@@ -32,7 +32,7 @@ document.documentElement.classList.add('js');
 
   var bootLines = [
     '> initializing publisher system...',
-    '> system online'
+    '> catalog: 1 asset online'
   ];
 
   var typingDone = false;
@@ -182,7 +182,7 @@ document.documentElement.classList.add('js');
       ctx.beginPath();
       ctx.moveTo(a[0], a[1]);
       ctx.lineTo(b[0], b[1]);
-      ctx.strokeStyle = 'rgba(16, 185, 129, ' + alpha + ')';
+      ctx.strokeStyle = 'rgba(255, 229, 0, ' + alpha + ')';
       ctx.lineWidth = 1;
       ctx.stroke();
     }
@@ -190,10 +190,8 @@ document.documentElement.classList.add('js');
     for (var v = 0; v < projected.length; v++) {
       var p = projected[v];
       var vAlpha = Math.max(0.2, Math.min(1, 0.6 - p[2] * 0.3));
-      ctx.beginPath();
-      ctx.arc(p[0], p[1], 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(245, 158, 11, ' + vAlpha + ')';
-      ctx.fill();
+      ctx.fillStyle = 'rgba(245, 245, 240, ' + vAlpha + ')';
+      ctx.fillRect(p[0] - 2.5, p[1] - 2.5, 5, 5);
     }
 
     angle += 0.004;
@@ -221,10 +219,9 @@ document.documentElement.classList.add('js');
     function animateRing() {
       ringX += (tx - ringX) * 0.15;
       ringY += (ty - ringY) * 0.15;
-      // Ring size changes via CSS class; offset = half current size.
-      // Using getBoundingClientRect keeps it centered at any size.
-      var size = cursorRing.offsetWidth;
-      cursorRing.style.transform = 'translate(' + (ringX - size / 2) + 'px, ' + (ringY - size / 2) + 'px)';
+      // Base 32px ring → 16px offset. Scale via .hover class (transform
+      // composes with this translate). No per-frame layout read.
+      cursorRing.style.transform = 'translate(' + (ringX - 16) + 'px, ' + (ringY - 16) + 'px)' + (cursorRing.classList.contains('hover') ? ' scale(1.5)' : '');
       requestAnimationFrame(animateRing);
     }
     animateRing();
