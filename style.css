@@ -565,6 +565,7 @@ body {
 .queue-cta { padding: 20px; border-top: 1px solid var(--border); text-align: center; }
 .console-val a { color: var(--hazard); text-decoration: none; transition: color 0.2s; }
 .console-val a:hover { color: var(--amber); }
+.console-val s { color: var(--smoke); }
 
 /* === Dossier — asymmetric console + prose === */
 .dossier {
