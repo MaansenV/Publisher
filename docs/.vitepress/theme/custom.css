@@ -1,0 +1,372 @@
+/* === Maansen — Cyberpunk docs theme (VitePress default overrides) ===
+   Design system mirrors the landing page: Void/Carbon/Hazard Yellow,
+   Orbitron display + JetBrains Mono console + Rajdhani prose,
+   angular (no border-radius) + HUD corner-bracket motif. */
+
+:root {
+  /* Palette */
+  --void: #0a0a0a;
+  --carbon: #121212;
+  --carbon-2: #181818;
+  --carbon-3: #1e1e1e;
+  --hazard: #ffe500;
+  --amber: #ffb800;
+  --bone: #f5f5f0;
+  --ash: #9a9a92;
+  --smoke: #5a5a52;
+  --border: rgba(255, 229, 0, 0.15);
+  --border-strong: rgba(255, 229, 0, 0.4);
+  --border-faint: rgba(255, 255, 255, 0.06);
+  --hazard-glow: rgba(255, 229, 0, 0.25);
+  --hazard-soft: rgba(255, 229, 0, 0.08);
+
+  /* Map onto VitePress tokens */
+  --vp-c-bg: var(--void);
+  --vp-c-bg-soft: var(--carbon);
+  --vp-c-bg-soft-up: var(--carbon-2);
+  --vp-c-bg-mute: var(--carbon-2);
+  --vp-c-bg-alt: var(--carbon);
+
+  --vp-c-divider: var(--border);
+  --vp-c-divider-soft: var(--border-faint);
+  --vp-c-gutter: var(--border);
+
+  --vp-c-text-1: var(--bone);
+  --vp-c-text-2: var(--ash);
+  --vp-c-text-3: var(--smoke);
+
+  --vp-c-brand-1: var(--hazard);
+  --vp-c-brand-2: var(--amber);
+  --vp-c-brand-3: var(--hazard);
+  --vp-c-brand-soft: var(--hazard-soft);
+  --vp-c-brand: var(--hazard);
+
+  --vp-c-default-1: var(--carbon-3);
+  --vp-c-default-2: var(--carbon-2);
+  --vp-c-default-3: var(--carbon);
+  --vp-c-default-soft: var(--carbon-2);
+
+  --vp-c-control: var(--carbon-3);
+  --vp-c-control-hover: var(--carbon-2);
+
+  --vp-font-family-base: 'Rajdhani', sans-serif;
+  --vp-font-family-mono: 'JetBrains Mono', monospace;
+
+  /* Angular motif — no rounded corners anywhere */
+  --vp-border-radius: 0;
+}
+
+/* === Base === */
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: var(--void);
+  color: var(--bone);
+}
+
+::selection {
+  background: var(--hazard);
+  color: var(--void);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--carbon-3); border: 2px solid var(--void); }
+::-webkit-scrollbar-thumb:hover { background: var(--smoke); }
+
+/* === Nav bar === */
+.VPNavBar {
+  background: rgba(10, 10, 10, 0.85) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border) !important;
+}
+.VPNavBarTitle .title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--bone);
+}
+.VPNavBarMenuLink {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--ash) !important;
+  transition: color 0.2s;
+}
+.VPNavBarMenuLink:hover { color: var(--hazard) !important; }
+.VPNavBarMenuLink.active { color: var(--hazard) !important; }
+
+.VPSocialLinks .VPImage { opacity: 0.7; }
+.VPSocialLinks .VPImage:hover { opacity: 1; filter: drop-shadow(0 0 4px var(--hazard-glow)); }
+
+/* Search button — angular */
+.VPNavBarSearch > .DocSearch-Button,
+.VPLocalSearchBox .search-button {
+  border: 1px solid var(--border) !important;
+  background: var(--carbon) !important;
+}
+.DocSearch-Button {
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* === Sidebar === */
+.VPSidebar {
+  background: var(--carbon) !important;
+  border-right: 1px solid var(--border) !important;
+}
+.VPSidebar .curtain { background: var(--carbon) !important; }
+
+.group-title {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.72rem !important;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--smoke) !important;
+}
+
+.VPSidebarItem .text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--ash);
+  transition: color 0.2s;
+}
+.VPSidebarItem.level-0 .text { font-weight: 600; }
+.VPSidebarItem:hover .text { color: var(--bone); }
+.VPSidebarItem.active .text { color: var(--hazard) !important; }
+.VPSidebarItem.active > .item > .indicator { background: var(--hazard) !important; }
+
+/* === Content === */
+.vp-doc {
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--bone);
+}
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--bone);
+}
+.vp-doc h1 { font-weight: 900; }
+.vp-doc h2 {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.vp-doc h2::before { display: none; } /* drop the default brand hash */
+.vp-doc a {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--hazard);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.vp-doc a:hover { color: var(--amber); }
+.vp-doc p { color: var(--bone); line-height: 1.7; }
+.vp-doc strong { color: var(--bone); font-weight: 700; }
+.vp-doc li { color: var(--bone); }
+.vp-doc blockquote {
+  border-left: 2px solid var(--hazard);
+  background: var(--hazard-soft);
+  color: var(--ash);
+  padding: 12px 20px;
+}
+.vp-doc hr { border-top: 1px solid var(--border); }
+
+/* Tables */
+.vp-doc table { border-collapse: collapse; }
+.vp-doc th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--hazard);
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--carbon);
+}
+.vp-doc td { border-bottom: 1px solid var(--border-faint); }
+.vp-doc tr:nth-child(2n) { background: rgba(255, 229, 0, 0.02); }
+
+/* === Code blocks — HUD corner brackets === */
+.vp-doc div[class*='language-'] {
+  background: var(--carbon) !important;
+  border: 1px solid var(--border);
+  border-radius: 0 !important;
+  position: relative;
+  margin: 16px 0;
+}
+.vp-doc div[class*='language-']::before,
+.vp-doc div[class*='language-']::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  z-index: 2;
+}
+.vp-doc div[class*='language-']::before {
+  top: -1px; left: -1px;
+  border-top: 2px solid var(--hazard);
+  border-left: 2px solid var(--hazard);
+}
+.vp-doc div[class*='language-']::after {
+  bottom: -1px; right: -1px;
+  border-bottom: 2px solid var(--hazard);
+  border-right: 2px solid var(--hazard);
+}
+.vp-doc div[class*='language-'] .lang {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--smoke);
+}
+.vp-doc code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.86rem;
+}
+.vp-doc :not(pre) > code {
+  color: var(--hazard);
+  background: var(--hazard-soft);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  padding: 1px 6px;
+}
+.vp-doc [class*='language-'] .line { color: var(--bone); }
+
+/* === Custom containers (tip / warning / danger / details) === */
+.vp-doc .custom-block {
+  border-radius: 0 !important;
+  border-width: 1px;
+  border-style: solid;
+  background: var(--carbon);
+  position: relative;
+}
+.vp-doc .custom-block.tip {
+  border-color: var(--border-strong);
+  background: var(--hazard-soft);
+}
+.vp-doc .custom-block.tip .custom-block-title { color: var(--hazard); }
+.vp-doc .custom-block.warning {
+  border-color: var(--amber);
+  background: rgba(255, 184, 0, 0.06);
+}
+.vp-doc .custom-block.warning .custom-block-title { color: var(--amber); }
+.vp-doc .custom-block.danger {
+  border-color: rgba(255, 90, 70, 0.5);
+  background: rgba(255, 90, 70, 0.05);
+}
+.vp-doc .custom-block.danger .custom-block-title { color: #ff7a66; }
+.vp-doc .custom-block-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.vp-doc .custom-block p { color: var(--bone); }
+
+/* Details summary */
+.vp-doc summary {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--hazard);
+}
+
+/* === Buttons — chamfered clip === */
+.VPButton {
+  font-family: 'JetBrains Mono', monospace !important;
+  border-radius: 0 !important;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 10px 100%);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.VPButton.brand {
+  background: var(--hazard) !important;
+  color: var(--void) !important;
+  border: none !important;
+}
+.VPButton.brand:hover { box-shadow: 0 0 20px var(--hazard-glow); transform: translateY(-1px); }
+
+/* === Right outline (TOC) === */
+.VPDocAsideOutline .outline-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--ash);
+  transition: color 0.2s;
+}
+.VPDocAsideOutline .outline-link:hover { color: var(--bone); }
+.VPDocAsideOutline .outline-link.active { color: var(--hazard); }
+.VPDocAsideOutline .outline-marker { background: var(--hazard) !important; }
+.outline-title {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--smoke) !important;
+}
+
+/* === Footer === */
+.VPFooter {
+  border-top: 1px solid var(--border) !important;
+  background: var(--void) !important;
+  color: var(--smoke) !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+.VPFooter .copyright { color: var(--smoke) }
+
+/* === Last-updated + edit + back-to-top chrome === */
+.VPDocFooter .pager-link {
+  border-color: var(--border) !important;
+  font-family: 'JetBrains Mono', monospace;
+}
+.VPDocFooter .pager-link:hover { border-color: var(--hazard) !important; color: var(--hazard) !important; }
+
+/* === Angular — kill any residual radius === */
+.vp-doc .custom-block,
+.vp-doc div[class*='language-'],
+.VPButton,
+.VPFlyout,
+.VPMenu,
+.VPLocalSearchBox,
+.VPNavBarSearch .DocSearch-Button {
+  border-radius: 0 !important;
+}
+
+/* === Focus states === */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--hazard);
+  outline-offset: 2px;
+}
+
+/* === Local search box theming === */
+.VPLocalSearchBox .modal {
+  background: var(--carbon) !important;
+  border: 1px solid var(--border) !important;
+}
+.VPLocalSearchBox .search-box input {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--bone);
+  background: var(--carbon-2);
+  border: 1px solid var(--border);
+}
+.VPLocalSearchBox .result.selected {
+  background: var(--hazard-soft) !important;
+}
+
+/* === Hero image glow (home layout, if ever used) === */
+:root {
+  --vp-home-hero-name-color: var(--hazard);
+  --vp-home-hero-image-background-image: radial-gradient(circle at 50% 50%, var(--hazard-glow) 0%, transparent 65%);
+  --vp-home-hero-image-filter: blur(20px);
+}
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation: none !important; }
+}
