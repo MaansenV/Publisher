@@ -1,46 +1,76 @@
 ---
 title: Quick Start
-description: Quick start outline for Easy FP Full Body Controller. Placeholder steps pending verification against the asset.
+description: Get a first-person full-body character running with Easy FP Full Body Controller — the 7-step Setup Wizard, FPCutter, and input setup.
 ---
 
 # Quick Start
 
-::: warning Outline only — verify before following
-The steps below are a **placeholder structure** for the quick-start guide. They describe the *shape* of a typical Unity asset setup (import → add to scene → configure → play) but the exact menu paths, prefab names, and component fields have **not yet been checked against the shipped package**. Each step marked `[to verify]` must be confirmed against the real asset before this guide is accurate.
+::: tip Verified against v1.1.0 source
+Steps reflect the shipped `FirstPersonSetupWizard` and `FBInputActions` asset.
 :::
 
 ## Requirements
 
-- Unity **6000.5.0** or newer *(verified from the store listing)*.
-- A project using the **Universal Render Pipeline (URP)** *(verified — URP only)*.
-- The Easy FP Full Body Controller package, imported from the Asset Store.
+A URP project on **Unity 6.5 (6000.5.0f1)+**, and a character model imported as **Humanoid**. See [Overview](./) for the full dependency list.
 
-## 1. Import the package
+## 1. Import the asset
 
-`[to verify]` Open the Asset Store listing, add the asset to your account, and import it into your URP project via the Package Manager. Confirm whether it imports as a UPM package or Asset Store legacy content.
+Import Easy FP Full Body Controller from the [Asset Store](https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454) into your URP project. The asset lives under `Assets/FBSystem/`.
 
-## 2. Add the controller to a scene
+## 2. Prepare a Humanoid model
 
-`[to verify]` Locate the controller prefab shipped with the asset and add it to your scene. The exact prefab path and name will be documented here once verified.
+Select your character FBX → **Inspector ▸ Rig ▸ Animation Type: Humanoid** → Apply. The Setup Wizard requires a Humanoid rig for IK and animation to work.
 
-## 3. Configure input
+## 3. Run the 7-step Setup Wizard
 
-`[to verify]` The controller expects input bindings for movement, look, and interaction. Whether it uses Unity's new Input System, the legacy Input Manager, or its own binding layer will be confirmed here.
+Menu: **`Tools ▸ First Person ▸ Setup Wizard`**. Navigate with `Next >` / `< Back` / `Finish Setup`.
 
-## 4. Configure the camera
+1. **Select Player Root** — the container that holds the character's logic and movement. Create or assign one.
+2. **Assign Model** — assign the character's `Animator` (the Humanoid rig from step 2).
+3. **Bone Detection** — auto-detects the head, spine, and right-hand bones. Override manually if your rig is non-standard.
+4. **Add Components** — adds the player scripts (movement, animation, logic).
+5. **Create Hierarchy** — creates the camera target and item sockets.
+6. **Wiring** — automatically finds and connects every reference between components.
+7. **Validation** — runs a final health check. Green → **Finish Setup**.
 
-`[to verify]` Attach/assign the first-person camera and confirm any URP-specific camera or volume setup the asset requires.
+## 4. Cut the mesh with FPCutter
 
-## 5. Press Play
+So the character's head (and any other parts) hide in first person without vanishing from shadows:
 
-`[to verify]` Enter Play mode and verify the full body renders in first person with working locomotion.
+1. Run the **FPCutter Wizard** (menu `Tools ▸ FPCutter Wizard`) on your character's `SkinnedMeshRenderer` to segment it into body parts.
+2. The generated `FPCutterController` hides the parts listed in **Hide In First Person** (default: `Head`).
+3. Toggle at runtime via `SetFirstPerson()` / `SetThirdPerson()`, or the component's context menu (`View ▸ Set First Person`).
+
+## 5. Wire input
+
+The asset ships `FBInputActions` (a Unity Input System asset) with a **Player** action map. `PlayerInputHandler` references it (`actionMapName = "Player"`). The Player actions:
+
+| Action | Used by |
+| --- | --- |
+| `Move`, `Look` | `PlayerInputHandler` → locomotion & camera |
+| `Sprint`, `Jump`, `Crouch` | `PlayerInputHandler` → locomotion |
+| `Flashlight` | triggers the current item's **Use** (`HandItemSocket.UseCurrentItem()`) |
+| `Previous`, `Next` | `ItemSwitcher` (number keys / scroll wheel) |
+| `Attack`, `Interact` | defined in the action map; consumed by the demo scripts |
+
+Assign the `FBInputActions` asset to the `PlayerInputHandler` if the wizard didn't.
+
+## 6. Press Play
+
+Enter Play mode. You should see a full body in first person with working locomotion, look, and the held item. Verify events with the demo `PlayerEventLogger` (it logs every transition to the Console).
+
+## Video walkthrough
+
+<div style="position:relative;max-width:640px;aspect-ratio:16/9;margin:24px 0;border:1px solid rgba(255,229,0,0.4);">
+<iframe style="position:absolute;inset:0;width:100%;height:100%;border:0;" src="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" title="FBSystem Quick Start Guide" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ## Troubleshooting
 
-`[to verify]` Common issues (pink materials / missing URP, input not bound, camera clipping) and their fixes will be listed here once the asset's actual failure modes are known.
-
----
-
-::: details Why this page is a placeholder
-This documentation frontend is built and live, but the **content** for each asset must be written from the real package so it never documents a wrong menu path or class name. This outline exists so the structure is ready to fill in.
-:::
+| Symptom | Fix |
+| --- | --- |
+| IK / animation broken | Model must be **Humanoid** (Rig ▸ Animation Type). Re-run the wizard's Assign Model step. |
+| Pink materials | Project must be **URP**. Convert/reimport materials to URP shaders. |
+| Camera clips into the head | Adjust `eyeOffset` / `crouchEyeOffset` on `PlayerCameraController`, and ensure FPCutter hides the head. |
+| Item won't equip | `HandItemSocket` must be assigned; the item needs an `ItemHoldData` component. |
+| Look feels off | Tune `lookSensitivity` / `verticalLookLimit` (or the same fields on the `PlayerSettings` asset). |
