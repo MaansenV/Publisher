@@ -34,8 +34,8 @@ const tabs = [
     proof: 'Requirements shown before setup',
     previewTag: 'REQUIREMENTS',
     previewColor: 'yellow',
-    previewImg: '/fp-control.png',
-    previewAlt: 'Easy FP Full Body Controller: full-body control with stable anchor camera',
+    previewImg: '/fp-integrations.png',
+    previewAlt: 'Easy FP Full Body Controller: Setup Wizard steps 1-3, select player root, assign model, find bones',
   },
   {
     id: 'setup',
@@ -44,8 +44,8 @@ const tabs = [
     proof: 'Quick Start verified for v1.1.0',
     previewTag: 'SETUP WIZARD',
     previewColor: 'cobalt',
-    previewImg: '/fp-control.png',
-    previewAlt: 'Easy FP Full Body Controller: full-body control result after setup',
+    previewImg: '/fp-setup.png',
+    previewAlt: 'Easy FP Full Body Controller: Setup Wizard steps 4-6, add player scripts, setup helpers, connect systems',
   },
 ]
 

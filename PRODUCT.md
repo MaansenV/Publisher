@@ -45,7 +45,7 @@ Provide the required public publisher presence for the Unity Asset Store, and ho
 
 ## Evidence on Hand
 
-- **Easy FP Full Body Controller** — a real, live, commercial (paid) Asset Store listing (URL above) targeting Unity 6000.5.0+ (Unity 6.5) / URP-only. Docs are verified against the v1.1.0 package source, and the landing page now displays v1.1.0. Exact listing price, package size, and release dates are mirrored from the Asset Store into the repo docs — verify against the live listing for current numbers. [All listing facts sourced from inspected repo content: `docs/index.md` and `docs/easy-fp-full-body-controller/index.md`, not memory.]
+- **Easy FP Full Body Controller**: a real, live, commercial (paid) Asset Store listing (URL above) targeting Unity 6000.5.0+ (Unity 6.5). Runtime API is render-pipeline-agnostic; demo scene and FPCutter shader require URP. Docs are verified against the v1.1.0 package source, and the landing page now displays v1.1.0. Exact listing price, package size, and release dates are mirrored from the Asset Store into the repo docs. Verify against the live listing for current numbers. [All listing facts sourced from inspected repo content: `docs/index.md` and `docs/easy-fp-full-body-controller/index.md`, not memory.]
 - A YouTube quick-start walkthrough credited to **aloiV** is embedded in the asset overview. [Attribution kept as found; not assumed to be the same handle as `vedaloiv`.]
 - **Future assets** — no listings, names, prices, or details exist yet. [Open.]
 - **Absences future work must not fabricate:** no testimonials, customer logos, case studies, press, benchmarks, or third-party endorsements exist. Do not invent them.
