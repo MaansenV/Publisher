@@ -14,7 +14,7 @@ const tabs = [
     proof: 'Real package · v1.1.0',
     previewTag: 'OVERVIEW',
     previewColor: 'cobalt',
-    previewImg: '/fp-movement.png',
+    previewImg: '/fp-overview.png',
     previewAlt: 'Easy FP Full Body Controller: full-body movement states (idle, walk, sprint, crouch)',
   },
   {
@@ -24,7 +24,7 @@ const tabs = [
     proof: 'Documented against shipped source',
     previewTag: 'CAPABILITIES',
     previewColor: 'vermilion',
-    previewImg: '/fp-body-awareness.png',
+    previewImg: '/fp-features.png',
     previewAlt: 'Easy FP Full Body Controller: true FPS body awareness in-game view',
   },
   {
