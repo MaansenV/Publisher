@@ -1,11 +1,11 @@
 ---
 title: Easy FP Full Body Controller
-description: Easy FP Full Body Controller — a first-person full-body character controller for Unity URP by Maansen. 7-step setup wizard, procedural IK, FPCutter mesh-cutting, item system, extensible event API.
+description: Easy FP Full Body Controller — a first-person full-body character controller for Unity URP by vedaloiv. 7-step setup wizard, procedural IK, FPCutter mesh-cutting, item system, extensible event API.
 ---
 
 # Easy FP Full Body Controller
 
-A first-person **and** third-person full-body character controller for Unity's Universal Render Pipeline (URP). It renders and animates a full body in first person using procedural IK, ships with a guided 7-step Setup Wizard, includes the **FPCutter** mesh-cutting tool for hiding body parts in FP view, a dynamic item system, and an extensible event API.
+A first-person **and** third-person full-body character controller for Unity. The runtime API is render-pipeline-agnostic; the demo scene and FPCutter shader require URP. It renders and animates a full body in first person using procedural IK, ships with a guided 7-step Setup Wizard, includes the **FPCutter** mesh-cutting tool for hiding body parts in FP view, a dynamic item system, and an extensible event API.
 
 ::: tip Verified against v1.1.0
 This documentation reflects the shipped **v1.1.0** package source (read directly from `Assets/FBSystem/`). Signatures below are real, not estimates.
@@ -26,7 +26,7 @@ This documentation reflects the shipped **v1.1.0** package source (read directly
 | Requirement | Version | Source |
 | --- | --- | --- |
 | Unity | 6000.5.0f1 (Unity 6.5) or newer | `ProjectSettings/ProjectVersion.txt` |
-| Render Pipeline | URP 17.5.0 (URP only) | `Packages/manifest.json` |
+| Render Pipeline | URP 17.5.0 (demo + FPCutter shader) | `Packages/manifest.json` |
 | Cinemachine | 3.1.7 | `Packages/manifest.json` |
 | Input System | 1.19.0 | `Packages/manifest.json` |
 | Character model | imported as **Humanoid** | Setup Wizard step 2 requires it |
@@ -36,12 +36,12 @@ This documentation reflects the shipped **v1.1.0** package source (read directly
 | Field | Value |
 | --- | --- |
 | Asset | Easy FP Full Body Controller |
-| Publisher | Maansen |
+| Publisher | vedaloiv (listed as Maansen) |
 | Store page | [assetstore.unity.com](https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454) |
 | Price | ~~€36.79~~ €18.39 |
 | Version | 1.1.0 |
 | Unity | 6000.5.0+ |
-| Render pipeline | URP only |
+| Render pipeline | URP (demo + FPCutter) |
 | Package size | 185.2 MB |
 | Released | 2026-07-28 (v1.0), v1.1.0 on 2026-07-30 |
 
@@ -49,7 +49,7 @@ This documentation reflects the shipped **v1.1.0** package source (read directly
 
 Run the **7-step Setup Wizard** (`Tools ▸ First Person ▸ Setup Wizard`), cut your mesh with **FPCutter**, and press Play. Full steps: [Quick Start](./quick-start).
 
-<div style="position:relative;max-width:640px;aspect-ratio:16/9;margin:24px 0;border:1px solid rgba(255,229,0,0.4);">
+<div style="position:relative;max-width:640px;aspect-ratio:16/9;margin:24px 0;border:2px solid var(--vp-c-divider);border-radius:4px;overflow:hidden;">
 <iframe style="position:absolute;inset:0;width:100%;height:100%;border:0;" src="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" title="FBSystem Quick Start Guide" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
@@ -69,4 +69,4 @@ Full changelog ships in the package at `Assets/FBSystem/CHANGELOG.md`.
 
 ## Get it
 
-<a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener" class="btn-primary">VIEW ON ASSET STORE ↗</a>
+<a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener" class="btn-primary">View on Asset Store ↗</a>

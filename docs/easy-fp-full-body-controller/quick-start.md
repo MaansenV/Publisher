@@ -39,7 +39,7 @@ So the character's head (and any other parts) hide in first person without vanis
 
 1. Run the **FPCutter Wizard** (menu `Tools ▸ FPCutter Wizard`) on your character's `SkinnedMeshRenderer` to segment it into body parts.
 2. The generated `FPCutterController` hides the parts listed in **Hide In First Person** (default: `Head`).
-3. Toggle at runtime via `SetFirstPerson()` / `SetThirdPerson()`, or the component's context menu (`View ▸ Set First Person`).
+3. Toggle at runtime via `SetFirstPerson()` or `SetThirdPerson()`, or the component's context menu (`View ▸ Set First Person`).
 
 ## 5. Wire input
 
@@ -61,7 +61,7 @@ Enter Play mode. You should see a full body in first person with working locomot
 
 ## Video walkthrough
 
-<div style="position:relative;max-width:640px;aspect-ratio:16/9;margin:24px 0;border:1px solid rgba(255,229,0,0.4);">
+<div style="position:relative;max-width:640px;aspect-ratio:16/9;margin:24px 0;border:2px solid var(--vp-c-divider);border-radius:4px;overflow:hidden;">
 <iframe style="position:absolute;inset:0;width:100%;height:100%;border:0;" src="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" title="FBSystem Quick Start Guide" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
@@ -71,6 +71,6 @@ Enter Play mode. You should see a full body in first person with working locomot
 | --- | --- |
 | IK / animation broken | Model must be **Humanoid** (Rig ▸ Animation Type). Re-run the wizard's Assign Model step. |
 | Pink materials | Project must be **URP**. Convert/reimport materials to URP shaders. |
-| Camera clips into the head | Adjust `eyeOffset` / `crouchEyeOffset` on `PlayerCameraController`, and ensure FPCutter hides the head. |
+| Camera clips into the head | Adjust `eyeOffset` or `crouchEyeOffset` on `PlayerCameraController`, and ensure FPCutter hides the head. |
 | Item won't equip | `HandItemSocket` must be assigned; the item needs an `ItemHoldData` component. |
-| Look feels off | Tune `lookSensitivity` / `verticalLookLimit` (or the same fields on the `PlayerSettings` asset). |
+| Look feels off | Tune `lookSensitivity` or `verticalLookLimit` (or the same fields on the `PlayerSettings` asset). |

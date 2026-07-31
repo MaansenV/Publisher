@@ -20,3 +20,7 @@ dist/
 build/
 *.log
 docs/.vitepress/cache/
+*.rar
+.opencode/
+.pi/
+.impeccable/
