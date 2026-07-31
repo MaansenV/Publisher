@@ -15,7 +15,7 @@ const tabs = [
     previewTag: 'OVERVIEW',
     previewColor: 'cobalt',
     previewImg: '/fp-movement.png',
-    previewAlt: 'Easy FP Full Body Controller — full-body movement states: idle, walk, sprint, crouch',
+    previewAlt: 'Easy FP Full Body Controller: full-body movement states (idle, walk, sprint, crouch)',
   },
   {
     id: 'features',
@@ -25,7 +25,7 @@ const tabs = [
     previewTag: 'CAPABILITIES',
     previewColor: 'vermilion',
     previewImg: '/fp-body-awareness.png',
-    previewAlt: 'Easy FP Full Body Controller — true FPS body awareness in-game view',
+    previewAlt: 'Easy FP Full Body Controller: true FPS body awareness in-game view',
   },
   {
     id: 'integrations',
@@ -35,7 +35,7 @@ const tabs = [
     previewTag: 'REQUIREMENTS',
     previewColor: 'yellow',
     previewImg: '/fp-control.png',
-    previewAlt: 'Easy FP Full Body Controller — full-body control with stable anchor camera',
+    previewAlt: 'Easy FP Full Body Controller: full-body control with stable anchor camera',
   },
   {
     id: 'setup',
@@ -45,7 +45,7 @@ const tabs = [
     previewTag: 'SETUP WIZARD',
     previewColor: 'cobalt',
     previewImg: '/fp-control.png',
-    previewAlt: 'Easy FP Full Body Controller — full-body control result after setup',
+    previewAlt: 'Easy FP Full Body Controller: full-body control result after setup',
   },
 ]
 
@@ -287,7 +287,7 @@ async function submitContact() {
         <div class="section-inner contact-layout">
           <div class="contact-copy">
             <h2 class="section-title">Need a hand<span class="hero-dot">?</span></h2>
-            <p>Questions, support, or feedback about Easy FP Full Body Controller or future vedaloiv tools — write to us.</p>
+            <p>Questions, support, or feedback about Easy FP Full Body Controller or future vedaloiv tools. Write to us.</p>
             <span class="contact-stamp">SUPPORT / PUBLISHER / 2026</span>
           </div>
           <form

@@ -1,6 +1,6 @@
 ---
 title: Easy FP Full Body Controller
-description: Easy FP Full Body Controller — a first-person full-body character controller for Unity URP by vedaloiv. 7-step setup wizard, procedural IK, FPCutter mesh-cutting, item system, extensible event API.
+description: "Easy FP Full Body Controller: a first-person full-body character controller for Unity URP by vedaloiv. 7-step setup wizard, procedural IK, FPCutter mesh-cutting, item system, extensible event API."
 ---
 
 # Easy FP Full Body Controller
@@ -14,10 +14,10 @@ This documentation reflects the shipped **v1.1.0** package source (read directly
 ## Features
 
 - **Full-body first / third person** with procedural hand & head IK and spine stabilization.
-- **7-step Setup Wizard** — menu `Tools ▸ First Person ▸ Setup Wizard` walks you from root to validation.
-- **FPCutter** — segments the character mesh and hides body parts (e.g. the head) in first person while still casting shadows.
-- **Dynamic item system** — equip/unequip, per-item hold data, shareable IK presets, scroll-wheel / number-key switching.
-- **Extensible event API** — C# events + `UnityEvent`s + auto-discovered listener interfaces, each fired once per transition from a single canonical chokepoint.
+- **7-step Setup Wizard**: menu `Tools ▸ First Person ▸ Setup Wizard` walks you from root to validation.
+- **FPCutter**: segments the character mesh and hides body parts (e.g. the head) in first person while still casting shadows.
+- **Dynamic item system**: equip/unequip, per-item hold data, shareable IK presets, scroll-wheel / number-key switching.
+- **Extensible event API**: C# events + `UnityEvent`s + auto-discovered listener interfaces, each fired once per transition from a single canonical chokepoint.
 - **Cinemachine**-based FPS camera with a stable anchor target.
 - **Unity Input System** integration (shipped `FBInputActions` asset).
 
@@ -53,17 +53,17 @@ Run the **7-step Setup Wizard** (`Tools ▸ First Person ▸ Setup Wizard`), cut
 <iframe style="position:absolute;inset:0;width:100%;height:100%;border:0;" src="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" title="FBSystem Quick Start Guide" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-_Walkthrough by **aloiV** — covers the 7-step Setup Wizard, FPCutter mesh optimization, and the dynamic Item Usage system._
+_Walkthrough by **aloiV**. Covers the 7-step Setup Wizard, FPCutter mesh optimization, and the dynamic Item Usage system._
 
 ## Next steps
 
-- [Quick Start](./quick-start) — import, wizard, FPCutter, input, play.
-- [Interfaces](./interfaces) — the runtime API: `PlayerController` hub, item system, and the full event catalog.
+- [Quick Start](./quick-start): import, wizard, FPCutter, input, play.
+- [Interfaces](./interfaces): the runtime API: `PlayerController` hub, item system, and the full event catalog.
 
 ## Changelog highlights
 
-- **v1.1.0 (2026-07-30)** — Extensible Event API: triple mechanism (C# `event` + `UnityEvent` + auto-discovered listener interfaces) on `HandItemSocket` and `PlayerLocomotion`, fired once per transition. `HandItemSocket` is now the canonical equip-event owner; `ItemContainer` is pure orchestration.
-- **v1.0.0** — initial release: FP/TP full-body controller, procedural IK, setup-wizard onboarding, FPCutter mesh-cutting, demo scene with item pickup/drop.
+- **v1.1.0 (2026-07-30)**: Extensible Event API: triple mechanism (C# `event` + `UnityEvent` + auto-discovered listener interfaces) on `HandItemSocket` and `PlayerLocomotion`, fired once per transition. `HandItemSocket` is now the canonical equip-event owner; `ItemContainer` is pure orchestration.
+- **v1.0.0**: initial release: FP/TP full-body controller, procedural IK, setup-wizard onboarding, FPCutter mesh-cutting, demo scene with item pickup/drop.
 
 Full changelog ships in the package at `Assets/FBSystem/CHANGELOG.md`.
 

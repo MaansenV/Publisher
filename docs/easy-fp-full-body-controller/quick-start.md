@@ -1,6 +1,6 @@
 ---
 title: Quick Start
-description: Get a first-person full-body character running with Easy FP Full Body Controller — the 7-step Setup Wizard, FPCutter, and input setup.
+description: "Get a first-person full-body character running with Easy FP Full Body Controller: the 7-step Setup Wizard, FPCutter, and input setup."
 ---
 
 # Quick Start
@@ -25,13 +25,13 @@ Select your character FBX → **Inspector ▸ Rig ▸ Animation Type: Humanoid**
 
 Menu: **`Tools ▸ First Person ▸ Setup Wizard`**. Navigate with `Next >` / `< Back` / `Finish Setup`.
 
-1. **Select Player Root** — the container that holds the character's logic and movement. Create or assign one.
-2. **Assign Model** — assign the character's `Animator` (the Humanoid rig from step 2).
-3. **Bone Detection** — auto-detects the head, spine, and right-hand bones. Override manually if your rig is non-standard.
-4. **Add Components** — adds the player scripts (movement, animation, logic).
-5. **Create Hierarchy** — creates the camera target and item sockets.
-6. **Wiring** — automatically finds and connects every reference between components.
-7. **Validation** — runs a final health check. Green → **Finish Setup**.
+1. **Select Player Root**: the container that holds the character's logic and movement. Create or assign one.
+2. **Assign Model**: assign the character's `Animator` (the Humanoid rig from step 2).
+3. **Bone Detection**: auto-detects the head, spine, and right-hand bones. Override manually if your rig is non-standard.
+4. **Add Components**: adds the player scripts (movement, animation, logic).
+5. **Create Hierarchy**: creates the camera target and item sockets.
+6. **Wiring**: automatically finds and connects every reference between components.
+7. **Validation**: runs a final health check. Green → **Finish Setup**.
 
 ## 4. Cut the mesh with FPCutter
 

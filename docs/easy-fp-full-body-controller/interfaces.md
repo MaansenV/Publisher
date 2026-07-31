@@ -1,17 +1,17 @@
 ---
 title: Interfaces
-description: Public runtime API of Easy FP Full Body Controller — PlayerController hub, item system, FPCutter, and the extensible event API.
+description: "Public runtime API of Easy FP Full Body Controller: PlayerController hub, item system, FPCutter, and the extensible event API."
 ---
 
 # Interfaces
 
-The public runtime API for integrating with the controller. All runtime types are in namespace `Player`. This page covers the **integration surface** — demo scripts, editor inspectors, and internal tuning fields are omitted (see source under `Assets/FBSystem/`).
+The public runtime API for integrating with the controller. All runtime types are in namespace `Player`. This page covers the **integration surface**: demo scripts, editor inspectors, and internal tuning fields are omitted (see source under `Assets/FBSystem/`).
 
 ::: tip Verified against v1.1.0 source
 Signatures below are read from the shipped package.
 :::
 
-## PlayerController — the hub
+## PlayerController: the hub
 
 Central `MonoBehaviour`. Auto-finds every sub-component in `Awake` if you leave them unassigned, so external code only needs one reference.
 
@@ -62,7 +62,7 @@ player.DisableAllControls();   // enter cutscene / menu
 player.EnableAllControls();    // resume gameplay
 ```
 
-## Configuration — PlayerSettings
+## Configuration: PlayerSettings
 
 `ScriptableObject` (Create ▸ **Player ▸ Settings**). Referenced by most components, so it's the single place to tune feel. `beginnerMode` toggles a simplified inspector view.
 
@@ -94,7 +94,7 @@ player.EnableAllControls();    // resume gameplay
 | `middleSpineWeight` | `float` | Rotation weight for middle spine. (default: 0.3f)
 | `upperSpineWeight` | `float` | Rotation weight for upper spine. (default: 0.4f)
 
-## Input — PlayerInputHandler
+## Input: PlayerInputHandler
 
 Reads the Unity Input System asset (`inputActions`, `actionMapName = "Player"`).
 
@@ -105,9 +105,9 @@ Reads the Unity Input System asset (`inputActions`, `actionMapName = "Player"`).
 | `MoveInput` | `Vector2` | Current movement input vector (X = Strafe, Y = Forward), normalized between -1 and 1. |
 | `LookInput` | `Vector2` | Current look input vector (X = Horizontal, Y = Vertical) from mouse/joystick. |
 | `IsSprinting` | `bool` | Whether the sprint button is currently held. |
-| `JumpTriggered` | `bool` | Whether a jump was triggered this frame — true for the single frame jump is pressed. |
+| `JumpTriggered` | `bool` | Whether a jump was triggered this frame; true for the single frame jump is pressed. |
 | `IsCrouching` | `bool` | Whether the player is in the crouch state (toggled on each press). |
-| `FlashlightTriggered` | `bool` | Whether the flashlight was toggled this frame — true for the single frame it is pressed. |
+| `FlashlightTriggered` | `bool` | Whether the flashlight was toggled this frame; true for the single frame it is pressed. |
 
 **Methods**
 
@@ -129,7 +129,7 @@ Reads the Unity Input System asset (`inputActions`, `actionMapName = "Player"`).
 - `Sprint`
 - `Flashlight`
 
-## Locomotion — PlayerLocomotion
+## Locomotion: PlayerLocomotion
 
 `[RequireComponent(typeof(CharacterController))]`.
 
@@ -154,13 +154,13 @@ Reads the Unity Input System asset (`inputActions`, `actionMapName = "Player"`).
 | Member | Type | Notes |
 | --- | --- | --- |
 | `IsGrounded` | `bool` | True if the player is currently touching the ground (CharacterController + raycast fallback). |
-| `IsSprinting` | `bool` | True if the player is currently sprinting — only possible when grounded and not crouching. |
+| `IsSprinting` | `bool` | True if the player is currently sprinting; only possible when grounded and not crouching. |
 | `CurrentSpeed` | `float` | The current horizontal speed of the player in units per second. |
 | `MaxSpeed` | `float` | The theoretical maximum speed in the current state (crouch/walk/sprint). |
 
 Fires the locomotion events listed below.
 
-## Camera — PlayerCameraController
+## Camera: PlayerCameraController
 
 Cinemachine-based.
 
@@ -182,12 +182,12 @@ Cinemachine-based.
 | `Yaw` | `float` | Current horizontal look angle in degrees. |
 | `GetLookAngles` | `GetLookAngles() → Vector2` | Gets the current look direction as a Vector2 (X = Yaw, Y = Pitch). |
 | `SetLookDirection` | `SetLookDirection(float yaw, float pitch)` | Sets the look direction programmatically (useful for respawning, cutscenes, etc.). |
-| `SyncCameraTargetToHead` | `SyncCameraTargetToHead()` | Syncs the camera target position to the animated head bone — called in LateUpdate; external IK systems may call it manually. |
+| `SyncCameraTargetToHead` | `SyncCameraTargetToHead()` | Syncs the camera target position to the animated head bone; called in LateUpdate; external IK systems may call it manually. |
 | `SetVerticalLimitOverride` | `SetVerticalLimitOverride(float upper, float lower)` | Sets the vertical limit override for asymmetric look limits (used by item IK data). |
 
 ## Items
 
-### HandItemSocket — canonical equip event source
+### HandItemSocket: canonical equip event source
 
 The single owner of equip/unequip events.
 
@@ -206,12 +206,12 @@ The single owner of equip/unequip events.
 | --- | --- | --- |
 | `AttachItem` | `AttachItem(GameObject, Vector3? pos, Vector3? rot)` | Attaches an item to the hand socket with optional position/rotation offsets. |
 | `AttachItem` | `AttachItem(GameObject, ItemAttachmentData)` | Attaches an item using an ItemAttachmentData configuration (offsets + animation info). |
-| `EquipFromContainer` | `EquipFromContainer(GameObject, int slotIndex = -1)` | Equips an item from a container — activates it and applies ItemHoldData offsets, animator layer, and IK. |
-| `UseCurrentItem` | `UseCurrentItem()` | triggered by the `Flashlight/Use` input — fires the `OnUse` event on the equipped item's ItemHoldData. |
+| `EquipFromContainer` | `EquipFromContainer(GameObject, int slotIndex = -1)` | Equips an item from a container; activates it and applies ItemHoldData offsets, animator layer, and IK. |
+| `UseCurrentItem` | `UseCurrentItem()` | triggered by the `Flashlight/Use` input; fires the `OnUse` event on the equipped item's ItemHoldData. |
 
 Events: see [Event API](#event-api).
 
-### ItemContainer — orchestration
+### ItemContainer: orchestration
 
 Manages a list of items and equips them **through** the socket (it no longer emits its own equip events).
 
@@ -223,7 +223,7 @@ Manages a list of items and equips them **through** the socket (it no longer emi
 | `HasEquippedItem` | `bool` | Whether an item is currently equipped. |
 | `CurrentIndex` | `int` | The index of the currently equipped item, or -1 if none. |
 | `ItemCount` | `int` | Number of items in the container. |
-| `HandSocket` | `HandItemSocket` | The hand socket this container equips items through — subscribe to its canonical item events (e.g. `ItemEquipped`). |
+| `HandSocket` | `HandItemSocket` | The hand socket this container equips items through; subscribe to its canonical item events (e.g. `ItemEquipped`). |
 
 **Methods**
 
@@ -238,15 +238,15 @@ Manages a list of items and equips them **through** the socket (it no longer emi
 | `GetItem` | `GetItem(int)` | Gets an item by index without equipping it. |
 | `GetItemById` | `GetItemById(string)` | Gets an item GameObject by its unique ID defined in ItemHoldData. |
 | `AddItem` | `AddItem(GameObject)` | Adds an item to the container's list (deactivated until equipped); fires `OnContainerChanged`. |
-| `RemoveItem` | `RemoveItem(GameObject) → bool` | Removes an item from the container — unequips it first if currently equipped; fires `OnContainerChanged`; returns true if removed. |
+| `RemoveItem` | `RemoveItem(GameObject) → bool` | Removes an item from the container; unequips it first if currently equipped; fires `OnContainerChanged`; returns true if removed. |
 
 **Event**
 
 | Member | Type | Notes |
 | --- | --- | --- |
-| `OnContainerChanged` | `UnityEvent` | fires when the item list itself changes — add/remove |
+| `OnContainerChanged` | `UnityEvent` | fires when the item list itself changes: add/remove |
 
-### ItemHoldData — per-item config & reactions
+### ItemHoldData: per-item config & reactions
 
 Attach to item `GameObject`s.
 
@@ -257,27 +257,27 @@ Attach to item `GameObject`s.
 | `OnUnequip` | `UnityEvent` | item-local event; fires alongside the system events |
 | `OnUse` | `UnityEvent` | item-local event; fires alongside the system events |
 | `attachmentData` | `ItemAttachmentData` | config |
-| `worldItemPrefab` | `GameObject` | config; should carry a `WorldItem` component — prefab to spawn when this item is dropped |
+| `worldItemPrefab` | `GameObject` | config; should carry a `WorldItem` component; prefab to spawn when this item is dropped |
 | `ItemId` | `string` | property; unique identifier for this item |
 | `AttachmentData` | `ItemAttachmentData` | property; configuration for how this item is attached and held |
 | `WorldItemPrefab` | `GameObject` | property; prefab used when dropping this item into the world |
 
-### ItemAttachmentData — hold & IK config
+### ItemAttachmentData: hold & IK config
 
 `[Serializable]`.
 
 | Member | Type | Notes |
 | --- | --- | --- |
-| `animatorLayerIndex` | `int` | The index of the override animation layer for this item — used to play specific hold/use animations. (default: 1) |
+| `animatorLayerIndex` | `int` | The index of the override animation layer for this item; used to play specific hold/use animations. (default: 1) |
 | `holdStyle` | `OneHandedRight` \| `TwoHanded` | Defines if the item is held with one hand or two hands. (default: OneHandedRight) |
 | `gripPositionOffset` | `Vector3` | Local position offset of the item mesh relative to the hand socket transform. (default: Vector3.zero) |
 | `gripRotationOffset` | `Vector3` | Local rotation offset of the item mesh relative to the hand socket transform (Euler angles). (default: Vector3.zero) |
-| `debugMode` | `bool` | editor-only; tune live in the editor — when enabled, offsets update in real-time (field lives on `ItemHoldData`). (default: false) |
-| `tuneGripMode` | `bool` | editor-only; tune live in the editor — when enabled, transform changes are captured into the grip offsets (field lives on `ItemHoldData`). (default: false) |
+| `debugMode` | `bool` | editor-only; tune live in the editor; when enabled, offsets update in real-time (field lives on `ItemHoldData`). (default: false) |
+| `tuneGripMode` | `bool` | editor-only; tune live in the editor; when enabled, transform changes are captured into the grip offsets (field lives on `ItemHoldData`). (default: false) |
 
 Plus standing/crouching hand and elbow IK overrides.
 
-### ItemIKPreset — share IK config
+### ItemIKPreset: share IK config
 
 `ScriptableObject` (Create ▸ **Player ▸ Item IK Preset**).
 
@@ -286,7 +286,7 @@ Plus standing/crouching hand and elbow IK overrides.
 | `CaptureFromScene` | `CaptureFromScene()` | context menu; copies IK config between items |
 | `ApplyToScene` | `ApplyToScene()` | context menu; copies IK config between items |
 
-## Event API — PlayerEventAPI {#event-api}
+## Event API: PlayerEventAPI {#event-api}
 
 Three complementary mechanisms, each fired **once per transition** from a single canonical chokepoint:
 
@@ -294,14 +294,14 @@ Three complementary mechanisms, each fired **once per transition** from a single
 | --- | --- |
 | C# `event Action<TArgs>` | code subscribers (struct args, no per-call allocation) |
 | `UnityEvent` | Inspector / no-code wiring |
-| Listener interfaces | full extension / structured contract — **auto-discovered** |
+| Listener interfaces | full extension / structured contract; **auto-discovered** |
 
 ### Event payloads
 
-- **`ItemEquipArgs`** — `Item` (`GameObject`), `SlotIndex` (`int`, `-1` if equipped outside a container), `HoldData` (`ItemHoldData`), `FromContainer` (`bool`).
-- **`LandArgs`** — `ImpactVelocity` (`float`), `FallDistance` (`float`).
+- **`ItemEquipArgs`**: `Item` (`GameObject`), `SlotIndex` (`int`, `-1` if equipped outside a container), `HoldData` (`ItemHoldData`), `FromContainer` (`bool`).
+- **`LandArgs`**: `ImpactVelocity` (`float`), `FallDistance` (`float`).
 
-### Item events — `HandItemSocket`
+### Item events: `HandItemSocket`
 
 **C# events**
 
@@ -319,7 +319,7 @@ Three complementary mechanisms, each fired **once per transition** from a single
 
 Fire for **every** socket-backed equip/unequip (manual attach, container equip, detach).
 
-### Locomotion events — `PlayerLocomotion`
+### Locomotion events: `PlayerLocomotion`
 
 **C# events**
 
@@ -346,7 +346,7 @@ Fire for **every** socket-backed equip/unequip (manual attach, container equip, 
 
 ### Listener interfaces
 
-Implement on any `MonoBehaviour` under the player — it's found at startup automatically. Unhandled methods are no-ops; override only what you need.
+Implement on any `MonoBehaviour` under the player; it's found at startup automatically. Unhandled methods are no-ops; override only what you need.
 
 ```csharp
 using Player;
@@ -378,11 +378,11 @@ player.HandItemSocket.ItemEquipped += args =>
 
 ::: warning Event contract
 - Each transition fires its C# event, its `UnityEvent`, and every discovered listener **once**, in that order, from one private notify method.
-- Equip/unequip events require a connected `HandItemSocket` — the socket is the source. A container without a socket emits **no** equip event.
+- Equip/unequip events require a connected `HandItemSocket`; the socket is the source. A container without a socket emits **no** equip event.
 - Dispatch is best-effort: a handler that throws interrupts the remaining handlers for that transition. Keep handlers exception-free.
 :::
 
-## FPCutter — FPCutterController
+## FPCutter: FPCutterController
 
 Hides body parts in first person (default: `Head`) while keeping shadow casting. Generated by the FPCutter Wizard.
 
@@ -404,7 +404,7 @@ Hides body parts in first person (default: `Head`) while keeping shadow casting.
 
 The `BodyPart` enum is defined in `FPCutterData`.
 
-## Animator — PlayerAnimatorController
+## Animator: PlayerAnimatorController
 
 Drives animator parameters and item animation layers.
 
@@ -437,10 +437,10 @@ Tuned by the Setup Wizard; adjust only for advanced customization.
 | `IKPositionWeight` | get/set | |
 | `SetEnabled` | `SetEnabled(bool)` | |
 
-**PlayerSpineStabilizer** — `[RequireComponent(typeof(Animator))]`; aligns spine yaw to the camera.
+**PlayerSpineStabilizer**: `[RequireComponent(typeof(Animator))]`; aligns spine yaw to the camera.
 
 ---
 
 ::: details Demo & Editor code (not part of the runtime API)
-**Demo** (`Project/Scripts/Player/Demo/`): `PlayerEventLogger` (implements both listener interfaces — copy it as a template), `PlayerDropSystem`, `PlayerInventory`, `PlayerInteraction`, `WorldItem`. **Editor**: custom inspectors plus the setup wizards — `Tools ▸ First Person ▸ Setup Wizard`, the Item Container setup, and the FPCutter Wizard.
+**Demo** (`Project/Scripts/Player/Demo/`): `PlayerEventLogger` (implements both listener interfaces; copy it as a template), `PlayerDropSystem`, `PlayerInventory`, `PlayerInteraction`, `WorldItem`. **Editor**: custom inspectors plus the setup wizards; `Tools ▸ First Person ▸ Setup Wizard`, the Item Container setup, and the FPCutter Wizard.
 :::
