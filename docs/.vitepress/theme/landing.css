@@ -268,7 +268,32 @@ html.dark .nav-appearance .check { transform: translateX(12px) !important; }
 .dossier-heading p span.dossier-listing { color: var(--muted); font-weight: 500; }
 .dossier-heading p strong { color: var(--vermilion-text); font-weight: 700; }
 .dossier-preview { position: relative; overflow: hidden; border: 2px solid var(--ink); background: var(--preview-bg); }
-.dossier-preview img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; }
+.dossier-zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.dossier-zoom img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; }
+.zoom-hint {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px 8px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.18s var(--ease), background 0.18s var(--ease);
+  pointer-events: none;
+}
+.dossier-zoom:hover .zoom-hint,
+.dossier-zoom:focus-visible .zoom-hint { opacity: 1; background: var(--yellow); color: #111318; }
 .preview-label {
   position: absolute;
   left: 10px;
@@ -323,6 +348,69 @@ html.dark .nav-appearance .check { transform: translateX(12px) !important; }
 .dossier-action { min-height: 44px; display: inline-flex; align-items: center; padding: 9px 11px; border: 2px solid var(--ink); font-size: 0.78rem; font-weight: 800; white-space: nowrap; }
 .dossier-action--primary { background: var(--cobalt); color: #fff; }
 .dossier-action:hover { background: var(--yellow); color: #111318; }
+
+/* === Preview lightbox ================================================= */
+.preview-dialog {
+  margin: auto;
+  width: min(1200px, 94vw);
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 12px 12px 0 var(--shadow-accent);
+  overflow: hidden;
+}
+.preview-dialog::backdrop { background: rgba(10, 12, 16, 0.88); }
+.preview-dialog[open] { animation: dialog-in 0.22s var(--ease); }
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  to { opacity: 1; transform: none; }
+}
+.preview-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--ink);
+}
+.preview-dialog-tag {
+  padding: 4px 9px;
+  background: var(--vermilion);
+  color: #111318;
+  border: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.preview-dialog-close {
+  min-height: 40px;
+  padding: 6px 12px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.preview-dialog-close:hover { background: var(--vermilion); color: #111318; }
+.preview-dialog img {
+  display: block;
+  width: 100%;
+  max-height: calc(100dvh - 140px);
+  object-fit: contain;
+  background: var(--preview-bg);
+}
+.preview-dialog-caption {
+  padding: 12px 14px 14px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
 
 
 /* === Sections ========================================================= */

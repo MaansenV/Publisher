@@ -23,15 +23,66 @@ Select your character FBX → **Inspector ▸ Rig ▸ Animation Type: Humanoid**
 
 ## 3. Run the 7-step Setup Wizard
 
-Menu: **`Tools ▸ First Person ▸ Setup Wizard`**. Navigate with `Next >` / `< Back` / `Finish Setup`.
+Menu: **`Tools ▸ First Person ▸ Setup Wizard`**. Navigate with `Next >` / `< Back` / `Finish Setup`. The wizard only lets you advance once the current step's requirements are met.
 
-1. **Select Player Root**: the container that holds the character's logic and movement. Create or assign one.
-2. **Assign Model**: assign the character's `Animator` (the Humanoid rig from step 2).
-3. **Bone Detection**: auto-detects the head, spine, and right-hand bones. Override manually if your rig is non-standard.
-4. **Add Components**: adds the player scripts (movement, animation, logic).
-5. **Create Hierarchy**: creates the camera target and item sockets.
-6. **Wiring**: automatically finds and connects every reference between components.
-7. **Validation**: runs a final health check. Green → **Finish Setup**.
+### Step 1: Select Player Root
+
+![Step 1: Select Player Root](/QuickStart/Unity_PWb7prASdK.png)
+
+The **Root** is the primary container for your character's logic and movement — everything else lives inside it. Either drag an existing empty `GameObject` into the **Player Root** field, or click **Create New Player Root** to let the wizard generate one.
+
+### Step 2: Assign Model
+
+![Step 2: Assign Model](/QuickStart/Unity_0dJzXrSKBX.png)
+
+Assign the **Model Animator** (the `Animator` on your Humanoid character from step 2 above). The model MUST be set to **Humanoid** in its FBX import settings for IK and animations to work correctly — otherwise you get the *"No Animator found"* warning and cannot proceed. **Global Dependencies** (`FBInputActions`, `PlayerSettings`) are resolved automatically; both show a green checkmark once assigned.
+
+### Step 3: Find Bones
+
+![Step 3: Find Bones](/QuickStart/Unity_bSmzxxK6LC.png)
+
+The wizard needs three key bones for the camera and IK systems:
+
+- **Head (Viewpoint Focus)** — required; a red error icon appears until assigned.
+- **Spine (Body Balance)** — auto-detected; warning icon until filled.
+- **Right Hand (Item Socket)** — auto-detected; warning icon until filled.
+
+Auto-detection works for most standard humanoid rigs: click **Auto-Detect Bones** and override any field manually if your rig is non-standard.
+
+### Step 4: Add Player Scripts
+
+![Step 4: Add Player Scripts](/QuickStart/Unity_vjpyc392M1.png)
+
+Adds the scripts that handle movement, animation, and logic. Use **Add All Required Scripts** to add them in one go, or add individually:
+
+| Script | Purpose |
+| --- | --- |
+| Main Logic Hub (`PlayerController`) | entry point / logic hub |
+| Movement (`CharacterController`) | `CharacterController`-based locomotion |
+| Locomotion (`PlayerLocomotion`) | movement state handling |
+| Camera Control (`PlayerCameraController`) | first-person camera, look, eye offset |
+| Animation Bridge (`PlayerAnimatorController`) | feeds the Animator |
+
+### Step 5: Setup Helper Objects
+
+![Step 5: Setup Helper Objects](/QuickStart/Unity_zhE8XJutFj.png)
+
+Creates the internal hierarchy: the **Camera Target** (viewport focus) and sockets for holding items, plus two **IK hints** for the elbows. Click **Create Missing Hierarchy Objects** (or each row's **Create** button) to generate:
+
+- Camera Target (Viewport focus)
+- Right Elbow Hint (IK helper)
+- Left Elbow Hint (IK helper)
+- Item Container (Socket for tools)
+
+### Step 6: Connect Everything
+
+![Step 6: Connect Everything](/QuickStart/Unity_QMTSPEfk5i.png)
+
+This final wiring step links all systems together. Click **Connect All Systems** — the wizard automatically finds and connects every reference between the components you set up in steps 1–5.
+
+### Step 7: Validation
+
+The wizard runs a final health check over the whole setup. Everything green → **Finish Setup**.
 
 ## 4. Cut the mesh with FPCutter
 

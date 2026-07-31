@@ -52,6 +52,26 @@ const tabs = [
 const activeTabId = ref(tabs[0].id)
 const activeTab = computed(() => tabs.find((t) => t.id === activeTabId.value))
 
+const previewDialog = ref(null)
+const previewSrc = ref('')
+const previewAlt = ref('')
+const previewTag = ref('')
+
+function openPreview() {
+  previewSrc.value = withBase(activeTab.value.previewImg)
+  previewAlt.value = activeTab.value.previewAlt
+  previewTag.value = activeTab.value.previewTag
+  previewDialog.value?.showModal()
+}
+
+function closePreview() {
+  previewDialog.value?.close()
+}
+
+function onPreviewDialogClick(event) {
+  if (event.target === previewDialog.value) closePreview()
+}
+
 const tabRefs = ref([])
 const contactForm = ref(null)
 const contactState = ref('idle')
@@ -229,11 +249,19 @@ async function submitContact() {
           </div>
           <div class="dossier-preview" :data-accent="activeTab.previewColor">
             <span class="preview-accent" :data-accent="activeTab.previewColor" aria-hidden="true"></span>
-            <img
-              :src="withBase(activeTab.previewImg)"
-              :alt="activeTab.previewAlt"
-              decoding="async"
-            />
+            <button
+              type="button"
+              class="dossier-zoom"
+              :aria-label="`Enlarge ${activeTab.previewTag} preview`"
+              @click="openPreview"
+            >
+              <img
+                :src="withBase(activeTab.previewImg)"
+                :alt="activeTab.previewAlt"
+                decoding="async"
+              />
+              <span class="zoom-hint" aria-hidden="true">ENLARGE <span class="zoom-hint-arrow">↗</span></span>
+            </button>
             <span class="preview-label">{{ activeTab.previewTag }}</span>
           </div>
           <div class="dossier-tabs" role="tablist" aria-label="Asset details">
@@ -282,6 +310,21 @@ async function submitContact() {
         </aside>
       </section>
 
+      <dialog
+        ref="previewDialog"
+        class="preview-dialog"
+        aria-label="Enlarged asset preview"
+        @click="onPreviewDialogClick"
+      >
+        <div class="preview-dialog-head">
+          <span class="preview-dialog-tag">{{ previewTag }}</span>
+          <button type="button" class="preview-dialog-close" @click="closePreview">
+            CLOSE <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+        <img :src="previewSrc" :alt="previewAlt" decoding="async" />
+        <p class="preview-dialog-caption">{{ previewAlt }}</p>
+      </dialog>
 
       <section id="contact" class="section contact-section">
         <div class="section-inner contact-layout">
