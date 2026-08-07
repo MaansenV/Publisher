@@ -1,0 +1,1022 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Public runtime API of Easy FP Full Body Controller: PlayerController hub, item system, FPCutter, and the extensible event API.">
+  <title>Interfaces / API / Easy FP Full Body Controller docs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: oklch(0.145 0 89.88);
+      --surface: oklch(0.218 0 89.88);
+      --surface-raised: oklch(0.285 0 89.88);
+      --fg: oklch(0.99 0.01 97.35);
+      --muted: oklch(0.6 0.01 89.88);
+      --on-accent: oklch(0.145 0 89.88);
+      --border: oklch(0.99 0.01 97.35 / 0.16);
+      --border-dark: oklch(0.145 0 89.88 / 0.18);
+      --accent: oklch(0.913 0.17 98.7);
+      --lime: oklch(0.904 0.21 124.11);
+      --pink: oklch(0.709 0.24 341.96);
+      --purple: oklch(0.597 0.23 285.53);
+      --teal: oklch(0.736 0.13 184.33);
+      --orange: oklch(0.749 0.17 53.84);
+      --cyan: oklch(0.837 0.14 202.63);
+      --focus: oklch(0.913 0.17 98.7);
+      --font-display: "Rubik", "Avenir Next", system-ui, sans-serif;
+      --font-body: "Rubik", system-ui, -apple-system, sans-serif;
+      --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; overflow-x: hidden; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.6; }
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+    img { max-width: 100%; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+    ::selection { background: var(--accent); color: var(--on-accent); }
+
+    .container { width: min(1240px, calc(100% - 48px)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 20; background: var(--surface-raised); border-bottom: 1px solid var(--border); }
+    .nav-wrap { min-height: 76px; display: flex; align-items: center; gap: 28px; }
+    .brand { display: inline-flex; min-height: 44px; align-items: baseline; gap: 10px; flex: 0 0 auto; color: var(--fg); text-decoration: none; }
+    .brand-name { font-family: var(--font-display); font-size: 19px; font-weight: 800; letter-spacing: -0.02em; }
+    .brand-context { color: var(--muted); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .nav-link { display: inline-flex; min-height: 44px; align-items: center; padding: 8px 10px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; }
+    .nav-link { color: var(--fg); }
+    .nav-link:hover, .nav-link[aria-current="page"] { color: var(--fg); text-decoration: underline; }
+
+    .doc-hero { position: relative; isolation: isolate; overflow: hidden; padding: clamp(64px, 8vw, 116px) 0 70px; background: var(--surface-raised); border-bottom: 1px solid var(--border); }
+    .doc-hero::before { content: ""; position: absolute; z-index: -1; inset: 0 0 0 63%; background: var(--bg); clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%); pointer-events: none; }
+    .doc-hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 7fr) minmax(280px, 5fr); gap: clamp(28px, 6vw, 88px); align-items: start; }
+    .eyebrow, .mono, .footer-meta { font-family: var(--font-mono); }
+    .eyebrow { display: inline-flex; padding: 9px 13px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; line-height: 1.3; text-transform: uppercase; }
+    .doc-hero h1 { max-width: 16ch; margin: 25px 0 22px; font-family: var(--font-display); font-size: clamp(44px, 6.5vw, 84px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.02; text-wrap: balance; }
+    .doc-lead { max-width: 72ch; margin: 0; font-size: clamp(17px, 2vw, 20px); line-height: 1.55; }
+    .doc-hero-note { display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: 38px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
+    .doc-hero-media { margin: 0; padding: 14px; border: 1px solid var(--surface); background: var(--surface); box-shadow: 16px 18px 0 color-mix(in oklch, var(--bg) 72%, var(--surface-raised) 28%); }
+    .doc-hero-media img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--surface-raised); }
+    .doc-hero-caption { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; padding-inline: 2px; color: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+    .doc-hero-caption span:last-child { color: var(--cyan); }
+
+    .doc-shell { padding: clamp(54px, 7vw, 94px) 0; background: var(--bg); }
+    .doc-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+    .doc-aside { position: sticky; top: 100px; grid-column: 1; padding: 18px; border: 1px solid var(--border); background: var(--surface); }
+    .doc-aside a { display: flex; min-height: 44px; align-items: center; padding: 8px 2px; color: var(--fg); font-size: 14px; text-decoration: none; border-bottom: 1px solid var(--border); }
+    .doc-aside a:last-child { border-bottom: 0; }
+    .doc-article { grid-column: 2; min-width: 0; }
+    .doc-section { padding: 0 0 54px; border-bottom: 1px solid var(--border); }
+    .doc-section + .doc-section { padding-top: 54px; }
+    .doc-section:last-child { padding-bottom: 0; border-bottom: 0; }
+    h2, h3, p { overflow-wrap: break-word; }
+    h2 { margin: 0 0 20px; font-family: var(--font-display); font-size: clamp(30px, 4vw, 48px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; text-wrap: balance; }
+    h3 { margin: 34px 0 12px; font-family: var(--font-display); font-size: clamp(22px, 2.7vw, 30px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+    h4 { margin: 26px 0 10px; font-family: var(--font-display); font-size: 19px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
+    h3:first-child { margin-top: 0; }
+    p { max-width: 76ch; margin: 0 0 18px; }
+    strong { font-weight: 700; }
+    code, .mono { font-family: var(--font-mono); }
+    code { color: var(--cyan); font-size: 0.9em; overflow-wrap: anywhere; }
+    ul { max-width: 78ch; margin: 0 0 20px; padding-left: 1.35em; }
+    li { margin: 8px 0; padding-left: 4px; }
+    .callout { margin: 0 0 28px; padding: 19px 21px; border: 1px solid var(--teal); background: color-mix(in oklch, var(--surface-raised) 88%, var(--teal) 12%); color: var(--fg); }
+    .callout h2 { margin: 0 0 7px; color: var(--teal); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; line-height: 1.4; text-transform: uppercase; }
+    .callout p { margin: 0; }
+    .table-wrap { width: 100%; margin: 20px 0 28px; border: 1px solid var(--border); background: var(--surface); }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14px; line-height: 1.5; }
+    th, td { min-width: 0; padding: 13px 15px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+    table th:first-child, table td:first-child { width: 34%; }
+    table:has(th:nth-child(3)) th:first-child, table:has(th:nth-child(3)) td:first-child { width: 25%; }
+    table:has(th:nth-child(3)) th:nth-child(2), table:has(th:nth-child(3)) td:nth-child(2) { width: 28%; }
+    th { color: var(--fg); background: var(--surface-raised); font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+    tbody tr:nth-child(even) { background: color-mix(in oklch, var(--surface) 72%, var(--surface-raised) 28%); }
+    tbody tr:hover { background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--border); }
+    tbody tr:last-child td { border-bottom: 0; }
+    td code { font-size: 0.88em; }
+    .doc-link { color: var(--cyan); font-weight: 500; }
+    .doc-link:hover { color: var(--fg); }
+    pre { max-width: 100%; margin: 0 0 28px; padding: 18px 20px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface-raised); color: var(--fg); font-family: var(--font-mono); font-size: 13px; line-height: 1.6; overflow: hidden; white-space: pre-wrap; overflow-wrap: anywhere; }
+    pre code { color: var(--fg); font-size: 0.95em; }
+    .callout--warning { border-color: var(--orange); background: color-mix(in oklch, var(--surface-raised) 88%, var(--orange) 12%); }
+    .callout--warning h2 { color: var(--orange); }
+    details { margin-top: 4px; padding: 18px 20px; border: 1px solid var(--border); background: var(--surface); }
+    summary { display: flex; min-height: 44px; align-items: center; cursor: pointer; font-family: var(--font-display); font-weight: 700; }
+    details p { margin-top: 16px; }
+    .cta-panel { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 30px; padding: 24px; border: 1px solid var(--border); background: var(--surface); }
+    .cta-panel p { margin: 0; }
+    .button { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 10px; padding: 12px 18px; border: 1px solid transparent; border-radius: 999px; font-weight: 700; line-height: 1.2; text-decoration: none; transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease; }
+    .button:hover { transform: translateY(-2px); }
+    .button--primary { background: var(--accent); color: var(--on-accent); }
+    .button--primary:hover { background: color-mix(in oklch, var(--accent) 86%, var(--fg) 14%); color: var(--on-accent); }
+    .button:active { transform: translateY(0); }
+    .site-footer { padding: 30px 0 36px; background: var(--surface-raised); border-top: 1px solid var(--border); }
+    .footer-wrap { display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .footer-meta { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+    .footer-links a { display: inline-flex; min-height: 44px; align-items: center; color: var(--fg); font-family: var(--font-mono); font-size: 12px; text-decoration: none; }
+    .footer-links a:hover { color: var(--fg); background: var(--surface); text-decoration: underline; }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } .button:hover { transform: none; } }
+
+    /* VitePress-style documentation shell: compact, searchable, and offline. */
+    .site-header { background: color-mix(in oklch, var(--surface-raised) 92%, var(--bg)); backdrop-filter: blur(16px); }
+    .nav-wrap { min-height: 64px; gap: 18px; }
+    .brand { min-height: 44px; }
+    .brand-name { letter-spacing: -0.04em; }
+    .brand-context { color: var(--teal); }
+    .top-nav { display: flex; align-items: center; gap: 2px; min-width: 0; flex: 1; }
+    .top-nav .nav-link { text-transform: none; letter-spacing: 0; font-size: 13px; border: 1px solid transparent; border-radius: 4px; }
+    .top-nav .nav-link:hover { background: var(--surface); color: var(--fg); text-decoration: none; }
+    .top-nav .nav-link[aria-current="page"] { color: var(--fg); background: var(--surface); box-shadow: inset 0 -2px var(--accent); font-weight: 700; text-decoration: none; }
+    .top-actions { display: flex; align-items: center; gap: 7px; flex: 0 0 auto; }
+    .top-github, .search-trigger, .sidebar-toggle { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--border); border-radius: 4px; background: transparent; color: var(--fg); font: 500 12px/1 var(--font-mono); text-decoration: none; }
+    .top-github, .search-trigger { padding: 8px 11px; }
+    .top-github:hover, .search-trigger:hover, .sidebar-toggle:hover { border-color: var(--fg); background: var(--surface); color: var(--fg); }
+    .search { position: relative; }
+    .search-trigger { cursor: pointer; }
+    .search-trigger kbd { color: var(--fg); font: 11px var(--font-mono); }
+    .search-panel { display: none; position: absolute; z-index: 40; top: calc(100% + 10px); right: 0; width: min(430px, calc(100vw - 32px)); padding: 12px; border: 1px solid var(--border); background: var(--surface-raised); box-shadow: 12px 14px 0 color-mix(in oklch, var(--bg) 72%, transparent); }
+    .search.is-open .search-panel { display: block; }
+    .search-form { display: flex; align-items: center; gap: 8px; }
+    .search-input { width: 100%; min-height: 44px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg); color: var(--fg); padding: 9px 11px; font: 14px var(--font-body); }
+    .search-input::placeholder { color: var(--muted); }
+    .search-results { display: grid; gap: 4px; max-height: 330px; overflow-y: auto; margin-top: 9px; }
+    .search-results[hidden] { display: none; }
+    .search-result { display: grid; gap: 2px; padding: 9px 10px; border: 1px solid transparent; border-radius: 4px; color: var(--fg); text-decoration: none; overflow-wrap: anywhere; }
+    .search-result:hover, .search-result.is-active { border-color: var(--border); background: var(--surface); color: var(--fg); box-shadow: inset 3px 0 var(--accent); }
+    .search-result-title { font-weight: 700; }
+    .search-result-meta { color: var(--teal); font: 11px/1.45 var(--font-mono); }
+    .search-empty { margin: 8px 2px 2px; color: var(--fg); font-size: 13px; }
+    .sidebar-toggle { display: none; cursor: pointer; padding: 8px 11px; }
+
+    .doc-hero { padding: 30px 0 24px; background: var(--surface); }
+    .doc-hero::before { inset: 0 0 0 72%; opacity: .55; }
+    .doc-hero-grid { grid-template-columns: minmax(0, 1fr) 240px; gap: clamp(20px, 4vw, 44px); align-items: start; }
+    .eyebrow { padding: 7px 10px; font-size: 10px; }
+    .doc-hero h1 { max-width: 18ch; margin: 13px 0 10px; font-size: clamp(36px, 4.4vw, 56px); }
+    .doc-lead { max-width: 68ch; font-size: clamp(16px, 1.3vw, 17px); }
+    .doc-hero-note { margin-top: 16px; padding-top: 10px; color: var(--fg); }
+    .doc-hero-media { padding: 8px; border-radius: 4px; box-shadow: 7px 8px 0 color-mix(in oklch, var(--bg) 72%, var(--surface-raised) 28%); }
+    .doc-hero-media img { aspect-ratio: 16 / 9; }
+    .doc-hero-caption { color: var(--fg); }
+
+    .doc-shell { padding: 24px 0 56px; }
+    .doc-layout { grid-template-columns: 220px minmax(0, 1fr) 200px; gap: clamp(20px, 3vw, 40px); align-items: start; }
+    .doc-sidebar, .doc-aside { position: sticky; top: 84px; align-self: start; padding: 14px; border: 1px solid var(--border); border-radius: 4px; background: color-mix(in oklch, var(--surface) 86%, var(--bg)); }
+    .doc-sidebar { grid-column: 1; grid-row: 1; }
+    .doc-aside { grid-column: 3; grid-row: 1; }
+    .doc-sidebar-title, .doc-aside-title { margin: 0 0 10px; color: var(--teal); font: 11px/1.4 var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
+    .doc-sidebar-section { margin: 0 -14px 10px; padding: 0 14px 10px; border-bottom: 1px solid var(--border); color: var(--fg); font: 11px/1.4 var(--font-mono); }
+    .doc-sidebar nav, .doc-aside nav { display: grid; gap: 2px; }
+    .doc-sidebar a, .doc-aside a { display: flex; min-height: 44px; align-items: center; padding: 7px 9px; border: 1px solid transparent; border-radius: 3px; color: var(--fg); font-size: 13px; text-decoration: none; }
+    .doc-sidebar a:hover, .doc-aside a:hover { color: var(--fg); background: var(--surface-raised); border-color: transparent; border-left-color: var(--border); }
+    .doc-sidebar a[aria-current="page"] { border-color: transparent; border-left-color: var(--accent); background: var(--surface-raised); color: var(--fg); font-weight: 700; }
+    .doc-aside a { min-height: 44px; color: var(--fg); font-size: 12px; }
+    .doc-aside a.outline-subitem { min-height: 44px; padding-left: 20px; font-size: 11px; }
+    .doc-article { grid-column: 2; grid-row: 1; max-width: 76ch; }
+    .doc-article h2, .doc-article h3 { scroll-margin-top: 92px; }
+    .doc-section { padding-bottom: 42px; scroll-margin-top: 92px; }
+    .doc-section + .doc-section { padding-top: 42px; }
+    h2 { font-size: clamp(28px, 3vw, 42px); }
+    h3 { font-size: clamp(20px, 2.2vw, 27px); }
+    .callout { border-color: var(--teal); border-radius: 4px; background: color-mix(in oklch, var(--surface-raised) 88%, var(--teal) 12%); }
+    .callout h2 { color: var(--teal); }
+    .callout--warning { border-color: var(--orange); background: color-mix(in oklch, var(--surface-raised) 88%, var(--orange) 12%); }
+    .callout--warning h2 { color: var(--orange); }
+    code { color: var(--cyan); }
+    .doc-link { color: var(--cyan); }
+    .doc-link:hover { color: var(--fg); text-decoration-thickness: 2px; }
+    .doc-article table { table-layout: auto; }
+    .table-wrap { max-width: 100%; overflow-x: auto; border-radius: 4px; -webkit-overflow-scrolling: touch; }
+    tbody tr { transition: background-color 180ms ease, box-shadow 180ms ease; }
+    tbody tr:hover { background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--border); }
+    details, .cta-panel { border-radius: 4px; }
+    .button--primary:hover { background: color-mix(in oklch, var(--accent) 86%, var(--fg) 14%); color: var(--on-accent); }
+    details summary:hover { background: var(--surface-raised); color: var(--fg); }
+    .doc-footer-nav { grid-column: 2; display: flex; justify-content: space-between; gap: 18px; margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .doc-footer-link { display: grid; gap: 4px; max-width: 48%; padding: 10px 8px; border: 1px solid transparent; border-radius: 4px; color: var(--fg); text-decoration: none; }
+    .doc-footer-link:last-child { text-align: right; margin-left: auto; }
+    .doc-footer-link:hover { color: var(--fg); background: var(--surface); border-color: var(--border); }
+    .doc-footer-label { color: var(--teal); font: 10px var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
+    .back-top { display: inline-flex; min-height: 44px; align-items: center; margin-top: 18px; padding-inline: 8px; color: var(--fg); font: 11px var(--font-mono); }
+    .back-top:hover { color: var(--fg); background: var(--surface); text-decoration: underline; }
+    .footer-meta { color: var(--fg); }
+    .footer-links a { padding-inline: 8px; border: 1px solid transparent; border-radius: 4px; }
+    .footer-links a[aria-current="page"] { background: var(--surface); border-color: var(--border); font-weight: 700; }
+    .footer-links a:hover { color: var(--fg); background: var(--surface); border-color: var(--border); }
+
+    @media (max-width: 1120px) {
+      .doc-layout { grid-template-columns: 220px minmax(0, 1fr); }
+      .doc-sidebar { grid-column: 1; grid-row: 1; }
+      .doc-article { grid-column: 2; grid-row: 1; }
+      .doc-aside { grid-column: 2; grid-row: 2; position: static; margin-top: 26px; }
+      .doc-footer-nav { grid-column: 2; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(100% - 28px, 680px); }
+      .nav-wrap { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; min-height: 60px; padding-block: 8px; }
+      .sidebar-toggle { display: inline-flex; grid-column: 1; grid-row: 1; }
+      .brand { grid-column: 2; grid-row: 1; min-width: 0; }
+      .brand-context { display: none; }
+      .top-actions { grid-column: 3; grid-row: 1; }
+      .top-github { display: none; }
+      .search-trigger { padding-inline: 9px; }
+      .search-trigger kbd { display: none; }
+      .top-nav { grid-column: 1 / -1; grid-row: 2; flex-wrap: wrap; overflow: visible; width: 100%; justify-content: center; }
+      .top-nav .nav-link { flex: 1 1 auto; min-height: 36px; padding-inline: 8px; white-space: nowrap; justify-content: center; }
+      .search-panel { position: fixed; top: 58px; right: 14px; left: 14px; width: auto; }
+      .doc-hero { padding: 28px 0 22px; }
+      .doc-hero::before { inset: 62% 0 0; }
+      .doc-hero-grid { display: block; }
+      .doc-hero h1 { max-width: none; font-size: clamp(34px, 10vw, 52px); }
+      .doc-hero-media { width: min(100%, 360px); max-width: none; margin: 20px 0 0 auto; }
+      .doc-layout { display: flex; flex-direction: column; }
+      .doc-sidebar { display: none; position: static; margin-bottom: 24px; }
+      .doc-sidebar.is-open { display: block; }
+      .doc-aside { position: static; margin-top: 26px; }
+      .doc-article { max-width: none; order: 1; }
+      .doc-sidebar { order: 0; }
+      .doc-aside { order: 2; }
+      .doc-footer-nav { order: 3; width: 100%; margin-top: 28px; flex-direction: column; }
+      .doc-footer-link, .doc-footer-link:last-child { max-width: 100%; margin-left: 0; text-align: left; }
+      .table-wrap { max-width: 100%; overflow-x: auto; }
+      table { min-width: 520px; }
+      .cta-panel { align-items: stretch; flex-direction: column; }
+      .button { width: 100%; }
+    }
+    @media (max-width: 680px) {
+      .top-nav .nav-link { justify-content: center; }
+      .doc-hero::before { clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%); }
+      .doc-aside { margin-bottom: 38px; }
+      .table-wrap { border-radius: 4px; }
+      table { font-size: 13px; }
+      th, td { padding: 11px 9px; }
+    }
+    @media (max-width: 620px) {
+      .table-wrap:has(table th:nth-child(3)) { scrollbar-color: var(--teal) var(--surface-raised); scrollbar-width: thin; }
+      .table-wrap:has(table th:nth-child(3)) table { min-width: 620px; }
+      .table-wrap:has(table th:nth-child(3))::-webkit-scrollbar { height: 8px; }
+      .table-wrap:has(table th:nth-child(3))::-webkit-scrollbar-track { background: var(--surface-raised); }
+      .table-wrap:has(table th:nth-child(3))::-webkit-scrollbar-thumb { background: var(--teal); }
+    }
+  </style>
+</head>
+<body id="top" data-doc-page="interfaces">
+  <header class="site-header" data-od-id="site-header">
+    <div class="container nav-wrap">
+      <button class="sidebar-toggle" type="button" data-od-id="mobile-menu-button" aria-controls="docs-sidebar" aria-expanded="false" aria-label="Open documentation menu">Menu</button>
+      <a class="brand" href="../unity-asset-portfolio.html" aria-label="vedaloiv Home" data-od-id="brand-home-link">
+        <span class="brand-name">vedaloiv</span><span class="brand-context">/ docs</span>
+      </a>
+      <nav class="top-nav" aria-label="Primary navigation" data-od-id="top-navigation">
+        <a class="nav-link" href="../unity-asset-portfolio.html" data-od-id="home-nav-link">Home</a>
+        <a class="nav-link" href="overview.html" data-od-id="controller-nav-link">Easy FP Controller</a>
+        <a class="nav-link" data-od-id="asset-store-nav-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener noreferrer">Asset Store</a>
+      </nav>
+      <div class="top-actions" data-od-id="top-actions">
+        <div class="search" data-search-provider="local" data-od-id="search-control">
+          <button class="search-trigger" type="button" aria-controls="search-panel" aria-expanded="false" aria-keyshortcuts="Control+K Meta+K" data-od-id="search-button">Search <kbd>Ctrl K</kbd></button>
+          <div class="search-panel" id="search-panel" data-od-id="search-panel">
+            <form class="search-form" role="search" data-od-id="search-form">
+              <input class="search-input" id="doc-search" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-activedescendant="" placeholder="Search the docs…" autocomplete="off" spellcheck="false" aria-label="Search documentation" aria-controls="search-results" data-od-id="search-input">
+            </form>
+            <div class="search-results" id="search-results" role="listbox" aria-label="Search results" aria-live="polite" aria-atomic="true" aria-relevant="additions text" hidden data-od-id="search-results"></div>
+          </div>
+        </div>
+        <a class="top-github" href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="github-nav-link">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <main data-od-id="interfaces-page">
+    <section class="doc-hero" data-od-id="interfaces-hero" aria-labelledby="interfaces-title">
+      <div class="container doc-hero-grid">
+        <div>
+          <span class="eyebrow">Documentation / Runtime API</span>
+          <h1 id="interfaces-title" data-od-id="interfaces-heading">Interfaces</h1>
+          <p class="doc-lead">The public runtime API for integrating with the controller. All runtime types are in namespace <code>Player</code>. This page covers the <strong>integration surface</strong>: demo scripts, editor inspectors, and internal tuning fields are omitted (see source under <code>Assets/FBSystem/</code>).</p>
+          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.1.0</span><span>namespace Player</span></div>
+        </div>
+        <figure class="doc-hero-media" data-od-id="interfaces-hero-image">
+          <img src="images/fp-integrations.png" alt="Easy FP Full Body Controller integrations in Unity" fetchpriority="high" decoding="async">
+          <figcaption class="doc-hero-caption"><span>Integration surface</span><span>Runtime API</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="doc-shell" data-od-id="interfaces-content">
+      <div class="container doc-layout">
+        <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Easy FP Full Body Controller">
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title">Easy FP Full Body Controller</p>
+          <p class="doc-sidebar-section">Documentation</p>
+          <nav aria-label="Documentation pages">
+            <a href="overview.html" data-od-id="sidebar-overview-link">Overview</a>
+            <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
+            <a href="interfaces.html" aria-current="page" data-od-id="sidebar-interfaces-link">Interfaces</a>
+          </nav>
+        </aside>
+        <aside class="doc-aside" data-od-id="interfaces-sidebar" aria-label="Interfaces sections">
+          <p class="doc-aside-title" data-od-id="interfaces-outline-title">On this page</p>
+          <nav id="doc-outline-list" aria-label="On this page links" data-od-id="outline-links">
+            <a href="#player-controller">PlayerController</a>
+            <a href="#playersettings">PlayerSettings</a>
+            <a href="#playerinputhandler">PlayerInputHandler</a>
+            <a href="#playerlocomotion">PlayerLocomotion</a>
+            <a href="#playercameracontroller">PlayerCameraController</a>
+            <a href="#items">Item system</a>
+            <a href="#event-api">Event API</a>
+            <a href="#fpcutter">FPCutter</a>
+            <a href="#animator">PlayerAnimatorController</a>
+            <a href="#procedural-ik">Procedural IK</a>
+          </nav>
+        </aside>
+
+        <article class="doc-article">
+          <aside class="callout" data-od-id="verified-callout">
+            <h2 data-od-id="verified-heading">Verified against v1.1.0 source</h2>
+            <p>Signatures below are read from the shipped package.</p>
+          </aside>
+
+          <section class="doc-section" id="player-controller" data-od-id="player-controller-section" aria-labelledby="player-controller-heading">
+            <h2 id="player-controller-heading" data-od-id="player-controller-heading">PlayerController: the hub</h2>
+            <p>Central <code>MonoBehaviour</code>. Auto-finds every sub-component in <code>Awake</code> if you leave them unassigned, so external code only needs one reference.</p>
+            <h3 data-od-id="subsystem-accessors-heading">Subsystem accessors</h3>
+            <div class="table-wrap" data-od-id="pc-accessors-table-wrap">
+              <table data-od-id="pc-accessors-table">
+                <thead><tr><th scope="col">Property</th><th scope="col">Type</th><th scope="col">Subsystem</th></tr></thead>
+                <tbody>
+                  <tr><td><code>Settings</code></td><td><code>PlayerSettings</code></td><td>global config asset</td></tr>
+                  <tr><td><code>Input</code></td><td><code>PlayerInputHandler</code></td><td>input state</td></tr>
+                  <tr><td><code>Locomotion</code></td><td><code>PlayerLocomotion</code></td><td>movement &amp; physics</td></tr>
+                  <tr><td><code>CameraController</code></td><td><code>PlayerCameraController</code></td><td>FPS camera</td></tr>
+                  <tr><td><code>AnimatorController</code></td><td><code>PlayerAnimatorController</code></td><td>animation + item layers</td></tr>
+                  <tr><td><code>HeadIK</code></td><td><code>PlayerHeadIK</code></td><td>head look-at IK</td></tr>
+                  <tr><td><code>HandIK</code></td><td><code>PlayerHandIK</code></td><td>hand IK</td></tr>
+                  <tr><td><code>SpineStabilizer</code></td><td><code>PlayerSpineStabilizer</code></td><td>spine yaw</td></tr>
+                  <tr><td><code>HandItemSocket</code></td><td><code>HandItemSocket</code></td><td>item equip</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="player-state-heading">State (read-only)</h3>
+            <div class="table-wrap" data-od-id="pc-state-table-wrap">
+              <table data-od-id="pc-state-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>IsGrounded</code></td><td>read-only state</td><td></td></tr>
+                  <tr><td><code>IsSprinting</code></td><td>read-only state</td><td></td></tr>
+                  <tr><td><code>MoveInput</code></td><td>read-only state</td><td></td></tr>
+                  <tr><td><code>LookInput</code></td><td>read-only state</td><td></td></tr>
+                  <tr><td><code>FlashlightTriggered</code></td><td>read-only state</td><td></td></tr>
+                  <tr><td><code>CurrentSpeed</code></td><td>read-only state</td><td></td></tr>
+                  <tr><td><code>MaxSpeed</code></td><td>read-only state</td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="control-methods-heading">Control methods (menus / cutscenes / pausing):</h3>
+            <div class="table-wrap" data-od-id="pc-control-table-wrap">
+              <table data-od-id="pc-control-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>SetInputEnabled</code></td><td><code>SetInputEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>SetMovementEnabled</code></td><td><code>SetMovementEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>SetCameraEnabled</code></td><td><code>SetCameraEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>SetHeadIKEnabled</code></td><td><code>SetHeadIKEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>SetHandIKEnabled</code></td><td><code>SetHandIKEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>SetSpineStabilizationEnabled</code></td><td><code>SetSpineStabilizationEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>SetCursorLocked</code></td><td><code>SetCursorLocked(bool)</code></td><td></td></tr>
+                  <tr><td><code>EnableAllControls</code></td><td><code>EnableAllControls()</code></td><td>resume gameplay</td></tr>
+                  <tr><td><code>DisableAllControls</code></td><td><code>DisableAllControls()</code></td><td>enter cutscene / menu</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <pre data-od-id="control-methods-code"><code>var player = GetComponent&lt;PlayerController&gt;();
+player.DisableAllControls();   // enter cutscene / menu
+// ...
+player.EnableAllControls();    // resume gameplay</code></pre>
+          </section>
+
+          <section class="doc-section" id="playersettings" data-od-id="playersettings-section" aria-labelledby="playersettings-heading">
+            <h2 id="playersettings-heading" data-od-id="playersettings-heading">Configuration: PlayerSettings</h2>
+            <p><code>ScriptableObject</code> (Create ▸ <strong>Player ▸ Settings</strong>). Referenced by most components, so it's the single place to tune feel. <code>beginnerMode</code> toggles a simplified inspector view.</p>
+            <div class="table-wrap" data-od-id="settings-table-wrap">
+              <table data-od-id="settings-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>beginnerMode</code></td><td><code>bool</code></td><td>When enabled, the Inspector will show a simplified view for beginners. (default: true)</td></tr>
+                  <tr><td><code>walkSpeed</code></td><td><code>float</code></td><td>Walking speed in units per second. (default: 3.0f)</td></tr>
+                  <tr><td><code>sprintSpeed</code></td><td><code>float</code></td><td>Sprinting speed in units per second. (default: 6.0f)</td></tr>
+                  <tr><td><code>crouchSpeed</code></td><td><code>float</code></td><td>Movement speed while crouching in units per second. (default: 1.5f)</td></tr>
+                  <tr><td><code>crouchHeight</code></td><td><code>float</code></td><td>CharacterController height while crouching. (default: 1.0f)</td></tr>
+                  <tr><td><code>standHeight</code></td><td><code>float</code></td><td>CharacterController height while standing. (default: 2.0f)</td></tr>
+                  <tr><td><code>crouchTransitionSpeed</code></td><td><code>float</code></td><td>Speed of crouch/stand transition. (default: 8f)</td></tr>
+                  <tr><td><code>jumpHeight</code></td><td><code>float</code></td><td>Jump height in units. (default: 1.2f)</td></tr>
+                  <tr><td><code>gravity</code></td><td><code>float</code></td><td>Gravity force (should be negative). (default: -15f)</td></tr>
+                  <tr><td><code>groundCheckDistance</code></td><td><code>float</code></td><td>Distance to check for ground below player. (default: 0.2f)</td></tr>
+                  <tr><td><code>groundedVelocityReset</code></td><td><code>float</code></td><td>Velocity applied when grounded to keep player grounded. (default: -2f)</td></tr>
+                  <tr><td><code>inputDeadzone</code></td><td><code>float</code></td><td>Minimum input magnitude to register movement. (default: 0.01f)</td></tr>
+                  <tr><td><code>animationSmoothTime</code></td><td><code>float</code></td><td>Time to smooth animation parameter changes. (default: 0.1f)</td></tr>
+                  <tr><td><code>sprintAnimMultiplier</code></td><td><code>float</code></td><td>Animation speed multiplier when sprinting. (default: 1.5f)</td></tr>
+                  <tr><td><code>defaultHeadHeight</code></td><td><code>float</code></td><td>Default head height when no head bone is available. (default: 1.6f)</td></tr>
+                  <tr><td><code>lookTargetDistance</code></td><td><code>float</code></td><td>Distance to place look target in front of player. (default: 2f)</td></tr>
+                  <tr><td><code>cameraFallbackHeadHeight</code></td><td><code>float</code></td><td>Fallback head height when head bone is not assigned. (default: 1.7f)</td></tr>
+                  <tr><td><code>verticalLookLimit</code></td><td><code>float</code></td><td>Maximum vertical look angle for the camera. (default: 80f)</td></tr>
+                  <tr><td><code>handVerticalLimitUpper/Lower</code></td><td><code>float</code></td><td>Maximum vertical look angle for the hand IK tracking when looking UP; Maximum vertical look angle for the hand IK tracking when looking DOWN. (default: 45f / 45f)</td></tr>
+                  <tr><td><code>enableSpineStabilization</code></td><td><code>bool</code></td><td>Enable spine stabilization logic. (default: true)</td></tr>
+                  <tr><td><code>spineStiffness</code></td><td><code>float</code></td><td>Weight of stabilization. (default: 1.0f)</td></tr>
+                  <tr><td><code>spineDamping</code></td><td><code>float</code></td><td>Smoothing speed. (default: 10f)</td></tr>
+                  <tr><td><code>lowerSpineWeight</code></td><td><code>float</code></td><td>Rotation weight for lower spine. (default: 0.3f)</td></tr>
+                  <tr><td><code>middleSpineWeight</code></td><td><code>float</code></td><td>Rotation weight for middle spine. (default: 0.3f)</td></tr>
+                  <tr><td><code>upperSpineWeight</code></td><td><code>float</code></td><td>Rotation weight for upper spine. (default: 0.4f)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="doc-section" id="playerinputhandler" data-od-id="playerinputhandler-section" aria-labelledby="playerinputhandler-heading">
+            <h2 id="playerinputhandler-heading" data-od-id="playerinputhandler-heading">Input: PlayerInputHandler</h2>
+            <p>Reads the Unity Input System asset (<code>inputActions</code>, <code>actionMapName = "Player"</code>).</p>
+            <h3 data-od-id="input-state-heading">Per-frame state (read-only)</h3>
+            <div class="table-wrap" data-od-id="input-state-table-wrap">
+              <table data-od-id="input-state-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>MoveInput</code></td><td><code>Vector2</code></td><td>Current movement input vector (X = Strafe, Y = Forward), normalized between -1 and 1.</td></tr>
+                  <tr><td><code>LookInput</code></td><td><code>Vector2</code></td><td>Current look input vector (X = Horizontal, Y = Vertical) from mouse/joystick.</td></tr>
+                  <tr><td><code>IsSprinting</code></td><td><code>bool</code></td><td>Whether the sprint button is currently held.</td></tr>
+                  <tr><td><code>JumpTriggered</code></td><td><code>bool</code></td><td>Whether a jump was triggered this frame; true for the single frame jump is pressed.</td></tr>
+                  <tr><td><code>IsCrouching</code></td><td><code>bool</code></td><td>Whether the player is in the crouch state (toggled on each press).</td></tr>
+                  <tr><td><code>FlashlightTriggered</code></td><td><code>bool</code></td><td>Whether the flashlight was toggled this frame; true for the single frame it is pressed.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="input-methods-heading">Methods</h3>
+            <div class="table-wrap" data-od-id="input-methods-table-wrap">
+              <table data-od-id="input-methods-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>LockCursor</code></td><td><code>LockCursor()</code></td><td>Locks the cursor for first-person gameplay (sets <code>Cursor.lockState</code> to Locked, hides cursor).</td></tr>
+                  <tr><td><code>UnlockCursor</code></td><td><code>UnlockCursor()</code></td><td>Unlocks the cursor for UI interaction (sets <code>Cursor.lockState</code> to None, shows cursor).</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="action-map-heading">Player action map (<code>FBInputActions</code>)</h3>
+            <ul data-od-id="action-map-list">
+              <li><code>Move</code></li><li><code>Look</code></li><li><code>Attack</code></li><li><code>Interact</code></li><li><code>Crouch</code></li><li><code>Jump</code></li><li><code>Previous</code></li><li><code>Next</code></li><li><code>Sprint</code></li><li><code>Flashlight</code></li>
+            </ul>
+          </section>
+
+          <section class="doc-section" id="playerlocomotion" data-od-id="playerlocomotion-section" aria-labelledby="playerlocomotion-heading">
+            <h2 id="playerlocomotion-heading" data-od-id="playerlocomotion-heading">Locomotion: PlayerLocomotion</h2>
+            <p><code>[RequireComponent(typeof(CharacterController))]</code>.</p>
+            <h3 data-od-id="locomotion-config-heading">Configurable fields</h3>
+            <div class="table-wrap" data-od-id="locomotion-config-table-wrap">
+              <table data-od-id="locomotion-config-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>walkSpeed</code></td><td><code>float</code></td><td>Horizontal movement speed while walking. (default: 3.0f)</td></tr>
+                  <tr><td><code>sprintSpeed</code></td><td><code>float</code></td><td>Horizontal movement speed while sprinting. (default: 6.0f)</td></tr>
+                  <tr><td><code>jumpHeight</code></td><td><code>float</code></td><td>Vertical height of a single jump. (default: 1.2f)</td></tr>
+                  <tr><td><code>gravity</code></td><td><code>float</code></td><td>Gravity force applied to the player (negative value). (default: -15f)</td></tr>
+                  <tr><td><code>crouchSpeed</code></td><td><code>float</code></td><td>Horizontal movement speed while crouching. (default: 1.5f)</td></tr>
+                  <tr><td><code>crouchHeight</code></td><td><code>float</code></td><td>CharacterController height when fully crouched. (default: 1.0f)</td></tr>
+                  <tr><td><code>standHeight</code></td><td><code>float</code></td><td>CharacterController height when standing. (default: 2.0f)</td></tr>
+                  <tr><td><code>crouchTransitionSpeed</code></td><td><code>float</code></td><td>Speed of height interpolation between states. (default: 8f)</td></tr>
+                  <tr><td><code>groundCheckDistance</code></td><td><code>float</code></td><td>Distance below feet to check for ground. (default: 0.2f)</td></tr>
+                  <tr><td><code>groundLayers</code></td><td><code>LayerMask</code></td><td>Layers to consider as ground. (default: ~0)</td></tr>
+                  <tr><td><code>inputDeadzone</code></td><td><code>float</code></td><td>Minimum input magnitude to trigger movement. (default: 0.01f)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="locomotion-state-heading">State</h3>
+            <div class="table-wrap" data-od-id="locomotion-state-table-wrap">
+              <table data-od-id="locomotion-state-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>IsGrounded</code></td><td><code>bool</code></td><td>True if the player is currently touching the ground (CharacterController + raycast fallback).</td></tr>
+                  <tr><td><code>IsSprinting</code></td><td><code>bool</code></td><td>True if the player is currently sprinting; only possible when grounded and not crouching.</td></tr>
+                  <tr><td><code>CurrentSpeed</code></td><td><code>float</code></td><td>The current horizontal speed of the player in units per second.</td></tr>
+                  <tr><td><code>MaxSpeed</code></td><td><code>float</code></td><td>The theoretical maximum speed in the current state (crouch/walk/sprint).</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Fires the locomotion events listed below.</p>
+          </section>
+
+          <section class="doc-section" id="playercameracontroller" data-od-id="playercameracontroller-section" aria-labelledby="playercameracontroller-heading">
+            <h2 id="playercameracontroller-heading" data-od-id="playercameracontroller-heading">Camera: PlayerCameraController</h2>
+            <p>Cinemachine-based.</p>
+            <h3 data-od-id="camera-config-heading">Configurable</h3>
+            <div class="table-wrap" data-od-id="camera-config-table-wrap">
+              <table data-od-id="camera-config-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>eyeOffset</code></td><td><code>Vector3</code></td><td>Offset from head bone position while standing. (default: (0, 0.05, 0.1))</td></tr>
+                  <tr><td><code>crouchEyeOffset</code></td><td><code>Vector3</code></td><td>Offset from head bone position while crouching. (default: (0, 0.05, 0.05))</td></tr>
+                  <tr><td><code>lookSensitivity</code></td><td><code>float</code></td><td>Mouse sensitivity multiplier. (default: 0.1f)</td></tr>
+                  <tr><td><code>verticalLookLimit</code></td><td><code>float</code></td><td>Maximum vertical look angle (degrees). (default: 80f)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="camera-api-heading">Public API</h3>
+            <div class="table-wrap" data-od-id="camera-api-table-wrap">
+              <table data-od-id="camera-api-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>CameraTarget</code></td><td><code>Transform</code></td><td>The actual transform the Cinemachine camera follows and looks at.</td></tr>
+                  <tr><td><code>Pitch</code></td><td><code>float</code></td><td>Current vertical look angle in degrees (used by Animation Rigging).</td></tr>
+                  <tr><td><code>Yaw</code></td><td><code>float</code></td><td>Current horizontal look angle in degrees.</td></tr>
+                  <tr><td><code>GetLookAngles</code></td><td><code>GetLookAngles() → Vector2</code></td><td>Gets the current look direction as a Vector2 (X = Yaw, Y = Pitch).</td></tr>
+                  <tr><td><code>SetLookDirection</code></td><td><code>SetLookDirection(float yaw, float pitch)</code></td><td>Sets the look direction programmatically (useful for respawning, cutscenes, etc.).</td></tr>
+                  <tr><td><code>SyncCameraTargetToHead</code></td><td><code>SyncCameraTargetToHead()</code></td><td>Syncs the camera target position to the animated head bone; called in LateUpdate; external IK systems may call it manually.</td></tr>
+                  <tr><td><code>SetVerticalLimitOverride</code></td><td><code>SetVerticalLimitOverride(float upper, float lower)</code></td><td>Sets the vertical limit override for asymmetric look limits (used by item IK data).</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="doc-section" id="items" data-od-id="items-section" aria-labelledby="items-heading">
+            <h2 id="items-heading" data-od-id="items-heading">Items</h2>
+
+            <h3 data-od-id="hand-socket-heading">HandItemSocket: canonical equip event source</h3>
+            <p>The single owner of equip/unequip events.</p>
+            <h4 data-od-id="hand-socket-properties-heading">Properties</h4>
+            <div class="table-wrap" data-od-id="socket-props-table-wrap">
+              <table data-od-id="socket-props-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>CurrentItem</code></td><td><code>GameObject</code></td><td>The currently equipped item.</td></tr>
+                  <tr><td><code>HasItem</code></td><td><code>bool</code></td><td>Whether an item is currently equipped.</td></tr>
+                  <tr><td><code>Socket</code></td><td><code>Transform</code></td><td>The socket transform where items are attached.</td></tr>
+                  <tr><td><code>Locomotion</code></td><td><code>PlayerLocomotion</code></td><td>The player locomotion system (used for crouch offsets).</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h4 data-od-id="hand-socket-methods-heading">Methods</h4>
+            <div class="table-wrap" data-od-id="socket-methods-table-wrap">
+              <table data-od-id="socket-methods-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>AttachItem</code></td><td><code>AttachItem(GameObject, Vector3? pos, Vector3? rot)</code></td><td>Attaches an item to the hand socket with optional position/rotation offsets.</td></tr>
+                  <tr><td><code>AttachItem</code></td><td><code>AttachItem(GameObject, ItemAttachmentData)</code></td><td>Attaches an item using an ItemAttachmentData configuration (offsets + animation info).</td></tr>
+                  <tr><td><code>EquipFromContainer</code></td><td><code>EquipFromContainer(GameObject, int slotIndex = -1)</code></td><td>Equips an item from a container; activates it and applies ItemHoldData offsets, animator layer, and IK.</td></tr>
+                  <tr><td><code>UseCurrentItem</code></td><td><code>UseCurrentItem()</code></td><td>triggered by the <code>Flashlight/Use</code> input; fires the <code>OnUse</code> event on the equipped item's ItemHoldData.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Events: see <a class="doc-link" href="#event-api">Event API</a>.</p>
+
+            <h3 data-od-id="item-container-heading">ItemContainer: orchestration</h3>
+            <p>Manages a list of items and equips them <strong>through</strong> the socket (it no longer emits its own equip events).</p>
+            <h4 data-od-id="item-container-properties-heading">Properties</h4>
+            <div class="table-wrap" data-od-id="container-props-table-wrap">
+              <table data-od-id="container-props-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>CurrentItem</code></td><td><code>GameObject</code></td><td>The currently equipped item, or null if none.</td></tr>
+                  <tr><td><code>HasEquippedItem</code></td><td><code>bool</code></td><td>Whether an item is currently equipped.</td></tr>
+                  <tr><td><code>CurrentIndex</code></td><td><code>int</code></td><td>The index of the currently equipped item, or -1 if none.</td></tr>
+                  <tr><td><code>ItemCount</code></td><td><code>int</code></td><td>Number of items in the container.</td></tr>
+                  <tr><td><code>HandSocket</code></td><td><code>HandItemSocket</code></td><td>The hand socket this container equips items through; subscribe to its canonical item events (e.g. <code>ItemEquipped</code>).</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h4 data-od-id="item-container-methods-heading">Methods</h4>
+            <div class="table-wrap" data-od-id="container-methods-table-wrap">
+              <table data-od-id="container-methods-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>EquipItem</code></td><td><code>EquipItem(int)</code></td><td>Equips an item by index in the items list.</td></tr>
+                  <tr><td><code>EquipItemById</code></td><td><code>EquipItemById(string)</code></td><td>Equips an item by its unique ID defined in ItemHoldData.</td></tr>
+                  <tr><td><code>EquipItem</code></td><td><code>EquipItem(GameObject)</code></td><td>Equips a specific item GameObject (must be in the items list).</td></tr>
+                  <tr><td><code>UnequipCurrent</code></td><td><code>UnequipCurrent()</code></td><td>Unequips the currently equipped item.</td></tr>
+                  <tr><td><code>EquipNext</code></td><td><code>EquipNext()</code></td><td>Cycles to the next item in the container (wraps around to index 0).</td></tr>
+                  <tr><td><code>EquipPrevious</code></td><td><code>EquipPrevious()</code></td><td>Cycles to the previous item in the container (wraps around to the last item).</td></tr>
+                  <tr><td><code>GetItem</code></td><td><code>GetItem(int)</code></td><td>Gets an item by index without equipping it.</td></tr>
+                  <tr><td><code>GetItemById</code></td><td><code>GetItemById(string)</code></td><td>Gets an item GameObject by its unique ID defined in ItemHoldData.</td></tr>
+                  <tr><td><code>AddItem</code></td><td><code>AddItem(GameObject)</code></td><td>Adds an item to the container's list (deactivated until equipped); fires <code>OnContainerChanged</code>.</td></tr>
+                  <tr><td><code>RemoveItem</code></td><td><code>RemoveItem(GameObject) → bool</code></td><td>Removes an item from the container; unequips it first if currently equipped; fires <code>OnContainerChanged</code>; returns true if removed.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h4 data-od-id="item-container-event-heading">Event</h4>
+            <div class="table-wrap" data-od-id="container-event-table-wrap">
+              <table data-od-id="container-event-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>OnContainerChanged</code></td><td><code>UnityEvent</code></td><td>fires when the item list itself changes: add/remove</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-od-id="item-hold-data-heading">ItemHoldData: per-item config &amp; reactions</h3>
+            <p>Attach to item <code>GameObject</code>s.</p>
+            <div class="table-wrap" data-od-id="holddata-table-wrap">
+              <table data-od-id="holddata-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>itemId</code></td><td><code>string</code></td><td>identity; unique identifier used to equip items via code or ID-based systems. (default: "NewItem")</td></tr>
+                  <tr><td><code>OnEquip</code></td><td><code>UnityEvent</code></td><td>item-local event; fires alongside the system events</td></tr>
+                  <tr><td><code>OnUnequip</code></td><td><code>UnityEvent</code></td><td>item-local event; fires alongside the system events</td></tr>
+                  <tr><td><code>OnUse</code></td><td><code>UnityEvent</code></td><td>item-local event; fires alongside the system events</td></tr>
+                  <tr><td><code>attachmentData</code></td><td><code>ItemAttachmentData</code></td><td>config</td></tr>
+                  <tr><td><code>worldItemPrefab</code></td><td><code>GameObject</code></td><td>config; should carry a <code>WorldItem</code> component; prefab to spawn when this item is dropped</td></tr>
+                  <tr><td><code>ItemId</code></td><td><code>string</code></td><td>property; unique identifier for this item</td></tr>
+                  <tr><td><code>AttachmentData</code></td><td><code>ItemAttachmentData</code></td><td>property; configuration for how this item is attached and held</td></tr>
+                  <tr><td><code>WorldItemPrefab</code></td><td><code>GameObject</code></td><td>property; prefab used when dropping this item into the world</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-od-id="attachment-data-heading">ItemAttachmentData: hold &amp; IK config</h3>
+            <p><code>[Serializable]</code>.</p>
+            <div class="table-wrap" data-od-id="attachment-table-wrap">
+              <table data-od-id="attachment-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>animatorLayerIndex</code></td><td><code>int</code></td><td>The index of the override animation layer for this item; used to play specific hold/use animations. (default: 1)</td></tr>
+                  <tr><td><code>holdStyle</code></td><td><code>OneHandedRight</code> | <code>TwoHanded</code></td><td>Defines if the item is held with one hand or two hands. (default: OneHandedRight)</td></tr>
+                  <tr><td><code>gripPositionOffset</code></td><td><code>Vector3</code></td><td>Local position offset of the item mesh relative to the hand socket transform. (default: Vector3.zero)</td></tr>
+                  <tr><td><code>gripRotationOffset</code></td><td><code>Vector3</code></td><td>Local rotation offset of the item mesh relative to the hand socket transform (Euler angles). (default: Vector3.zero)</td></tr>
+                  <tr><td><code>debugMode</code></td><td><code>bool</code></td><td>editor-only; tune live in the editor; when enabled, offsets update in real-time (field lives on <code>ItemHoldData</code>). (default: false)</td></tr>
+                  <tr><td><code>tuneGripMode</code></td><td><code>bool</code></td><td>editor-only; tune live in the editor; when enabled, transform changes are captured into the grip offsets (field lives on <code>ItemHoldData</code>). (default: false)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Plus standing/crouching hand and elbow IK overrides.</p>
+
+            <h3 data-od-id="ik-preset-heading">ItemIKPreset: share IK config</h3>
+            <p><code>ScriptableObject</code> (Create ▸ <strong>Player ▸ Item IK Preset</strong>).</p>
+            <div class="table-wrap" data-od-id="ikpreset-table-wrap">
+              <table data-od-id="ikpreset-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>CaptureFromScene</code></td><td><code>CaptureFromScene()</code></td><td>context menu; copies IK config between items</td></tr>
+                  <tr><td><code>ApplyToScene</code></td><td><code>ApplyToScene()</code></td><td>context menu; copies IK config between items</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="doc-section" id="event-api" data-od-id="event-api-section" aria-labelledby="event-api-heading">
+            <h2 id="event-api-heading" data-od-id="event-api-heading">Event API: PlayerEventAPI</h2>
+            <p>Three complementary mechanisms, each fired <strong>once per transition</strong> from a single canonical chokepoint:</p>
+            <div class="table-wrap" data-od-id="event-mechanisms-table-wrap">
+              <table data-od-id="event-mechanisms-table">
+                <thead><tr><th scope="col">Mechanism</th><th scope="col">For</th></tr></thead>
+                <tbody>
+                  <tr><td>C# <code>event Action&lt;TArgs&gt;</code></td><td>code subscribers (struct args, no per-call allocation)</td></tr>
+                  <tr><td><code>UnityEvent</code></td><td>Inspector / no-code wiring</td></tr>
+                  <tr><td>Listener interfaces</td><td>full extension / structured contract; <strong>auto-discovered</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="event-payloads-heading">Event payloads</h3>
+            <ul data-od-id="payloads-list">
+              <li><strong><code>ItemEquipArgs</code></strong>: <code>Item</code> (<code>GameObject</code>), <code>SlotIndex</code> (<code>int</code>, -1 if equipped outside a container), <code>HoldData</code> (<code>ItemHoldData</code>), <code>FromContainer</code> (<code>bool</code>).</li>
+              <li><strong><code>LandArgs</code></strong>: <code>ImpactVelocity</code> (<code>float</code>), <code>FallDistance</code> (<code>float</code>).</li>
+            </ul>
+
+            <h3 data-od-id="item-events-heading">Item events: <code>HandItemSocket</code></h3>
+            <p data-od-id="item-csharp-events-heading"><strong>C# events</strong></p>
+            <div class="table-wrap" data-od-id="socket-cs-events-table-wrap">
+              <table data-od-id="socket-cs-events-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>ItemEquipped</code></td><td><code>event Action&lt;ItemEquipArgs&gt;</code></td><td></td></tr>
+                  <tr><td><code>ItemUnequipped</code></td><td><code>event Action&lt;ItemEquipArgs&gt;</code></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p data-od-id="item-inspector-heading"><strong>Inspector</strong></p>
+            <div class="table-wrap" data-od-id="socket-inspector-events-table-wrap">
+              <table data-od-id="socket-inspector-events-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>OnItemEquipped</code></td><td><code>ItemEvent : UnityEvent&lt;GameObject&gt;</code></td><td></td></tr>
+                  <tr><td><code>OnItemUnequipped</code></td><td><code>ItemEvent : UnityEvent&lt;GameObject&gt;</code></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Fire for <strong>every</strong> socket-backed equip/unequip (manual attach, container equip, detach).</p>
+
+            <h3 data-od-id="locomotion-events-heading">Locomotion events: <code>PlayerLocomotion</code></h3>
+            <p data-od-id="locomotion-csharp-events-heading"><strong>C# events</strong></p>
+            <div class="table-wrap" data-od-id="loc-cs-events-table-wrap">
+              <table data-od-id="loc-cs-events-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>Jumped</code></td><td><code>Action&lt;LandArgs&gt;</code></td><td></td></tr>
+                  <tr><td><code>Landed</code></td><td><code>Action&lt;LandArgs&gt;</code></td><td></td></tr>
+                  <tr><td><code>CrouchStarted</code></td><td><code>Action</code></td><td>fires when crouch begins</td></tr>
+                  <tr><td><code>CrouchEnded</code></td><td><code>Action</code></td><td>fires when crouch ends</td></tr>
+                  <tr><td><code>SprintStarted</code></td><td><code>Action</code></td><td>fires when sprint begins</td></tr>
+                  <tr><td><code>SprintEnded</code></td><td><code>Action</code></td><td>fires when sprint ends</td></tr>
+                  <tr><td><code>GroundedChanged</code></td><td><code>Action&lt;bool&gt;</code></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p data-od-id="unity-event-mirrors-heading"><strong>Inspector <code>UnityEvent</code> mirrors</strong></p>
+            <div class="table-wrap" data-od-id="loc-inspector-events-table-wrap">
+              <table data-od-id="loc-inspector-events-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>OnJumped</code></td><td></td></tr>
+                  <tr><td><code>OnLanded</code></td><td></td></tr>
+                  <tr><td><code>OnCrouchStarted</code></td><td></td></tr>
+                  <tr><td><code>OnCrouchEnded</code></td><td></td></tr>
+                  <tr><td><code>OnSprintStarted</code></td><td></td></tr>
+                  <tr><td><code>OnSprintEnded</code></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-od-id="listener-interfaces-heading">Listener interfaces</h3>
+            <p>Implement on any <code>MonoBehaviour</code> under the player; it's found at startup automatically. Unhandled methods are no-ops; override only what you need.</p>
+            <pre data-od-id="listener-interfaces-code"><code>using Player;
+
+public class MyListener : MonoBehaviour, IItemEventListener, ILocomotionEventListener
+{
+    public void OnItemEquipped(ItemEquipArgs args) =&gt; Debug.Log($"equipped {args.Item.name}");
+    public void OnItemUnequipped(ItemEquipArgs args) { }
+    public void OnLanded(LandArgs args) =&gt; Debug.Log($"landed at {args.ImpactVelocity}");
+    // OnJumped, OnCrouchStarted/Ended, OnSprintStarted/Ended, OnGroundedChanged default to no-op
+}</code></pre>
+            <p>Runtime-added listeners:</p>
+            <div class="table-wrap" data-od-id="listener-register-table-wrap">
+              <table data-od-id="listener-register-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>locomotion.RegisterListener(ILocomotionEventListener)</code></td><td>register a locomotion listener</td></tr>
+                  <tr><td><code>socket.RegisterListener(IItemEventListener)</code></td><td>register an item listener</td></tr>
+                  <tr><td><code>UnregisterListener(...)</code></td><td>matching unregister on both</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="subscribe-code-heading">Subscribe in code</h3>
+            <pre data-od-id="subscribe-code"><code>player.Locomotion.Jumped += () =&gt; Debug.Log("jumped");
+player.HandItemSocket.ItemEquipped += args =&gt;
+    Debug.Log($"equipped {args.Item.name} from slot {args.SlotIndex}");</code></pre>
+
+            <aside class="callout callout--warning" data-od-id="event-contract-callout">
+              <h2 data-od-id="event-contract-heading">Event contract</h2>
+              <ul>
+                <li>Each transition fires its C# event, its <code>UnityEvent</code>, and every discovered listener <strong>once</strong>, in that order, from one private notify method.</li>
+                <li>Equip/unequip events require a connected <code>HandItemSocket</code>; the socket is the source. A container without a socket emits <strong>no</strong> equip event.</li>
+                <li>Dispatch is best-effort: a handler that throws interrupts the remaining handlers for that transition. Keep handlers exception-free.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="doc-section" id="fpcutter" data-od-id="fpcutter-section" aria-labelledby="fpcutter-heading">
+            <h2 id="fpcutter-heading" data-od-id="fpcutter-heading">FPCutter: FPCutterController</h2>
+            <p>Hides body parts in first person (default: <code>Head</code>) while keeping shadow casting. Generated by the FPCutter Wizard.</p>
+            <h3 data-od-id="fpcutter-methods-heading">Methods</h3>
+            <div class="table-wrap" data-od-id="fpcutter-methods-table-wrap">
+              <table data-od-id="fpcutter-methods-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>SetFirstPerson</code></td><td><code>SetFirstPerson()</code></td><td></td></tr>
+                  <tr><td><code>SetThirdPerson</code></td><td><code>SetThirdPerson()</code></td><td></td></tr>
+                  <tr><td><code>HidePart</code></td><td><code>HidePart(BodyPart)</code></td><td></td></tr>
+                  <tr><td><code>ShowPart</code></td><td><code>ShowPart(BodyPart)</code></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="fpcutter-config-heading">Config</h3>
+            <div class="table-wrap" data-od-id="fpcutter-config-table-wrap">
+              <table data-od-id="fpcutter-config-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>HideInFirstPerson</code></td><td><code>List&lt;BodyPart&gt;</code></td><td></td></tr>
+                  <tr><td><code>invisibleMaterial</code></td><td><code>Material</code></td><td>uses the <code>FPCutter_Invisible</code> shader</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>The <code>BodyPart</code> enum is defined in <code>FPCutterData</code>.</p>
+          </section>
+
+          <section class="doc-section" id="animator" data-od-id="animator-section" aria-labelledby="animator-heading">
+            <h2 id="animator-heading" data-od-id="animator-heading">Animator: PlayerAnimatorController</h2>
+            <p>Drives animator parameters and item animation layers.</p>
+            <div class="table-wrap" data-od-id="animator-table-wrap">
+              <table data-od-id="animator-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>SetItemLayer</code></td><td><code>SetItemLayer(int)</code></td><td></td></tr>
+                  <tr><td><code>SetFlashlightActive</code></td><td><code>SetFlashlightActive(bool)</code></td><td></td></tr>
+                  <tr><td><code>ToggleFlashlight</code></td><td><code>ToggleFlashlight()</code></td><td></td></tr>
+                  <tr><td><code>TriggerAnimation</code></td><td><code>TriggerAnimation(string)</code></td><td></td></tr>
+                  <tr><td><code>GetAnimator</code></td><td><code>GetAnimator() → Animator</code></td><td></td></tr>
+                  <tr><td><code>IsFlashlightActive</code></td><td><code>property</code></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="doc-section" id="procedural-ik" data-od-id="procedural-ik-section" aria-labelledby="procedural-ik-heading">
+            <h2 id="procedural-ik-heading" data-od-id="procedural-ik-heading">Procedural IK (advanced)</h2>
+            <p>Tuned by the Setup Wizard; adjust only for advanced customization.</p>
+            <h3 data-od-id="head-ik-heading">PlayerHeadIK</h3>
+            <div class="table-wrap" data-od-id="headik-table-wrap">
+              <table data-od-id="headik-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>Weight</code></td><td><code>get/set</code></td><td></td></tr>
+                  <tr><td><code>SetWeight</code></td><td><code>SetWeight(float)</code></td><td></td></tr>
+                  <tr><td><code>SetWeights</code></td><td><code>SetWeights(body, head, eyes, clamp)</code></td><td></td></tr>
+                  <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="hand-ik-heading">PlayerHandIK</h3>
+            <div class="table-wrap" data-od-id="handik-table-wrap">
+              <table data-od-id="handik-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>IKPositionWeight</code></td><td><code>get/set</code></td><td></td></tr>
+                  <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="spine-stabilizer-heading">PlayerSpineStabilizer</h3>
+            <p><code>[RequireComponent(typeof(Animator))]</code>; aligns spine yaw to the camera.</p>
+
+            <details data-od-id="demo-editor-note">
+              <summary data-od-id="demo-note-heading">Demo &amp; Editor code (not part of the runtime API)</summary>
+              <p><strong>Demo</strong> (<code>Project/Scripts/Player/Demo/</code>): <code>PlayerEventLogger</code> (implements both listener interfaces; copy it as a template), <code>PlayerDropSystem</code>, <code>PlayerInventory</code>, <code>PlayerInteraction</code>, <code>WorldItem</code>. <strong>Editor</strong>: custom inspectors plus the setup wizards; <code>Tools ▸ First Person ▸ Setup Wizard</code>, the Item Container setup, and the FPCutter Wizard.</p>
+            </details>
+            <div class="cta-panel" data-od-id="interfaces-cta-panel">
+              <p>Easy FP Full Body Controller is available as a paid asset in the Asset Store.</p>
+              <a class="button button--primary" data-od-id="interfaces-cta" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">View on Asset Store ↗</a>
+            </div>
+          </section>
+          <a class="back-top" href="#top" data-od-id="back-to-top">Back to top ↑</a>
+        </article>
+        <nav class="doc-footer-nav" aria-label="Page navigation" data-od-id="doc-footer-navigation">
+          <a class="doc-footer-link" href="quick-start.html" data-od-id="previous-page-link"><span class="doc-footer-label">Previous</span><strong>← Quick Start</strong></a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" data-od-id="site-footer">
+    <div class="container footer-wrap">
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.1.0</p>
+      <nav class="footer-links" aria-label="Footer navigation" data-od-id="footer-navigation">
+        <a href="../unity-asset-portfolio.html" data-od-id="footer-home-link">Home</a>
+        <a href="overview.html" data-od-id="footer-overview-link">Overview</a>
+        <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
+        <a href="interfaces.html" aria-current="page" data-od-id="footer-interfaces-link">Interfaces</a>
+        <a href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="footer-github-link">GitHub</a>
+        <a href="mailto:dinlinwin@gmail.com">Email</a>
+      </nav>
+    </div>
+  </footer>
+  <script type="application/json" id="doc-search-index">
+    [
+      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity: full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, dynamic items, procedural IK, and extensible events.","url":"overview.html"},
+      {"title":"Quick Start","headings":["Requirements","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Validation","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, prepare a Humanoid model, run the 7-step Setup Wizard, configure FPCutter and input, then press Play.","url":"quick-start.html"},
+      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus / cutscenes / pausing):","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config & reactions","ItemAttachmentData: hold & IK config","ItemIKPreset: share IK config","Event API: PlayerEventAPI","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Procedural IK (advanced)","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items, event API, FPCutter, animation, and procedural IK.","url":"interfaces.html"}
+    ]
+  </script>
+  <script>
+    (() => {
+      const index = JSON.parse(document.getElementById('doc-search-index').textContent);
+      const search = document.querySelector('[data-od-id="search-control"]');
+      const trigger = document.querySelector('[data-od-id="search-button"]');
+      const input = document.querySelector('[data-od-id="search-input"]');
+      const results = document.querySelector('[data-od-id="search-results"]');
+      const menu = document.querySelector('[data-od-id="mobile-menu-button"]');
+      const sidebar = document.getElementById('docs-sidebar');
+      let active = -1;
+      const setMenuOpen = (isOpen) => {
+        sidebar.classList.toggle('is-open', isOpen);
+        menu.setAttribute('aria-expanded', String(isOpen));
+        menu.setAttribute('aria-label', isOpen ? 'Close documentation menu' : 'Open documentation menu');
+        menu.textContent = isOpen ? 'Close' : 'Menu';
+      };
+
+      const openSearch = () => {
+        search.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        input.focus();
+        input.setAttribute('aria-expanded', String(Boolean(input.value.trim())));
+        if (input.value) renderResults();
+      };
+      const closeSearch = () => {
+        search.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        results.hidden = true;
+        input.setAttribute('aria-expanded', 'false');
+        input.setAttribute('aria-activedescendant', '');
+        active = -1;
+        if (document.activeElement === input) trigger.focus();
+      };
+      const setActive = (next) => {
+        const links = [...results.querySelectorAll('.search-result')];
+        if (!links.length) {
+          input.setAttribute('aria-activedescendant', '');
+          return;
+        }
+        active = (next + links.length) % links.length;
+        links.forEach((link, i) => {
+          link.classList.toggle('is-active', i === active);
+          link.setAttribute('aria-selected', String(i === active));
+        });
+        input.setAttribute('aria-activedescendant', links[active].id);
+      };
+      function renderResults() {
+        const query = input.value.trim().toLowerCase();
+        results.replaceChildren();
+        active = -1;
+        if (!query) {
+          results.hidden = true;
+          input.setAttribute('aria-expanded', 'false');
+          input.setAttribute('aria-activedescendant', '');
+          return;
+        }
+        const terms = query.split(/\s+/);
+        const matches = index.filter((item) => {
+          const text = [item.title, item.excerpt, item.url, ...item.headings].join(' ').toLowerCase();
+          return terms.every((term) => text.includes(term));
+        });
+        if (!matches.length) {
+          const empty = document.createElement('p');
+          empty.className = 'search-empty';
+          empty.textContent = 'No matching pages.';
+          results.append(empty);
+        } else {
+          matches.forEach((item, i) => {
+            const link = document.createElement('a');
+            link.className = 'search-result';
+            link.id = `search-result-${i}`;
+            link.href = item.url;
+            link.setAttribute('role', 'option');
+            const title = document.createElement('span');
+            title.className = 'search-result-title';
+            title.textContent = item.title;
+            const meta = document.createElement('span');
+            meta.className = 'search-result-meta';
+            meta.textContent = `${item.headings.slice(0, 3).join(' · ')} · ${item.url}`;
+            link.append(title, meta);
+            results.append(link);
+          });
+          setActive(0);
+        }
+        results.hidden = false;
+        input.setAttribute('aria-expanded', 'true');
+        results.setAttribute('aria-label', matches.length ? `${matches.length} search result${matches.length === 1 ? '' : 's'}` : 'No matching pages');
+      }
+
+      trigger.addEventListener('click', () => search.classList.contains('is-open') ? closeSearch() : openSearch());
+      input.addEventListener('input', renderResults);
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') { event.preventDefault(); setActive(active + 1); }
+        if (event.key === 'ArrowUp') { event.preventDefault(); setActive(active - 1); }
+        if (event.key === 'Enter' && active >= 0) { event.preventDefault(); results.querySelectorAll('.search-result')[active].click(); }
+        if (event.key === 'Escape') closeSearch();
+      });
+      document.addEventListener('keydown', (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); openSearch(); }
+        if (event.key === 'Escape') {
+          if (search.classList.contains('is-open')) closeSearch();
+          if (sidebar.classList.contains('is-open')) setMenuOpen(false);
+        }
+      });
+      document.addEventListener('click', (event) => {
+        if (!search.contains(event.target)) closeSearch();
+      });
+      menu.addEventListener('click', () => {
+        setMenuOpen(!sidebar.classList.contains('is-open'));
+      });
+
+      const outline = document.getElementById('doc-outline-list');
+      const article = document.querySelector('.doc-article');
+      if (outline && article) {
+        const usedIds = new Set([...document.querySelectorAll('[id]')].map((node) => node.id));
+        outline.replaceChildren();
+        article.querySelectorAll('h2, h3').forEach((heading) => {
+          if (heading.closest('.callout')) return;
+          if (!heading.id) {
+            const base = (heading.dataset.odId || heading.textContent).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'section';
+            let id = base;
+            let count = 2;
+            while (usedIds.has(id)) id = `${base}-${count++}`;
+            heading.id = id;
+            usedIds.add(id);
+          }
+          const link = document.createElement('a');
+          link.href = `#${heading.id}`;
+          link.textContent = heading.textContent.trim();
+          link.dataset.odId = `outline-${heading.id}`;
+          if (heading.tagName === 'H3') link.classList.add('outline-subitem');
+          outline.append(link);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

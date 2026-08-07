@@ -1,0 +1,1301 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="vedaloiv — Unity Asset Store Publisher for Easy FP Full Body Controller, with less friction and more building.">
+  <title>vedaloiv — Easy FP Full Body Controller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Wakeout palette: near-black foundation and elevated panels */
+      --bg: oklch(0.145 0 89.88);
+      --surface: oklch(0.218 0 89.88);
+      --surface-raised: oklch(0.285 0 89.88);
+
+      /* Text and selection */
+      --fg: oklch(0.99 0.01 97.35);
+      --muted: oklch(0.6 0.01 89.88);
+      --on-accent: oklch(0.145 0 89.88);
+
+      /* Borders */
+      --border: oklch(0.99 0.01 97.35 / 0.16);
+      --border-dark: oklch(0.145 0 89.88 / 0.18);
+
+      /* Signature yellow and restrained playful accents */
+      --accent: oklch(0.913 0.17 98.7);
+      --lime: oklch(0.904 0.21 124.11);
+      --pink: oklch(0.709 0.24 341.96);
+      --purple: oklch(0.597 0.23 285.53);
+      --teal: oklch(0.736 0.13 184.33);
+      --orange: oklch(0.749 0.17 53.84);
+      --cyan: oklch(0.837 0.14 202.63);
+
+      /* Focus stays bright against every dark surface */
+      --focus: oklch(0.913 0.17 98.7);
+
+      --font-display: "Rubik", "Avenir Next", system-ui, sans-serif;
+      --font-body: "Rubik", system-ui, -apple-system, sans-serif;
+      --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+    button { font: inherit; }
+    img { max-width: 100%; }
+    svg { display: block; max-width: 100%; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+    ::selection { background: var(--accent); color: var(--on-accent); }
+    [hidden] { display: none !important; }
+
+    .container {
+      width: min(1280px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      color: var(--fg);
+      background: color-mix(in oklch, var(--surface-raised) 92%, var(--bg));
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-wrap {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      color: var(--fg);
+      text-decoration: none;
+      flex: 0 0 auto;
+    }
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .nav-link,
+    .nav-cta,
+    .mono,
+    .section-kicker,
+    .asset-category,
+    .asset-version,
+    .filter-chip,
+    .footer-meta {
+      font-family: var(--font-mono);
+    }
+    .main-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 22px;
+      flex: 1;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .nav-link,
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 8px 10px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .nav-link { color: var(--fg); }
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      background: var(--surface);
+      color: var(--fg);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+    .nav-cta:hover { text-decoration: underline; }
+    .nav-cta {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--fg);
+    }
+    .nav-cta:hover {
+      background: var(--surface);
+      border-color: var(--surface);
+      color: var(--fg);
+    }
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: clamp(76px, 9vw, 132px) 0 74px;
+      color: var(--fg);
+      background: var(--surface-raised);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 0 0 0 58%;
+      background: var(--bg);
+      clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+      pointer-events: none;
+    }
+    .hero-grid,
+    .section-head,
+    .about-grid,
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 24px;
+    }
+    .hero-grid > *,
+    .section-head > *,
+    .about-grid > *,
+    .contact-grid > *,
+    .featured-grid > *,
+    .asset-grid > * { min-width: 0; }
+    .hero-grid { position: relative; z-index: 1; align-items: start; }
+    .hero-copy { grid-column: 1 / span 7; align-self: start; }
+    .eyebrow,
+    .badge--new {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--on-accent);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+    .eyebrow { padding: 9px 13px; }
+    .hero h1 {
+      max-width: 10ch;
+      margin: 26px 0 24px;
+      font-family: var(--font-display);
+      font-size: clamp(48px, 7vw, 92px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.04;
+      text-wrap: balance;
+    }
+    .hero h1 .hero-ink {
+      color: var(--lime);
+      display: inline-flex;
+      align-items: baseline;
+    }
+    .hero h1 .hero-ink .ink-letter {
+      display: inline-block;
+      animation: hero-ink-wave 2.6s ease-in-out infinite;
+      will-change: transform;
+    }
+    @keyframes hero-ink-wave {
+      0%, 100% { transform: translateY(0); color: var(--lime); }
+      50% { transform: translateY(-0.14em); color: var(--cyan); }
+    }
+    .display-ink {
+      color: var(--accent);
+      display: inline-flex;
+      align-items: baseline;
+    }
+    .display-ink .ink-letter-echo {
+      display: inline-block;
+      animation: display-ink-wave 4s ease-in-out infinite;
+      will-change: transform;
+    }
+    @keyframes display-ink-wave {
+      0%, 100% { transform: translateY(0); color: var(--accent); }
+      50% { transform: translateY(-0.07em); color: var(--lime); }
+    }
+    .hero-lead {
+      max-width: 54ch;
+      margin: 0;
+      color: var(--fg);
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.55;
+    }
+    .button {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px 18px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1.2;
+      text-decoration: none;
+      transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button:active { transform: translateY(0); }
+    .button--primary {
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+    .button--primary:hover {
+      background: color-mix(in oklch, var(--accent) 86%, var(--fg) 14%);
+      color: var(--on-accent);
+    }
+    .button--ghost {
+      border-color: var(--border);
+      color: var(--fg);
+    }
+    .button--ghost:hover { background: color-mix(in oklch, var(--bg) 86%, var(--fg) 14%); border-color: var(--fg); }
+    .button--ghost-dark {
+      border-color: var(--border);
+      color: var(--fg);
+    }
+    .button--ghost-dark:hover { background: color-mix(in oklch, var(--surface-raised) 90%, var(--surface) 10%); border-color: var(--fg); }
+    .button svg { width: 18px; height: 18px; flex: 0 0 auto; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+    .hero-note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 34px;
+      margin-top: 58px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-note p { margin: 0; }
+    .hero-note-label {
+      display: block;
+      color: var(--fg);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .hero-note-value { display: block; margin-top: 3px; font-size: 14px; }
+    .hero-visual {
+      grid-column: 8 / -1;
+      align-self: start;
+      margin: 0;
+    }
+    .hero-art-frame {
+      padding: 14px;
+      border: 1px solid var(--surface);
+      background: var(--surface);
+      box-shadow: 16px 18px 0 color-mix(in oklch, var(--bg) 72%, var(--surface-raised) 28%);
+    }
+    .hero-art-frame img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: var(--surface-raised);
+    }
+    .hero-caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 10px;
+      padding-inline: 2px;
+      color: var(--fg);
+      font-size: 12px;
+    }
+    .hero-caption span:last-child { color: var(--cyan); }
+
+    .section { padding: clamp(74px, 9vw, 132px) 0; scroll-margin-top: 80px; }
+    .section--apricot {
+      position: relative;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .section--apricot::before {
+      content: "";
+      position: absolute;
+      top: 22px;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background: var(--surface-raised);
+      opacity: 0.14;
+      pointer-events: none;
+    }
+    .section--surface { background: var(--bg); }
+    .section--dark { color: var(--fg); background: var(--surface-raised); }
+    .section-head { align-items: start; margin-bottom: 42px; }
+    .section-head-copy { grid-column: 1 / span 7; }
+    .section-head-aside { grid-column: 8 / -1; align-self: start; padding-top: 33px; }
+    .section-kicker {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--fg);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+    .section--dark .section-kicker { color: var(--accent); }
+    h2,
+    h3,
+    p { overflow-wrap: break-word; }
+    h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(32px, 3.6vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      text-wrap: balance;
+    }
+    .section-intro { max-width: 52ch; margin: 0; }
+    .section--dark .section-intro { color: var(--fg); }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+    .asset-card {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 14px 30px -28px var(--surface-raised);
+      transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+    .asset-card:hover {
+      background: var(--surface-raised);
+      border-color: var(--fg);
+      box-shadow: 0 22px 38px -28px var(--surface-raised);
+      transform: translateY(-4px);
+    }
+    .featured-grid .asset-card--lead {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(280px, 5fr);
+      border-top: 4px solid var(--surface-raised);
+    }
+    .asset-media {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-raised);
+      aspect-ratio: 4 / 3;
+    }
+    .featured-grid .asset-card--lead .asset-media {
+      min-height: 360px;
+      aspect-ratio: 4 / 3;
+      border-right: 1px solid var(--border);
+      border-bottom: 0;
+    }
+    .asset-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 500ms cubic-bezier(.2,.75,.2,1);
+    }
+    .asset-card:hover .asset-media img { transform: scale(1.04); }
+    .badge--new,
+    .badge--version {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 7px 10px;
+      box-shadow: 0 12px 24px -15px var(--fg);
+    }
+    .badge--new { border: 1px solid var(--accent); }
+    .badge--version {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.03em;
+    }
+    .asset-content {
+      display: flex;
+      min-width: 0;
+      flex: 1;
+      flex-direction: column;
+      padding: 28px 30px 30px;
+    }
+    .asset-category {
+      margin: 0;
+      color: var(--fg);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+    }
+    .section--apricot .asset-category { color: var(--teal); }
+    .asset-title {
+      margin: 8px 0 8px;
+      font-family: var(--font-display);
+      font-size: clamp(22px, 2.2vw, 29px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .asset-description { max-width: 48ch; margin: 0; }
+    .asset-foot {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: auto;
+      padding-top: 24px;
+    }
+    .asset-version { font-size: 11px; line-height: 1.5; }
+    .asset-link {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      color: var(--fg);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .asset-link:hover { color: var(--fg); text-decoration-thickness: 2px; }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 40px;
+      padding: 14px 16px 14px 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg);
+    }
+    .filter-list { display: flex; flex-wrap: wrap; gap: 9px; }
+    .filter-chip {
+      min-height: 44px;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--fg);
+      cursor: pointer;
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      line-height: 1.3;
+      text-transform: uppercase;
+      transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+    .filter-chip:active { transform: translateY(1px); }
+    .filter-chip:hover {
+      border-color: var(--surface-raised);
+      background: var(--surface-raised);
+      color: var(--fg);
+    }
+    .filter-chip[aria-pressed="true"] {
+      border-color: var(--lime);
+      background: var(--lime);
+      color: var(--on-accent);
+    }
+    .filter-status { margin: 0; font-family: var(--font-mono); font-size: 12px; }
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+    .asset-grid .asset-card {
+      position: relative;
+      grid-column: auto;
+      border-top: 4px solid var(--surface-raised);
+      border-radius: 4px 4px 12px 12px;
+    }
+    .asset-grid .asset-card::before {
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: 24px;
+      width: 48px;
+      height: 4px;
+      background: var(--purple);
+    }
+
+    .section-head[aria-labelledby="roadmap-title"] {
+      margin-top: clamp(78px, 8vw, 112px);
+      margin-bottom: 30px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .section-head[aria-labelledby="roadmap-title"] .asset-title { margin-top: 0; }
+
+    .about-grid { align-items: start; }
+    .about-copy { grid-column: 1 / span 7; align-self: start; }
+    .about-visual { grid-column: 8 / -1; align-self: start; margin: 0; }
+    .about-copy h2 { max-width: 9ch; }
+    .about-copy p { max-width: 52ch; margin: 24px 0 0; }
+    .about-copy p + p { margin-top: 14px; }
+    .about-principles-plate {
+      padding: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: 14px 16px 0 color-mix(in oklch, var(--surface-raised) 12%, transparent);
+    }
+    .about-principles-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 24px;
+      background: var(--surface-raised);
+      color: var(--fg);
+      border: 1px solid var(--border);
+    }
+    .about-principles-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--pink);
+    }
+    .about-principles {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .about-principles li {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .about-principles li:last-child { padding-bottom: 0; border-bottom: 0; }
+    .about-principles strong {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+    }
+    .about-principles span {
+      color: var(--fg);
+      font-size: 13px;
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+    .plate-caption {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 2px 0;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .plate-caption span:last-child { color: var(--fg); }
+
+    .contact-grid { align-items: start; }
+    .contact-copy { grid-column: 1 / span 7; }
+    .contact-copy h2 { max-width: 10ch; }
+    .contact-copy p { max-width: 50ch; margin: 24px 0 0; }
+    .site-footer {
+      padding: 30px 0 36px;
+      color: var(--fg);
+      background: var(--surface-raised);
+      border-top: 1px solid var(--border);
+    }
+    .footer-wrap { display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .footer-meta { margin: 0; color: var(--fg); font-size: 11px; line-height: 1.7; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+    .footer-links a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      padding-inline: 8px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-decoration: none;
+      transition: background-color 180ms ease, border-color 180ms ease;
+    }
+    .footer-links a:hover {
+      color: var(--fg);
+      background: var(--surface);
+      border-color: var(--border);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .section-head,
+      .about-grid,
+      .contact-grid,
+      .featured-grid,
+      .asset-grid { gap: 20px; }
+      .hero-copy { grid-column: 1 / span 7; }
+      .hero-visual { grid-column: 8 / -1; }
+      .section-head-copy { grid-column: 1 / span 7; }
+      .section-head-aside { grid-column: 8 / -1; }
+      .featured-grid .asset-card--lead {
+        grid-column: 1 / -1;
+        display: flex;
+      }
+      .featured-grid .asset-card--lead .asset-media {
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .asset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .asset-grid .asset-card { grid-column: auto; }
+      .about-copy { grid-column: 1 / span 7; }
+      .about-visual { grid-column: 8 / -1; }
+      .contact-copy { grid-column: 1 / span 7; }
+      .contact-form { grid-column: 8 / -1; }
+    }
+    @media (max-width: 680px) {
+      .container { width: min(100% - 32px, 560px); }
+      .nav-wrap { min-height: 68px; gap: 4px 8px; padding-block: 10px; display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+      .brand { grid-column: 1; grid-row: 1; }
+      .main-nav { display: contents; }
+      .nav-cta { grid-column: 2; grid-row: 1; }
+      .nav-links { grid-column: 1 / -1; grid-row: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 8px; width: 100%; }
+      .nav-link { padding-inline: 4px; }
+      .nav-link:nth-child(odd) { justify-content: flex-start; }
+      .nav-link:nth-child(even) { justify-content: flex-end; }
+      .hero { padding-top: 68px; }
+      .hero::before {
+        inset: 54% 0 0;
+        clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+      }
+      .hero-grid,
+      .section-head,
+      .about-grid,
+      .contact-grid { display: block; }
+      .hero-copy,
+      .hero-visual,
+      .section-head-copy,
+      .section-head-aside,
+      .about-copy,
+      .about-visual,
+      .contact-copy,
+      .contact-form { width: 100%; }
+      .hero-copy,
+      .hero-visual,
+      .section-head-copy,
+      .section-head-aside,
+      .about-copy,
+      .about-visual,
+      .contact-copy,
+      .contact-form { min-width: 0; }
+      .hero h1 { max-width: 11ch; font-size: clamp(46px, 14vw, 72px); }
+      .hero-visual { margin-top: 52px; }
+      .hero-art-frame { max-width: calc(100% - 16px); margin-left: auto; margin-right: 16px; }
+      .section-head-aside { margin-top: 20px; padding-top: 0; }
+      .section-head { margin-bottom: 34px; }
+      .section-head[aria-labelledby="roadmap-title"] { margin-top: 64px; padding-top: 20px; }
+      .featured-grid,
+      .asset-grid { display: block; }
+      .featured-grid .asset-card,
+      .asset-grid .asset-card { margin-bottom: 18px; }
+      .asset-card:last-child { margin-bottom: 0; }
+      .featured-grid .asset-card--lead { display: flex; }
+      .featured-grid .asset-card--lead .asset-media {
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .featured-grid .asset-card--lead .asset-content { padding: 24px; }
+      .asset-media { aspect-ratio: 4 / 3; }
+      .filter-row { align-items: start; flex-direction: column; }
+.about-visual { margin-top: 42px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      .button:hover,
+      .asset-card:hover,
+      #kontakt .contact-submit:hover,
+      #kontakt .contact-submit:active { transform: none; }
+      .asset-card:hover .asset-media img { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#start" aria-label="vedaloiv home">
+        <span class="brand-name">vedaloiv</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <div class="nav-links">
+          <a class="nav-link" href="#galerie">Gallery</a>
+          <a class="nav-link" href="#assets">Collection</a>
+          <a class="nav-link" href="#ueber-mich">About</a>
+          <a class="nav-link" href="docs/overview.html">Docs</a>
+        </div>
+        <a class="nav-cta" href="#kontakt">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="start">
+    <section class="hero" data-od-id="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Unity Asset Store Publisher</span>
+          <h1 id="hero-title" data-od-id="hero-heading">More body. Less <span class="hero-ink" aria-label="friction"><span class="ink-letter" style="animation-delay:0s">f</span><span class="ink-letter" style="animation-delay:.11s">r</span><span class="ink-letter" style="animation-delay:.22s">i</span><span class="ink-letter" style="animation-delay:.33s">c</span><span class="ink-letter" style="animation-delay:.44s">t</span><span class="ink-letter" style="animation-delay:.55s">i</span><span class="ink-letter" style="animation-delay:.66s">o</span><span class="ink-letter" style="animation-delay:.77s">n</span></span>.</h1>
+          <p class="hero-lead">vedaloiv publishes Unity tools for full-body character control: first and third person, procedural IK, and a clear path from first import to a playable body.</p>
+          <div class="hero-actions">
+            <a class="button button--primary" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">
+              Go to Asset Store
+              <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M9.5 4.5 14 9l-4.5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+            </a>
+          </div>
+          <div class="hero-note" aria-label="Working approach">
+            <p><span class="hero-note-label mono">Working approach</span><span class="hero-note-value">small, modular, documented</span></p>
+            <p><span class="hero-note-label mono">Focus</span><span class="hero-note-value">Full Body · IK · Unity</span></p>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <div class="hero-art-frame">
+            <img src="assets/web/fp-overview.jpg" role="img" alt="Easy FP Full Body Controller – product view showing a full body in a Unity scene" fetchpriority="high" decoding="async">
+            <figcaption class="hero-caption mono"><span>Easy FP Full Body Controller</span><span>Real shot</span></figcaption>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section--apricot" id="galerie" data-od-id="galerie" aria-labelledby="featured-title">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-copy">
+            <span class="section-kicker">Selection / Gallery</span>
+            <h2 id="featured-title" data-od-id="galerie-heading">Your body, <span class="display-ink" aria-label="on screen"><span class="ink-letter-echo" style="animation-delay:0s">o</span><span class="ink-letter-echo" style="animation-delay:.14s">n</span><span class="ink-letter-echo" style="animation-delay:.28s"> </span><span class="ink-letter-echo" style="animation-delay:.42s">s</span><span class="ink-letter-echo" style="animation-delay:.56s">c</span><span class="ink-letter-echo" style="animation-delay:.70s">r</span><span class="ink-letter-echo" style="animation-delay:.84s">e</span><span class="ink-letter-echo" style="animation-delay:.98s">e</span><span class="ink-letter-echo" style="animation-delay:1.12s">n</span></span>.</h2>
+          </div>
+          <div class="section-head-aside">
+            <p class="section-intro">Easy FP Full Body Controller combines first and third person: the full body stays visible and animated, while procedural IK stabilizes hands, head, and spine.</p>
+          </div>
+        </div>
+        <div class="featured-grid">
+          <article class="asset-card asset-card--lead" data-od-id="asset-easy-fp-full-body-controller">
+            <div class="asset-media">
+              <span class="badge--new">New · v1.1.0</span>
+              <img src="assets/web/fp-overview.jpg" role="img" alt="Easy FP Full Body Controller – product view of the full-body controller in a Unity scene" loading="lazy" decoding="async">
+            </div>
+            <div class="asset-content">
+              <p class="asset-category">Tools / Game Toolkits</p>
+              <h3 class="asset-title" data-od-id="asset-title-easy-fp-full-body-controller">Easy FP Full Body Controller</h3>
+              <p class="asset-description">A first-person and third-person full-body character controller for Unity. Procedural hand and head IK, spine stabilization, a guided 7-step Setup Wizard, FPCutter for non-destructive mesh slicing with shadow preservation, a dynamic item system, and an extensible event API.</p>
+              <div class="asset-foot"><span class="asset-version">v1.1.0 · 30.07.2026 · Unity 6000.5.0+ (Unity 6.5) · URP<br>Cinemachine 3.1.7 · Input System 1.19.0 · 185.2 MB<br>€36.79</span><a class="asset-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">Go to Asset Store</a></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface" id="assets" data-od-id="assets" aria-labelledby="assets-title">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-copy">
+            <span class="section-kicker">Collection / All Assets</span>
+            <h2 id="assets-title" data-od-id="assets-heading">One product, clearly documented.</h2>
+          </div>
+          <div class="section-head-aside">
+            <p class="section-intro">Right now exactly one asset is released. Further ideas stay visible as a roadmap — not as finished products.</p>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-list" role="group" aria-label="Asset categories">
+            <button class="filter-chip" type="button" data-filter="Alle" data-od-id="filter-alle" aria-pressed="true">All</button>
+            <button class="filter-chip" type="button" data-filter="Tools / Game Toolkits" data-od-id="filter-tools" aria-pressed="false">Tools / Game Toolkits</button>
+          </div>
+          <p class="filter-status" data-filter-status aria-live="polite">1 asset visible</p>
+        </div>
+        <div class="featured-grid" aria-live="polite">
+          <article class="asset-card asset-card--lead" data-category="Tools / Game Toolkits" data-od-id="asset-easy-fp-full-body-controller-collection">
+            <div class="asset-media">
+              <span class="badge--version">v1.1.0</span>
+              <img src="assets/web/fp-setup.jpg" role="img" alt="Easy FP Full Body Controller – setup wizard with steps 4 to 6 in Unity" loading="lazy" decoding="async">
+            </div>
+            <div class="asset-content"><p class="asset-category">Tools / Game Toolkits</p><h3 class="asset-title" data-od-id="asset-title-easy-fp-full-body-controller-collection">Easy FP Full Body Controller</h3><p class="asset-description">Full body control for first and third person — with a 7-step Setup Wizard, FPCutter, a dynamic item system, and an extensible event API.</p><div class="asset-foot"><span class="asset-version">v1.1.0 · Unity 6000.5+ · URP<br>€36.79 · 185.2 MB</span><a class="asset-link" href="docs/overview.html">View overview</a></div></div>
+          </article>
+        </div>
+
+        <div class="section-head" aria-labelledby="roadmap-title">
+          <div class="section-head-copy">
+            <span class="section-kicker">Planned / Roadmap</span>
+            <h3 id="roadmap-title" class="asset-title" data-od-id="roadmap-heading">Next up, not a promise.</h3>
+          </div>
+          <div class="section-head-aside">
+            <p class="section-intro">These items are planned and not yet released.</p>
+          </div>
+        </div>
+        <div class="asset-grid" aria-label="Planned extensions">
+          <article class="asset-card" data-od-id="roadmap-advanced-foot-ik">
+            <div class="asset-content"><p class="asset-category">Planned / Roadmap</p><h3 class="asset-title" data-od-id="roadmap-title-advanced-foot-ik">Foot IK</h3><p class="asset-description">Predictive foot placement for the next steps of the controller.</p><div class="asset-foot"><span class="asset-version">Planned for 1.2</span></div></div>
+          </article>
+          <article class="asset-card" data-od-id="roadmap-procedural-item-sway">
+            <div class="asset-content"><p class="asset-category">Planned / Roadmap</p><h3 class="asset-title" data-od-id="roadmap-title-procedural-item-sway">FishNet Multiplayer Support</h3><p class="asset-description">Multiplayer networking for the full-body controller.</p><div class="asset-foot"><span class="asset-version">Not released</span></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--apricot" id="ueber-mich" data-od-id="ueber-mich" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <div class="about-copy">
+          <span class="section-kicker">About / Working approach</span>
+          <h2 id="about-title" data-od-id="about-heading">Solo built. With an eye for the workflow.</h2>
+          <p>As a solo developer I build Unity tools that lower the barrier to entry and stay out of the way in daily use. I'm interested in the small frictions: a click too many, a body that disappears in first person, or documentation that doesn't help on first open.</p>
+          <p>Less friction, more building — with documentation verified against the shipped source. Easy FP Full Body Controller is vedaloiv's first released asset.</p>
+        </div>
+        <figure class="about-visual">
+          <div class="about-principles-plate">
+            <div class="about-principles-slot">
+              <span class="about-principles-eyebrow">Working approach</span>
+              <ul class="about-principles">
+                <li><strong>Guided setup</strong><span>Wizards and sensible defaults lower the barrier to entry.</span></li>
+                <li><strong>Docs verified against source</strong><span>Every claim checked against the shipped package code.</span></li>
+                <li><strong>One asset, one doc</strong><span>Per-asset docs instead of a watered-down wiki.</span></li>
+                <li><strong>Real products first</strong><span>No marketing promises, no invented numbers.</span></li>
+              </ul>
+            </div>
+            <figcaption class="plate-caption"><span>vedaloiv / Working approach</span><span>Principles</span></figcaption>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="kontakt" data-od-id="kontakt" aria-labelledby="contact-title">
+      <style>
+        #kontakt .contact-actions {
+          grid-column: 8 / -1;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          min-width: 0;
+          padding: 32px 24px 24px;
+          border: 1px solid var(--border);
+          background: color-mix(in oklch, var(--surface-raised) 86%, var(--surface) 14%);
+        }
+        #kontakt .contact-asset-cta {
+          padding-bottom: 24px;
+          border-bottom: 1px solid var(--border);
+        }
+        #kontakt .contact-form {
+          display: grid;
+          gap: 16px;
+          margin-top: 26px;
+          width: 100%;
+          padding: 0;
+          border: 0;
+          background: transparent;
+          grid-column: auto;
+        }
+        #kontakt .contact-form-title {
+          margin: 0;
+          color: var(--fg);
+          font-family: var(--font-display);
+          font-size: clamp(24px, 2.5vw, 32px);
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          line-height: 1.1;
+        }
+        #kontakt .contact-form-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
+        }
+        #kontakt .form-field {
+          display: grid;
+          min-width: 0;
+          gap: 7px;
+        }
+        #kontakt .form-field--wide { grid-column: 1 / -1; }
+        #kontakt .form-label {
+          color: var(--fg);
+          font-family: var(--font-mono);
+          font-size: 11px;
+          letter-spacing: 0.08em;
+          line-height: 1.4;
+          text-transform: uppercase;
+        }
+        #kontakt .form-control {
+          width: 100%;
+          min-height: 48px;
+          padding: 11px 13px;
+          border: 1px solid var(--border);
+          border-radius: 4px;
+          background: color-mix(in oklch, var(--surface) 78%, var(--bg) 22%);
+          color: var(--fg);
+          font: inherit;
+          line-height: 1.4;
+        }
+        #kontakt textarea.form-control {
+          min-height: 132px;
+          resize: vertical;
+        }
+        #kontakt .form-control::placeholder {
+          color: var(--fg);
+          opacity: 0.72;
+        }
+        #kontakt .form-control:hover { border-color: var(--fg); }
+        #kontakt .form-control:focus-visible {
+          border-color: var(--focus);
+          outline: 3px solid var(--focus);
+          outline-offset: 3px;
+        }
+        #kontakt .form-control[aria-invalid="true"] { border-color: var(--orange); }
+        #kontakt .field-error {
+          min-height: 1.4em;
+          margin: 0;
+          color: var(--orange);
+          font-family: var(--font-mono);
+          font-size: 11px;
+          line-height: 1.4;
+        }
+        #kontakt .contact-submit {
+          width: 100%;
+          min-height: 52px;
+          padding: 12px 18px;
+          border: 1px solid var(--surface);
+          border-radius: 999px;
+          background: var(--surface);
+          color: var(--fg);
+          cursor: pointer;
+          font: inherit;
+          font-weight: 700;
+          line-height: 1.2;
+          transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+        }
+        #kontakt .contact-submit:hover {
+          border-color: var(--fg);
+          background: color-mix(in oklch, var(--surface) 86%, var(--fg) 14%);
+          color: var(--fg);
+          transform: translateY(-2px);
+        }
+        #kontakt .contact-submit:active { transform: translateY(0); }
+        #kontakt .contact-submit:focus-visible {
+          outline: 3px solid var(--focus);
+          outline-offset: 4px;
+        }
+        #kontakt .contact-submit:disabled {
+          cursor: wait;
+          border-color: var(--border);
+          background: var(--surface-raised);
+          color: var(--fg);
+          transform: none;
+        }
+        #kontakt .contact-status {
+          min-height: 1.5em;
+          margin: 0;
+          color: var(--fg);
+          font-family: var(--font-mono);
+          font-size: 11px;
+          line-height: 1.5;
+        }
+        #kontakt .contact-status[data-state="success"] { color: var(--lime); }
+        #kontakt .contact-status[data-state="error"] { color: var(--orange); }
+        #kontakt .field-honeypot {
+          position: absolute;
+          left: -9999px;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
+          border: 0;
+          opacity: 0;
+        }
+        @media (max-width: 900px) {
+          #kontakt .contact-actions { grid-column: 8 / -1; }
+          #kontakt .contact-form-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 680px) {
+          #kontakt .contact-actions {
+            grid-column: auto;
+            margin-top: 32px;
+            padding: 24px;
+          }
+        }
+    
+    .asset-media { cursor: zoom-in; }
+    .asset-media img { user-select: none; -webkit-user-select: none; }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: color-mix(in oklch, var(--bg) 86%, transparent);
+      padding: clamp(16px, 4vw, 48px);
+    }
+    .lightbox.is-open { display: flex; }
+    .lightbox[hidden] { display: none; }
+    .lightbox figure {
+      margin: 0;
+      max-width: min(1200px, 100%);
+      max-height: 100%;
+      display: grid;
+      gap: 12px;
+    }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 82vh;
+      display: block;
+      margin-inline: auto;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+      background: var(--surface-raised);
+    }
+    .lightbox figcaption {
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: clamp(12px, 3vw, 28px);
+      right: clamp(12px, 3vw, 28px);
+      min-width: 44px;
+      min-height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--fg);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .lightbox-close:hover { background: var(--accent); color: var(--on-accent); }
+    .lightbox-close:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  </style>
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <span class="section-kicker">Contact / Asset Store</span>
+          <h2 id="contact-title" data-od-id="contact-heading">Ready for your first import?</h2>
+          <p>Easy FP Full Body Controller is available as a paid asset in the Asset Store. To get started, Overview, Quick Start and Interfaces / API are ready — for questions you can reach vedaloiv directly.</p>
+        </div>
+        <div class="contact-actions">
+          <div class="contact-asset-cta">
+            <a class="button button--primary" data-od-id="contact-cta" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">Go to Asset Store <span aria-hidden="true">→</span></a>
+          </div>
+          <form class="contact-form" id="contact-form" data-od-id="contact-form" action="https://formsubmit.co/dinlinwin@gmail.com" method="POST" novalidate aria-labelledby="contact-form-title">
+            <h3 class="contact-form-title" id="contact-form-title">Write directly</h3>
+            <input class="field-honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input type="hidden" name="_subject" value="New message from vedaloiv publisher page">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://maansenv.github.io/Publisher/">
+            <div class="contact-form-grid">
+              <div class="form-field">
+                <label class="form-label" for="contact-name">Name</label>
+                <input class="form-control" id="contact-name" data-od-id="field-name" type="text" name="name" placeholder="Your name" autocomplete="name" required aria-describedby="error-name">
+                <p class="field-error" id="error-name" aria-live="polite" hidden></p>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="contact-email">Email</label>
+                <input class="form-control" id="contact-email" data-od-id="field-email" type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-describedby="error-email">
+                <p class="field-error" id="error-email" aria-live="polite" hidden></p>
+              </div>
+              <div class="form-field form-field--wide">
+                <label class="form-label" for="contact-subject">Subject</label>
+                <input class="form-control" id="contact-subject" data-od-id="field-subject" type="text" name="subject" placeholder="Message subject" maxlength="140" required aria-describedby="error-subject">
+                <p class="field-error" id="error-subject" aria-live="polite" hidden></p>
+              </div>
+              <div class="form-field form-field--wide">
+                <label class="form-label" for="contact-message">Message</label>
+                <textarea class="form-control" id="contact-message" data-od-id="field-message" name="message" rows="4" placeholder="Your message" maxlength="5000" required aria-describedby="error-message"></textarea>
+                <p class="field-error" id="error-message" aria-live="polite" hidden></p>
+              </div>
+            </div>
+            <button class="contact-submit" type="submit" data-od-id="contact-submit">Send message</button>
+            <p class="contact-status" data-contact-status data-state="idle" role="status" aria-live="polite">Ready for your message.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="footer">
+    <div class="container footer-wrap">
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.1.0</p>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#galerie">Gallery</a>
+        <a href="#assets">Collection</a>
+        <a href="#ueber-mich">About</a>
+        <a href="docs/overview.html">Overview</a>
+        <a href="https://github.com/MaansenV" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="mailto:dinlinwin@gmail.com">Email</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const storageKey = "unity-asset-portfolio-filter";
+      const buttons = [...document.querySelectorAll("[data-filter]")];
+      const cards = [...document.querySelectorAll("[data-category]")];
+      const status = document.querySelector("[data-filter-status]");
+      const validFilters = new Set(buttons.map((button) => button.dataset.filter));
+
+      function readFilter() {
+        try { return localStorage.getItem(storageKey); } catch { return null; }
+      }
+
+      function writeFilter(filter) {
+        try { localStorage.setItem(storageKey, filter); } catch { /* private browsing */ }
+      }
+
+      function applyFilter(requestedFilter) {
+        const filter = validFilters.has(requestedFilter) ? requestedFilter : "Alle";
+        let visible = 0;
+        buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.filter === filter)));
+        cards.forEach((card) => {
+          const matches = filter === "Alle" || card.dataset.category === filter;
+          card.hidden = !matches;
+          if (matches) visible += 1;
+        });
+        status.textContent = `${visible} ${visible === 1 ? "asset" : "assets"} visible`;
+        writeFilter(filter);
+      }
+
+      buttons.forEach((button) => button.addEventListener("click", () => applyFilter(button.dataset.filter)));
+      applyFilter(readFilter() || "Alle");
+      console.assert(buttons.length > 0 && cards.length > 0 && status, "Asset filter is not fully wired.");
+    })();
+
+    (() => {
+      const form = document.getElementById("contact-form");
+      if (!form) return;
+      const status = form.querySelector("[data-contact-status]");
+      const submit = form.querySelector('[data-od-id="contact-submit"]');
+      const honeypot = form.querySelector(".field-honeypot");
+      const fields = [
+        { input: form.querySelector('[name="name"]'), error: form.querySelector("#error-name") },
+        { input: form.querySelector('[name="email"]'), error: form.querySelector("#error-email"), email: true },
+        { input: form.querySelector('[name="subject"]'), error: form.querySelector("#error-subject") },
+        { input: form.querySelector('[name="message"]'), error: form.querySelector("#error-message") }
+      ];
+
+      function setStatus(message, state) {
+        status.textContent = message;
+        status.dataset.state = state;
+      }
+
+      function setFieldError(field, message) {
+        field.input.setAttribute("aria-invalid", String(Boolean(message)));
+        field.error.textContent = message;
+        field.error.hidden = !message;
+      }
+
+      function validate() {
+        let firstInvalid = null;
+        fields.forEach((field) => {
+          const value = field.input.value.trim();
+          let message = "";
+          if (!value) message = field.input.name === "message" ? "Please write a message." : `Please enter ${field.input.name === "email" ? "your email address" : field.input.name === "subject" ? "a subject" : "your name"}.`;
+          else if (field.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) message = "Please enter a valid email address.";
+          setFieldError(field, message);
+          if (message && !firstInvalid) firstInvalid = field.input;
+        });
+        return firstInvalid;
+      }
+
+      form.addEventListener("input", (event) => {
+        const field = fields.find((item) => item.input === event.target);
+        if (field) setFieldError(field, "");
+});
+
+    // Image lightbox: zoom any product image into a fullscreen preview.
+    (function () {
+      var lightbox = document.getElementById("lightbox");
+      var lightboxImg = document.getElementById("lightbox-img");
+      var lightboxCaption = document.getElementById("lightbox-caption");
+      var lightboxClose = document.getElementById("lightbox-close");
+      if (!lightbox || !lightboxImg || !lightboxClose) return;
+      function openLightbox(img) {
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = img.alt || "";
+        lightboxCaption.textContent = img.alt || "";
+        lightbox.hidden = false;
+        lightboxClose.focus();
+        document.body.style.overflow = "hidden";
+      }
+      function closeLightbox() {
+        lightbox.hidden = true;
+        document.body.style.overflow = "";
+        lightboxImg.removeAttribute("src");
+      }
+      document.querySelectorAll(".asset-media img").forEach(function (img) {
+        img.addEventListener("click", function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+          openLightbox(img);
+        });
+      });
+      lightboxClose.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeLightbox();
+      });
+    })();
+  </script>
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview" hidden id="lightbox" data-od-id="image-lightbox">
+    <button type="button" class="lightbox-close" aria-label="Close image preview" id="lightbox-close" data-od-id="lightbox-close">&times;</button>
+    <figure>
+      <img src="" alt="" id="lightbox-img" data-od-id="lightbox-image">
+      <figcaption id="lightbox-caption" data-od-id="lightbox-caption"></figcaption>
+    </figure>
+  </div>
+</body>
+</html>

@@ -19,22 +19,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-
-      - run: npm ci
-
-      - name: Build VitePress
-        run: npm run docs:build
+      # Static publish of the Open Design site (od-site/). No build step.
+      # index.html = copy of the entry page so the site root (/Publisher/)
+      # serves the landing page directly; docs/ back-links keep resolving
+      # against unity-asset-portfolio.html, which is published as well.
+      # design.md (OD design source doc) stays in the repo but is not published.
+      - name: Prepare publish dir
+        run: |
+          mkdir -p _site
+          cp -r od-site/. _site/
+          rm _site/design.md
+          cp od-site/unity-asset-portfolio.html _site/index.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/.vitepress/dist
+          path: _site
 
   deploy:
     environment:
