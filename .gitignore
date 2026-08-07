@@ -19,7 +19,6 @@ node_modules/
 dist/
 build/
 *.log
-docs/.vitepress/cache/
 *.rar
 .opencode/
 .pi/

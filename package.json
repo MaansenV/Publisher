@@ -3,16 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Maansen — Unity Asset Store publisher page + asset documentation (VitePress).",
+  "description": "Maansen — Unity Asset Store publisher page + asset documentation (static HTML, synced from Open Design).",
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
     "site:local": "node scripts/serve.mjs od-site",
     "sync:od": "node scripts/sync-od.mjs"
-  },
-  "devDependencies": {
-    "vitepress": "^1.6.3",
-    "vue": "^3.5.13"
   }
 }
