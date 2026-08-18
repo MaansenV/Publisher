@@ -274,6 +274,7 @@
       <nav class="top-nav" aria-label="Primary navigation" data-od-id="top-navigation">
         <a class="nav-link" href="../unity-asset-portfolio.html" data-od-id="home-nav-link">Home</a>
         <a class="nav-link" href="overview.html" data-od-id="controller-nav-link">Easy FP Controller</a>
+        <a class="nav-link" href="dungeon-generator.html" data-od-id="dungeon-generator-nav-link">Dungeon Generator</a>
         <a class="nav-link" data-od-id="asset-store-nav-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener noreferrer">Asset Store</a>
       </nav>
       <div class="top-actions" data-od-id="top-actions">
@@ -309,13 +310,20 @@
 
     <section class="doc-shell" data-od-id="interfaces-content">
       <div class="container doc-layout">
-        <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Easy FP Full Body Controller">
+        <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Documentation">
           <p class="doc-sidebar-title" data-od-id="docs-sidebar-title">Easy FP Full Body Controller</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Documentation pages">
             <a href="overview.html" data-od-id="sidebar-overview-link">Overview</a>
             <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
             <a href="interfaces.html" aria-current="page" data-od-id="sidebar-interfaces-link">Interfaces</a>
+          </nav>
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Procedural Dungeon Generator</p>
+          <p class="doc-sidebar-section">Documentation</p>
+          <nav aria-label="Dungeon Generator pages">
+            <a href="dungeon-generator.html" data-od-id="sidebar-dungeon-overview-link">Overview</a>
+            <a href="dungeon-quick-start.html" data-od-id="sidebar-dungeon-quick-start-link">Quick Start</a>
+            <a href="dungeon-api.html" data-od-id="sidebar-dungeon-api-link">API Reference</a>
           </nav>
         </aside>
         <aside class="doc-aside" data-od-id="interfaces-sidebar" aria-label="Interfaces sections">
@@ -870,6 +878,9 @@ player.HandItemSocket.ItemEquipped += args =&gt;
         <a href="overview.html" data-od-id="footer-overview-link">Overview</a>
         <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
         <a href="interfaces.html" aria-current="page" data-od-id="footer-interfaces-link">Interfaces</a>
+        <a href="dungeon-generator.html" data-od-id="footer-dungeon-generator-link">Dungeon Generator</a>
+        <a href="dungeon-quick-start.html" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
+        <a href="dungeon-api.html" data-od-id="footer-dungeon-api-link">Dungeon API</a>
         <a href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="footer-github-link">GitHub</a>
         <a href="mailto:dinlinwin@gmail.com">Email</a>
       </nav>
@@ -879,7 +890,10 @@ player.HandItemSocket.ItemEquipped += args =&gt;
     [
       {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity: full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, dynamic items, procedural IK, and extensible events.","url":"overview.html"},
       {"title":"Quick Start","headings":["Requirements","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Validation","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, prepare a Humanoid model, run the 7-step Setup Wizard, configure FPCutter and input, then press Play.","url":"quick-start.html"},
-      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus / cutscenes / pausing):","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config & reactions","ItemAttachmentData: hold & IK config","ItemIKPreset: share IK config","Event API: PlayerEventAPI","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Procedural IK (advanced)","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items, event API, FPCutter, animation, and procedural IK.","url":"interfaces.html"}
+      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus / cutscenes / pausing):","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config & reactions","ItemAttachmentData: hold & IK config","ItemIKPreset: share IK config","Event API: PlayerEventAPI","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Procedural IK (advanced)","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items, event API, FPCutter, animation, and procedural IK.","url":"interfaces.html"},
+      {"title":"Dungeon Generator","headings":["Authoring vs. assembly","Editor tools","How generation works","Getting started","Chunk streaming","Extending the toolkit","Status"],"excerpt":"Procedural Dungeon Generator for Unity: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, editor tools under Tools/DungeonGen, chunk streaming, and extension contracts.","url":"dungeon-generator.html"},
+      {"title":"Dungeon Quick Start","headings":["1. Package & setup","2. Create a theme","3. Paint a room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","7. Decorate rooms (optional)","8. Chunk streaming (optional)","9. Next steps"],"excerpt":"Minimal flow for the Procedural Dungeon Generator: package setup, Theme Wizard, Room Designer, DungeonTemplate, and DungeonManager Generate.","url":"dungeon-quick-start.html"},
+      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","ChunkDungeonStreamer","RoomDecorator","Rendering & room geometry","Post-processing & culling","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API in namespace DungeonGen: DungeonManager, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
     ]
   </script>
   <script>

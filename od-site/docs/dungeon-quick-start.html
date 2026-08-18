@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Easy FP Full Body Controller documentation: overview, requirements, listing facts, quick start, and runtime API.">
-  <title>Overview / Easy FP Full Body Controller docs</title>
+  <meta name="description" content="Dungeon Generator quick start: package setup, Theme Wizard, Room Designer, DungeonTemplate, and generating a dungeon with DungeonManager.">
+  <title>Dungeon Quick Start / Procedural Dungeon Generator docs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -299,6 +299,9 @@
     .doc-link { color: var(--cyan); }
     .doc-link:hover { color: var(--fg); text-decoration-thickness: 2px; }
     .table-wrap { max-width: 100%; overflow-x: auto; border-radius: 4px; -webkit-overflow-scrolling: touch; }
+    .doc-screenshot { display: block; width: fit-content; max-width: 100%; margin: 24px 0 28px; padding: 10px; border: 1px solid var(--fg); border-radius: 4px; background: var(--surface-raised); box-shadow: 8px 10px 0 color-mix(in oklch, var(--bg) 72%, var(--surface-raised) 28%); }
+    .doc-screenshot img { display: block; width: auto; max-width: 100%; height: auto; object-fit: contain; background: var(--bg); }
+    .doc-screenshot figcaption { max-width: 72ch; margin-top: 10px; color: var(--fg); font: 11px/1.5 var(--font-mono); }
     tbody tr { transition: background-color 180ms ease, box-shadow 180ms ease; }
     tbody tr:hover { background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--border); }
     .video-frame, .step-shot, .cta-panel, details { border-radius: 4px; }
@@ -364,7 +367,7 @@
     }
   </style>
 </head>
-<body id="top" data-doc-page="overview">
+<body id="top" data-doc-page="dungeon-quick-start">
   <header class="site-header" data-od-id="site-header">
     <div class="container nav-wrap">
       <button class="sidebar-toggle" type="button" data-od-id="mobile-menu-button" aria-controls="docs-sidebar" aria-expanded="false" aria-label="Open documentation menu">Menu</button>
@@ -373,7 +376,7 @@
       </a>
       <nav class="top-nav" aria-label="Primary navigation" data-od-id="top-navigation">
         <a class="nav-link" href="../unity-asset-portfolio.html" data-od-id="home-nav-link">Home</a>
-        <a class="nav-link" href="overview.html" aria-current="page" data-od-id="controller-nav-link">Easy FP Controller</a>
+        <a class="nav-link" href="overview.html" data-od-id="controller-nav-link">Easy FP Controller</a>
         <a class="nav-link" href="dungeon-generator.html" data-od-id="dungeon-generator-nav-link">Dungeon Generator</a>
         <a class="nav-link" data-od-id="asset-store-nav-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener noreferrer">Asset Store</a>
       </nav>
@@ -392,29 +395,29 @@
     </div>
   </header>
 
-  <main data-od-id="overview-page">
-    <section class="doc-hero" data-od-id="overview-hero" aria-labelledby="overview-title">
+  <main data-od-id="dungeon-quick-start-page">
+    <section class="doc-hero" data-od-id="dungeon-quick-start-hero" aria-labelledby="dungeon-quick-start-title">
       <div class="container doc-hero-grid">
         <div>
-          <span class="eyebrow">Documentation / Overview</span>
-          <h1 id="overview-title" data-od-id="overview-heading">Easy FP Full Body Controller</h1>
-          <p class="doc-lead">A first-person <strong>and</strong> third-person full-body character controller for Unity. The runtime API is render-pipeline-agnostic; the demo scene and FPCutter shader require URP. It renders and animates a full body in first person using procedural IK, ships with a guided 7-step Setup Wizard, includes the <strong>FPCutter</strong> mesh-cutting tool for hiding body parts in FP view, a dynamic item system, and an extensible event API.</p>
-          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.1.0</span><span>namespace Player</span></div>
+          <span class="eyebrow">Documentation / Quick Start</span>
+          <h1 id="dungeon-quick-start-title" data-od-id="dungeon-quick-start-heading">Dungeon Generator Quick Start</h1>
+          <p class="doc-lead">From import to a generated dungeon in a few steps: set up the package, create a theme, paint a room, build a template, and let <strong>DungeonManager</strong> generate the layout.</p>
+          <div class="doc-hero-note"><span>Minimal flow</span><span>Tools ▸ DungeonGen</span><span>namespace DungeonGen</span></div>
         </div>
-        <figure class="doc-hero-media" data-od-id="overview-hero-image">
-          <img src="images/fp-overview.png" alt="Easy FP Full Body Controller product view showing a full body in a Unity scene" fetchpriority="high" decoding="async">
-          <figcaption class="doc-hero-caption"><span>Easy FP Full Body Controller</span><span>Real shot</span></figcaption>
+        <figure class="doc-hero-media" data-od-id="dungeon-quick-start-hero-image">
+          <img src="../assets/web/dungen-editor.jpg" alt="Dungeon Generator editor tools in Unity with room designer and template views" fetchpriority="high" decoding="async">
+          <figcaption class="doc-hero-caption"><span>Room Designer + Template Designer</span><span>Minimal flow</span></figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="doc-shell" data-od-id="overview-content">
+    <section class="doc-shell" data-od-id="dungeon-quick-start-content">
       <div class="container doc-layout">
         <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Documentation">
           <p class="doc-sidebar-title" data-od-id="docs-sidebar-title">Easy FP Full Body Controller</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Documentation pages">
-            <a href="overview.html" aria-current="page" data-od-id="sidebar-overview-link">Overview</a>
+            <a href="overview.html" data-od-id="sidebar-overview-link">Overview</a>
             <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
             <a href="interfaces.html" data-od-id="sidebar-interfaces-link">Interfaces</a>
           </nav>
@@ -422,123 +425,265 @@
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Dungeon Generator pages">
             <a href="dungeon-generator.html" data-od-id="sidebar-dungeon-overview-link">Overview</a>
-            <a href="dungeon-quick-start.html" data-od-id="sidebar-dungeon-quick-start-link">Quick Start</a>
+            <a href="dungeon-quick-start.html" aria-current="page" data-od-id="sidebar-dungeon-quick-start-link">Quick Start</a>
             <a href="dungeon-api.html" data-od-id="sidebar-dungeon-api-link">API Reference</a>
           </nav>
         </aside>
-        <aside class="doc-aside" data-od-id="overview-sidebar" aria-label="Overview sections">
-          <p class="doc-aside-title" data-od-id="overview-outline-title">On this page</p>
+        <aside class="doc-aside" data-od-id="dungeon-quick-start-sidebar" aria-label="Quick Start sections">
+          <p class="doc-aside-title" data-od-id="dungeon-quick-start-outline-title">On this page</p>
           <nav id="doc-outline-list" aria-label="On this page links" data-od-id="outline-links">
-            <a href="#features">Features</a>
-            <a href="#requirements">Requirements</a>
-            <a href="#listing-facts">Listing facts</a>
-            <a href="#quick-start">Quick start</a>
+            <a href="#setup">Package &amp; setup</a>
+            <a href="#theme">Create a theme</a>
+            <a href="#room">Paint a room</a>
+            <a href="#pool">Add rooms to the pool</a>
+            <a href="#template">Build a template</a>
+            <a href="#generate">Generate a dungeon</a>
+            <a href="#decoration">Decorate rooms (optional)</a>
+            <a href="#chunk-streaming">Chunk streaming (optional)</a>
             <a href="#next-steps">Next steps</a>
-            <a href="#changelog">Changelog</a>
-            <a href="#get-it">Get it</a>
           </nav>
         </aside>
 
         <article class="doc-article">
-          <aside class="callout" data-od-id="verified-callout">
-            <h2 data-od-id="verified-heading">Verified against v1.1.0</h2>
-            <p>This documentation reflects the shipped <strong>v1.1.0</strong> package source (read directly from <code>Assets/FBSystem/</code>). Signatures below are real, not estimates.</p>
+          <aside class="callout" data-od-id="qs-verified-callout">
+            <h2 data-od-id="qs-verified-heading">Source-verified workflow</h2>
+            <p>Every tool path and component name below was read directly from <code>Assets/DungeonGenerator/</code>. Deeper details — dependency versions, smoke tests, troubleshooting, and the export checklist — ship in the package's User Guide.</p>
           </aside>
 
-          <section class="doc-section" id="features" data-od-id="features-section" aria-labelledby="features-heading">
-            <span class="section-kicker">01 / Product surface</span>
-            <h2 id="features-heading" data-od-id="features-heading">Features</h2>
-            <ul class="feature-list" data-od-id="features-list">
-              <li><strong>Full-body first / third person</strong> with procedural hand &amp; head IK and spine stabilization.</li>
-              <li><strong>7-step Setup Wizard</strong>: menu <code>Tools ▸ First Person ▸ Setup Wizard</code> walks you from root to validation.</li>
-              <li><strong>FPCutter</strong>: segments the character mesh and hides body parts (e.g. the head) in first person while still casting shadows.</li>
-              <li><strong>Dynamic item system</strong>: equip/unequip, per-item hold data, shareable IK presets, scroll-wheel / number-key switching.</li>
-              <li><strong>Extensible event API</strong>: C# events + <code>UnityEvent</code>s + auto-discovered listener interfaces, each fired once per transition from a single canonical chokepoint.</li>
-              <li><strong>Cinemachine</strong>-based FPS camera with a stable anchor target.</li>
-              <li><strong>Unity Input System</strong> integration (shipped <code>FBInputActions</code> asset).</li>
+          <section class="doc-section" id="setup" data-od-id="qs-setup-section" aria-labelledby="setup-heading">
+            <span class="section-kicker">01 / Install</span>
+            <h2 id="setup-heading" data-od-id="qs-setup-heading">1. Package &amp; setup</h2>
+            <p>This is an Assets-folder toolkit, not a UPM package. Keep it at exactly <code>Assets/DungeonGenerator/</code> — several editor windows load their <code>.uss</code> stylesheets from that path, and renaming or moving the folder breaks them.</p>
+            <p>Before using the tools, install the package dependencies: <strong>AI Navigation</strong>, <strong>Burst</strong>, <strong>Collections</strong>, <strong>Mathematics</strong>, and <strong>Alchemy</strong> (the exact versions used in development are listed in the shipped User Guide). Burst, Collections, and Mathematics are compile-time dependencies even when <code>DungeonManager.useBurstPlanner</code> is disabled.</p>
+            <h3 data-od-id="qs-setup-object-heading">Create a setup object</h3>
+            <p>Open <strong>Tools ▸ DungeonGen ▸ Dungeon Setup</strong> to create a basic <code>DungeonManager</code> or <code>ChunkDungeonStreamer</code> setup object. You can also add <code>DungeonManager</code> directly to a scene GameObject.</p>
+            <figure class="doc-screenshot" data-od-id="qs-setup-screenshot-figure">
+              <img src="images/dungeon/Unity_vjRd2cfcbX.png" alt="Dungeon Setup window offering Template Dungeon and Infinite Dungeon creation." loading="lazy" decoding="async">
+              <figcaption>Create either a DungeonManager-based template dungeon or a ChunkDungeonStreamer-based infinite dungeon.</figcaption>
+            </figure>
+            <h3 data-od-id="qs-authoring-assets-heading">Create authoring assets</h3>
+            <p>Use the Project window's create menu: <code>Assets ▸ Create ▸ DungeonGen ▸ …</code> for <strong>Room Design</strong>, <strong>Dungeon Template</strong>, <strong>DungeonTheme</strong>, <strong>Decoration Profile</strong>, <strong>Door Socket Type</strong>, and <strong>Progression Requirement</strong>. Keep all authored assets in your own content folder (for example <code>Assets/MyDungeonContent/</code>) — never back inside the package folder.</p>
+          </section>
+
+          <section class="doc-section" id="theme" data-od-id="qs-theme-section" aria-labelledby="theme-heading">
+            <span class="section-kicker">02 / Visuals</span>
+            <h2 id="theme-heading" data-od-id="qs-theme-heading">2. Create a theme</h2>
+            <ol data-od-id="theme-steps">
+              <li>Create a <code>DungeonTheme</code> asset in your content folder.</li>
+              <li>Add floor, wall, corner, door, ceiling, stair, hole, and corridor prefabs as needed.</li>
+              <li>Set the tile size and floor height to match your kit.</li>
+              <li>Open <strong>Tools ▸ DungeonGen ▸ Dungeon Theme Wizard</strong>.</li>
+              <li>Use <strong>Detect Tile Size From Floors</strong>, then <strong>Analyze All</strong>.</li>
+              <li>Review the proposed sizes and offsets, apply only the proposals that match your kit, and use the preview to verify seams.</li>
+            </ol>
+            <figure class="doc-screenshot" data-od-id="qs-theme-screenshot-figure">
+              <img src="images/dungeon/Unity_p5iVVEUj5y.png" alt="Dungeon Theme Wizard with no DungeonTheme selected and collapsed prefab-analysis sections." loading="lazy" decoding="async">
+              <figcaption>Select or create a DungeonTheme before analyzing tile dimensions, offsets, and preview seams.</figcaption>
+            </figure>
+            <p>A theme can omit a prefab family. For example, if no ceiling prefabs are assigned, the renderer does not create ceilings. Wall and door offsets that look small can create visible seams, so validate changes in the Theme Wizard preview.</p>
+          </section>
+
+          <section class="doc-section" id="room" data-od-id="qs-room-section" aria-labelledby="room-heading">
+            <span class="section-kicker">03 / Authoring</span>
+            <h2 id="room-heading" data-od-id="qs-room-heading">3. Paint a room</h2>
+            <p>Open <strong>Tools ▸ DungeonGen ▸ Room Designer</strong>. In Layout mode: the <strong>Floor brush</strong> paints walkable cells, the <strong>Door brush</strong> places a door overlay on a wall cell, the <strong>Stair brush</strong> anchors stairs between adjacent floors, and the <strong>Hole brush</strong> places an explicit opening. <strong>RectDelete</strong> removes a rectangular region. Right-click erases, middle mouse pans, the wheel zooms, <code>F</code>/<code>D</code>/<code>S</code>/<code>H</code> select common brushes, <code>0</code> fits the design to view, and <code>R</code> cycles the stair axis.</p>
+            <figure class="doc-screenshot" data-od-id="qs-room-screenshot-figure">
+              <img src="images/dungeon/Unity_HZVGaM9JGn.png" alt="Room Designer Layout mode showing floor, door, stair, and hole brushes for a new room." loading="lazy" decoding="async">
+              <figcaption>Paint a room layout and configure its grid, brushes, stair direction, and floors.</figcaption>
+            </figure>
+            <p>Doors are overlays; walls are derived from neighboring walkable cells. Do not paint wall cells manually to replace the derived wall system.</p>
+            <h3 data-od-id="qs-multifloor-heading">Multi-floor rooms</h3>
+            <p>Use the floor controls to switch floors and paint each floor independently; stairs define the connection between floors. The renderer derives the floor opening, wall exclusions, and ceiling cutout from the stair footprint — do not add a second manual hole for the same stair opening.</p>
+            <h3 data-od-id="qs-doors-heading">Doors and socket types</h3>
+            <p>Door direction is detected from neighboring wall geometry. A <code>DoorSocketType</code> controls compatibility between connections: a socket with no type is a wildcard, typed sockets normally require the same type asset, and compatible type relations can explicitly allow two different types to connect. Chunk portal selection also uses socket-type compatibility. Create types with <code>Assets ▸ Create ▸ DungeonGen ▸ Door Socket Type</code>.</p>
+            <h3 data-od-id="qs-save-heading">Save the room</h3>
+            <p>Save designs and prefabs outside <code>Assets/DungeonGenerator/</code>. A saved room should contain a <code>RoomData</code> root, valid <code>DoorSocket</code> components, the intended <code>DungeonTheme</code> reference, and optionally a baked <code>RoomDecorationAuthoring</code> snapshot. Use <strong>Tools ▸ DungeonGen ▸ Setup Room Prefab</strong> if the prefab needs <code>RoomData</code>, sockets, or wall-fill setup, then confirm that each doorway has the intended <code>DoorSocket</code> and that socket coordinates snap to the room grid.</p>
+          </section>
+
+          <section class="doc-section" id="pool" data-od-id="qs-pool-section" aria-labelledby="pool-heading">
+            <span class="section-kicker">04 / Content</span>
+            <h2 id="pool-heading" data-od-id="qs-pool-heading">4. Add rooms to the pool</h2>
+            <p>On the <code>DungeonManager</code>, add room pool entries. Each entry needs a prefab, a positive selection weight, and an allowed placement context (<code>Template</code>, <code>SequenceFiller</code>, or <code>RandomBranch</code>). Template nodes can instead pin a specific prefab directly, bypassing the weighted pool.</p>
+          </section>
+
+          <section class="doc-section" id="template" data-od-id="qs-template-section" aria-labelledby="template-heading">
+            <span class="section-kicker">05 / Structure</span>
+            <h2 id="template-heading" data-od-id="qs-template-heading">5. Build a template</h2>
+            <p>Open <strong>Tools ▸ DungeonGen ▸ Dungeon Template Designer</strong>. A template is a tree of <code>TemplateNode</code> and <code>TemplateEdge</code> objects: nodes are milestones or room slots, edges are required connections, the root is the entrance, and an exit is normally the terminal leaf. Optional <code>ProgressionRequirement</code> assets can gate main-path connections.</p>
+            <p>Validate the template before generating — the validator checks integrity, tree topology, socket feasibility, and progression reachability.</p>
+            <figure class="doc-screenshot" data-od-id="qs-template-screenshot-figure">
+              <img src="images/dungeon/Unity_vCB8swmKlu.png" alt="Dungeon Template Designer showing an Entrance node and a failed validation because it has no pinned prefab or pool entries." loading="lazy" decoding="async">
+              <figcaption>Build and validate the template tree; assign an entrance prefab or eligible room-pool entries before generation.</figcaption>
+            </figure>
+          </section>
+
+          <section class="doc-section" id="generate" data-od-id="qs-generate-section" aria-labelledby="generate-heading">
+            <span class="section-kicker">06 / Assembly</span>
+            <h2 id="generate-heading" data-od-id="qs-generate-heading">6. Generate a dungeon</h2>
+            <ol data-od-id="generate-steps">
+              <li>Add <code>DungeonManager</code> to a scene object.</li>
+              <li>Assign a mandatory <code>DungeonTemplate</code>.</li>
+              <li>Add room pool entries on the manager and assign any pinned prefabs.</li>
+              <li>Configure seed, rotation, seam padding, and search limits.</li>
+              <li>Choose <code>TemplateExact</code> or <code>TemplateSequencedRandom</code>.</li>
+              <li>Enable decoration only after the basic layout works.</li>
+              <li>Call <strong>Generate Dungeon</strong> from the inspector or invoke <code>Generate()</code> from code.</li>
+              <li>Use <code>ClearAllChildren()</code> before regenerating during iteration.</li>
+            </ol>
+            <p>The inspector also provides optional <strong>Add NavMesh Support</strong> and <strong>Add Culling Support</strong> actions — both are idempotent attachments (see the <a class="doc-link" href="dungeon-api.html">API Reference</a>).</p>
+            <p>Use a fixed seed for reproducible layouts. The managed planner and the optional Burst planner are both deterministic, but the Burst planner uses a separate implementation and can produce a different valid layout for the same seed.</p>
+          </section>
+
+          <section class="doc-section" id="dungeon-manager-inspector" data-od-id="qs-dungeon-manager-inspector-section" aria-labelledby="dungeon-manager-inspector-heading">
+            <h3 id="dungeon-manager-inspector-heading" data-od-id="qs-dungeon-manager-inspector-heading">DungeonManager inspector</h3>
+            <p>Use the manager inspector in two passes: set the template and generation mode, then check the pool, seed, retries, and decoration.</p>
+            <figure class="doc-screenshot" data-od-id="qs-dungeon-manager-template-figure">
+              <img src="images/dungeon/Unity_CRdhp8nWKQ.png" alt="Unity Inspector showing Dungeon Manager set to Template Exact, with generation buttons, an empty Dungeon Template field, rotation enabled, and visible expansion and placement settings." loading="lazy" decoding="async">
+              <figcaption>Start with a template, allow rotation when your room sockets support it, then generate. The expansion values matter when using sequenced random generation.</figcaption>
+            </figure>
+            <ul data-od-id="qs-dungeon-manager-template-list">
+              <li><strong>Generate Dungeon / Clear Generated / Add NavMesh Support / Add Culling Support:</strong> build the dungeon, remove generated content, or add the two optional supports.</li>
+              <li><strong>Generation Mode:</strong> chooses how the template is used for this generation.</li>
+              <li><strong>Use Burst Planner:</strong> switches to the Burst planner when enabled.</li>
+              <li><strong>Add Random Branches in Exact:</strong> allows random branches while using Exact mode.</li>
+              <li><strong>Dungeon Template:</strong> is the template asset to generate; assign one first.</li>
+              <li><strong>Max Search Nodes:</strong> limits the planner's search attempts.</li>
+              <li><strong>Allow Rotation:</strong> allows room rotation; use it only when layouts and sockets support it.</li>
+              <li><strong>Expansion — Main Path:</strong> controls expansion of the main route.</li>
+              <li><strong>Expansion — Min Offshoot Sequence Fillers:</strong> sets the lower bound for sequence-filler rooms on an offshoot.</li>
+              <li><strong>Expansion — Max Offshoot Sequence Fillers:</strong> sets the upper bound for sequence-filler rooms on an offshoot.</li>
+              <li><strong>Expansion — Max Random Branch Rooms:</strong> caps rooms added to random branches.</li>
+              <li><strong>Expansion — Min Random Branch Starts:</strong> sets the lower bound for random branch starts.</li>
+              <li><strong>Expansion — Max Random Branch Starts:</strong> sets the upper bound for random branch starts.</li>
+              <li><strong>Expansion — Random Subbranches:</strong> allows branches to grow from other random branches when enabled.</li>
+              <li><strong>Expansion — Max Branch Depth:</strong> caps the number of random branch levels.</li>
+              <li><strong>Placement — Seam Padding:</strong> adds spacing around room seams.</li>
+              <li><strong>Placement — Allowed Seam Overlap:</strong> sets how much adjacent seams may overlap.</li>
+              <li><strong>Placement — Root:</strong> selects the scene root used for generated content.</li>
+              <li><strong>Placement — Scene Entrance:</strong> selects the scene entrance object.</li>
+            </ul>
+            <figure class="doc-screenshot" data-od-id="qs-dungeon-manager-runtime-figure">
+              <img src="images/dungeon/Unity_nNnPlzdoNJ.png" alt="Unity Inspector showing lower Dungeon Manager settings: empty weighted room pool, runtime prewarm values, random seed and retry settings, and decoration enabled after generation." loading="lazy" decoding="async">
+              <figcaption>Add eligible room prefabs to the weighted pool, keep a fixed seed while testing, and enable decoration after the base layout works.</figcaption>
+            </figure>
+            <ul data-od-id="qs-dungeon-manager-runtime-list">
+              <li><strong>Weighted Room Pool:</strong> supplies rooms for unpinned nodes.</li>
+              <li><strong>Runtime — Prototype Player Prefab:</strong> sets the prefab used by the prototype runtime.</li>
+              <li><strong>Runtime — Spawn Prototype Player:</strong> spawns that prototype player when enabled; turn it off to skip it.</li>
+              <li><strong>Runtime — Generation Frames:</strong> sets how many frames generation work may use.</li>
+              <li><strong>Runtime — Room Pool Prewarm:</strong> prepares room instances before they are needed.</li>
+              <li><strong>Runtime — Decoration Pool Prewarm:</strong> prepares decoration instances before they are needed.</li>
+              <li><strong>Determinism &amp; Retry — Seed:</strong> sets the value used when random seeding is off.</li>
+              <li><strong>Determinism &amp; Retry — Use Random Seed:</strong> chooses a changing seed when enabled; turn it off to use <strong>Seed</strong> for repeatable tests.</li>
+              <li><strong>Determinism &amp; Retry — Max Plan Retries:</strong> sets how many extra planning attempts are allowed.</li>
+              <li><strong>Determinism &amp; Retry — Plan Retry Timeout:</strong> limits how long each retry may spend planning.</li>
+              <li><strong>Decoration &amp; Logging — Decorate After Generation:</strong> runs decoration after the base layout when enabled; turn it off while debugging the layout.</li>
+              <li><strong>Decoration &amp; Logging — Log Decoration Diagnostics:</strong> adds decoration-specific diagnostic messages to the log when enabled.</li>
+              <li><strong>Decoration &amp; Logging — Log Generation:</strong> adds generation messages to the log when enabled.</li>
             </ul>
           </section>
 
-          <section class="doc-section" id="requirements" data-od-id="requirements-section" aria-labelledby="requirements-heading">
-            <span class="section-kicker">02 / Before import</span>
-            <h2 id="requirements-heading" data-od-id="requirements-heading">Requirements</h2>
-            <div class="table-wrap" data-od-id="requirements-table-wrap">
-              <table data-od-id="requirements-table">
-                <thead><tr><th scope="col">Requirement</th><th scope="col">Version</th><th scope="col">Source</th></tr></thead>
-                <tbody>
-                  <tr><td>Unity</td><td>6000.5.0f1 (Unity 6.5) or newer</td><td><code>ProjectSettings/ProjectVersion.txt</code></td></tr>
-                  <tr><td>Render Pipeline</td><td>URP 17.5.0 (demo + FPCutter shader)</td><td><code>Packages/manifest.json</code></td></tr>
-                  <tr><td>Cinemachine</td><td>3.1.7</td><td><code>Packages/manifest.json</code></td></tr>
-                  <tr><td>Input System</td><td>1.19.0</td><td><code>Packages/manifest.json</code></td></tr>
-                  <tr><td>Character model</td><td>imported as <strong>Humanoid</strong></td><td>Setup Wizard step 2 requires it</td></tr>
-                </tbody>
-              </table>
-            </div>
+          <section class="doc-section" id="decoration" data-od-id="qs-decoration-section" aria-labelledby="decoration-heading">
+            <span class="section-kicker">07 / Optional</span>
+            <h2 id="decoration-heading" data-od-id="qs-decoration-heading">7. Decorate rooms (optional)</h2>
+            <p>A <code>DecorationProfile</code> contains ordered categories. Each category can define a surface (floor, wall, or ceiling), a region, a prefab pool with weights, footprint and padding, relations, preserve-paths accessibility checks, a failure policy, deterministic seed offsets, and fixed or AutoFit placement.</p>
+            <figure class="doc-screenshot" data-od-id="qs-decoration-screenshot-figure">
+              <img src="images/dungeon/Unity_edIANa0imX.png" alt="Room Designer Objects mode with an empty Decoration Profile and object category controls." loading="lazy" decoding="async">
+              <figcaption>Configure Decoration Profile categories and spawn controls in the Room Designer’s Objects mode.</figcaption>
+            </figure>
+            <p>Bake footprints before saving a runtime prefab when a decoration object does not provide an override footprint. As with the rest of the pipeline: enable decoration only after the basic layout works.</p>
           </section>
 
-          <section class="doc-section" id="listing-facts" data-od-id="listing-facts-section" aria-labelledby="listing-facts-heading">
-            <span class="section-kicker">03 / Asset Store</span>
-            <h2 id="listing-facts-heading" data-od-id="listing-facts-heading">Listing facts</h2>
-            <div class="table-wrap" data-od-id="listing-facts-table-wrap">
-              <table data-od-id="listing-facts-table">
-                <thead><tr><th scope="col">Field</th><th scope="col">Value</th></tr></thead>
-                <tbody>
-                  <tr><td>Asset</td><td>Easy FP Full Body Controller</td></tr>
-                  <tr><td>Publisher</td><td>vedaloiv (listed as Maansen)</td></tr>
-                  <tr><td>Store page</td><td><a class="doc-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">assetstore.unity.com</a></td></tr>
-                  <tr><td>Price</td><td>€36.79</td></tr>
-                  <tr><td>Version</td><td>1.1.0</td></tr>
-                  <tr><td>Unity</td><td>6000.5.0+</td></tr>
-                  <tr><td>Render pipeline</td><td>URP (demo + FPCutter)</td></tr>
-                  <tr><td>Package size</td><td>185.2 MB</td></tr>
-                  <tr><td>Released</td><td>2026-07-28 (v1.0), v1.1.0 on 2026-07-30</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section class="doc-section" id="quick-start" data-od-id="quick-start-section" aria-labelledby="quick-start-heading">
-            <span class="section-kicker">04 / First run</span>
-            <h2 id="quick-start-heading" data-od-id="quick-start-heading">Quick start</h2>
-            <p>Run the <strong>7-step Setup Wizard</strong> (<code>Tools ▸ First Person ▸ Setup Wizard</code>), cut your mesh with <strong>FPCutter</strong>, and press Play. Full steps: <a class="doc-link" href="quick-start.html">Quick Start</a>.</p>
-            <div class="video-frame" data-od-id="overview-video">
-              <iframe src="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" title="FBSystem Quick Start Guide walkthrough" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen data-od-id="walkthrough-embed"></iframe>
-            </div>
-            <p class="video-link"><a href="https://www.youtube-nocookie.com/watch?v=_X0HWXqQ3_k" target="_blank" rel="noopener noreferrer" data-od-id="walkthrough-video-link">Open the walkthrough on YouTube ↗</a></p>
-            <p class="video-credit">Walkthrough by <strong>aloiV</strong>. Covers the 7-step Setup Wizard, FPCutter mesh optimization, and the dynamic Item Usage system.</p>
-          </section>
-
-          <section class="doc-section" id="next-steps" data-od-id="next-steps-section" aria-labelledby="next-steps-heading">
-            <span class="section-kicker">05 / Continue</span>
-            <h2 id="next-steps-heading" data-od-id="next-steps-heading">Next steps</h2>
-            <ul data-od-id="next-steps-list">
-              <li><a class="doc-link" href="quick-start.html">Quick Start</a>: import, wizard, FPCutter, input, play.</li>
-              <li><a class="doc-link" href="interfaces.html">Interfaces</a>: the runtime API: <code>PlayerController</code> hub, item system, and the full event catalog.</li>
+          <section class="doc-section" id="chunk-streaming" data-od-id="qs-chunk-streaming-section" aria-labelledby="chunk-streaming-heading">
+            <span class="section-kicker">08 / Optional</span>
+            <h2 id="chunk-streaming-heading" data-od-id="qs-chunk-streaming-heading">8. Chunk streaming (optional)</h2>
+            <p><code>ChunkDungeonStreamer</code> expands a dungeon around a moving player instead of creating the whole world at once. Before initializing the streamer, configure all of the following:</p>
+            <h3 id="chunk-setup-heading" data-od-id="qs-chunk-setup-heading">Setup</h3>
+            <p>Set the scene references first so the streamer knows what to spawn and connect.</p>
+            <figure class="doc-screenshot" data-od-id="qs-chunk-setup-figure">
+              <img src="images/dungeon/Unity_V3loHYnweB.png" alt="Unity Inspector showing Chunk Dungeon Streamer setup with empty player, entry, corridor, and room-pool references; dedicated entry enabled; four minimum and maximum rooms; random seed enabled; and chunk size set to 24 cells." loading="lazy" decoding="async">
+              <figcaption>Assign a player, corridor, entry room, and room pool before generating the streamed world.</figcaption>
+            </figure>
+            <ul data-od-id="qs-chunk-setup-list">
+              <li><strong>Generate / Rebuild / Clear World / Recenter:</strong> create the world, rebuild it, remove it, or recenter it.</li>
+              <li><strong>Setup / Preview:</strong> switch between setup controls and the preview view.</li>
+              <li><strong>Player:</strong> assigns the player transform used by streaming.</li>
+              <li><strong>Player Prefab:</strong> provides a prefab the streamer can use as the player.</li>
+              <li><strong>Dedicated Entry:</strong> uses a dedicated entry room when enabled.</li>
+              <li><strong>Entry Prefabs:</strong> supplies prefabs that can be used for the entry room.</li>
+              <li><strong>Corridor Prefab:</strong> supplies the connector placed between rooms.</li>
+              <li><strong>Min Rooms / Max Rooms:</strong> set the lower and upper room counts.</li>
+              <li><strong>Room Pool Prefabs:</strong> supplies room prefabs for streamed chunks.</li>
+              <li><strong>Random Seed:</strong> changes the seed between runs when enabled; disable it for a fixed test seed.</li>
+              <li><strong>World Seed:</strong> is the seed used when Random Seed is off.</li>
+              <li><strong>Chunk Size:</strong> sets the dimensions of a chunk in cells.</li>
             </ul>
-          </section>
-
-          <section class="doc-section" id="changelog" data-od-id="changelog-section" aria-labelledby="changelog-heading">
-            <span class="section-kicker">06 / Release history</span>
-            <h2 id="changelog-heading" data-od-id="changelog-heading">Changelog highlights</h2>
-            <ul data-od-id="changelog-list">
-              <li><strong>v1.1.0 (2026-07-30)</strong>: Extensible Event API: triple mechanism (C# <code>event</code> + <code>UnityEvent</code> + auto-discovered listener interfaces) on <code>HandItemSocket</code> and <code>PlayerLocomotion</code>, fired once per transition. <code>HandItemSocket</code> is now the canonical equip-event owner; <code>ItemContainer</code> is pure orchestration.</li>
-              <li><strong>v1.0.0</strong>: initial release: FP/TP full-body controller, procedural IK, setup-wizard onboarding, FPCutter mesh-cutting, demo scene with item pickup/drop.</li>
+            <ol data-od-id="chunk-steps">
+              <li>Assign a <code>player</code> transform or a <code>playerPrefab</code>.</li>
+              <li>Provide a 1×1 <code>corridorPrefab</code> with cardinal <code>DoorSocket</code> components — there is no procedural corridor fallback.</li>
+              <li>Provide entry prefabs, or explicitly use pool-only mode.</li>
+              <li>Assign room pool prefabs when more than one room may be generated per chunk.</li>
+              <li>Set <code>cellSize</code> to match the measured grid size of the room prefabs.</li>
+              <li>If locks are enabled, assign a <code>keyPrefab</code> with a <code>ChunkKeyPickup</code> component and an enabled trigger collider on the prefab root.</li>
+            </ol>
+            <h3 id="chunk-world-streaming-heading" data-od-id="qs-chunk-world-streaming-heading">World &amp; streaming</h3>
+            <p>These values control the grid and how far the streamer plans ahead versus what it keeps loaded.</p>
+            <figure class="doc-screenshot" data-od-id="qs-chunk-world-streaming-figure">
+              <img src="images/dungeon/Unity_EroYs8nVu9.png" alt="Unity Inspector showing Chunk Dungeon Streamer world and streaming settings: random seed, 24-cell chunks, 3-metre cells, planned radius 2, loaded radius 1, diamond neighborhood off, and visible prewarm values." loading="lazy" decoding="async">
+              <figcaption>Match cell size to the room grid, then balance planning distance, loaded distance, and build cost.</figcaption>
+            </figure>
+            <ul data-od-id="qs-chunk-world-streaming-list">
+              <li><strong>World Seed:</strong> identifies the generated world for repeatable tests.</li>
+              <li><strong>Chunk Size:</strong> sets the chunk dimensions in cells.</li>
+              <li><strong>Cell Size:</strong> sets the world size of one cell; match it to the room grid.</li>
+              <li><strong>Safety Margin:</strong> leaves a buffer around chunk edges for safe placement.</li>
+              <li><strong>Retry Slots:</strong> sets how many fallback planning slots are available.</li>
+              <li><strong>Exit Seams:</strong> controls the exit connections kept at chunk seams.</li>
+              <li><strong>Portal Socket Types:</strong> filters portal connections by socket type.</li>
+              <li><strong>Planned Radius:</strong> sets how far ahead chunks are planned.</li>
+              <li><strong>Loaded Radius:</strong> sets how far around the player chunks stay loaded.</li>
+              <li><strong>Diamond Neighborhood:</strong> uses a diamond-shaped neighborhood when enabled.</li>
+              <li><strong>Builds per Frame:</strong> sets how much chunk-building work may run in one frame.</li>
+              <li><strong>Prewarm Rooms:</strong> prepares room instances before they are needed.</li>
+              <li><strong>Prewarm Corridors:</strong> prepares corridor instances before they are needed.</li>
             </ul>
-            <p>Full changelog ships in the package at <code>Assets/FBSystem/CHANGELOG.md</code>.</p>
+            <h3 id="chunk-locks-heading" data-od-id="qs-chunk-locks-heading">Locks, gizmos &amp; logging</h3>
+            <p>Use the lock and diagnostic controls while you test the streamed layout.</p>
+            <figure class="doc-screenshot" data-od-id="qs-chunk-locks-figure">
+              <img src="images/dungeon/Unity_yNUsEJ8Zso.png" alt="Unity Inspector showing Chunk Dungeon Streamer lock, debug-gizmo, and logging settings: zero lock chance, no key prefab, chunk overlays enabled, locked labels disabled, and detailed logging enabled." loading="lazy" decoding="async">
+              <figcaption>Keep locks disabled until a key prefab is configured; use gizmos and detailed logs while testing.</figcaption>
+            </figure>
+            <ul data-od-id="qs-chunk-locks-list">
+              <li><strong>Lock Chance:</strong> controls how often locks can appear; <strong>Lock Chance 0</strong> disables locks.</li>
+              <li><strong>Spawn Protection Radius:</strong> sets how far the spawn-protection area extends.</li>
+              <li><strong>Key Prefab:</strong> supplies the key used for locked connections; locked worlds need one.</li>
+              <li><strong>Seed-lock status note:</strong> it shows whether the current seed is locked.</li>
+              <li><strong>Debug Gizmos — Chunk Gizmos:</strong> shows or hides chunk debug overlays.</li>
+              <li><strong>Debug Gizmos — Areas:</strong> shows or hides area guides.</li>
+              <li><strong>Debug Gizmos — Footprints:</strong> shows or hides room footprint guides.</li>
+              <li><strong>Debug Gizmos — Corridors:</strong> shows or hides corridor guides.</li>
+              <li><strong>Debug Gizmos — Portal Seams:</strong> shows or hides portal seam guides.</li>
+              <li><strong>Debug Gizmos — Locked Labels:</strong> shows or hides locked-state labels.</li>
+              <li><strong>Log Details:</strong> adds detailed streaming information to the log; use it for troubleshooting.</li>
+              <li><strong>Status:</strong> reports the current streamer state.</li>
+            </ul>
+            <p>Use a fixed world seed and stable chunk coordinates. Treat chunk seams as contracts: both sides must agree on the portal edge, room endpoint, lock state, and connection visual.</p>
           </section>
 
-          <section class="doc-section" id="get-it" data-od-id="get-it-section" aria-labelledby="get-it-heading">
-            <span class="section-kicker">07 / Store</span>
-            <h2 id="get-it-heading" data-od-id="get-it-heading">Get it</h2>
-            <div class="cta-panel" data-od-id="get-it-cta-panel">
-              <p>Easy FP Full Body Controller is available on the Unity Asset Store.</p>
-              <a class="button button--primary" data-od-id="get-it-cta" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">View on Asset Store ↗</a>
-            </div>
+          <section class="doc-section" id="next-steps" data-od-id="qs-next-steps-section" aria-labelledby="next-steps-heading">
+            <span class="section-kicker">09 / Continue</span>
+            <h2 id="next-steps-heading" data-od-id="qs-next-steps-heading">9. Next steps</h2>
+            <ul data-od-id="qs-next-steps-list">
+              <li><a class="doc-link" href="dungeon-generator.html">Dungeon Generator Overview</a> — the authoring/assembly model and the full editor tool set.</li>
+              <li><a class="doc-link" href="dungeon-api.html">Dungeon API Reference</a> — source-verified signatures for <code>DungeonManager</code>, <code>ChunkDungeonStreamer</code>, <code>RoomDecorator</code>, the contracts, and the ScriptableObjects.</li>
+            </ul>
+            <p>Deep details — dependency versions, folder rules, smoke tests, troubleshooting, and the export checklist — ship in the package's User Guide. A dedicated detail page is planned as future documentation.</p>
           </section>
           <a class="back-top" href="#top" data-od-id="back-to-top">Back to top ↑</a>
         </article>
         <nav class="doc-footer-nav" aria-label="Page navigation" data-od-id="doc-footer-navigation">
-          <a class="doc-footer-link" href="quick-start.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Quick Start →</strong></a>
+          <a class="doc-footer-link" href="dungeon-generator.html" data-od-id="prev-page-link"><span class="doc-footer-label">Previous</span><strong>← Dungeon Overview</strong></a>
+          <a class="doc-footer-link" href="dungeon-api.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Dungeon API Reference →</strong></a>
         </nav>
       </div>
     </section>
@@ -546,14 +691,14 @@
 
   <footer class="site-footer" data-od-id="site-footer">
     <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.1.0</p>
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Procedural Dungeon Generator · quick start</p>
       <nav class="footer-links" aria-label="Footer navigation" data-od-id="footer-navigation">
         <a href="../unity-asset-portfolio.html" data-od-id="footer-home-link">Home</a>
-        <a href="overview.html" aria-current="page" data-od-id="footer-overview-link">Overview</a>
+        <a href="overview.html" data-od-id="footer-overview-link">Overview</a>
         <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
         <a href="interfaces.html" data-od-id="footer-interfaces-link">Interfaces</a>
         <a href="dungeon-generator.html" data-od-id="footer-dungeon-generator-link">Dungeon Generator</a>
-        <a href="dungeon-quick-start.html" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
+        <a href="dungeon-quick-start.html" aria-current="page" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
         <a href="dungeon-api.html" data-od-id="footer-dungeon-api-link">Dungeon API</a>
         <a href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="footer-github-link">GitHub</a>
         <a href="mailto:dinlinwin@gmail.com">Email</a>

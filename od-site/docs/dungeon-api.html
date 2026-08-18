@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Easy FP Full Body Controller documentation: overview, requirements, listing facts, quick start, and runtime API.">
-  <title>Overview / Easy FP Full Body Controller docs</title>
+  <meta name="description" content="Dungeon Generator API reference in namespace DungeonGen: DungeonManager, ChunkDungeonStreamer, RoomDecorator, rendering and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects — verified against the source.">
+  <title>Dungeon API Reference / Procedural Dungeon Generator docs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -364,7 +364,7 @@
     }
   </style>
 </head>
-<body id="top" data-doc-page="overview">
+<body id="top" data-doc-page="dungeon-api">
   <header class="site-header" data-od-id="site-header">
     <div class="container nav-wrap">
       <button class="sidebar-toggle" type="button" data-od-id="mobile-menu-button" aria-controls="docs-sidebar" aria-expanded="false" aria-label="Open documentation menu">Menu</button>
@@ -373,7 +373,7 @@
       </a>
       <nav class="top-nav" aria-label="Primary navigation" data-od-id="top-navigation">
         <a class="nav-link" href="../unity-asset-portfolio.html" data-od-id="home-nav-link">Home</a>
-        <a class="nav-link" href="overview.html" aria-current="page" data-od-id="controller-nav-link">Easy FP Controller</a>
+        <a class="nav-link" href="overview.html" data-od-id="controller-nav-link">Easy FP Controller</a>
         <a class="nav-link" href="dungeon-generator.html" data-od-id="dungeon-generator-nav-link">Dungeon Generator</a>
         <a class="nav-link" data-od-id="asset-store-nav-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener noreferrer">Asset Store</a>
       </nav>
@@ -392,29 +392,29 @@
     </div>
   </header>
 
-  <main data-od-id="overview-page">
-    <section class="doc-hero" data-od-id="overview-hero" aria-labelledby="overview-title">
+  <main data-od-id="dungeon-api-page">
+    <section class="doc-hero" data-od-id="dungeon-api-hero" aria-labelledby="dungeon-api-title">
       <div class="container doc-hero-grid">
         <div>
-          <span class="eyebrow">Documentation / Overview</span>
-          <h1 id="overview-title" data-od-id="overview-heading">Easy FP Full Body Controller</h1>
-          <p class="doc-lead">A first-person <strong>and</strong> third-person full-body character controller for Unity. The runtime API is render-pipeline-agnostic; the demo scene and FPCutter shader require URP. It renders and animates a full body in first person using procedural IK, ships with a guided 7-step Setup Wizard, includes the <strong>FPCutter</strong> mesh-cutting tool for hiding body parts in FP view, a dynamic item system, and an extensible event API.</p>
-          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.1.0</span><span>namespace Player</span></div>
+          <span class="eyebrow">Documentation / API Reference</span>
+          <h1 id="dungeon-api-title" data-od-id="dungeon-api-heading">Dungeon API Reference</h1>
+          <p class="doc-lead">The source-verified public API of the Procedural Dungeon Generator in <strong>namespace <code>DungeonGen</code></strong>: the generation managers, the decorator, rendering and geometry contracts, post-processing and culling, and the authoring ScriptableObjects.</p>
+          <div class="doc-hero-note"><span>namespace DungeonGen</span><span>source-verified</span><span>Unity 6</span></div>
         </div>
-        <figure class="doc-hero-media" data-od-id="overview-hero-image">
-          <img src="images/fp-overview.png" alt="Easy FP Full Body Controller product view showing a full body in a Unity scene" fetchpriority="high" decoding="async">
-          <figcaption class="doc-hero-caption"><span>Easy FP Full Body Controller</span><span>Real shot</span></figcaption>
+        <figure class="doc-hero-media" data-od-id="dungeon-api-hero-image">
+          <img src="../assets/web/dungen-nodes.jpg" alt="Dungeon Generator template graph with connected entrance, room, treasure and boss nodes in Unity" fetchpriority="high" decoding="async">
+          <figcaption class="doc-hero-caption"><span>Template graph</span><span>Source-verified</span></figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="doc-shell" data-od-id="overview-content">
+    <section class="doc-shell" data-od-id="dungeon-api-content">
       <div class="container doc-layout">
         <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Documentation">
           <p class="doc-sidebar-title" data-od-id="docs-sidebar-title">Easy FP Full Body Controller</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Documentation pages">
-            <a href="overview.html" aria-current="page" data-od-id="sidebar-overview-link">Overview</a>
+            <a href="overview.html" data-od-id="sidebar-overview-link">Overview</a>
             <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
             <a href="interfaces.html" data-od-id="sidebar-interfaces-link">Interfaces</a>
           </nav>
@@ -423,122 +423,244 @@
           <nav aria-label="Dungeon Generator pages">
             <a href="dungeon-generator.html" data-od-id="sidebar-dungeon-overview-link">Overview</a>
             <a href="dungeon-quick-start.html" data-od-id="sidebar-dungeon-quick-start-link">Quick Start</a>
-            <a href="dungeon-api.html" data-od-id="sidebar-dungeon-api-link">API Reference</a>
+            <a href="dungeon-api.html" aria-current="page" data-od-id="sidebar-dungeon-api-link">API Reference</a>
           </nav>
         </aside>
-        <aside class="doc-aside" data-od-id="overview-sidebar" aria-label="Overview sections">
-          <p class="doc-aside-title" data-od-id="overview-outline-title">On this page</p>
+        <aside class="doc-aside" data-od-id="dungeon-api-sidebar" aria-label="API Reference sections">
+          <p class="doc-aside-title" data-od-id="dungeon-api-outline-title">On this page</p>
           <nav id="doc-outline-list" aria-label="On this page links" data-od-id="outline-links">
-            <a href="#features">Features</a>
-            <a href="#requirements">Requirements</a>
-            <a href="#listing-facts">Listing facts</a>
-            <a href="#quick-start">Quick start</a>
-            <a href="#next-steps">Next steps</a>
-            <a href="#changelog">Changelog</a>
-            <a href="#get-it">Get it</a>
+            <a href="#overview">Namespace overview</a>
+            <a href="#dungeon-manager">DungeonManager</a>
+            <a href="#chunk-streamer">ChunkDungeonStreamer</a>
+            <a href="#room-decorator">RoomDecorator</a>
+            <a href="#rendering">Rendering &amp; room geometry</a>
+            <a href="#post-processing">Post-processing &amp; culling</a>
+            <a href="#scriptable-objects">Authoring ScriptableObjects</a>
+            <a href="#progression">Progression contracts</a>
+            <a href="#core">Supporting core types</a>
           </nav>
         </aside>
 
         <article class="doc-article">
-          <aside class="callout" data-od-id="verified-callout">
-            <h2 data-od-id="verified-heading">Verified against v1.1.0</h2>
-            <p>This documentation reflects the shipped <strong>v1.1.0</strong> package source (read directly from <code>Assets/FBSystem/</code>). Signatures below are real, not estimates.</p>
+          <aside class="callout" data-od-id="api-verified-callout">
+            <h2 data-od-id="api-verified-heading">Verified against the source snapshot</h2>
+            <p>Every signature below was read directly from <code>Assets/DungeonGenerator/</code>. Nothing is estimated — if a member is not listed, it is not claimed. This page complements, not replaces, the package's User Guide.</p>
           </aside>
 
-          <section class="doc-section" id="features" data-od-id="features-section" aria-labelledby="features-heading">
-            <span class="section-kicker">01 / Product surface</span>
-            <h2 id="features-heading" data-od-id="features-heading">Features</h2>
-            <ul class="feature-list" data-od-id="features-list">
-              <li><strong>Full-body first / third person</strong> with procedural hand &amp; head IK and spine stabilization.</li>
-              <li><strong>7-step Setup Wizard</strong>: menu <code>Tools ▸ First Person ▸ Setup Wizard</code> walks you from root to validation.</li>
-              <li><strong>FPCutter</strong>: segments the character mesh and hides body parts (e.g. the head) in first person while still casting shadows.</li>
-              <li><strong>Dynamic item system</strong>: equip/unequip, per-item hold data, shareable IK presets, scroll-wheel / number-key switching.</li>
-              <li><strong>Extensible event API</strong>: C# events + <code>UnityEvent</code>s + auto-discovered listener interfaces, each fired once per transition from a single canonical chokepoint.</li>
-              <li><strong>Cinemachine</strong>-based FPS camera with a stable anchor target.</li>
-              <li><strong>Unity Input System</strong> integration (shipped <code>FBInputActions</code> asset).</li>
-            </ul>
-          </section>
-
-          <section class="doc-section" id="requirements" data-od-id="requirements-section" aria-labelledby="requirements-heading">
-            <span class="section-kicker">02 / Before import</span>
-            <h2 id="requirements-heading" data-od-id="requirements-heading">Requirements</h2>
-            <div class="table-wrap" data-od-id="requirements-table-wrap">
-              <table data-od-id="requirements-table">
-                <thead><tr><th scope="col">Requirement</th><th scope="col">Version</th><th scope="col">Source</th></tr></thead>
+          <section class="doc-section" id="overview" data-od-id="api-overview-section" aria-labelledby="overview-heading">
+            <span class="section-kicker">01 / Map</span>
+            <h2 id="overview-heading" data-od-id="api-overview-heading">Namespace overview</h2>
+            <p>Everything public lives in <code>namespace DungeonGen</code>:</p>
+            <div class="table-wrap" data-od-id="api-overview-table-wrap">
+              <table data-od-id="api-overview-table">
+                <thead><tr><th scope="col">Area</th><th scope="col">Types</th></tr></thead>
                 <tbody>
-                  <tr><td>Unity</td><td>6000.5.0f1 (Unity 6.5) or newer</td><td><code>ProjectSettings/ProjectVersion.txt</code></td></tr>
-                  <tr><td>Render Pipeline</td><td>URP 17.5.0 (demo + FPCutter shader)</td><td><code>Packages/manifest.json</code></td></tr>
-                  <tr><td>Cinemachine</td><td>3.1.7</td><td><code>Packages/manifest.json</code></td></tr>
-                  <tr><td>Input System</td><td>1.19.0</td><td><code>Packages/manifest.json</code></td></tr>
-                  <tr><td>Character model</td><td>imported as <strong>Humanoid</strong></td><td>Setup Wizard step 2 requires it</td></tr>
+                  <tr><td>Assembly runtime</td><td><code>DungeonManager</code>, <code>RoomDecorator</code>, <code>ChunkDungeonStreamer</code>, <code>ChunkStreamer</code>, <code>ChunkPlanner</code>, <code>ChunkMaterializer</code>, <code>ChunkRoomProviderFactory</code></td></tr>
+                  <tr><td>Rendering</td><td><code>IDungeonRenderer</code>, <code>PrefabDungeonRenderer</code>, <code>DungeonTheme</code></td></tr>
+                  <tr><td>Post-processing &amp; culling</td><td><code>IDungeonPostProcessor</code>, <code>IDungeonPreClearProcessor</code>, <code>DungeonPostProcessor</code>, <code>DungeonPostProcessContext</code>, <code>DungeonNavMeshPostProcessor</code>, <code>DungeonCulling</code>, <code>ICullConnectionRule</code>, <code>ICullRoomRule</code></td></tr>
+                  <tr><td>Authoring assets</td><td><code>DungeonTemplate</code>, <code>RoomDesign</code>, <code>DecorationProfile</code>, <code>DoorSocketType</code>, <code>ProgressionRequirement</code></td></tr>
+                  <tr><td>Geometry &amp; core</td><td><code>IRoomGeometry</code>, <code>RoomData</code>, <code>DoorSocket</code>, <code>RoomType</code>, <code>TileType</code>, <code>GeneratedRoomInfo</code>, <code>DungeonObjectPool</code>, <code>DungeonData</code>, <code>DungeonConfig</code></td></tr>
                 </tbody>
               </table>
             </div>
           </section>
 
-          <section class="doc-section" id="listing-facts" data-od-id="listing-facts-section" aria-labelledby="listing-facts-heading">
-            <span class="section-kicker">03 / Asset Store</span>
-            <h2 id="listing-facts-heading" data-od-id="listing-facts-heading">Listing facts</h2>
-            <div class="table-wrap" data-od-id="listing-facts-table-wrap">
-              <table data-od-id="listing-facts-table">
-                <thead><tr><th scope="col">Field</th><th scope="col">Value</th></tr></thead>
+          <section class="doc-section" id="dungeon-manager" data-od-id="api-manager-section" aria-labelledby="dungeon-manager-heading">
+            <span class="section-kicker">02 / Core assembly</span>
+            <h2 id="dungeon-manager-heading" data-od-id="api-manager-heading">DungeonManager</h2>
+            <p><code>DungeonManager : MonoBehaviour</code> plans a complete <code>DungeonTemplate</code> tree in pure math, then materializes it transactionally — previous output is only cleared after a successful plan. Exposed in the inspector as a <strong>Generate Dungeon</strong> button and as the context menu <code>Generate Dungeon</code>.</p>
+            <h3 data-od-id="api-manager-methods-heading">Methods</h3>
+            <div class="table-wrap" data-od-id="api-manager-methods-wrap">
+              <table data-od-id="api-manager-methods-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Description</th></tr></thead>
                 <tbody>
-                  <tr><td>Asset</td><td>Easy FP Full Body Controller</td></tr>
-                  <tr><td>Publisher</td><td>vedaloiv (listed as Maansen)</td></tr>
-                  <tr><td>Store page</td><td><a class="doc-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">assetstore.unity.com</a></td></tr>
-                  <tr><td>Price</td><td>€36.79</td></tr>
-                  <tr><td>Version</td><td>1.1.0</td></tr>
-                  <tr><td>Unity</td><td>6000.5.0+</td></tr>
-                  <tr><td>Render pipeline</td><td>URP (demo + FPCutter)</td></tr>
-                  <tr><td>Package size</td><td>185.2 MB</td></tr>
-                  <tr><td>Released</td><td>2026-07-28 (v1.0), v1.1.0 on 2026-07-30</td></tr>
+                  <tr><td><code>void Generate()</code></td><td>Validates the template, plans (managed or optional Burst planner), materializes, wires sockets, places progression items, decorates, and runs post-processors. Rejects overlapping generation.</td></tr>
+                  <tr><td><code>void ClearAllChildren()</code></td><td>Clears generated rooms and the spawned prototype player; deferred automatically while generation is running.</td></tr>
+                  <tr><td><code>void AddNavMeshSupport()</code></td><td>Idempotent convenience action: attaches <code>DungeonNavMeshPostProcessor</code> (which auto-adds <code>DungeonNavMeshSurfaceHost</code> + <code>NavMeshSurface</code>).</td></tr>
+                  <tr><td><code>void AddCullingSupport()</code></td><td>Idempotent convenience action: attaches <code>DungeonCulling</code> for additive portal culling.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="api-manager-fields-heading">Key fields</h3>
+            <div class="table-wrap" data-od-id="api-manager-fields-wrap">
+              <table data-od-id="api-manager-fields-table">
+                <thead><tr><th scope="col">Field</th><th scope="col">Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td><code>template</code> (DungeonTemplate)</td><td>Mandatory — generation aborts without it.</td></tr>
+                  <tr><td><code>roomPool</code> (List&lt;RoomPoolEntry&gt;)</td><td>Weighted random candidates: <code>prefab</code>, <code>weight</code>, <code>allowedContexts</code>.</td></tr>
+                  <tr><td><code>generationMode</code></td><td><code>DungeonGenerationMode</code>: <code>TemplateExact</code> or <code>TemplateSequencedRandom</code>.</td></tr>
+                  <tr><td><code>seed</code> / <code>useRandomSeed</code></td><td>Fixed or random seed for deterministic generation.</td></tr>
+                  <tr><td><code>seamPadding</code> / <code>allowedSeamOverlap</code></td><td>Extra space kept between adjacent rooms; allowed overlap at a seam.</td></tr>
+                  <tr><td><code>maxSearchNodes</code></td><td>Maximum placement attempts before planning gives up.</td></tr>
+                  <tr><td><code>allowRotation</code></td><td>Allow 90° room rotation to fit socket directions.</td></tr>
+                  <tr><td><code>root</code> (Transform)</td><td>Parent transform for instantiated rooms; null = this transform.</td></tr>
+                  <tr><td><code>sceneEntrance</code> (RoomData)</td><td>Optional pre-placed scene anchor used as the dungeon's root.</td></tr>
+                  <tr><td><code>decorateAfterGeneration</code></td><td>Run <code>RoomDecorator</code> on each room after generation.</td></tr>
+                  <tr><td><code>useBurstPlanner</code> / <code>addRandomBranchesInExact</code></td><td>Optional Burst planner; random branches in exact mode.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Supporting types: <code>DungeonGenerationMode</code> (<code>TemplateExact = 0</code>, <code>TemplateSequencedRandom = 1</code>); <code>RoomPlacementContext</code> (<code>[Flags]</code>: <code>Template</code>, <code>SequenceFiller</code>, <code>RandomBranch</code>, <code>All</code>); <code>RoomPoolEntry</code> (struct with <code>Allows(context)</code>); <code>RoomType</code> (<code>Normal</code>, <code>Entrance</code>, <code>Exit</code>, <code>Treasure</code>, <code>Boss</code>).</p>
+          </section>
+
+          <section class="doc-section" id="chunk-streamer" data-od-id="api-chunk-section" aria-labelledby="chunk-streamer-heading">
+            <span class="section-kicker">03 / Chunk streaming</span>
+            <h2 id="chunk-streamer-heading" data-od-id="api-chunk-heading">ChunkDungeonStreamer</h2>
+            <p><code>ChunkDungeonStreamer : MonoBehaviour</code> is the scene-facing chunk streamer: it measures the assigned prefabs, plans a <code>(2·plannedRadius+1)²</code> neighborhood and materializes a <code>(2·loadedRadius+1)²</code> neighborhood around the player. The initial load settles synchronously so the player spawns into a ready world; later center changes are frame-sliced. Chunk instances pool on a sibling <code>ChunkPool</code> container, and unloaded chunk roots stay inactive for cheap revisits.</p>
+            <h3 data-od-id="api-chunk-methods-heading">Methods</h3>
+            <div class="table-wrap" data-od-id="api-chunk-methods-wrap">
+              <table data-od-id="api-chunk-methods-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Description</th></tr></thead>
+                <tbody>
+                  <tr><td><code>bool Initialize()</code></td><td>Measures all prefabs, builds the streamer, and settles the initial loaded neighborhood. Idempotent; inspector button <strong>Generate World</strong> / context menu <code>Generate World</code>. Returns false with a clear log on invalid configuration.</td></tr>
+                  <tr><td><code>bool UpdateCenterFromPlayer()</code></td><td>Re-centers the streamed world on the player's current chunk. Idempotent while the player stays in the same chunk. Button <strong>Recenter on Player</strong>.</td></tr>
+                  <tr><td><code>ChunkCoord CenterFromPosition(Vector3 position)</code></td><td>Chunk coordinate for a world position (floor division, Floor = 0).</td></tr>
+                  <tr><td><code>void Dispose()</code></td><td>Releases all loaded chunks, the spawned player, and the pool. Button <strong>Clear World</strong>.</td></tr>
+                  <tr><td><code>void Rebuild()</code></td><td><code>Dispose()</code> then <code>Initialize()</code> — clears the world and generates it again. Button <strong>Rebuild World</strong>.</td></tr>
+                  <tr><td><code>static int ChunkSizeMinimum(int maxRoomWidth, int maxRoomHeight, int safetyMarginCells)</code></td><td>Geometry gate: 3× the largest room side plus 2× the safety margin (cells per side).</td></tr>
+                  <tr><td><code>static int ChunkSizeRecommended(int maxRoomWidth, int maxRoomHeight, int safetyMarginCells)</code></td><td>Minimum + <code>MainPathWidthCells</code> (2) for corridor breathing room.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="api-chunk-fields-heading">Key fields</h3>
+            <div class="table-wrap" data-od-id="api-chunk-fields-wrap">
+              <table data-od-id="api-chunk-fields-table">
+                <thead><tr><th scope="col">Field</th><th scope="col">Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td><code>player</code> / <code>playerPrefab</code></td><td>Streaming center transform, or a prefab spawned at the entry room in Play Mode.</td></tr>
+                  <tr><td><code>corridorPrefab</code></td><td>Mandatory 1×1 corridor module with one cardinal <code>DoorSocket</code> per direction — no procedural fallback.</td></tr>
+                  <tr><td><code>useDedicatedEntry</code> / <code>entryPrefabs</code></td><td>Dedicated entry room prefabs for the first room of every chunk; off = pool-only mode.</td></tr>
+                  <tr><td><code>roomPrefabs</code> / <code>minRooms</code> / <code>maxRooms</code></td><td>Pool prefabs (measured automatically) and the per-chunk room-count range.</td></tr>
+                  <tr><td><code>cellsPerSide</code> / <code>cellSize</code></td><td>Chunk dimensions in cells and world size per cell (must match the room grid).</td></tr>
+                  <tr><td><code>plannedRadius</code> / <code>loadedRadius</code></td><td>Planned and instantiated neighborhood radii (<code>loadedRadius ≤ plannedRadius</code>).</td></tr>
+                  <tr><td><code>worldSeed</code> / <code>useRandomSeed</code> / <code>keyPrefab</code></td><td>Deterministic world seed; optional universal key prefab for locked worlds.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-od-id="api-chunk-support-heading">Supporting chunk architecture</h3>
+            <p>These types back the streamer and are part of the public <code>DungeonGen</code> namespace: <code>ChunkStreamer</code> (load/unload scheduling, <code>Dispose()</code>, <code>LoadedCount</code>, <code>LastError</code>), <code>ChunkPlanner</code> (deterministic chunk layouts, <code>Plan(...)</code>, <code>ChunkPlanResult</code>, <code>ChunkPlanStatus</code>/<code>ChunkPlanFailureKind</code>), <code>ChunkMaterializer</code> (room and corridor instantiation), <code>ChunkRoomProviderFactory</code> (<code>Measure(prefab, cellSize, out provider, out error)</code>), <code>ChunkGridSettings</code> (chunk dimensions, room limits, streaming distance, <code>IsValid(out error)</code>), <code>ChunkCoord</code> (<code>X</code>, <code>Z</code>, <code>Floor</code>, <code>Zero</code>, <code>ToKey()</code>), <code>ChunkKeyPickup</code>, and <code>ChunkRoomRequiresKey</code>.</p>
+          </section>
+
+          <section class="doc-section" id="room-decorator" data-od-id="api-decorator-section" aria-labelledby="room-decorator-heading">
+            <span class="section-kicker">04 / Decoration</span>
+            <h2 id="room-decorator-heading" data-od-id="api-decorator-heading">RoomDecorator</h2>
+            <p><code>RoomDecorator</code> fills a room from a <code>DecorationProfile</code>. The same solver runs in the editor preview and at runtime; runtime prefabs can use <code>RoomDecorationAuthoring</code>, which stores a baked geometry snapshot from the room design.</p>
+            <p>Constructors: <code>RoomDecorator(RoomDesign design, Transform root, DecorationProfile profile, int seed)</code> and <code>RoomDecorator(IRoomGeometry geo, Transform root, DecorationProfile profile, int seed)</code>.</p>
+            <div class="table-wrap" data-od-id="api-decorator-methods-wrap">
+              <table data-od-id="api-decorator-methods-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Description</th></tr></thead>
+                <tbody>
+                  <tr><td><code>DecorationResult DecorateAll()</code></td><td>Clears previous placement, then solves every category in priority order.</td></tr>
+                  <tr><td><code>DecorationResult DecorateCategory(string categoryId)</code></td><td>Re-solves a single category (removes its previous instances first).</td></tr>
+                  <tr><td><code>void DespawnCategory(string categoryId)</code></td><td>Removes one category's instances.</td></tr>
+                  <tr><td><code>void DespawnAll()</code></td><td>Removes all instances (pool-aware).</td></tr>
+                  <tr><td><code>IReadOnlyList&lt;PlacedInstance&gt; Placed</code></td><td>Current placements.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Result types: <code>DecorationResult</code> (<code>placed</code>, <code>diagnostics</code>, <code>hasErrors</code>, <code>errorMessage</code>), <code>PlacedInstance</code> (<code>instance</code>, <code>categoryId</code>, <code>categoryName</code>, <code>worldPosition</code>, <code>worldRotation</code>, <code>footprint</code>, <code>boundsSize</code>, <code>padding</code>, <code>floor</code>, <code>gridX</code>, <code>gridY</code>, <code>prefab</code>, <code>occupancy</code>), and <code>GroupDiagnostic</code> (<code>targetCount</code>, <code>placedCount</code>, <code>candidateCount</code>, <code>solveMilliseconds</code>, <code>instantiateMilliseconds</code>, <code>groupDead</code>, <code>groupDeadReason</code>, <code>rejectionCounts</code>).</p>
+            <p>Authoring enums: <code>PlacementSurface</code>, <code>PlacementRegion</code>, <code>AmountMode</code>, <code>FailurePolicy</code>, <code>WallRegion</code>, <code>OccupancyMode</code>, <code>DistributionMode</code>, <code>OrientationMode</code>, <code>RelationType</code>, <code>FloorScope</code>, and <code>FitMode</code>.</p>
+          </section>
+
+          <section class="doc-section" id="rendering" data-od-id="api-rendering-section" aria-labelledby="rendering-heading">
+            <span class="section-kicker">05 / Contracts</span>
+            <h2 id="rendering-heading" data-od-id="api-rendering-heading">Rendering &amp; room geometry</h2>
+            <h3 data-od-id="api-renderer-heading">IDungeonRenderer</h3>
+            <div class="table-wrap" data-od-id="api-renderer-wrap">
+              <table data-od-id="api-renderer-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th></tr></thead>
+                <tbody>
+                  <tr><td>Render</td><td><code>void Render(DungeonData data, DungeonTheme theme, Transform root)</code></td></tr>
+                  <tr><td>Clear</td><td><code>void Clear(Transform root)</code></td></tr>
+                  <tr><td>PlaceCeilings</td><td><code>void PlaceCeilings(DungeonData data, DungeonTheme theme, Transform root)</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>The default implementation is <code>PrefabDungeonRenderer</code>. Implement or wrap <code>IDungeonRenderer</code> to swap the rendering backend.</p>
+            <h3 data-od-id="api-geometry-heading">IRoomGeometry</h3>
+            <p>Geometry contract for the decorator, implemented by <code>RoomDesign</code> (editor) and <code>RoomDecorationAuthoring</code> (runtime baked snapshot); <code>RoomDesignGeometry</code> is the adapter struct. Members: <code>Width</code>, <code>Height</code>, <code>FloorIndices</code> (IReadOnlyList&lt;int&gt;), <code>TileSize</code>, <code>FloorHeight</code>, <code>WallThickness</code>, <code>CenterPivot</code>; <code>TileType[] GetFloor(int floor)</code>, <code>InBounds(x, y)</code>, <code>IsWallAt(x, y, floor)</code>, <code>HasDoorAt(x, y, floor)</code>, <code>IsStairFloorOpeningAt(x, y, floor)</code>, <code>IsStairCeilingOpeningAt(x, y, floor)</code>, <code>IsInStairFootprint(StairPlacement, x, y)</code>, <code>Doors</code>, and <code>Stairs</code>.</p>
+          </section>
+
+          <section class="doc-section" id="post-processing" data-od-id="api-postproc-section" aria-labelledby="post-processing-heading">
+            <span class="section-kicker">06 / After generation</span>
+            <h2 id="post-processing-heading" data-od-id="api-postproc-heading">Post-processing &amp; culling</h2>
+            <h3 data-od-id="api-postproc-contracts-heading">Post-processing contracts</h3>
+            <ul data-od-id="api-postproc-list">
+              <li><code>IDungeonPostProcessor</code> — <code>int Priority { get; }</code> and <code>void Process(DungeonPostProcessContext context)</code>. <code>DungeonManager</code> runs every enabled processor on its GameObject after materialization, wiring, progression, and decoration; higher <code>Priority</code> first, stable on ties.</li>
+              <li><code>DungeonPostProcessor</code> — abstract MonoBehaviour carrier with a serialized priority, so processors can be added as components without code.</li>
+              <li><code>DungeonPostProcessContext</code> — read-only per-run snapshot: <code>RunSeed</code>, <code>Root</code>, <code>Rooms</code>, <code>LayoutRooms</code>, <code>Connections</code>; valid for the duration of <code>Process</code>.</li>
+              <li><code>IDungeonPreClearProcessor</code> — <code>void BeforeClear()</code>, invoked at the start of the manager's clear so processors can release references to rooms that are about to be destroyed (for example a baked NavMesh).</li>
+            </ul>
+            <h3 data-od-id="api-navmesh-heading">DungeonNavMeshPostProcessor</h3>
+            <p>Implements both post-processor contracts and bakes one whole-dungeon NavMesh per generation. Key fields: <code>agentTypeID</code>, <code>buildOnProcess</code>, <code>useDoorLinks</code>, <code>bakeConnectors</code>, <code>logErrors</code>. Requires <code>DungeonNavMeshSurfaceHost</code> (auto-added with the surface).</p>
+            <h3 data-od-id="api-culling-heading">DungeonCulling and rules</h3>
+            <p><code>DungeonCulling</code> is an additive portal-culling post-processor: it reads the generated room graph and socket state and only toggles renderer/activation state — removing the component restores the exact unculled behavior. Mode: <code>DungeonCullingMode</code> (<code>Disabled</code>, <code>DisableRenderers</code>, <code>DeactivateRooms</code>). Key members: <code>Refresh()</code>, <code>PollNow()</code>, <code>IsRoomVisible(RoomData)</code>, <code>SetConnectionRule(ICullConnectionRule)</code>, <code>AddRoomRule(ICullRoomRule)</code>, <code>RemoveRoomRule(ICullRoomRule)</code>, <code>SetReference(Transform)</code>, plus toggles such as <code>UseDoorState</code>, <code>UseMaxHops</code>, <code>UseOcclusionTolerance</code>, <code>UseDistanceCulling</code>, <code>UseVisibleRoomBudget</code>, <code>MaxHops</code>, and <code>MaxVisibleRooms</code>.</p>
+            <div class="table-wrap" data-od-id="api-cull-rules-wrap">
+              <table data-od-id="api-cull-rules-table">
+                <thead><tr><th scope="col">Contract</th><th scope="col">Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td><code>ICullConnectionRule</code> — <code>bool IsPassable(DungeonConnectionInfo connection)</code></td><td>Decides whether a wired connection is passable for the visibility BFS. Default: <code>DoorSocketRule</code> (passable iff both sockets are open and unlocked).</td></tr>
+                  <tr><td><code>ICullRoomRule</code> — <code>bool? OverrideVisibility(RoomData room)</code></td><td>Optional per-room override layered on the BFS result; the first registered rule that returns a value wins.</td></tr>
                 </tbody>
               </table>
             </div>
           </section>
 
-          <section class="doc-section" id="quick-start" data-od-id="quick-start-section" aria-labelledby="quick-start-heading">
-            <span class="section-kicker">04 / First run</span>
-            <h2 id="quick-start-heading" data-od-id="quick-start-heading">Quick start</h2>
-            <p>Run the <strong>7-step Setup Wizard</strong> (<code>Tools ▸ First Person ▸ Setup Wizard</code>), cut your mesh with <strong>FPCutter</strong>, and press Play. Full steps: <a class="doc-link" href="quick-start.html">Quick Start</a>.</p>
-            <div class="video-frame" data-od-id="overview-video">
-              <iframe src="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" title="FBSystem Quick Start Guide walkthrough" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen data-od-id="walkthrough-embed"></iframe>
+          <section class="doc-section" id="scriptable-objects" data-od-id="api-so-section" aria-labelledby="scriptable-objects-heading">
+            <span class="section-kicker">07 / Authoring</span>
+            <h2 id="scriptable-objects-heading" data-od-id="api-so-heading">Authoring ScriptableObjects</h2>
+            <p>All assets are created via <code>Assets ▸ Create ▸ DungeonGen ▸ …</code>:</p>
+            <div class="table-wrap" data-od-id="api-so-wrap">
+              <table data-od-id="api-so-table">
+                <thead><tr><th scope="col">Asset</th><th scope="col">Key members</th></tr></thead>
+                <tbody>
+                  <tr><td><code>RoomDesign</code><br>(Room Design)</td><td><code>roomType</code>, <code>width</code>, <code>height</code>, <code>activeFloor</code>, <code>doors</code>, <code>stairs</code>, <code>theme</code>, <code>decorationProfile</code>, <code>decorationSeed</code>; <code>GetFloor(int)</code>, <code>InBounds</code>, <code>IsWallAt</code>, <code>HasDoorAt</code>, <code>IsStairFloorOpeningAt</code>, <code>IsStairCeilingOpeningAt</code>, <code>HasFloor</code>/<code>AddFloor</code>/<code>RemoveFloor</code>, <code>Floors</code>; structs <code>FloorTiles</code>, <code>StairPlacement</code>, <code>DoorPlacement</code>.</td></tr>
+                  <tr><td><code>DungeonTemplate</code><br>(Dungeon Template)</td><td><code>nodes</code>, <code>edges</code>, <code>rootNodeId</code>; <code>FindNode(id)</code>, <code>FindEdge(from, to)</code>, <code>DefaultColor(RoomType)</code>; <code>TemplateNode</code> (<code>id</code>, <code>type</code>, <code>pinnedPrefab</code>, <code>providedRequirements</code>, <code>graphPos</code>) and <code>TemplateEdge</code> (<code>id</code>, <code>fromNode</code>, <code>toNode</code>, <code>requirement</code>).</td></tr>
+                  <tr><td><code>DungeonTheme</code><br>(DungeonTheme)</td><td><code>tileSize</code>, <code>floorHeight</code>, <code>wallThickness</code>, <code>pivot</code> (<code>Corner</code>/<code>Center</code>), <code>prefabs</code> (list of <code>TilePrefab</code>: prefab, <code>sizeX</code>, <code>sizeY</code>, <code>canRotate</code>), <code>stairProfile</code> (<code>StairProfile</code>: assembly mode, pieces, <code>length</code>, <code>backLength</code>, <code>width</code>), <code>ResolveStairProfile()</code>.</td></tr>
+                  <tr><td><code>DecorationProfile</code><br>(Decoration Profile)</td><td><code>categories</code>; <code>FindCategory(id)</code>, <code>GetSortedByPriority()</code>; each <code>DecorationCategory</code> carries surface, region, pool, footprint, relations, and failure policy configuration.</td></tr>
+                  <tr><td><code>DoorSocketType</code><br>(Door Socket Type)</td><td><code>DisplayName</code>, <code>Color</code>, <code>CompatibleTypes</code>, <code>SetCompatibleType(other, bool)</code>, <code>HasCompatibleType(other)</code>, <code>IsCompatibleWith(other)</code>. Untyped sockets are wildcards; typed sockets match by asset identity or authored compatibility.</td></tr>
+                  <tr><td><code>ProgressionRequirement</code><br>(Progression Requirement)</td><td><code>StableId</code>, <code>DisplayName</code>, <code>DefaultItemPrefab</code>. Gates template edges and locks connections until fulfilled.</td></tr>
+                </tbody>
+              </table>
             </div>
-            <p class="video-link"><a href="https://www.youtube-nocookie.com/watch?v=_X0HWXqQ3_k" target="_blank" rel="noopener noreferrer" data-od-id="walkthrough-video-link">Open the walkthrough on YouTube ↗</a></p>
-            <p class="video-credit">Walkthrough by <strong>aloiV</strong>. Covers the 7-step Setup Wizard, FPCutter mesh optimization, and the dynamic Item Usage system.</p>
           </section>
 
-          <section class="doc-section" id="next-steps" data-od-id="next-steps-section" aria-labelledby="next-steps-heading">
-            <span class="section-kicker">05 / Continue</span>
-            <h2 id="next-steps-heading" data-od-id="next-steps-heading">Next steps</h2>
-            <ul data-od-id="next-steps-list">
-              <li><a class="doc-link" href="quick-start.html">Quick Start</a>: import, wizard, FPCutter, input, play.</li>
-              <li><a class="doc-link" href="interfaces.html">Interfaces</a>: the runtime API: <code>PlayerController</code> hub, item system, and the full event catalog.</li>
+          <section class="doc-section" id="progression" data-od-id="api-progression-section" aria-labelledby="progression-heading">
+            <span class="section-kicker">08 / Lock &amp; key</span>
+            <h2 id="progression-heading" data-od-id="api-progression-heading">Progression contracts</h2>
+            <ul data-od-id="api-progression-list">
+              <li><code>IItemSpawnPoint</code> — <code>bool CanSpawn(ProgressionRequirement requirement)</code> and <code>bool TrySpawn(ItemSpawnRequest request)</code>. Default MonoBehaviour implementation: <code>ItemSpawnPoint</code> (optional target and prefab override).</li>
+              <li><code>ItemSpawnRequest</code> — readonly struct (<code>requirement</code>, <code>roomRoot</code>).</li>
+              <li><code>ProgressionItemToken</code> — MonoBehaviour stamped on spawned items (<code>Requirement</code>, <code>Configure(requirement)</code>).</li>
+              <li><code>IConnectionGate</code> — <code>ProgressionRequirement Requirement</code>, <code>bool IsLocked</code>, <code>CanHandle(requirement)</code>, <code>Configure(requirement)</code>, <code>Unlock()</code>. Default implementation: <code>BasicConnectionGate</code>.</li>
             </ul>
+            <p><code>ProgressionRequirement</code> assets gate template edges; a gate holds the connection until the requirement is fulfilled, and item spawn points place the items that fulfill it.</p>
           </section>
 
-          <section class="doc-section" id="changelog" data-od-id="changelog-section" aria-labelledby="changelog-heading">
-            <span class="section-kicker">06 / Release history</span>
-            <h2 id="changelog-heading" data-od-id="changelog-heading">Changelog highlights</h2>
-            <ul data-od-id="changelog-list">
-              <li><strong>v1.1.0 (2026-07-30)</strong>: Extensible Event API: triple mechanism (C# <code>event</code> + <code>UnityEvent</code> + auto-discovered listener interfaces) on <code>HandItemSocket</code> and <code>PlayerLocomotion</code>, fired once per transition. <code>HandItemSocket</code> is now the canonical equip-event owner; <code>ItemContainer</code> is pure orchestration.</li>
-              <li><strong>v1.0.0</strong>: initial release: FP/TP full-body controller, procedural IK, setup-wizard onboarding, FPCutter mesh-cutting, demo scene with item pickup/drop.</li>
-            </ul>
-            <p>Full changelog ships in the package at <code>Assets/FBSystem/CHANGELOG.md</code>.</p>
-          </section>
-
-          <section class="doc-section" id="get-it" data-od-id="get-it-section" aria-labelledby="get-it-heading">
-            <span class="section-kicker">07 / Store</span>
-            <h2 id="get-it-heading" data-od-id="get-it-heading">Get it</h2>
-            <div class="cta-panel" data-od-id="get-it-cta-panel">
-              <p>Easy FP Full Body Controller is available on the Unity Asset Store.</p>
-              <a class="button button--primary" data-od-id="get-it-cta" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">View on Asset Store ↗</a>
+          <section class="doc-section" id="core" data-od-id="api-core-section" aria-labelledby="core-heading">
+            <span class="section-kicker">09 / Foundation</span>
+            <h2 id="core-heading" data-od-id="api-core-heading">Supporting core types</h2>
+            <div class="table-wrap" data-od-id="api-core-wrap">
+              <table data-od-id="api-core-table">
+                <thead><tr><th scope="col">Type</th><th scope="col">Role</th></tr></thead>
+                <tbody>
+                  <tr><td><code>RoomData</code> (MonoBehaviour)</td><td>Root component on room prefabs: <code>width</code>, <code>height</code>, <code>tileSize</code>, <code>EffectiveTileSize</code>, <code>roomType</code>, <code>doorSockets</code>; <code>TryGetOrderedSockets(out, out)</code>, <code>FindSocket(gridX, gridY)</code>, <code>CloseAllDoors()</code>, <code>OpenDoor(IDoorSocket)</code>, <code>OpenDoorAt(gridX, gridY)</code>, <code>Sockets</code>.</td></tr>
+                  <tr><td><code>DoorSocket</code> (MonoBehaviour)</td><td>Visual and logical doorway state (open, closed, passage, locked) with <code>IsOpen</code>/<code>IsLocked</code>, state setters such as <code>SetOpen(bool)</code>, <code>SetLocked</code>, <code>SetPassage</code>, and <code>ShowConnectorVisual</code>; <code>DoorSocketType</code> compatibility; <code>ChunkSocketRole</code> for chunk seams.</td></tr>
+                  <tr><td><code>RoomType</code> / <code>TileType</code></td><td>Room roles (<code>Normal</code>, <code>Entrance</code>, <code>Exit</code>, <code>Treasure</code>, <code>Boss</code>) and grid cell types (<code>Empty</code>, <code>Floor</code>, <code>Wall</code>, <code>Door</code>, <code>CorridorFloor</code>, <code>CorridorWall</code>, <code>Hole</code>, <code>Ceiling</code>).</td></tr>
+                  <tr><td><code>GeneratedRoomInfo</code> (MonoBehaviour)</td><td>Marker component on generated room roots; carries the room origin and is used by the manager's cleanup sweep.</td></tr>
+                  <tr><td><code>DungeonObjectPool</code> (MonoBehaviour)</td><td>Runtime pooling for room and decoration prefabs.</td></tr>
+                  <tr><td><code>DungeonData</code> / <code>DungeonConfig</code></td><td>Core data containers feeding the renderer and the generation pipeline.</td></tr>
+                  <tr><td>Helpers</td><td><code>Corridor</code>, <code>Direction</code>, <code>Vec2Int</code>, <code>DoorConnectionResolver</code>, <code>DungeonTemplateValidator</code>, <code>DungeonTemplateGraph</code> — connection matching, validation, and graph helpers.</td></tr>
+                </tbody>
+              </table>
             </div>
+            <p>See also <a class="doc-link" href="dungeon-quick-start.html">Dungeon Quick Start</a> for the practical flow and <a class="doc-link" href="dungeon-generator.html">Dungeon Generator Overview</a> for the authoring/assembly model.</p>
           </section>
           <a class="back-top" href="#top" data-od-id="back-to-top">Back to top ↑</a>
         </article>
         <nav class="doc-footer-nav" aria-label="Page navigation" data-od-id="doc-footer-navigation">
-          <a class="doc-footer-link" href="quick-start.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Quick Start →</strong></a>
+          <a class="doc-footer-link" href="dungeon-quick-start.html" data-od-id="prev-page-link"><span class="doc-footer-label">Previous</span><strong>← Dungeon Quick Start</strong></a>
+          <a class="doc-footer-link" href="dungeon-generator.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Dungeon Overview →</strong></a>
         </nav>
       </div>
     </section>
@@ -546,15 +668,15 @@
 
   <footer class="site-footer" data-od-id="site-footer">
     <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.1.0</p>
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Procedural Dungeon Generator · API reference</p>
       <nav class="footer-links" aria-label="Footer navigation" data-od-id="footer-navigation">
         <a href="../unity-asset-portfolio.html" data-od-id="footer-home-link">Home</a>
-        <a href="overview.html" aria-current="page" data-od-id="footer-overview-link">Overview</a>
+        <a href="overview.html" data-od-id="footer-overview-link">Overview</a>
         <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
         <a href="interfaces.html" data-od-id="footer-interfaces-link">Interfaces</a>
         <a href="dungeon-generator.html" data-od-id="footer-dungeon-generator-link">Dungeon Generator</a>
         <a href="dungeon-quick-start.html" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
-        <a href="dungeon-api.html" data-od-id="footer-dungeon-api-link">Dungeon API</a>
+        <a href="dungeon-api.html" aria-current="page" data-od-id="footer-dungeon-api-link">Dungeon API</a>
         <a href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="footer-github-link">GitHub</a>
         <a href="mailto:dinlinwin@gmail.com">Email</a>
       </nav>

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -197,7 +197,7 @@
       line-height: 1.3;
       text-transform: uppercase;
     }
-    .eyebrow { padding: 9px 13px; }
+    .eyebrow { padding: 9px 13px; font-family: var(--font-display); font-weight: 500; letter-spacing: 0.09em; }
     .hero h1 {
       max-width: 10ch;
       margin: 26px 0 24px;
@@ -411,6 +411,13 @@
       background: var(--surface-raised);
       aspect-ratio: 4 / 3;
     }
+    /* Dungeon screenshots are 16:9; keep them fully visible without cropping. */
+    .featured-grid article.asset-dungeon-generator .asset-media { aspect-ratio: 16 / 9; }
+    .featured-grid article.asset-dungeon-generator-collection .asset-media {
+      align-self: start;
+      aspect-ratio: 16 / 9;
+      min-height: 0;
+    }
     .featured-grid .asset-card--lead .asset-media {
       min-height: 360px;
       aspect-ratio: 4 / 3;
@@ -425,7 +432,8 @@
       object-position: center;
       transition: transform 500ms cubic-bezier(.2,.75,.2,1);
     }
-    .asset-card:hover .asset-media img { transform: scale(1.04); }
+    /* Keep product screenshots fully legible; the card itself carries the hover feedback. */
+    .asset-card:hover .asset-media img { transform: none; }
     .badge--new,
     .badge--version {
       position: absolute;
@@ -492,6 +500,21 @@
       font-weight: 500;
     }
     .asset-link:hover { color: var(--fg); text-decoration-thickness: 2px; }
+    .asset-support {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .asset-support img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface-raised);
+    }
 
     .filter-row {
       display: flex;
@@ -783,7 +806,7 @@
         <div class="hero-copy">
           <span class="eyebrow">Unity Asset Store Publisher</span>
           <h1 id="hero-title" data-od-id="hero-heading">More body. Less <span class="hero-ink" aria-label="friction"><span class="ink-letter" style="animation-delay:0s">f</span><span class="ink-letter" style="animation-delay:.11s">r</span><span class="ink-letter" style="animation-delay:.22s">i</span><span class="ink-letter" style="animation-delay:.33s">c</span><span class="ink-letter" style="animation-delay:.44s">t</span><span class="ink-letter" style="animation-delay:.55s">i</span><span class="ink-letter" style="animation-delay:.66s">o</span><span class="ink-letter" style="animation-delay:.77s">n</span></span>.</h1>
-          <p class="hero-lead">vedaloiv publishes Unity tools for full-body character control: first and third person, procedural IK, and a clear path from first import to a playable body.</p>
+          <p class="hero-lead">I build Unity tools for first-person full-body character control — procedural IK, a guided setup, and a clear path from import to a playable body.</p>
           <div class="hero-actions">
             <a class="button button--primary" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">
               Go to Asset Store
@@ -828,6 +851,18 @@
               <div class="asset-foot"><span class="asset-version">v1.1.0 · 30.07.2026 · Unity 6000.5.0+ (Unity 6.5) · URP<br>Cinemachine 3.1.7 · Input System 1.19.0 · 185.2 MB<br>€36.79</span><a class="asset-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">Go to Asset Store</a></div>
             </div>
           </article>
+          <article class="asset-card" style="grid-column: 1 / -1" data-od-id="asset-dungeon-generator">
+            <div class="asset-media">
+              <span class="badge--new">Coming soon</span>
+              <img src="assets/web/dungen-main.jpg" role="img" alt="Procedural Dungeon Generator – node-based dungeon layout with entrance, rooms, treasure and boss" loading="lazy" decoding="async">
+            </div>
+            <div class="asset-content">
+              <p class="asset-category">Tools / Procedural Generation</p>
+              <h3 class="asset-title" data-od-id="asset-title-dungeon-generator">Procedural Dungeon Generator</h3>
+              <p class="asset-description">Build dungeons with nodes and generate endless chunk-based worlds. A visual Room Designer for painting rooms, doors, stairs and holes, with multi-floor support — perfect for roguelikes, RPGs and backrooms.</p>
+              <div class="asset-foot"><span class="asset-version">Coming soon · Unity 6 · URP<br>Node-based layouts · Infinite chunks</span><a class="asset-link" href="docs/dungeon-generator.html">View overview</a></div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -840,15 +875,16 @@
             <h2 id="assets-title" data-od-id="assets-heading">One product, clearly documented.</h2>
           </div>
           <div class="section-head-aside">
-            <p class="section-intro">Right now exactly one asset is released. Further ideas stay visible as a roadmap — not as finished products.</p>
+            <p class="section-intro">Two assets: one released, one coming soon. Further ideas stay visible as a roadmap — not as finished products.</p>
           </div>
         </div>
         <div class="filter-row">
           <div class="filter-list" role="group" aria-label="Asset categories">
             <button class="filter-chip" type="button" data-filter="Alle" data-od-id="filter-alle" aria-pressed="true">All</button>
             <button class="filter-chip" type="button" data-filter="Tools / Game Toolkits" data-od-id="filter-tools" aria-pressed="false">Tools / Game Toolkits</button>
+            <button class="filter-chip" type="button" data-filter="Tools / Procedural Generation" data-od-id="filter-procedural" aria-pressed="false">Procedural Generation</button>
           </div>
-          <p class="filter-status" data-filter-status aria-live="polite">1 asset visible</p>
+          <p class="filter-status" data-filter-status aria-live="polite">2 assets visible</p>
         </div>
         <div class="featured-grid" aria-live="polite">
           <article class="asset-card asset-card--lead" data-category="Tools / Game Toolkits" data-od-id="asset-easy-fp-full-body-controller-collection">
@@ -857,6 +893,13 @@
               <img src="assets/web/fp-setup.jpg" role="img" alt="Easy FP Full Body Controller – setup wizard with steps 4 to 6 in Unity" loading="lazy" decoding="async">
             </div>
             <div class="asset-content"><p class="asset-category">Tools / Game Toolkits</p><h3 class="asset-title" data-od-id="asset-title-easy-fp-full-body-controller-collection">Easy FP Full Body Controller</h3><p class="asset-description">Full body control for first and third person — with a 7-step Setup Wizard, FPCutter, a dynamic item system, and an extensible event API.</p><div class="asset-foot"><span class="asset-version">v1.1.0 · Unity 6000.5+ · URP<br>€36.79 · 185.2 MB</span><a class="asset-link" href="docs/overview.html">View overview</a></div></div>
+          </article>
+          <article class="asset-card asset-card--lead" data-category="Tools / Procedural Generation" data-od-id="asset-dungeon-generator-collection">
+            <div class="asset-media">
+              <span class="badge--version">Coming soon</span>
+              <img src="assets/web/dungen-nodes.jpg" role="img" alt="Procedural Dungeon Generator – node graph with entrance, rooms and boss in the editor" loading="lazy" decoding="async">
+            </div>
+            <div class="asset-content"><p class="asset-category">Tools / Procedural Generation</p><h3 class="asset-title" data-od-id="asset-title-dungeon-generator-collection">Procedural Dungeon Generator</h3><p class="asset-description">Design dungeons your way — node-based layouts, an intuitive Room Designer for painting rooms, doors, stairs and holes, and multi-floor support with seamless connections.</p><div class="asset-support"><img src="assets/web/dungen-editor.jpg" role="img" alt="Procedural Dungeon Generator – Room Designer editor with brush, floor and stair tools" loading="lazy" decoding="async"><img src="assets/web/dungen-features.jpg" role="img" alt="Procedural Dungeon Generator – node-based design, room editor and multi-floor support" loading="lazy" decoding="async"></div><div class="asset-foot"><span class="asset-version">Coming soon · Unity 6 · URP<br>Node-based · Infinite chunks</span><a class="asset-link" href="docs/dungeon-generator.html">View overview</a></div></div>
           </article>
         </div>
 
@@ -886,7 +929,7 @@
           <span class="section-kicker">About / Working approach</span>
           <h2 id="about-title" data-od-id="about-heading">Solo built. With an eye for the workflow.</h2>
           <p>As a solo developer I build Unity tools that lower the barrier to entry and stay out of the way in daily use. I'm interested in the small frictions: a click too many, a body that disappears in first person, or documentation that doesn't help on first open.</p>
-          <p>Less friction, more building — with documentation verified against the shipped source. Easy FP Full Body Controller is vedaloiv's first released asset.</p>
+          <p>Less friction, more building — with documentation verified against the shipped source. Easy FP Full Body Controller is vedaloiv's first released asset; the Procedural Dungeon Generator is next.</p>
         </div>
         <figure class="about-visual">
           <div class="about-principles-plate">
@@ -1166,7 +1209,7 @@
 
   <footer class="site-footer" id="footer">
     <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.1.0</p>
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.1.0 · Procedural Dungeon Generator · coming soon</p>
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="#galerie">Gallery</a>
         <a href="#assets">Collection</a>
@@ -1228,6 +1271,7 @@
       function setStatus(message, state) {
         status.textContent = message;
         status.dataset.state = state;
+
       }
 
       function setFieldError(field, message) {
