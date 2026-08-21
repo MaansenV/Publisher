@@ -299,7 +299,7 @@
           <span class="eyebrow">Documentation / Runtime API</span>
           <h1 id="interfaces-title" data-od-id="interfaces-heading">Interfaces</h1>
           <p class="doc-lead">The public runtime API for integrating with the controller. All runtime types are in namespace <code>Player</code>. This page covers the <strong>integration surface</strong>: demo scripts, editor inspectors, and internal tuning fields are omitted (see source under <code>Assets/FBSystem/</code>).</p>
-          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.1.0</span><span>namespace Player</span></div>
+          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.3.0</span><span>namespace Player</span></div>
         </div>
         <figure class="doc-hero-media" data-od-id="interfaces-hero-image">
           <img src="images/fp-integrations.png" alt="Easy FP Full Body Controller integrations in Unity" fetchpriority="high" decoding="async">
@@ -317,6 +317,7 @@
             <a href="overview.html" data-od-id="sidebar-overview-link">Overview</a>
             <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
             <a href="interfaces.html" aria-current="page" data-od-id="sidebar-interfaces-link">Interfaces</a>
+            <a href="fishnet.html" data-od-id="sidebar-fishnet-link">Multiplayer</a>
           </nav>
           <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Procedural Dungeon Generator</p>
           <p class="doc-sidebar-section">Documentation</p>
@@ -344,7 +345,7 @@
 
         <article class="doc-article">
           <aside class="callout" data-od-id="verified-callout">
-            <h2 data-od-id="verified-heading">Verified against v1.1.0 source</h2>
+            <h2 data-od-id="verified-heading">Verified against v1.3.0 source</h2>
             <p>Signatures below are read from the shipped package.</p>
           </aside>
 
@@ -364,6 +365,7 @@
                   <tr><td><code>HeadIK</code></td><td><code>PlayerHeadIK</code></td><td>head look-at IK</td></tr>
                   <tr><td><code>HandIK</code></td><td><code>PlayerHandIK</code></td><td>hand IK</td></tr>
                   <tr><td><code>SpineStabilizer</code></td><td><code>PlayerSpineStabilizer</code></td><td>spine yaw</td></tr>
+                  <tr><td><code>FootIK</code></td><td><code>PlayerFootIK</code></td><td>procedural foot IK (new in v1.2)</td></tr>
                   <tr><td><code>HandItemSocket</code></td><td><code>HandItemSocket</code></td><td>item equip</td></tr>
                 </tbody>
               </table>
@@ -394,6 +396,8 @@
                   <tr><td><code>SetHeadIKEnabled</code></td><td><code>SetHeadIKEnabled(bool)</code></td><td></td></tr>
                   <tr><td><code>SetHandIKEnabled</code></td><td><code>SetHandIKEnabled(bool)</code></td><td></td></tr>
                   <tr><td><code>SetSpineStabilizationEnabled</code></td><td><code>SetSpineStabilizationEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>SetFootIKEnabled</code></td><td><code>SetFootIKEnabled(bool)</code></td><td>toggle foot IK at runtime (new in v1.2)</td></tr>
+                  <tr><td><code>SetExternalControlEnabled</code></td><td><code>SetExternalControlEnabled(bool)</code></td><td>for external drivers (e.g. the FishNet bridge) that move the player instead of local input</td></tr>
                   <tr><td><code>SetCursorLocked</code></td><td><code>SetCursorLocked(bool)</code></td><td></td></tr>
                   <tr><td><code>EnableAllControls</code></td><td><code>EnableAllControls()</code></td><td>resume gameplay</td></tr>
                   <tr><td><code>DisableAllControls</code></td><td><code>DisableAllControls()</code></td><td>enter cutscene / menu</td></tr>
@@ -438,6 +442,18 @@ player.EnableAllControls();    // resume gameplay</code></pre>
                   <tr><td><code>lowerSpineWeight</code></td><td><code>float</code></td><td>Rotation weight for lower spine. (default: 0.3f)</td></tr>
                   <tr><td><code>middleSpineWeight</code></td><td><code>float</code></td><td>Rotation weight for middle spine. (default: 0.3f)</td></tr>
                   <tr><td><code>upperSpineWeight</code></td><td><code>float</code></td><td>Rotation weight for upper spine. (default: 0.4f)</td></tr>
+                  <tr><td><code>enableFootIK</code></td><td><code>bool</code></td><td>Enable foot IK targeting. (default: true)</td></tr>
+                  <tr><td><code>footIKWeight</code></td><td><code>float</code></td><td>Overall weight of the foot IK effect. (default: 1f)</td></tr>
+                  <tr><td><code>footIKLayerMask</code></td><td><code>LayerMask</code></td><td>Layers the foot trace hits; the player's own colliders are always ignored. (default: ~0)</td></tr>
+                  <tr><td><code>footIKTraceDistance</code></td><td><code>float</code></td><td>Downward sweep distance of the foot trace. (default: 1f)</td></tr>
+                  <tr><td><code>footIKTraceOffset</code></td><td><code>float</code></td><td>Height above the foot where the downward trace starts. (default: 0.3f)</td></tr>
+                  <tr><td><code>footIKTraceRadius</code></td><td><code>float</code></td><td>Radius of the foot trace sphere. (default: 0.05f)</td></tr>
+                  <tr><td><code>footIKFootHeightOffset</code></td><td><code>float</code></td><td>Extra height kept between the foot and the ground. (default: 0.02f)</td></tr>
+                  <tr><td><code>footIKInterpSpeed</code></td><td><code>float</code></td><td>Smoothing speed for foot offsets and rotations. (default: 20f)</td></tr>
+                  <tr><td><code>footIKMaxSlopeAngle</code></td><td><code>float</code></td><td>Maximum ground slope angle in degrees; foot rotation blends out past this limit. (default: 30f)</td></tr>
+                  <tr><td><code>footIKMaxStepUp</code></td><td><code>float</code></td><td>Maximum foot lift to match a step up. (default: 0.3f)</td></tr>
+                  <tr><td><code>footIKMaxStepDown</code></td><td><code>float</code></td><td>Maximum foot sink to match a step down. (default: 0.4f)</td></tr>
+                  <tr><td><code>footIKPelvisDropMultiplier</code></td><td><code>float</code></td><td>How much the pelvis follows a lower foot contact; 0 keeps the body level, 1 follows the full offset. (default: 0.65f)</td></tr>
                 </tbody>
               </table>
             </div>
@@ -540,6 +556,8 @@ player.EnableAllControls();    // resume gameplay</code></pre>
                   <tr><td><code>SetLookDirection</code></td><td><code>SetLookDirection(float yaw, float pitch)</code></td><td>Sets the look direction programmatically (useful for respawning, cutscenes, etc.).</td></tr>
                   <tr><td><code>SyncCameraTargetToHead</code></td><td><code>SyncCameraTargetToHead()</code></td><td>Syncs the camera target position to the animated head bone; called in LateUpdate; external IK systems may call it manually.</td></tr>
                   <tr><td><code>SetVerticalLimitOverride</code></td><td><code>SetVerticalLimitOverride(float upper, float lower)</code></td><td>Sets the vertical limit override for asymmetric look limits (used by item IK data).</td></tr>
+                  <tr><td><code>EnsureCameraTarget</code></td><td><code>EnsureCameraTarget()</code></td><td>Creates/reassigns the camera target if missing (used by external systems like the FishNet bridge).</td></tr>
+                  <tr><td><code>SetLocalCameraActive</code></td><td><code>SetLocalCameraActive(bool)</code></td><td>Enables/disables the local camera rig; the FishNet addon disables it on remote players.</td></tr>
                 </tbody>
               </table>
             </div>
@@ -826,7 +844,28 @@ player.HandItemSocket.ItemEquipped += args =&gt;
 
           <section class="doc-section" id="procedural-ik" data-od-id="procedural-ik-section" aria-labelledby="procedural-ik-heading">
             <h2 id="procedural-ik-heading" data-od-id="procedural-ik-heading">Procedural IK (advanced)</h2>
-            <p>Tuned by the Setup Wizard; adjust only for advanced customization.</p>
+            <p>Tuned by the Setup Wizard; adjust only for advanced customization. The components run in a fixed OnAnimatorIK order: <strong>FootIK (5) → HeadIK (10) → Spine (15) → HandIK (20)</strong>.</p>
+            <h3 data-od-id="foot-ik-heading">PlayerFootIK</h3>
+            <p><code>[RequireComponent(typeof(Animator))]</code>, runs first in the IK chain. SphereCast ground trace per foot; lifts/sinks the animated foot and lowers the pelvis to match the surface. Works in first and third person.</p>
+            <div class="table-wrap" data-od-id="footik-table-wrap">
+              <table data-od-id="footik-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>enableFootIK</code></td><td><code>bool</code></td><td>master toggle (default: true)</td></tr>
+                  <tr><td><code>footIKWeight</code></td><td><code>float</code></td><td>overall IK weight 0–1 (default: 1)</td></tr>
+                  <tr><td><code>footIKLayerMask</code></td><td><code>LayerMask</code></td><td>layers the foot trace hits; own colliders always ignored</td></tr>
+                  <tr><td><code>traceDistance</code> / <code>traceOffset</code> / <code>traceRadius</code></td><td><code>float</code></td><td>sweep distance below the foot, trace start height above the foot, sphere radius (defaults: 1 / 0.3 / 0.05)</td></tr>
+                  <tr><td><code>footHeightOffset</code></td><td><code>float</code></td><td>extra height kept between foot and ground (default: 0.02)</td></tr>
+                  <tr><td><code>interpSpeed</code></td><td><code>float</code></td><td>frame-rate independent smoothing for offsets/rotations (default: 20)</td></tr>
+                  <tr><td><code>maxSlopeAngle</code></td><td><code>float</code></td><td>max ground slope in degrees; foot rotation blends out beyond it (default: 30)</td></tr>
+                  <tr><td><code>maxStepUp</code> / <code>maxStepDown</code></td><td><code>float</code></td><td>clamp how far a foot may lift/sink per step (defaults: 0.3 / 0.4)</td></tr>
+                  <tr><td><code>pelvisDropMultiplier</code></td><td><code>float</code></td><td>how much the pelvis follows a lower foot contact, 0–1 (default: 0.65)</td></tr>
+                  <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td>toggle at runtime</td></tr>
+                  <tr><td><code>ResetGroundCalibration</code></td><td><code>ResetGroundCalibration()</code></td><td>re-measures the ground baseline (call after teleporting the player)</td></tr>
+                  <tr><td><code>GroundedOverride</code></td><td><code>bool?</code></td><td>override the grounded state used by the trace (e.g. from external locomotion logic)</td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 data-od-id="head-ik-heading">PlayerHeadIK</h3>
             <div class="table-wrap" data-od-id="headik-table-wrap">
               <table data-od-id="headik-table">
@@ -851,10 +890,12 @@ player.HandItemSocket.ItemEquipped += args =&gt;
             </div>
             <h3 data-od-id="spine-stabilizer-heading">PlayerSpineStabilizer</h3>
             <p><code>[RequireComponent(typeof(Animator))]</code>; aligns spine yaw to the camera.</p>
+            <h3 data-od-id="hand-pose-debugger-heading">PlayerHandPoseDebugger (debug)</h3>
+            <p>Debug helper: previews hand/IK poses from the <code>ItemContainer</code> without activating the item mesh — only HandIK offsets and the animator layer are driven. Attach to the player root; works in Play and Edit mode. Unequip first (<code>Q</code>/<code>0</code>): while a real item is equipped, <code>HandItemSocket</code> overwrites the preview every LateUpdate.</p>
 
             <details data-od-id="demo-editor-note">
               <summary data-od-id="demo-note-heading">Demo &amp; Editor code (not part of the runtime API)</summary>
-              <p><strong>Demo</strong> (<code>Project/Scripts/Player/Demo/</code>): <code>PlayerEventLogger</code> (implements both listener interfaces; copy it as a template), <code>PlayerDropSystem</code>, <code>PlayerInventory</code>, <code>PlayerInteraction</code>, <code>WorldItem</code>. <strong>Editor</strong>: custom inspectors plus the setup wizards; <code>Tools ▸ First Person ▸ Setup Wizard</code>, the Item Container setup, and the FPCutter Wizard.</p>
+              <p><strong>Demo</strong> (<code>Project/Scripts/Player/Demo/</code>): <code>PlayerEventLogger</code> (implements both listener interfaces; copy it as a template), <code>PlayerDropSystem</code>, <code>PlayerInventory</code>, <code>PlayerInteraction</code>, <code>WorldItem</code>. <strong>Editor</strong>: custom inspectors plus the tools under <code>Tools ▸ FBSystem</code>: <code>Setup Wizard</code>, <code>Item Container Setup</code>, <code>Transfer Configuration</code> (copies a tuned player's config onto a new character), and the <code>FPCutter Wizard</code>; the optional FishNet addon adds <code>Tools ▸ FBSystem ▸ FishNet ▸ Setup Wizard</code>.</p>
             </details>
             <div class="cta-panel" data-od-id="interfaces-cta-panel">
               <p>Easy FP Full Body Controller is available as a paid asset in the Asset Store.</p>
@@ -865,6 +906,7 @@ player.HandItemSocket.ItemEquipped += args =&gt;
         </article>
         <nav class="doc-footer-nav" aria-label="Page navigation" data-od-id="doc-footer-navigation">
           <a class="doc-footer-link" href="quick-start.html" data-od-id="previous-page-link"><span class="doc-footer-label">Previous</span><strong>← Quick Start</strong></a>
+          <a class="doc-footer-link" href="fishnet.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Multiplayer →</strong></a>
         </nav>
       </div>
     </section>
@@ -872,12 +914,13 @@ player.HandItemSocket.ItemEquipped += args =&gt;
 
   <footer class="site-footer" data-od-id="site-footer">
     <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.1.0</p>
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.3.0</p>
       <nav class="footer-links" aria-label="Footer navigation" data-od-id="footer-navigation">
         <a href="../unity-asset-portfolio.html" data-od-id="footer-home-link">Home</a>
         <a href="overview.html" data-od-id="footer-overview-link">Overview</a>
         <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
         <a href="interfaces.html" aria-current="page" data-od-id="footer-interfaces-link">Interfaces</a>
+        <a href="fishnet.html" data-od-id="footer-fishnet-link">Multiplayer</a>
         <a href="dungeon-generator.html" data-od-id="footer-dungeon-generator-link">Dungeon Generator</a>
         <a href="dungeon-quick-start.html" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
         <a href="dungeon-api.html" data-od-id="footer-dungeon-api-link">Dungeon API</a>
@@ -888,9 +931,10 @@ player.HandItemSocket.ItemEquipped += args =&gt;
   </footer>
   <script type="application/json" id="doc-search-index">
     [
-      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity: full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, dynamic items, procedural IK, and extensible events.","url":"overview.html"},
-      {"title":"Quick Start","headings":["Requirements","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Validation","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, prepare a Humanoid model, run the 7-step Setup Wizard, configure FPCutter and input, then press Play.","url":"quick-start.html"},
-      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus / cutscenes / pausing):","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config & reactions","ItemAttachmentData: hold & IK config","ItemIKPreset: share IK config","Event API: PlayerEventAPI","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Procedural IK (advanced)","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items, event API, FPCutter, animation, and procedural IK.","url":"interfaces.html"},
+      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity: full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, dynamic items, procedural IK incl. Foot IK, extensible events, config transfer, and an optional FishNet multiplayer addon.","url":"overview.html"},
+      {"title":"Quick Start","headings":["Requirements","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Validation","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","7. Multiplayer (optional)","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, prepare a Humanoid model, run the 7-step Setup Wizard, configure FPCutter and input, then press Play.","url":"quick-start.html"},
+      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus / cutscenes / pausing):","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config & reactions","ItemAttachmentData: hold & IK config","ItemIKPreset: share IK config","Event API: PlayerEventAPI","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Procedural IK (advanced)","PlayerFootIK","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items, event API, FPCutter, animation, and procedural IK (foot, head, hand, spine).","url":"interfaces.html"},
+      {"title":"Multiplayer (FishNet Addon)","headings":["What the addon does","Requirements","1. Install FishNet and the addon","Video: FishNet Quick Setup","2. FishNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: FishNet Components","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host and remote client","Troubleshooting"],"excerpt":"Optional FBSystemFishNet addon for FishNet 4.7.2: make scenes and players multiplayer-ready — networked movement, animation, item sync, world items, and remote Foot IK.","url":"fishnet.html"},
       {"title":"Dungeon Generator","headings":["Authoring vs. assembly","Editor tools","How generation works","Getting started","Chunk streaming","Extending the toolkit","Status"],"excerpt":"Procedural Dungeon Generator for Unity: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, editor tools under Tools/DungeonGen, chunk streaming, and extension contracts.","url":"dungeon-generator.html"},
       {"title":"Dungeon Quick Start","headings":["1. Package & setup","2. Create a theme","3. Paint a room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","7. Decorate rooms (optional)","8. Chunk streaming (optional)","9. Next steps"],"excerpt":"Minimal flow for the Procedural Dungeon Generator: package setup, Theme Wizard, Room Designer, DungeonTemplate, and DungeonManager Generate.","url":"dungeon-quick-start.html"},
       {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","ChunkDungeonStreamer","RoomDecorator","Rendering & room geometry","Post-processing & culling","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API in namespace DungeonGen: DungeonManager, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
