@@ -228,7 +228,7 @@
       .button:hover { transform: none; }
     }
 
-    /* VitePress-style documentation shell: compact, searchable, and offline. */
+    /* Documentation shell: compact, searchable, and offline. */
     .site-header { background: color-mix(in oklch, var(--surface-raised) 92%, var(--bg)); backdrop-filter: blur(16px); }
     .nav-wrap { min-height: 64px; gap: 18px; }
     .brand { min-height: 44px; }
@@ -373,6 +373,7 @@
       </a>
       <nav class="top-nav" aria-label="Primary navigation" data-od-id="top-navigation">
         <a class="nav-link" href="../unity-asset-portfolio.html" data-od-id="home-nav-link">Home</a>
+        <a class="nav-link" href="index.html" data-od-id="docs-hub-nav-link">All docs</a>
         <a class="nav-link" href="overview.html" aria-current="page" data-od-id="controller-nav-link">Easy FP Controller</a>
         <a class="nav-link" href="dungeon-generator.html" data-od-id="dungeon-generator-nav-link">Dungeon Generator</a>
         <a class="nav-link" data-od-id="asset-store-nav-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener noreferrer">Asset Store</a>
@@ -398,8 +399,8 @@
         <div>
           <span class="eyebrow">Documentation / Overview</span>
           <h1 id="overview-title" data-od-id="overview-heading">Easy FP Full Body Controller</h1>
-          <p class="doc-lead">A first-person <strong>and</strong> third-person full-body character controller for Unity. The runtime API is render-pipeline-agnostic; the demo scene and FPCutter shader require URP. It renders and animates a full body in first person using procedural IK, ships with a guided 7-step Setup Wizard, includes the <strong>FPCutter</strong> mesh-cutting tool for hiding body parts in FP view, a dynamic item system, an extensible event API, procedural <strong>Foot IK</strong>, a configuration transfer tool, and an optional <strong>FishNet multiplayer addon</strong>.</p>
-          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.3.0</span><span>namespace Player</span></div>
+          <p class="doc-lead">A first-person <strong>and</strong> third-person full-body character controller for Unity 6.5 and URP. It renders and animates a full body in first person with procedural IK, and ships with a guided 7-step Setup Wizard, ready-made demo prefabs and three demo scenes, the <strong>FPCutter</strong> mesh-cutting tool, a dynamic item system with holster animation, finger grips, ground-anchored <strong>foot planting</strong>, footsteps, an extensible event API, a configuration transfer tool, and optional <strong>FishNet</strong> and <strong>PurrNet</strong> multiplayer add-ons.</p>
+          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.6.0</span><span>namespace Player</span></div>
         </div>
         <figure class="doc-hero-media" data-od-id="overview-hero-image">
           <img src="images/fp-overview.png" alt="Easy FP Full Body Controller product view showing a full body in a Unity scene" fetchpriority="high" decoding="async">
@@ -411,15 +412,21 @@
     <section class="doc-shell" data-od-id="overview-content">
       <div class="container doc-layout">
         <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Documentation">
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-hub">vedaloiv</p>
+          <p class="doc-sidebar-section">Documentation hub</p>
+          <nav aria-label="All docs" data-od-id="docs-hub-sidebar-nav">
+            <a href="index.html" data-od-id="sidebar-docs-hub-link">All docs</a>
+          </nav>
           <p class="doc-sidebar-title" data-od-id="docs-sidebar-title">Easy FP Full Body Controller</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Documentation pages">
             <a href="overview.html" aria-current="page" data-od-id="sidebar-overview-link">Overview</a>
             <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
             <a href="interfaces.html" data-od-id="sidebar-interfaces-link">Interfaces</a>
-            <a href="fishnet.html" data-od-id="sidebar-fishnet-link">Multiplayer</a>
+            <a href="fishnet.html" data-od-id="sidebar-fishnet-link">Multiplayer (FishNet)</a>
+            <a href="purrnet.html" data-od-id="sidebar-purrnet-link">Multiplayer (PurrNet)</a>
           </nav>
-          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Procedural Dungeon Generator</p>
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Easy Dungeon Generator</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Dungeon Generator pages">
             <a href="dungeon-generator.html" data-od-id="sidebar-dungeon-overview-link">Overview</a>
@@ -442,22 +449,23 @@
 
         <article class="doc-article">
           <aside class="callout" data-od-id="verified-callout">
-            <h2 data-od-id="verified-heading">Verified against v1.3.0</h2>
-            <p>This documentation reflects the shipped <strong>v1.3.0</strong> package source (read directly from <code>Assets/FBSystem/</code>). Signatures below are real, not estimates.</p>
+            <h2 data-od-id="verified-heading">Verified against v1.6.0</h2>
+            <p>This documentation reflects the shipped <strong>v1.6.0</strong> package source (read directly from <code>Assets/FBSystem/</code>). Signatures below are real, not estimates.</p>
           </aside>
 
           <section class="doc-section" id="features" data-od-id="features-section" aria-labelledby="features-heading">
             <span class="section-kicker">01 / Product surface</span>
             <h2 id="features-heading" data-od-id="features-heading">Features</h2>
             <ul class="feature-list" data-od-id="features-list">
-              <li><strong>Full-body first / third person</strong> with procedural hand, head &amp; foot IK and spine stabilization.</li>
-              <li><strong>7-step Setup Wizard</strong>: menu <code>Tools ▸ FBSystem ▸ Setup Wizard</code> walks you from root to validation.</li>
-              <li><strong>FPCutter</strong>: segments the character mesh and hides body parts (e.g. the head) in first person while still casting shadows.</li>
-              <li><strong>Dynamic item system</strong>: equip/unequip, per-item hold data, shareable IK presets, scroll-wheel / number-key switching.</li>
+              <li><strong>Full-body first / third person</strong> with procedural hand, head and spine IK, ground-anchored foot planting and finger grips on held items.</li>
+              <li><strong>7-step Setup Wizard</strong>: menu <code>Tools ▸ FBSystem ▸ Setup Wizard</code> walks you from root to validation. A ready-made <code>FBSystem_Player</code> prefab and three demo scenes give a faster start.</li>
+              <li><strong>FPCutter</strong>: segments one or more character meshes and hides body parts (e.g. the head) in first person while still casting shadows.</li>
+              <li><strong>Item system</strong>: smooth equip, holster and unequip; per-item hold data; optional <code>ItemDefinition</code> assets with categories; IK presets; scroll-wheel and number-key switching.</li>
               <li><strong>Extensible event API</strong>: C# events + <code>UnityEvent</code>s + auto-discovered listener interfaces, each fired once per transition from a single canonical chokepoint.</li>
-              <li><strong>Procedural Foot IK</strong>: SphereCast ground tracing per foot with pelvis drop, slope limits and step up/down clamping (<code>PlayerFootIK</code>).</li>
+              <li><strong>Foot planting and footsteps</strong>: feet stay anchored to the ground with automatic re-steps; footsteps are detected from the animated feet, without animation events.</li>
+              <li><strong>Health and stamina</strong> (optional): <code>PlayerVitals</code> with damage, healing and death events, and heart-rate based sprint stamina.</li>
               <li><strong>Transfer Configuration</strong>: copies a fully tuned player's configuration onto a new character — no re-tuning of IK, camera or items (<code>Tools ▸ FBSystem ▸ Transfer Configuration</code>).</li>
-              <li><strong>FishNet multiplayer addon</strong> (optional): networked movement, animation, item sync and remote Foot IK with a dedicated Setup Wizard — see <a class="doc-link" href="fishnet.html">Multiplayer</a>.</li>
+              <li><strong>Multiplayer add-ons</strong> (optional): <a class="doc-link" href="fishnet.html">FishNet</a> (FishNet 4.7.2) and <a class="doc-link" href="purrnet.html">PurrNet</a> (PurrNet v1.22.0, host-client co-op for 2–4 players).</li>
               <li><strong>Cinemachine</strong>-based FPS camera with a stable anchor target.</li>
               <li><strong>Unity Input System</strong> integration (shipped <code>FBInputActions</code> asset).</li>
             </ul>
@@ -471,11 +479,12 @@
                 <thead><tr><th scope="col">Requirement</th><th scope="col">Version</th><th scope="col">Source</th></tr></thead>
                 <tbody>
                   <tr><td>Unity</td><td>6000.5.0f1 (Unity 6.5) or newer</td><td><code>ProjectSettings/ProjectVersion.txt</code></td></tr>
-                  <tr><td>Render Pipeline</td><td>URP 17.5.0 (demo + FPCutter shader)</td><td><code>Packages/manifest.json</code></td></tr>
+                  <tr><td>Render Pipeline</td><td>URP only (17.5.0)</td><td><code>Packages/manifest.json</code></td></tr>
                   <tr><td>Cinemachine</td><td>3.1.7</td><td><code>Packages/manifest.json</code></td></tr>
                   <tr><td>Input System</td><td>1.19.0</td><td><code>Packages/manifest.json</code></td></tr>
                   <tr><td>Character model</td><td>imported as <strong>Humanoid</strong></td><td>Setup Wizard step 2 requires it</td></tr>
-                  <tr><td>FishNet (optional)</td><td>4.7.2 — only for the multiplayer addon</td><td>install before importing <code>FBSystemFishNet</code></td></tr>
+                  <tr><td>FishNet (optional)</td><td>4.7.2 — only for the FishNet addon</td><td>install before importing <code>FBSystemFishNet</code></td></tr>
+                  <tr><td>PurrNet (optional)</td><td>v1.22.0 — only for the PurrNet addon</td><td>install before importing <code>FBSystemPurrNet</code></td></tr>
                 </tbody>
               </table>
             </div>
@@ -489,14 +498,14 @@
                 <thead><tr><th scope="col">Field</th><th scope="col">Value</th></tr></thead>
                 <tbody>
                   <tr><td>Asset</td><td>Easy FP Full Body Controller</td></tr>
-                  <tr><td>Publisher</td><td>vedaloiv (listed as Maansen)</td></tr>
+                  <tr><td>Publisher</td><td>vedaloiv</td></tr>
                   <tr><td>Store page</td><td><a class="doc-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">assetstore.unity.com</a></td></tr>
                   <tr><td>Price</td><td>€36.79</td></tr>
-                  <tr><td>Version</td><td>1.3.0</td></tr>
+                  <tr><td>Version</td><td>1.6.0</td></tr>
                   <tr><td>Unity</td><td>6000.5.0+</td></tr>
-                  <tr><td>Render pipeline</td><td>URP (demo + FPCutter)</td></tr>
-                  <tr><td>Package size</td><td>185.2 MB</td></tr>
-                  <tr><td>Released</td><td>2026-07-28 (v1.0), v1.1.0 on 2026-07-30</td></tr>
+                  <tr><td>Render pipeline</td><td>URP only</td></tr>
+                  <tr><td>Package size</td><td>194.7 MB</td></tr>
+                  <tr><td>Released</td><td>v1.0.0 (initial release) · v1.1.0 on 2026-07-30 · v1.3.0 on 2026-08-28 · v1.4.0 on 2026-09-08 · v1.6.0 on 2026-10-09</td></tr>
                 </tbody>
               </table>
             </div>
@@ -505,11 +514,11 @@
           <section class="doc-section" id="quick-start" data-od-id="quick-start-section" aria-labelledby="quick-start-heading">
             <span class="section-kicker">04 / First run</span>
             <h2 id="quick-start-heading" data-od-id="quick-start-heading">Quick start</h2>
-            <p>Run the <strong>7-step Setup Wizard</strong> (<code>Tools ▸ FBSystem ▸ Setup Wizard</code>), cut your mesh with <strong>FPCutter</strong>, and press Play. Full steps: <a class="doc-link" href="quick-start.html">Quick Start</a>.</p>
+            <p>Fastest start: drag <code>Demo/Prefabs/FBSystem_CameraRig</code> and <code>Demo/Prefabs/FBSystem_Player</code> into a scene with a floor and press Play. For your own character, run the <strong>7-step Setup Wizard</strong> (<code>Tools ▸ FBSystem ▸ Setup Wizard</code>), cut your mesh with <strong>FPCutter</strong>, and press Play. Full steps: <a class="doc-link" href="quick-start.html">Quick Start</a>.</p>
             <div class="video-frame" data-od-id="overview-video">
               <iframe src="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" title="FBSystem Quick Start Guide walkthrough" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen data-od-id="walkthrough-embed"></iframe>
             </div>
-            <p class="video-link"><a href="https://www.youtube-nocookie.com/watch?v=_X0HWXqQ3_k" target="_blank" rel="noopener noreferrer" data-od-id="walkthrough-video-link">Open the walkthrough on YouTube ↗</a></p>
+            <p class="video-link"><a href="https://www.youtube.com/watch?v=_X0HWXqQ3_k" target="_blank" rel="noopener noreferrer" data-od-id="walkthrough-video-link">Open the walkthrough on YouTube ↗</a></p>
             <p class="video-credit">Walkthrough by <strong>aloiV</strong>. Covers the 7-step Setup Wizard, FPCutter mesh optimization, and the dynamic Item Usage system.</p>
           </section>
 
@@ -517,9 +526,10 @@
             <span class="section-kicker">05 / Continue</span>
             <h2 id="next-steps-heading" data-od-id="next-steps-heading">Next steps</h2>
             <ul data-od-id="next-steps-list">
-              <li><a class="doc-link" href="quick-start.html">Quick Start</a>: import, wizard, FPCutter, input, play.</li>
-              <li><a class="doc-link" href="interfaces.html">Interfaces</a>: the runtime API: <code>PlayerController</code> hub, item system, and the full event catalog.</li>
-              <li><a class="doc-link" href="fishnet.html">Multiplayer</a>: make a scene and player multiplayer-ready with the optional FishNet addon.</li>
+              <li><a class="doc-link" href="quick-start.html">Quick Start</a>: import, demo prefabs or wizard, FPCutter, input, play. Includes <a class="doc-link" href="quick-start.html#upgrading">upgrade notes from 1.3</a>.</li>
+              <li><a class="doc-link" href="interfaces.html">Interfaces</a>: the runtime API: <code>PlayerController</code> hub, item system, foot planting, vitals and the full event catalog.</li>
+              <li><a class="doc-link" href="fishnet.html">Multiplayer (FishNet)</a>: make a scene and player multiplayer-ready with the optional FishNet addon.</li>
+              <li><a class="doc-link" href="purrnet.html">Multiplayer (PurrNet)</a>: host-client co-op for 2 to 4 players with the optional PurrNet addon.</li>
             </ul>
           </section>
 
@@ -527,11 +537,13 @@
             <span class="section-kicker">06 / Release history</span>
             <h2 id="changelog-heading" data-od-id="changelog-heading">Changelog highlights</h2>
             <ul data-od-id="changelog-list">
-              <li><strong>v1.3.0 (2026-08-21)</strong>: Optional <strong>FishNet multiplayer addon</strong> (<code>FBSystemFishNet</code>): client-authoritative movement &amp; animator sync, networked look pitch for remote IK, equip/unequip sync by container slot, networked world items (pickup/drop), remote Foot IK, and a 4-step FishNet Setup Wizard. Plus the <strong>Hand Pose Debugger</strong>, drop-physics refinements, and a consolidated <code>Tools ▸ FBSystem</code> menu.</li>
-              <li><strong>v1.2 (2026-08)</strong>: <strong>Character Configuration Transfer</strong> tool (copy tuning + add missing items onto a new character) and procedural <strong>Foot IK</strong> (<code>PlayerFootIK</code>: SphereCast ground trace, pelvis drop, slope/step limits).</li>
-              <li><strong>v1.1.0 (2026-07-30)</strong>: Extensible Event API: triple mechanism (C# <code>event</code> + <code>UnityEvent</code> + auto-discovered listener interfaces) on <code>HandItemSocket</code> and <code>PlayerLocomotion</code>, fired once per transition. <code>HandItemSocket</code> is now the canonical equip-event owner; <code>ItemContainer</code> is pure orchestration.</li>
-              <li><strong>v1.0.0</strong>: initial release: FP/TP full-body controller, procedural IK, setup-wizard onboarding, FPCutter mesh-cutting, demo scene with item pickup/drop.</li>
+              <li><strong>v1.6.0 (2026-10-09)</strong>: <code>FBSystem_Player</code> and <code>FBSystem_CameraRig</code> prefabs and three guided demo scenes; smooth equip/unequip with holster animation; finger grips (<code>HandPoseController</code>); footsteps (<code>PlayerFootsteps</code>); item definitions and categories; optional health and stamina (<code>PlayerVitals</code>); the PurrNet addon; input and FPCutter fixes. <strong>Breaking:</strong> Foot IK renamed to foot planting (<code>PlayerFootPlanting</code>).</li>
+              <li><strong>v1.4.0 (2026-09-08)</strong>: ground-anchored foot IK (<code>PlayerFootGlue</code>, renamed to <code>PlayerFootPlanting</code> in 1.6); the PurrNet addon; FPCutter support for characters built from several meshes. <strong>Breaking:</strong> the legacy foot IK systems were removed.</li>
+              <li><strong>v1.3.0 (2026-08-28)</strong>: <strong>Character Configuration Transfer</strong> tool: copies tuning and missing items onto a new character.</li>
+              <li><strong>v1.1.0 (2026-07-30)</strong>: Extensible Event API: C# <code>event</code> + <code>UnityEvent</code> + auto-discovered listener interfaces on <code>HandItemSocket</code> and <code>PlayerLocomotion</code>, fired once per transition.</li>
+              <li><strong>v1.0.0</strong>: initial release.</li>
             </ul>
+            <p>Upgrading from 1.3? Read <a class="doc-link" href="quick-start.html#upgrading">Upgrading from 1.3</a> first: foot settings reset and the add-ons must be re-imported.</p>
             <p>Full changelog ships in the package at <code>Assets/FBSystem/CHANGELOG.md</code>.</p>
           </section>
 
@@ -546,7 +558,7 @@
           <a class="back-top" href="#top" data-od-id="back-to-top">Back to top ↑</a>
         </article>
         <nav class="doc-footer-nav" aria-label="Page navigation" data-od-id="doc-footer-navigation">
-          <a class="doc-footer-link" href="quick-start.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Quick Start →</strong></a>
+          <a class="doc-footer-link" href="quick-start.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Quick Start &#8594;</strong></a>
         </nav>
       </div>
     </section>
@@ -554,30 +566,35 @@
 
   <footer class="site-footer" data-od-id="site-footer">
     <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.3.0</p>
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.6.0</p>
       <nav class="footer-links" aria-label="Footer navigation" data-od-id="footer-navigation">
         <a href="../unity-asset-portfolio.html" data-od-id="footer-home-link">Home</a>
+        <a href="index.html" data-od-id="footer-docs-hub-link">All docs</a>
         <a href="overview.html" aria-current="page" data-od-id="footer-overview-link">Overview</a>
         <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
         <a href="interfaces.html" data-od-id="footer-interfaces-link">Interfaces</a>
-        <a href="fishnet.html" data-od-id="footer-fishnet-link">Multiplayer</a>
+        <a href="fishnet.html" data-od-id="footer-fishnet-link">Multiplayer (FishNet)</a>
+        <a href="purrnet.html" data-od-id="footer-purrnet-link">Multiplayer (PurrNet)</a>
         <a href="dungeon-generator.html" data-od-id="footer-dungeon-generator-link">Dungeon Generator</a>
         <a href="dungeon-quick-start.html" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
         <a href="dungeon-api.html" data-od-id="footer-dungeon-api-link">Dungeon API</a>
+        <a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener noreferrer" data-od-id="footer-dungeon-store-link">Easy Dungeon Generator ↗</a>
         <a href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="footer-github-link">GitHub</a>
-        <a href="mailto:dinlinwin@gmail.com">Email</a>
+        <a href="mailto:karakask2004@gmail.com">Email</a>
       </nav>
     </div>
   </footer>
   <script type="application/json" id="doc-search-index">
     [
-      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity: full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, dynamic items, procedural IK incl. Foot IK, extensible events, config transfer, and an optional FishNet multiplayer addon.","url":"overview.html"},
-      {"title":"Quick Start","headings":["Requirements","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Validation","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","7. Multiplayer (optional)","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, prepare a Humanoid model, run the 7-step Setup Wizard, configure FPCutter and input, then press Play.","url":"quick-start.html"},
-      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus / cutscenes / pausing):","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config & reactions","ItemAttachmentData: hold & IK config","ItemIKPreset: share IK config","Event API: PlayerEventAPI","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Procedural IK (advanced)","PlayerFootIK","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items, event API, FPCutter, animation, and procedural IK (foot, head, hand, spine).","url":"interfaces.html"},
-      {"title":"Multiplayer (FishNet Addon)","headings":["What the addon does","Requirements","1. Install FishNet and the addon","Video: FishNet Quick Setup","2. FishNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: FishNet Components","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host and remote client","Troubleshooting"],"excerpt":"Optional FBSystemFishNet addon for FishNet 4.7.2: make scenes and players multiplayer-ready — networked movement, animation, item sync, world items, and remote Foot IK.","url":"fishnet.html"},
-      {"title":"Dungeon Generator","headings":["Authoring vs. assembly","Editor tools","How generation works","Getting started","Chunk streaming","Extending the toolkit","Status"],"excerpt":"Procedural Dungeon Generator for Unity: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, editor tools under Tools/DungeonGen, chunk streaming, and extension contracts.","url":"dungeon-generator.html"},
-      {"title":"Dungeon Quick Start","headings":["1. Package & setup","2. Create a theme","3. Paint a room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","7. Decorate rooms (optional)","8. Chunk streaming (optional)","9. Next steps"],"excerpt":"Minimal flow for the Procedural Dungeon Generator: package setup, Theme Wizard, Room Designer, DungeonTemplate, and DungeonManager Generate.","url":"dungeon-quick-start.html"},
-      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","ChunkDungeonStreamer","RoomDecorator","Rendering & room geometry","Post-processing & culling","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API in namespace DungeonGen: DungeonManager, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
+      {"title":"All docs","headings":["Assets","Easy FP Full Body Controller","Easy Dungeon Generator","Earshot"],"excerpt":"Documentation hub for the vedaloiv Unity assets: Easy FP Full Body Controller v1.6.0, Easy Dungeon Generator v1.1.0, and Earshot (in development).","url":"index.html"},
+      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity (URP): full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, item system with definitions and holster animation, finger grips, foot planting, footsteps, optional health and stamina, demo scenes and ready-made prefabs, and optional FishNet and PurrNet multiplayer add-ons.","url":"overview.html"},
+      {"title":"Quick Start","headings":["Requirements","Fastest start: demo scenes and prefabs","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Final Health Check","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","7. Multiplayer (optional)","Upgrading from 1.3","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, run the 7-step Setup Wizard or start from the ready-made FBSystem_Player and FBSystem_CameraRig prefabs, configure FPCutter and input, then press Play. Includes upgrade notes from 1.3.","url":"quick-start.html"},
+      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus, cutscenes, pausing)","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config and reactions","ItemDefinition: shared item description","ItemAttachmentData: hold and IK config","ItemIKPreset: share IK config","Event API","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Footstep and foot planting events","Vitals events: PlayerVitals","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Feet, hands, head and vitals","PlayerFootPlanting","PlayerFootsteps","HandPoseController and FingerPose","PlayerVitals and PlayerExertion","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer","PlayerHandPoseDebugger (debug)","Multiplayer add-on bridges","Demo and editor code"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items and item definitions, event API, FPCutter, animation, foot planting, footsteps, finger grips, vitals, and procedural IK.","url":"interfaces.html"},
+      {"title":"Multiplayer (FishNet Addon)","headings":["What the addon does","Requirements","1. Install FishNet and the addon","Video: FishNet quick setup","2. FishNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: FishNet Components","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & remote client","Host test in the editor","Remote-client test","Troubleshooting"],"excerpt":"Optional FBSystemFishNet addon for FishNet 4.7.2: make scenes and players multiplayer-ready with a 5-step Setup Wizard, networked movement, animator and item sync, and networked world items.","url":"fishnet.html"},
+      {"title":"Multiplayer (PurrNet Addon)","headings":["What the addon does","Requirements","1. Install PurrNet and the addon","2. PurrNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: Network Player","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & clients","Host test in the editor","Remote client test","Troubleshooting"],"excerpt":"Optional FBSystemPurrNet addon for PurrNet v1.22.0: host-client co-op for 2 to 4 players with a 5-step Setup Wizard, owner-authoritative movement, animator and foot-planting sync, and item sync.","url":"purrnet.html"},
+      {"title":"Easy Dungeon Generator","headings":["Authoring vs. assembly","Components","Editor tools","How generation works","Requirements","Demo scenes","Getting started","Chunk streaming","Extending the toolkit","Status and store facts"],"excerpt":"Easy Dungeon Generator v1.1.0 for Unity 6000.5.0+: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, components, requirements, four demo scenes, chunk streaming, and store facts (released 2026-10-08, €33.11).","url":"dungeon-generator.html"},
+      {"title":"Dungeon Quick Start","headings":["1. Package & setup","Create a setup object","Create authoring assets","2. Create a theme","3. Paint a room","Multi-floor rooms","Doors and socket types","Save the room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","DungeonManager inspector","7. Decorate rooms (optional)","8. Chunk streaming (optional)","Setup","World & streaming","Locks, gizmos & logging","9. Next steps"],"excerpt":"Minimal flow for Easy Dungeon Generator v1.1.0: package setup, Theme Wizard, Room Designer, DungeonTemplate, DungeonManager Generate, and the optional decoration and chunk streaming steps.","url":"dungeon-quick-start.html"},
+      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","Methods","Key fields","ChunkDungeonStreamer","Methods","Key fields","Supporting chunk architecture","RoomDecorator","Rendering & room geometry","IDungeonRenderer","IRoomGeometry","Post-processing & culling","Post-processing contracts","DungeonNavMeshPostProcessor","DungeonCulling and rules","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API of Easy Dungeon Generator v1.1.0 in namespace DungeonGen: DungeonManager with Wall Mode, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
     ]
   </script>
   <script>

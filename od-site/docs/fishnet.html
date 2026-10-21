@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FBSystem FishNet multiplayer addon: make scenes and players multiplayer-ready with FishNet 4.7.2 — networked movement, animation, item sync, world items, and remote Foot IK.">
+  <meta name="description" content="FBSystem FishNet multiplayer addon: make scenes and players multiplayer-ready with FishNet 4.7.2 — networked movement, animation, item sync and networked world items.">
   <title>Multiplayer (FishNet Addon) / Easy FP Full Body Controller docs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -168,7 +168,7 @@
       .button:hover { transform: none; }
     }
 
-    /* VitePress-style documentation shell: compact, searchable, and offline. */
+    /* Documentation shell: compact, searchable, and offline. */
     .site-header { background: color-mix(in oklch, var(--surface-raised) 92%, var(--bg)); backdrop-filter: blur(16px); }
     .nav-wrap { min-height: 64px; gap: 18px; }
     .brand { min-height: 44px; }
@@ -305,6 +305,7 @@
       </a>
       <nav class="top-nav" aria-label="Primary navigation" data-od-id="top-navigation">
         <a class="nav-link" href="../unity-asset-portfolio.html" data-od-id="home-nav-link">Home</a>
+        <a class="nav-link" href="index.html" data-od-id="docs-hub-nav-link">All docs</a>
         <a class="nav-link" href="overview.html" data-od-id="controller-nav-link">Easy FP Controller</a>
         <a class="nav-link" href="dungeon-generator.html" data-od-id="dungeon-generator-nav-link">Dungeon Generator</a>
         <a class="nav-link" data-od-id="asset-store-nav-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener noreferrer">Asset Store</a>
@@ -330,8 +331,8 @@
         <div>
           <span class="eyebrow">Documentation / Multiplayer</span>
           <h1 id="fishnet-title" data-od-id="fishnet-heading">FishNet Multiplayer Addon</h1>
-          <p class="doc-lead">Make FBSystem scenes and players multiplayer-ready with the optional <strong>FBSystemFishNet</strong> addon: client-authoritative movement, animator and item sync, networked world items, and remote Foot IK — wired by a dedicated Setup Wizard.</p>
-          <div class="doc-hero-note"><span>Optional addon</span><span>FishNet 4.7.2</span><span>FBSystem v1.3.0+</span></div>
+          <p class="doc-lead">Make FBSystem scenes and players multiplayer-ready with the optional <strong>FBSystemFishNet</strong> addon: client-authoritative movement, animator and item sync, networked world items, and a dedicated Setup Wizard.</p>
+          <div class="doc-hero-note"><span>Optional addon</span><span>FishNet 4.7.2</span><span>FBSystem v1.6.0</span></div>
         </div>
         <figure class="doc-hero-media" data-od-id="fishnet-hero-image">
           <img src="images/fp-integrations.png" alt="FBSystem FishNet addon integrating networking into the Easy FP Full Body Controller" fetchpriority="high" decoding="async">
@@ -343,15 +344,21 @@
     <section class="doc-shell" data-od-id="fishnet-content">
       <div class="container doc-layout">
         <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Documentation">
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-hub">vedaloiv</p>
+          <p class="doc-sidebar-section">Documentation hub</p>
+          <nav aria-label="All docs" data-od-id="docs-hub-sidebar-nav">
+            <a href="index.html" data-od-id="sidebar-docs-hub-link">All docs</a>
+          </nav>
           <p class="doc-sidebar-title" data-od-id="docs-sidebar-title">Easy FP Full Body Controller</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Documentation pages">
             <a href="overview.html" data-od-id="sidebar-overview-link">Overview</a>
             <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
             <a href="interfaces.html" data-od-id="sidebar-interfaces-link">Interfaces</a>
-            <a href="fishnet.html" aria-current="page" data-od-id="sidebar-fishnet-link">Multiplayer</a>
+            <a href="fishnet.html" aria-current="page" data-od-id="sidebar-fishnet-link">Multiplayer (FishNet)</a>
+            <a href="purrnet.html" data-od-id="sidebar-purrnet-link">Multiplayer (PurrNet)</a>
           </nav>
-          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Procedural Dungeon Generator</p>
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Easy Dungeon Generator</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Dungeon Generator pages">
             <a href="dungeon-generator.html" data-od-id="sidebar-dungeon-overview-link">Overview</a>
@@ -364,8 +371,8 @@
           <nav id="doc-outline-list" aria-label="On this page links" data-od-id="outline-links">
             <a href="#what">What the addon does</a>
             <a href="#requirements">Requirements</a>
-            <a href="#install">1. Install FishNet + addon</a>
-            <a href="#video">Video Quick Setup</a>
+            <a href="#install">1. Install FishNet and the addon</a>
+            <a href="#video">Video quick setup</a>
             <a href="#wizard">2. FishNet Setup Wizard</a>
             <a href="#step-scene-setup">Step 1: Scene Setup</a>
             <a href="#step-select-player">Step 2: Select Player</a>
@@ -375,14 +382,14 @@
             <a href="#world-items">3. Networked world items</a>
             <a href="#sync">What gets synchronized</a>
             <a href="#scope">Not included</a>
-            <a href="#testing">Testing host &amp; remote</a>
+            <a href="#testing">Testing host and remote client</a>
             <a href="#troubleshooting">Troubleshooting</a>
           </nav>
         </aside>
 
         <article class="doc-article">
           <aside class="callout" data-od-id="verified-callout">
-            <h2 data-od-id="verified-heading">Verified against v1.3.0 addon source</h2>
+            <h2 data-od-id="verified-heading">Verified against the v1.6.0 addon source</h2>
             <p>Steps below are read from <code>Assets/FBSystemFishNet/</code> (addon) plus the base <code>Assets/FBSystem/</code> package. The addon implementation targets <strong>FishNet 4.7.2</strong>.</p>
           </aside>
 
@@ -391,11 +398,11 @@
             <h2 id="what-heading" data-od-id="what-heading">What the addon does</h2>
             <p>An <strong>optional package</strong> that lives in <code>Assets/FBSystemFishNet/</code>. It turns any scene and any FBSystem player into a FishNet-multiplayer setup without touching the base package.</p>
             <ul class="step-list" data-od-id="what-list">
-              <li>A <strong>4-step Setup Wizard</strong> wires NetworkManager, the player bridge and world items — idempotently, existing objects are reused.</li>
-              <li><code>FishNetPlayerBridge</code> syncs movement, animator state, look pitch and item equipment and auto-discovers owner-only components (<code>ItemSwitcher</code>, <code>PlayerInteraction</code>, <code>PlayerDropSystem</code>).</li>
+              <li>A <strong>5-step Setup Wizard</strong> wires the NetworkManager, the player bridge and world items. Every step is idempotent: existing objects are reused.</li>
+              <li><code>FishNetPlayerBridge</code> syncs movement, animator state, look pitch and item equipment, and auto-discovers owner-only components (<code>ItemSwitcher</code>, <code>PlayerInteraction</code>, <code>PlayerDropSystem</code>).</li>
               <li><code>FishNetFPCutterVisibility</code> hides the head for the local player (no FP clipping) and shows the full body on every remote.</li>
-              <li>A <strong>drag-&amp;-drop world-item window</strong> creates <code>_Net</code> variants, registers them, and fills the bridge prefab list.</li>
-              <li>A prepared demo scene is included and added to Build Settings.</li>
+              <li>A <strong>drag-and-drop world-item window</strong> creates <code>_Net</code> variants, registers them, and fills the bridge prefab list.</li>
+              <li>A prepared demo scene is included.</li>
             </ul>
           </section>
 
@@ -406,7 +413,7 @@
               <table data-od-id="requirements-table">
                 <thead><tr><th scope="col">Requirement</th><th scope="col">Version</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td>FBSystem</td><td>v1.3.0+</td><td>base asset must already be in the project</td></tr>
+                  <tr><td>FBSystem</td><td>v1.6.0</td><td>base asset must already be in the project; add-on packages from older versions do not compile against 1.6</td></tr>
                   <tr><td>FishNet</td><td>4.7.2</td><td>install <strong>before</strong> importing <code>FBSystemFishNet</code> — FishNet is not bundled in the addon</td></tr>
                   <tr><td>Unity</td><td>6000.5.0+ (Unity 6.5)</td><td>same as the base asset</td></tr>
                   <tr><td>Render Pipeline</td><td>URP</td><td>inherited from the base asset (demo + FPCutter)</td></tr>
@@ -416,102 +423,102 @@
           </section>
 
           <section class="doc-section" id="install" data-od-id="install-section" aria-labelledby="install-heading">
-            <span class="section-kicker">02 / 1</span>
+            <span class="section-kicker">02 / Install</span>
             <h2 id="install-heading" data-od-id="install-heading">1. Install FishNet and the addon</h2>
             <ol class="step-list" data-od-id="install-steps">
               <li>Import <strong>FishNet</strong> (4.7.2) into your Unity project.</li>
-              <li>Import the optional <code>FBSystemFishNet</code> addon folder/package.</li>
+              <li>Import the optional <code>FBSystemFishNet</code> addon folder or package.</li>
               <li>Open the scene you want to make multiplayer-ready.</li>
             </ol>
           </section>
 
           <section class="doc-section" id="video" data-od-id="video-section" aria-labelledby="video-heading">
             <span class="section-kicker">Video / Quick Setup</span>
-            <h2 id="video-heading" data-od-id="video-heading">Video: FishNet Quick Setup</h2>
-            <p>Die 5 Schritte des Wizards in Aktion — von der leeren Szene zum Host-Test. Das Video zeigt das komplette Setup ohne Schnitte.</p>
+            <h2 id="video-heading" data-od-id="video-heading">Video: FishNet quick setup</h2>
+            <p>The five wizard steps from an empty scene to a host test.</p>
             <div class="video-frame" data-od-id="fishnet-video">
               <iframe src="https://www.youtube-nocookie.com/embed/BN9u25nHWHw" title="FishNet Multiplayer Quick Setup for FBSystem" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" data-od-id="fishnet-video-embed"></iframe>
             </div>
-            <p class="video-credit"><a class="doc-link" href="https://www.youtube.com/watch?v=BN9u25nHWHw" target="_blank" rel="noreferrer" data-od-id="fishnet-video-link">Auf YouTube öffnen ↗</a> — falls das Embed blockiert ist. Studio-Link: <code>BN9u25nHWHw</code></p>
+            <p class="video-credit"><a class="doc-link" href="https://www.youtube.com/watch?v=BN9u25nHWHw" target="_blank" rel="noreferrer" data-od-id="fishnet-video-link">Open on YouTube ↗</a> if the embed is blocked. Video ID: <code>BN9u25nHWHw</code></p>
           </section>
 
           <section class="doc-section" id="wizard" data-od-id="wizard-section" aria-labelledby="wizard-heading">
-            <span class="section-kicker">03 / 2</span>
+            <span class="section-kicker">03 / Setup Wizard</span>
             <h2 id="wizard-heading" data-od-id="wizard-heading">2. FishNet Setup Wizard</h2>
-            <p>Menu: <strong><code>Tools &#9656; FBSystem &#9656; FishNet &#9656; Setup Wizard</code></strong>. Ein 5-Schritt-Wizard (Header mit Icon, 5er-Fortschrittsleiste, Karten-Sektionen, <code>&lt; Back</code> / <code>Next &gt;</code> — <code>Finish Setup</code>). Der Wizard liegt ausschließlich in <code>Assets/FBSystemFishNet</code> und fasst Core-Dateien unter <code>Assets/FBSystem</code> nicht an — zum Export des Addons als <code>.unitypackage</code> nur den FishNet-Ordner exportieren. Jeder Schritt ist <strong>idempotent</strong>.</p>
+            <p>Menu: <strong><code>Tools &#9656; FBSystem &#9656; FishNet &#9656; Setup Wizard</code></strong>. The wizard has five steps with a progress bar, <code>&lt; Back</code> and <code>Next &gt;</code> buttons, and <code>Finish Setup</code> on the last step. It lives only in <code>Assets/FBSystemFishNet</code> and does not change core files under <code>Assets/FBSystem</code>. To export the addon as a <code>.unitypackage</code>, export only the FishNet folder.</p>
 
             <h3 id="step-scene-setup" data-od-id="step-scene-setup-heading">Step 1: Scene Setup</h3>
             <figure class="step-shot" data-od-id="step-scene-setup-image">
-              <img src="images/FishNet/step1-scene-setup.png" alt="FishNet Setup Schritt 1: Scene Setup mit Status-Checks für NetworkManager, TransportManager, PlayerSpawner, Connection HUD und EventSystem" loading="lazy" decoding="async">
-              <figcaption>Step 1 / Scene Setup — idempotenter Aufbau</figcaption>
+              <img src="images/FishNet/step1-scene-setup.png" alt="FishNet Setup step 1: Scene Setup with status checks for NetworkManager, TransportManager, PlayerSpawner, Connection HUD and EventSystem" loading="lazy" decoding="async">
+              <figcaption>Step 1 / Scene Setup — idempotent setup</figcaption>
             </figure>
-            <p>Bereitet die offene Szene als FishNet-Host vor:</p>
+            <p>Prepares the open scene as a FishNet host:</p>
             <ul class="step-list" data-od-id="step-scene-setup-list">
-              <li>Erstellt oder wiederverwendet <code>NetworkManager</code> mit <strong>Tugboat-Transport</strong>, <code>ObserverManager</code>, <code>PlayerSpawner</code>, Spawnable-Prefab-Verdrahtung und <code>EventSystem</code>.</li>
-              <li>Instanziiert FishNets eigenes <code>NetworkHudCanvas</code>-Prefab (<code>Assets/FishNet/Demos/Prefabs/NetworkHudCanvas.prefab</code>) für <em>Start Server</em> / <em>Start Client</em>. Wenn Demos entfernt wurden, zeigt der Wizard eine Warnung — Prefab wiederherstellen.</li>
-              <li>Alle Statuszeilen zeigen grün: <code>NetworkManager</code>, <code>TransportManager + Tugboat</code>, <code>PlayerSpawner</code>, <code>Connection HUD</code>, <code>EventSystem</code>. Button <strong>✨ Make Scene FishNet Ready</strong> führt den Schritt aus.</li>
+              <li>Creates or reuses a <code>NetworkManager</code> with <strong>Tugboat transport</strong>, <code>ObserverManager</code>, <code>PlayerSpawner</code>, spawnable-prefab wiring and an <code>EventSystem</code>.</li>
+              <li>Instantiates FishNet's own <code>NetworkHudCanvas</code> prefab (<code>Assets/FishNet/Demos/Prefabs/NetworkHudCanvas.prefab</code>) for <em>Start Server</em> and <em>Start Client</em>. If the FishNet demos were removed, the wizard warns: restore the prefab.</li>
+              <li>All status rows turn green: <code>NetworkManager</code>, <code>TransportManager + Tugboat</code>, <code>PlayerSpawner</code>, <code>Connection HUD</code>, <code>EventSystem</code>. The button <strong>✨ Make Scene FishNet Ready</strong> runs this step.</li>
             </ul>
 
             <h3 id="step-select-player" data-od-id="step-select-player-heading">Step 2: Select Player</h3>
             <figure class="step-shot" data-od-id="step-select-player-image">
-              <img src="images/FishNet/step2-select-player.png" alt="FishNet Setup Schritt 2: Select Player mit Player Root Feld und Hinweis zum Ziehen aus der Hierarchy" loading="lazy" decoding="async">
-              <figcaption>Step 2 / Select Player — Szene-Instanz wählen</figcaption>
+              <img src="images/FishNet/step2-select-player.png" alt="FishNet Setup step 2: Select Player with the Player Root field and a hint to drag the player from the Hierarchy" loading="lazy" decoding="async">
+              <figcaption>Step 2 / Select Player — choose the scene instance</figcaption>
             </figure>
-            <p>Wähle das FBSystem-Player-<code>GameObject</code> <strong>aus der Hierarchy</strong> (Szene-Instanz — kein reines Prefab-Asset — mit <code>PlayerController</code>, <code>Animator</code> etc.). Der Wizard fügt <code>NetworkObject</code> und <code>FishNetPlayerBridge</code> hinzu und rekonfiguriert die Bridge falls vorhanden.</p>
+            <p>Select the FBSystem player <code>GameObject</code> <strong>from the Hierarchy</strong>. It must be a scene instance, not a plain prefab asset, and must carry <code>PlayerController</code>, <code>Animator</code> and the other components. The wizard adds <code>NetworkObject</code> and <code>FishNetPlayerBridge</code>, and reconfigures the bridge if it already exists.</p>
             <ul class="step-list" data-od-id="step-select-player-list">
-              <li>Feld <code>Player Root</code>: <code>None (Game Object)</code> → per Drag &amp; Drop die Instanz aus der Szene ziehen.</li>
-              <li>Gelber Hinweis: <em>Drag your player from the Hierarchy (scene instance). Prefab assets must be in a scene.</em></li>
-              <li>Bei FPCutter-Nutzung wird <code>FishNetFPCutterVisibility</code> automatisch verdrahtet — Kopf lokal versteckt, remote voll sichtbar.</li>
+              <li>Field <code>Player Root</code>: <code>None (Game Object)</code>. Drag the instance from the scene into it.</li>
+              <li>Yellow hint: <em>Drag your player from the Hierarchy (scene instance). Prefab assets must be in a scene.</em></li>
+              <li>If you use FPCutter, <code>FishNetFPCutterVisibility</code> is wired automatically: the head is hidden locally and fully visible remotely.</li>
             </ul>
 
             <h3 id="step-fishnet-components" data-od-id="step-fishnet-components-heading">Step 3: FishNet Components</h3>
             <figure class="step-shot" data-od-id="step-fishnet-components-image">
-              <img src="images/FishNet/step3-fishnet-components.png" alt="FishNet Setup Schritt 3: FishNet Components mit grünen Checks für NetworkObject, NetworkTransform, NetworkAnimator, FishNetPlayerBridge und FPCutterVisibility" loading="lazy" decoding="async">
-              <figcaption>Step 3 / FishNet Components — Netzwerk-Komponenten konfigurieren</figcaption>
+              <img src="images/FishNet/step3-fishnet-components.png" alt="FishNet Setup step 3: FishNet Components with green checks for NetworkObject, NetworkTransform, NetworkAnimator, FishNetPlayerBridge and FPCutterVisibility" loading="lazy" decoding="async">
+              <figcaption>Step 3 / FishNet Components — configure the network components</figcaption>
             </figure>
-            <p>Fügt und konfiguriert die Netzwerk-Komponenten — ohne Core-FBSystem-Dateien zu ändern:</p>
+            <p>Adds and configures the network components without changing core FBSystem files:</p>
             <ul class="step-list" data-od-id="step-fishnet-components-list">
-              <li><code>NetworkObject</code>, <code>NetworkTransform (CharacterController, ClientAuth)</code>, <code>NetworkAnimator (ClientAuth, Animator ref)</code>, <code>FishNetPlayerBridge</code>, <code>FishNetFPCutterVisibility (local=FirstPerson / remote=ThirdPerson)</code> — alle mit grünem Haken.</li>
-              <li>Info-Zeile bei erkanntem FPCutter: <em>FPCutter mesh detected — FishNetFPCutterVisibility will hide Head for local player (no camera clipping) and show full body for remotes.</em></li>
-              <li>Button <strong>✨ Configure FishNet Components</strong>. Unter <em>Recent Changes</em> erscheinen <code>Configured NetworkObject / NetworkTransform / NetworkAnimator</code> und <code>FishNetFPCutterVisibility already present</code>.</li>
+              <li><code>NetworkObject</code>, <code>NetworkTransform (CharacterController, ClientAuth)</code>, <code>NetworkAnimator (ClientAuth, Animator ref)</code>, <code>FishNetPlayerBridge</code> and <code>FishNetFPCutterVisibility (local = FirstPerson / remote = ThirdPerson)</code>, each with a green check.</li>
+              <li>When an FPCutter mesh is detected, the info line reads: <em>FPCutter mesh detected — FishNetFPCutterVisibility will hide Head for local player (no camera clipping) and show full body for remotes.</em></li>
+              <li>Button <strong>✨ Configure FishNet Components</strong>. The <em>Recent Changes</em> list then shows <code>Configured NetworkObject / NetworkTransform / NetworkAnimator</code> and <code>FishNetFPCutterVisibility already present</code>.</li>
             </ul>
 
             <h3 id="step-world-items" data-od-id="step-world-items-heading">Step 4: World Items</h3>
             <figure class="step-shot" data-od-id="step-world-items-image">
-              <img src="images/FishNet/step4-world-items.png" alt="FishNet Setup Schritt 4: World Items mit zwei gefundenen ItemContainer-Einträgen Flashlightworlditem und Box_worlditem" loading="lazy" decoding="async">
-              <figcaption>Step 4 / World Items — _Net-Varianten aus dem ItemContainer</figcaption>
+              <img src="images/FishNet/step4-world-items.png" alt="FishNet Setup step 4: World Items listing two ItemContainer entries, Flashlightworlditem and Box_worlditem" loading="lazy" decoding="async">
+              <figcaption>Step 4 / World Items — _Net variants from the ItemContainer</figcaption>
             </figure>
-            <p>Konvertiert <code>WorldItem</code>-Prefabs zu netzwerkfähigen Varianten (fügt <code>NetworkObject</code> + <code>NetworkTransform</code> hinzu, erzeugt <code>*_Net.prefabs</code> unter <code>Assets/FBSystemFishNet/Testing/WorldItems/</code> und registriert sie als Spawnable):</p>
+            <p>Converts <code>WorldItem</code> prefabs to networked variants: it adds <code>NetworkObject</code> and <code>NetworkTransform</code>, creates <code>*_Net.prefab</code> files under <code>Assets/FBSystemFishNet/Testing/WorldItems/</code> and registers them as spawnable.</p>
             <ul class="step-list" data-od-id="step-world-items-list">
-              <li>Beispiel aus dem Screenshot: <code>Found 2 item(s) in ItemContainer</code> → <code>[0] 1 -&gt; Flashlightworlditem</code>, <code>[1] 2 -&gt; Box_worlditem</code>.</li>
-              <li>Button <strong>✨ Setup Networked World Items (from ItemContainer)</strong> und <strong>Open WorldItem Setup Window (Drag &amp; Drop, Find All, Remove)</strong> für manuelles Verwalten.</li>
-              <li>Hinweis: Für freies Hinzufügen per Drag &amp; Drop <code>Tools/FBSystem/FishNet/Setup Networked World Items</code> (eigenes Fenster) nutzen.</li>
+              <li>Example from the screenshot: <code>Found 2 item(s) in ItemContainer</code> → <code>[0] 1 -&gt; Flashlightworlditem</code>, <code>[1] 2 -&gt; Box_worlditem</code>.</li>
+              <li>Buttons <strong>✨ Setup Networked World Items (from ItemContainer)</strong> and <strong>Open WorldItem Setup Window (Drag &amp; Drop, Find All, Remove)</strong> for manual management.</li>
+              <li>To add items freely by drag and drop, use <code>Tools &#9656; FBSystem &#9656; FishNet &#9656; Setup Networked World Items</code> (separate window).</li>
             </ul>
 
             <h3 id="step-validation" data-od-id="step-validation-heading">Step 5: Validation</h3>
             <figure class="step-shot" data-od-id="step-validation-image">
-              <img src="images/FishNet/step5-validation.png" alt="FishNet Setup Schritt 5: Validation mit All checks passed Meldung und Buttons Select NetworkManager und Export" loading="lazy" decoding="async">
-              <figcaption>Step 5 / Validation — finaler Health-Check</figcaption>
+              <img src="images/FishNet/step5-validation.png" alt="FishNet Setup step 5: Validation with the All checks passed message and the Select NetworkManager and Export buttons" loading="lazy" decoding="async">
+              <figcaption>Step 5 / Validation — final health check</figcaption>
             </figure>
-            <p>Finaler Health-Check. Behebe verbleibende Warnungen — dieser Schritt ändert keine Core-FBSystem-Dateien.</p>
+            <p>Final health check. Fix any remaining warnings. This step does not change core FBSystem files.</p>
             <ul class="step-list" data-od-id="step-validation-list">
-              <li>Bei Erfolg: <em>✨ All checks passed — the scene and player are ready for FishNet. Press Play and use FishNet's HUD buttons (Start Server / Start Client).</em></li>
-              <li>Button <strong>Select NetworkManager in Scene</strong> und Abschnitt <em>Export</em>: <code>To ship the addon as .unitypackage: select Assets/FBSystemFishNet folder -&gt; Right Click -&gt; Export Package. Core Assets/FBSystem stays untouched and works without FishNet.</code></li>
-              <li>Wizard mit <strong>Finish Setup</strong> schließen. Der Wizard generiert bei Bedarf ein <code>GeneratedPlayers/*_Network</code>-Prefab-Asset, damit <code>PlayerSpawner</code> nie eine Szene-Instanz hält — das behebt <code>PrefabId 65535</code> / <code>NullReference</code> beim Spawn.</li>
+              <li>On success: <em>✨ All checks passed — the scene and player are ready for FishNet. Press Play and use FishNet's HUD buttons (Start Server / Start Client).</em></li>
+              <li>Button <strong>Select NetworkManager in Scene</strong> and the <em>Export</em> section: to ship the addon as a <code>.unitypackage</code>, select the <code>Assets/FBSystemFishNet</code> folder, right-click, and choose Export Package. The core <code>Assets/FBSystem</code> folder stays untouched and works without FishNet.</li>
+              <li>Close the wizard with <strong>Finish Setup</strong>. If needed, the wizard generates a <code>GeneratedPlayers/*_Network</code> prefab asset, so <code>PlayerSpawner</code> never holds a scene instance. This fixes <code>PrefabId 65535</code> and <code>NullReference</code> errors on spawn.</li>
             </ul>
-            <p>Owner-only Behaviours (<code>ItemSwitcher</code>, <code>PlayerInteraction</code>, <code>PlayerDropSystem</code>) werden automatisch auf der Bridge erkannt.</p>
+            <p>Owner-only behaviours (<code>ItemSwitcher</code>, <code>PlayerInteraction</code>, <code>PlayerDropSystem</code>) are detected automatically on the bridge.</p>
           </section>
 
           <section class="doc-section" id="world-items" data-od-id="world-items-section" aria-labelledby="world-items-heading">
-            <span class="section-kicker">04 / 3</span>
+            <span class="section-kicker">04 / World items</span>
             <h2 id="world-items-heading" data-od-id="world-items-heading">3. Networked world items</h2>
-            <p>Menu: <strong><code>Tools &#9656; FBSystem &#9656; FishNet &#9656; Setup Networked World Items</code></strong> — a <strong>drag-&amp;-drop window</strong> (<code>NetworkWorldItemSetupWindow</code>). Use <code>Find All WorldItems</code>, add or remove entries before applying, with <em>Auto-Find Bridge</em> and ItemContainer integration. It:</p>
+            <p>Menu: <strong><code>Tools &#9656; FBSystem &#9656; FishNet &#9656; Setup Networked World Items</code></strong> opens a <strong>drag-and-drop window</strong> (<code>NetworkWorldItemSetupWindow</code>). Use <code>Find All WorldItems</code> and add or remove entries before applying. <em>Auto-Find Bridge</em> and ItemContainer integration are available. The window:</p>
             <ul class="step-list" data-od-id="world-items-list">
               <li>Creates <code>_Net</code> WorldItem variants.</li>
               <li>Registers them with FishNet.</li>
               <li>Fills the bridge's prefab list on the player.</li>
             </ul>
-            <p>Pickup despawns the server object; drop spawns a networked WorldItem visible to all clients (server authoritative).</p>
+            <p>Pickup despawns the server object. A drop spawns a networked WorldItem that is visible to all clients (server authoritative).</p>
           </section>
 
           <section class="doc-section" id="sync" data-od-id="sync-section" aria-labelledby="sync-heading">
@@ -524,12 +531,13 @@
                   <tr><td>Root position &amp; rotation</td><td>FishNet <code>NetworkTransform</code>, client-authoritative</td></tr>
                   <tr><td>Animator state</td><td>FishNet <code>NetworkAnimator</code></td></tr>
                   <tr><td>Look pitch</td><td>networked for camera-dependent remote IK</td></tr>
-                  <tr><td>Remote Foot IK</td><td>supported on remote players (new in v1.3)</td></tr>
+                  <tr><td>Remote foot planting</td><td>runs on each client from the replicated animator state; no separate foot drive state is sent (the PurrNet addon sends one)</td></tr>
                   <tr><td>Equip / unequip</td><td>by container slot through <code>HandItemSocket</code> events</td></tr>
                   <tr><td>Item pickup</td><td>despawns the server object</td></tr>
                   <tr><td>Item drop</td><td>spawns a networked WorldItem for all clients</td></tr>
+                  <tr><td>Health (<code>PlayerVitals</code>)</td><td>not synchronized</td></tr>
                   <tr><td>Camera &amp; input</td><td>local-only: <code>PlayerCameraController.SetLocalCameraActive</code>; owner-only local input</td></tr>
-                  <tr><td>Server sanity checks</td><td>movement validation; item RPCs rejected after invalid teleport or non-finite transform</td></tr>
+                  <tr><td>Server sanity checks</td><td>movement validation; item RPCs rejected after an invalid teleport or non-finite transform</td></tr>
                 </tbody>
               </table>
             </div>
@@ -542,7 +550,7 @@
               <h2 data-od-id="scope-callout-heading">Out of scope for the addon</h2>
               <ul>
                 <li><strong>Item use</strong> stays local (no global sync).</li>
-                <li><strong>Server prediction</strong> and <strong>authoritative movement correction</strong> — not yet implemented.</li>
+                <li><strong>Server prediction</strong> and <strong>authoritative movement correction</strong> are not implemented.</li>
               </ul>
             </aside>
           </section>
@@ -550,7 +558,7 @@
           <section class="doc-section" id="testing" data-od-id="testing-section" aria-labelledby="testing-heading">
             <span class="section-kicker">07 / Verify</span>
             <h2 id="testing-heading" data-od-id="testing-heading">Testing host &amp; remote client</h2>
-            <p>The addon ships a prepared test setup (already in Build Settings):</p>
+            <p>The addon ships a prepared test setup. The scene is not in Build Settings, so add it before you build a remote client:</p>
             <ul class="step-list" data-od-id="testing-assets-list">
               <li>Scene: <code>Assets/FBSystemFishNet/Testing/Demo.unity</code></li>
               <li>Player: <code>Assets/FBSystemFishNet/Testing/FBSystemNetworkPlayer.prefab</code></li>
@@ -558,7 +566,7 @@
             </ul>
             <h3 data-od-id="testing-host-heading">Host test in the editor</h3>
             <ol class="step-list" data-od-id="testing-host-steps">
-              <li>Open <code>Demo.unity</code> — it must contain the FishNet <code>NetworkManager</code> prefab and its <code>PlayerSpawner</code>.</li>
+              <li>Open <code>Demo.unity</code>. It must contain the FishNet <code>NetworkManager</code> and its <code>PlayerSpawner</code>.</li>
               <li>Press Play. The HUD shows <em>Start Server</em> and <em>Start Client</em>. Start both for a host test.</li>
               <li>Verify movement, jump, sprint, crouch, root rotation, remote animator state and look pitch. The remote player must not process local input.</li>
               <li>Switch items (number keys, <code>Q</code>, or scroll) and verify equip/unequip on the other instance. Item use stays local.</li>
@@ -566,7 +574,7 @@
             </ol>
             <h3 data-od-id="testing-remote-heading">Remote-client test</h3>
             <ol class="step-list" data-od-id="testing-remote-steps">
-              <li>Build <code>Demo.unity</code> for Windows.</li>
+              <li>Add <code>Demo.unity</code> to Build Settings and build it for Windows.</li>
               <li>Run the build as the client and the editor scene as the host.</li>
               <li>Start the server in the editor and the client in the build with the HUD buttons.</li>
               <li>Repeat the same verification as above across both instances.</li>
@@ -580,11 +588,11 @@
               <table data-od-id="troubleshooting-table">
                 <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
                 <tbody>
-                  <tr><td><code>PrefabId 65535</code> / <code>NullReference</code> on <code>PlayerSpawner</code> spawn</td><td>Run the wizard's <strong>Validation</strong> step so <code>PlayerSpawner</code> holds a <strong>prefab asset</strong> (<code>GeneratedPlayers/*_Network</code>) registered in <code>DefaultPrefabObjects</code> — never a scene instance.</td></tr>
-                  <tr><td>No <em>Start Server / Start Client</em> buttons</td><td><code>NetworkHudCanvas</code> comes from <code>FishNet/Demos/Prefabs</code>. If you deleted Demos, the wizard warns — restore <code>NetworkHudCanvas.prefab</code>.</td></tr>
-                  <tr><td>Remote head clips in FP / always hidden</td><td>Player needs <code>FPCutterController</code>. The addon wires <code>FishNetFPCutterVisibility</code> to hide the head locally and show the full body on remotes.</td></tr>
+                  <tr><td><code>PrefabId 65535</code> / <code>NullReference</code> on <code>PlayerSpawner</code> spawn</td><td>Run the wizard's <strong>Validation</strong> step so <code>PlayerSpawner</code> holds a <strong>prefab asset</strong> (<code>GeneratedPlayers/*_Network</code>) registered in <code>DefaultPrefabObjects</code>, never a scene instance.</td></tr>
+                  <tr><td>No <em>Start Server / Start Client</em> buttons</td><td><code>NetworkHudCanvas</code> comes from <code>FishNet/Demos/Prefabs</code>. If you deleted the demos, the wizard warns: restore <code>NetworkHudCanvas.prefab</code>.</td></tr>
+                  <tr><td>Remote head clips in FP / always hidden</td><td>The player needs <code>FPCutterController</code>. The addon wires <code>FishNetFPCutterVisibility</code> to hide the head locally and show the full body on remotes.</td></tr>
                   <tr><td>Equip not syncing</td><td>Equip must go through <code>ItemContainer</code> slots (<code>HandItemSocket.EquipFromContainer</code>). Direct socket attaches without a slot carry no slot index.</td></tr>
-                  <tr><td>Item RPCs rejected</td><td>Server sanity kicked after an invalid teleport or non-finite transform — fix the teleport driver before calling item code.</td></tr>
+                  <tr><td>Item RPCs rejected</td><td>Server sanity check kicked in after an invalid teleport or non-finite transform. Fix the teleport driver before calling item code.</td></tr>
                 </tbody>
               </table>
             </div>
@@ -597,6 +605,7 @@
         </article>
         <nav class="doc-footer-nav" aria-label="Page navigation" data-od-id="doc-footer-navigation">
           <a class="doc-footer-link" href="interfaces.html" data-od-id="previous-page-link"><span class="doc-footer-label">Previous</span><strong>&#8592; Interfaces</strong></a>
+          <a class="doc-footer-link" href="purrnet.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Multiplayer (PurrNet) &#8594;</strong></a>
         </nav>
       </div>
     </section>
@@ -604,30 +613,36 @@
 
 <footer class="site-footer" data-od-id="site-footer">
     <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.3.0</p>
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.6.0</p>
       <nav class="footer-links" aria-label="Footer navigation" data-od-id="footer-navigation">
         <a href="../unity-asset-portfolio.html" data-od-id="footer-home-link">Home</a>
+        <a href="index.html" data-od-id="footer-docs-hub-link">All docs</a>
         <a href="overview.html" data-od-id="footer-overview-link">Overview</a>
         <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
         <a href="interfaces.html" data-od-id="footer-interfaces-link">Interfaces</a>
-        <a href="fishnet.html" aria-current="page" data-od-id="footer-fishnet-link">Multiplayer</a>
+        <a href="fishnet.html" aria-current="page" data-od-id="footer-fishnet-link">Multiplayer (FishNet)</a>
+        <a href="purrnet.html" data-od-id="footer-purrnet-link">Multiplayer (PurrNet)</a>
         <a href="dungeon-generator.html" data-od-id="footer-dungeon-generator-link">Dungeon Generator</a>
         <a href="dungeon-quick-start.html" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
         <a href="dungeon-api.html" data-od-id="footer-dungeon-api-link">Dungeon API</a>
+        <a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener noreferrer" data-od-id="footer-dungeon-store-link">Easy Dungeon Generator ↗</a>
         <a href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="footer-github-link">GitHub</a>
-        <a href="mailto:dinlinwin@gmail.com">Email</a>
+        <a href="mailto:karakask2004@gmail.com">Email</a>
       </nav>
     </div>
   </footer>
+
   <script type="application/json" id="doc-search-index">
     [
-      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity: full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, dynamic items, procedural IK incl. Foot IK, extensible events, config transfer, and an optional FishNet multiplayer addon.","url":"overview.html"},
-      {"title":"Quick Start","headings":["Requirements","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Validation","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","7. Multiplayer (optional)","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, prepare a Humanoid model, run the 7-step Setup Wizard, configure FPCutter and input, then press Play.","url":"quick-start.html"},
-      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus / cutscenes / pausing):","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config & reactions","ItemAttachmentData: hold & IK config","ItemIKPreset: share IK config","Event API: PlayerEventAPI","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Procedural IK (advanced)","PlayerFootIK","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items, event API, FPCutter, animation, and procedural IK (foot, head, hand, spine).","url":"interfaces.html"},
-      {"title":"Multiplayer (FishNet Addon)","headings":["What the addon does","Requirements","1. Install FishNet and the addon","Video: FishNet Quick Setup","2. FishNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: FishNet Components","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host and remote client","Troubleshooting"],"excerpt":"Optional FBSystemFishNet addon for FishNet 4.7.2: make scenes and players multiplayer-ready — networked movement, animation, item sync, world items, and remote Foot IK.","url":"fishnet.html"},
-      {"title":"Dungeon Generator","headings":["Authoring vs. assembly","Editor tools","How generation works","Getting started","Chunk streaming","Extending the toolkit","Status"],"excerpt":"Procedural Dungeon Generator for Unity: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, editor tools under Tools/DungeonGen, chunk streaming, and extension contracts.","url":"dungeon-generator.html"},
-      {"title":"Dungeon Quick Start","headings":["1. Package & setup","2. Create a theme","3. Paint a room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","7. Decorate rooms (optional)","8. Chunk streaming (optional)","9. Next steps"],"excerpt":"Minimal flow for the Procedural Dungeon Generator: package setup, Theme Wizard, Room Designer, DungeonTemplate, and DungeonManager Generate.","url":"dungeon-quick-start.html"},
-      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","ChunkDungeonStreamer","RoomDecorator","Rendering & room geometry","Post-processing & culling","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API in namespace DungeonGen: DungeonManager, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
+      {"title":"All docs","headings":["Assets","Easy FP Full Body Controller","Easy Dungeon Generator","Earshot"],"excerpt":"Documentation hub for the vedaloiv Unity assets: Easy FP Full Body Controller v1.6.0, Easy Dungeon Generator v1.1.0, and Earshot (in development).","url":"index.html"},
+      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity (URP): full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, item system with definitions and holster animation, finger grips, foot planting, footsteps, optional health and stamina, demo scenes and ready-made prefabs, and optional FishNet and PurrNet multiplayer add-ons.","url":"overview.html"},
+      {"title":"Quick Start","headings":["Requirements","Fastest start: demo scenes and prefabs","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Final Health Check","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","7. Multiplayer (optional)","Upgrading from 1.3","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, run the 7-step Setup Wizard or start from the ready-made FBSystem_Player and FBSystem_CameraRig prefabs, configure FPCutter and input, then press Play. Includes upgrade notes from 1.3.","url":"quick-start.html"},
+      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus, cutscenes, pausing)","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config and reactions","ItemDefinition: shared item description","ItemAttachmentData: hold and IK config","ItemIKPreset: share IK config","Event API","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Footstep and foot planting events","Vitals events: PlayerVitals","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Feet, hands, head and vitals","PlayerFootPlanting","PlayerFootsteps","HandPoseController and FingerPose","PlayerVitals and PlayerExertion","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer","PlayerHandPoseDebugger (debug)","Multiplayer add-on bridges","Demo and editor code"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items and item definitions, event API, FPCutter, animation, foot planting, footsteps, finger grips, vitals, and procedural IK.","url":"interfaces.html"},
+      {"title":"Multiplayer (FishNet Addon)","headings":["What the addon does","Requirements","1. Install FishNet and the addon","Video: FishNet quick setup","2. FishNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: FishNet Components","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & remote client","Host test in the editor","Remote-client test","Troubleshooting"],"excerpt":"Optional FBSystemFishNet addon for FishNet 4.7.2: make scenes and players multiplayer-ready with a 5-step Setup Wizard, networked movement, animator and item sync, and networked world items.","url":"fishnet.html"},
+      {"title":"Multiplayer (PurrNet Addon)","headings":["What the addon does","Requirements","1. Install PurrNet and the addon","2. PurrNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: Network Player","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & clients","Host test in the editor","Remote client test","Troubleshooting"],"excerpt":"Optional FBSystemPurrNet addon for PurrNet v1.22.0: host-client co-op for 2 to 4 players with a 5-step Setup Wizard, owner-authoritative movement, animator and foot-planting sync, and item sync.","url":"purrnet.html"},
+      {"title":"Easy Dungeon Generator","headings":["Authoring vs. assembly","Components","Editor tools","How generation works","Requirements","Demo scenes","Getting started","Chunk streaming","Extending the toolkit","Status and store facts"],"excerpt":"Easy Dungeon Generator v1.1.0 for Unity 6000.5.0+: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, components, requirements, four demo scenes, chunk streaming, and store facts (released 2026-10-08, €33.11).","url":"dungeon-generator.html"},
+      {"title":"Dungeon Quick Start","headings":["1. Package & setup","Create a setup object","Create authoring assets","2. Create a theme","3. Paint a room","Multi-floor rooms","Doors and socket types","Save the room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","DungeonManager inspector","7. Decorate rooms (optional)","8. Chunk streaming (optional)","Setup","World & streaming","Locks, gizmos & logging","9. Next steps"],"excerpt":"Minimal flow for Easy Dungeon Generator v1.1.0: package setup, Theme Wizard, Room Designer, DungeonTemplate, DungeonManager Generate, and the optional decoration and chunk streaming steps.","url":"dungeon-quick-start.html"},
+      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","Methods","Key fields","ChunkDungeonStreamer","Methods","Key fields","Supporting chunk architecture","RoomDecorator","Rendering & room geometry","IDungeonRenderer","IRoomGeometry","Post-processing & culling","Post-processing contracts","DungeonNavMeshPostProcessor","DungeonCulling and rules","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API of Easy Dungeon Generator v1.1.0 in namespace DungeonGen: DungeonManager with Wall Mode, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
     ]
   </script>
   <script>

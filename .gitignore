@@ -23,3 +23,7 @@ build/
 .opencode/
 .pi/
 .impeccable/
+
+# Windows redirect artefacts
+nul
+.impeccable-refs/

@@ -20,14 +20,15 @@ function filesIn(dir) {
     .map(p => relative(dir, p));
 }
 
-// --- 1. copy html + design.md + referenced asset subtrees ---
+// --- 1. copy html + referenced asset subtrees (design.md -> od-design.md) ---
 let copied = 0, skipped = 0, newFiles = 0;
 for (const sub of TREE) {
   const from = join(SRC, sub);
   if (!existsSync(from)) { console.warn(`WARN: Quelle fehlt: ${sub}`); continue; }
   mkdirSync(join(DST, sub), { recursive: true });
   for (const rel of filesIn(from)) {
-    if (sub === '.' && !rel.endsWith('.html') && rel !== 'design.md') { skipped++; continue; } // nur Entry-HTMLs + design.md
+    if (sub === '.' && rel === 'design.md') { cpSync(join(from, rel), resolve('od-design.md')); copied++; continue; } // outside od-site: Wasmer serves od-site as-is
+    if (sub === '.' && !rel.endsWith('.html')) { skipped++; continue; } // nur Entry-HTMLs
     if (rel.includes('.file-versions') || rel.endsWith('.artifact.json') || rel.endsWith('.analysis.json')) { skipped++; continue; }
     const srcFile = join(from, rel);
     const dstFile = join(DST, sub, rel);

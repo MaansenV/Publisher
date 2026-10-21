@@ -24,6 +24,11 @@ FPCutter prepares characters for True First Person without requiring a manually 
 ⚡ <b>Key Features</b><br><br>
 
 • <b>Procedural IK:</b> Hand, head, and spine alignment.<br>
+• <b>Foot planting:</b> Ground-anchored feet on slopes, stairs, and uneven terrain.<br>
+• <b>Finger grips:</b> Hand poses that calibrate themselves from your avatar.<br>
+• <b>Smooth equip and holster:</b> Animated item draw and put-away.<br>
+• <b>Optional vitals:</b> Health and heart-rate stamina, plus footsteps from animated foot bones.<br>
+• <b>Multiplayer add-ons:</b> FishNet and PurrNet (2–4 player co-op) with their own setup wizards.<br>
 • <b>Full locomotion:</b> Idle, walk, sprint, jump, and crouch.<br>
 • <b>First and third person:</b> Switch perspectives using the same controller.<br>
 • <b>Modular architecture:</b> Components are automatically discovered and connected.<br>
@@ -33,19 +38,22 @@ FPCutter prepares characters for True First Person without requiring a manually 
 
 🛠️ <b>Setup and Tools</b><br><br>
 
-• <b>Setup Wizard:</b> Configure a playable character in seven guided steps. <a href="https://maansenv.github.io/Publisher/easy-fp-full-body-controller/quick-start">Quick Start guide</a><br>
+• <b>Setup Wizard:</b> Configure a playable character in seven guided steps. <a href="https://vedaloiv.wasmer.app/docs/quick-start.html">Quick Start guide</a><br>
 • <b>FPCutter Wizard:</b> Preview and generate mesh cuts visually.<br>
-• <b>Item System:</b> Attach items with custom hold positions and reusable IK presets.<br><br>
+• <b>Item System:</b> Attach items with custom hold positions and reusable IK presets.<br>
+• <b>Demo scenes:</b> Three guided demos plus ready-made player and camera rig prefabs.<br><br>
 
 📖 <b>Documentation</b><br><br>
 
-Full setup guides and API documentation are available online, verified against the shipped v1.1.0 source.<br><br>
+Full setup guides and API documentation are available online, verified against the shipped v1.6.0 source.<br><br>
 
-• <a href="https://maansenv.github.io/Publisher/easy-fp-full-body-controller/">Overview and requirements</a><br>
-• <a href="https://maansenv.github.io/Publisher/easy-fp-full-body-controller/quick-start">Quick Start guide</a><br>
-• <a href="https://maansenv.github.io/Publisher/easy-fp-full-body-controller/interfaces">Runtime API and interfaces</a><br><br>
+• <a href="https://vedaloiv.wasmer.app/docs/overview.html">Overview and requirements</a><br>
+• <a href="https://vedaloiv.wasmer.app/docs/quick-start.html">Quick Start guide</a><br>
+• <a href="https://vedaloiv.wasmer.app/docs/interfaces.html">Runtime API and interfaces</a><br>
+• <a href="https://vedaloiv.wasmer.app/docs/fishnet.html">Multiplayer: FishNet add-on</a><br>
+• <a href="https://vedaloiv.wasmer.app/docs/purrnet.html">Multiplayer: PurrNet add-on</a><br><br>
 
 🔧 <b>Planned for future updates</b><br><br>
 
-• <b>Advanced Foot IK:</b> Predictive foot placement for slopes, stairs, and uneven terrain.<br>
-• <b>Procedural Item Sway:</b> Dynamic weapon inertia and rotational sway to simulate weight.
+• <b>Hand sway:</b> Look lag with overshoot, breathing, and idle drift.<br>
+• <b>Item IK Presets window:</b> Manage hold presets in one place.

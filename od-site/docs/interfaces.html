@@ -121,7 +121,7 @@
 
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } .button:hover { transform: none; } }
 
-    /* VitePress-style documentation shell: compact, searchable, and offline. */
+    /* Documentation shell: compact, searchable, and offline. */
     .site-header { background: color-mix(in oklch, var(--surface-raised) 92%, var(--bg)); backdrop-filter: blur(16px); }
     .nav-wrap { min-height: 64px; gap: 18px; }
     .brand { min-height: 44px; }
@@ -273,6 +273,7 @@
       </a>
       <nav class="top-nav" aria-label="Primary navigation" data-od-id="top-navigation">
         <a class="nav-link" href="../unity-asset-portfolio.html" data-od-id="home-nav-link">Home</a>
+        <a class="nav-link" href="index.html" data-od-id="docs-hub-nav-link">All docs</a>
         <a class="nav-link" href="overview.html" data-od-id="controller-nav-link">Easy FP Controller</a>
         <a class="nav-link" href="dungeon-generator.html" data-od-id="dungeon-generator-nav-link">Dungeon Generator</a>
         <a class="nav-link" data-od-id="asset-store-nav-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener noreferrer">Asset Store</a>
@@ -296,14 +297,14 @@
     <section class="doc-hero" data-od-id="interfaces-hero" aria-labelledby="interfaces-title">
       <div class="container doc-hero-grid">
         <div>
-          <span class="eyebrow">Documentation / Runtime API</span>
+          <span class="eyebrow">Documentation / Reference</span>
           <h1 id="interfaces-title" data-od-id="interfaces-heading">Interfaces</h1>
-          <p class="doc-lead">The public runtime API for integrating with the controller. All runtime types are in namespace <code>Player</code>. This page covers the <strong>integration surface</strong>: demo scripts, editor inspectors, and internal tuning fields are omitted (see source under <code>Assets/FBSystem/</code>).</p>
-          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.3.0</span><span>namespace Player</span></div>
+          <p class="doc-lead">The public runtime API of Easy FP Full Body Controller: the <code>PlayerController</code> hub, settings, input, locomotion, camera, items and item definitions, the event API, FPCutter, animation, foot planting, footsteps, finger grips, vitals and procedural IK. Everything lives in namespace <code>Player</code> unless noted.</p>
+          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.6.0</span><span>namespace Player</span></div>
         </div>
         <figure class="doc-hero-media" data-od-id="interfaces-hero-image">
-          <img src="images/fp-integrations.png" alt="Easy FP Full Body Controller integrations in Unity" fetchpriority="high" decoding="async">
-          <figcaption class="doc-hero-caption"><span>Integration surface</span><span>Runtime API</span></figcaption>
+          <img src="images/fp-control.png" alt="Easy FP Full Body Controller player controls in a Unity scene" loading="lazy" decoding="async">
+          <figcaption class="doc-hero-caption"><span>Runtime API</span><span>Reference</span></figcaption>
         </figure>
       </div>
     </section>
@@ -311,15 +312,21 @@
     <section class="doc-shell" data-od-id="interfaces-content">
       <div class="container doc-layout">
         <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Documentation">
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-hub">vedaloiv</p>
+          <p class="doc-sidebar-section">Documentation hub</p>
+          <nav aria-label="All docs" data-od-id="docs-hub-sidebar-nav">
+            <a href="index.html" data-od-id="sidebar-docs-hub-link">All docs</a>
+          </nav>
           <p class="doc-sidebar-title" data-od-id="docs-sidebar-title">Easy FP Full Body Controller</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Documentation pages">
             <a href="overview.html" data-od-id="sidebar-overview-link">Overview</a>
             <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
             <a href="interfaces.html" aria-current="page" data-od-id="sidebar-interfaces-link">Interfaces</a>
-            <a href="fishnet.html" data-od-id="sidebar-fishnet-link">Multiplayer</a>
+            <a href="fishnet.html" data-od-id="sidebar-fishnet-link">Multiplayer (FishNet)</a>
+            <a href="purrnet.html" data-od-id="sidebar-purrnet-link">Multiplayer (PurrNet)</a>
           </nav>
-          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Procedural Dungeon Generator</p>
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Easy Dungeon Generator</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Dungeon Generator pages">
             <a href="dungeon-generator.html" data-od-id="sidebar-dungeon-overview-link">Overview</a>
@@ -327,7 +334,7 @@
             <a href="dungeon-api.html" data-od-id="sidebar-dungeon-api-link">API Reference</a>
           </nav>
         </aside>
-        <aside class="doc-aside" data-od-id="interfaces-sidebar" aria-label="Interfaces sections">
+        <aside class="doc-aside" data-od-id="interfaces-sidebar" aria-label="Interface sections">
           <p class="doc-aside-title" data-od-id="interfaces-outline-title">On this page</p>
           <nav id="doc-outline-list" aria-label="On this page links" data-od-id="outline-links">
             <a href="#player-controller">PlayerController</a>
@@ -335,38 +342,41 @@
             <a href="#playerinputhandler">PlayerInputHandler</a>
             <a href="#playerlocomotion">PlayerLocomotion</a>
             <a href="#playercameracontroller">PlayerCameraController</a>
-            <a href="#items">Item system</a>
+            <a href="#items">Items</a>
             <a href="#event-api">Event API</a>
             <a href="#fpcutter">FPCutter</a>
             <a href="#animator">PlayerAnimatorController</a>
-            <a href="#procedural-ik">Procedural IK</a>
+            <a href="#procedural-ik">Feet, hands, head and vitals</a>
+            <a href="#addons">Multiplayer add-on bridges</a>
+            <a href="#demo-editor">Demo and editor code</a>
           </nav>
         </aside>
 
         <article class="doc-article">
           <aside class="callout" data-od-id="verified-callout">
-            <h2 data-od-id="verified-heading">Verified against v1.3.0 source</h2>
-            <p>Signatures below are read from the shipped package.</p>
+            <h2 data-od-id="verified-heading">Verified against v1.6.0 source</h2>
+            <p>Signatures below are read from the shipped package at the 1.6.0 release. Names are the C# names; Inspector labels are shown where they differ.</p>
           </aside>
 
           <section class="doc-section" id="player-controller" data-od-id="player-controller-section" aria-labelledby="player-controller-heading">
+            <span class="section-kicker">01 / Hub</span>
             <h2 id="player-controller-heading" data-od-id="player-controller-heading">PlayerController: the hub</h2>
-            <p>Central <code>MonoBehaviour</code>. Auto-finds every sub-component in <code>Awake</code> if you leave them unassigned, so external code only needs one reference.</p>
+            <p>Central <code>MonoBehaviour</code> on the player root. It finds every subsystem in <code>Awake</code> if you leave them unassigned, so external code needs only one reference.</p>
             <h3 data-od-id="subsystem-accessors-heading">Subsystem accessors</h3>
             <div class="table-wrap" data-od-id="pc-accessors-table-wrap">
               <table data-od-id="pc-accessors-table">
                 <thead><tr><th scope="col">Property</th><th scope="col">Type</th><th scope="col">Subsystem</th></tr></thead>
                 <tbody>
-                  <tr><td><code>Settings</code></td><td><code>PlayerSettings</code></td><td>global config asset</td></tr>
+                  <tr><td><code>Settings</code></td><td><code>PlayerSettings</code></td><td>global tuning asset</td></tr>
                   <tr><td><code>Input</code></td><td><code>PlayerInputHandler</code></td><td>input state</td></tr>
-                  <tr><td><code>Locomotion</code></td><td><code>PlayerLocomotion</code></td><td>movement &amp; physics</td></tr>
-                  <tr><td><code>CameraController</code></td><td><code>PlayerCameraController</code></td><td>FPS camera</td></tr>
-                  <tr><td><code>AnimatorController</code></td><td><code>PlayerAnimatorController</code></td><td>animation + item layers</td></tr>
+                  <tr><td><code>Locomotion</code></td><td><code>PlayerLocomotion</code></td><td>movement and physics</td></tr>
+                  <tr><td><code>CameraController</code></td><td><code>PlayerCameraController</code></td><td>first-person camera</td></tr>
+                  <tr><td><code>AnimatorController</code></td><td><code>PlayerAnimatorController</code></td><td>animator parameters and item layers</td></tr>
                   <tr><td><code>HeadIK</code></td><td><code>PlayerHeadIK</code></td><td>head look-at IK</td></tr>
-                  <tr><td><code>HandIK</code></td><td><code>PlayerHandIK</code></td><td>hand IK</td></tr>
-                  <tr><td><code>SpineStabilizer</code></td><td><code>PlayerSpineStabilizer</code></td><td>spine yaw</td></tr>
-                  <tr><td><code>FootIK</code></td><td><code>PlayerFootIK</code></td><td>procedural foot IK (new in v1.2)</td></tr>
-                  <tr><td><code>HandItemSocket</code></td><td><code>HandItemSocket</code></td><td>item equip</td></tr>
+                  <tr><td><code>HandIK</code></td><td><code>PlayerHandIK</code></td><td>hand IK and holster</td></tr>
+                  <tr><td><code>SpineStabilizer</code></td><td><code>PlayerSpineStabilizer</code></td><td>spine stabilization</td></tr>
+                  <tr><td><code>FootPlanting</code></td><td><code>PlayerFootPlanting</code></td><td>ground-anchored feet</td></tr>
+                  <tr><td><code>HandItemSocket</code></td><td><code>HandItemSocket</code></td><td>item equip and unequip</td></tr>
                 </tbody>
               </table>
             </div>
@@ -375,104 +385,86 @@
               <table data-od-id="pc-state-table">
                 <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>IsGrounded</code></td><td>read-only state</td><td></td></tr>
-                  <tr><td><code>IsSprinting</code></td><td>read-only state</td><td></td></tr>
-                  <tr><td><code>MoveInput</code></td><td>read-only state</td><td></td></tr>
-                  <tr><td><code>LookInput</code></td><td>read-only state</td><td></td></tr>
-                  <tr><td><code>FlashlightTriggered</code></td><td>read-only state</td><td></td></tr>
-                  <tr><td><code>CurrentSpeed</code></td><td>read-only state</td><td></td></tr>
-                  <tr><td><code>MaxSpeed</code></td><td>read-only state</td><td></td></tr>
+                  <tr><td><code>IsGrounded</code></td><td><code>bool</code></td><td>from <code>PlayerLocomotion</code></td></tr>
+                  <tr><td><code>IsSprinting</code></td><td><code>bool</code></td><td>from <code>PlayerLocomotion</code></td></tr>
+                  <tr><td><code>MoveInput</code>, <code>LookInput</code></td><td><code>Vector2</code></td><td>from <code>PlayerInputHandler</code></td></tr>
+                  <tr><td><code>FlashlightTriggered</code></td><td><code>bool</code></td><td>true for the frame the key is pressed</td></tr>
+                  <tr><td><code>CurrentSpeed</code>, <code>MaxSpeed</code></td><td><code>float</code></td><td>horizontal speed and the maximum for the current state</td></tr>
                 </tbody>
               </table>
             </div>
-            <h3 data-od-id="control-methods-heading">Control methods (menus / cutscenes / pausing):</h3>
+            <h3 data-od-id="control-methods-heading">Control methods (menus, cutscenes, pausing)</h3>
             <div class="table-wrap" data-od-id="pc-control-table-wrap">
               <table data-od-id="pc-control-table">
                 <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>SetInputEnabled</code></td><td><code>SetInputEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>SetInputEnabled</code></td><td><code>SetInputEnabled(bool)</code></td><td>disabling also clears held input</td></tr>
                   <tr><td><code>SetMovementEnabled</code></td><td><code>SetMovementEnabled(bool)</code></td><td></td></tr>
                   <tr><td><code>SetCameraEnabled</code></td><td><code>SetCameraEnabled(bool)</code></td><td></td></tr>
-                  <tr><td><code>SetHeadIKEnabled</code></td><td><code>SetHeadIKEnabled(bool)</code></td><td></td></tr>
-                  <tr><td><code>SetHandIKEnabled</code></td><td><code>SetHandIKEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>SetHeadIKEnabled</code>, <code>SetHandIKEnabled</code></td><td><code>SetHeadIKEnabled(bool)</code>, <code>SetHandIKEnabled(bool)</code></td><td></td></tr>
                   <tr><td><code>SetSpineStabilizationEnabled</code></td><td><code>SetSpineStabilizationEnabled(bool)</code></td><td></td></tr>
-                  <tr><td><code>SetFootIKEnabled</code></td><td><code>SetFootIKEnabled(bool)</code></td><td>toggle foot IK at runtime (new in v1.2)</td></tr>
-                  <tr><td><code>SetExternalControlEnabled</code></td><td><code>SetExternalControlEnabled(bool)</code></td><td>for external drivers (e.g. the FishNet bridge) that move the player instead of local input</td></tr>
+                  <tr><td><code>SetFootIKEnabled</code></td><td><code>SetFootIKEnabled(bool)</code></td><td>enables or disables <code>PlayerFootPlanting</code></td></tr>
+                  <tr><td><code>SetExternalControlEnabled</code></td><td><code>SetExternalControlEnabled(bool)</code></td><td>for external drivers that move the player instead of local input</td></tr>
                   <tr><td><code>SetCursorLocked</code></td><td><code>SetCursorLocked(bool)</code></td><td></td></tr>
-                  <tr><td><code>EnableAllControls</code></td><td><code>EnableAllControls()</code></td><td>resume gameplay</td></tr>
-                  <tr><td><code>DisableAllControls</code></td><td><code>DisableAllControls()</code></td><td>enter cutscene / menu</td></tr>
+                  <tr><td><code>EnableAllControls</code>, <code>DisableAllControls</code></td><td><code>EnableAllControls()</code>, <code>DisableAllControls()</code></td><td>resume gameplay, or enter a cutscene or menu</td></tr>
                 </tbody>
               </table>
             </div>
-            <pre data-od-id="control-methods-code"><code>var player = GetComponent&lt;PlayerController&gt;();
+<pre data-od-id="control-methods-code"><code>var player = GetComponent&lt;PlayerController&gt;();
 player.DisableAllControls();   // enter cutscene / menu
 // ...
 player.EnableAllControls();    // resume gameplay</code></pre>
           </section>
 
           <section class="doc-section" id="playersettings" data-od-id="playersettings-section" aria-labelledby="playersettings-heading">
+            <span class="section-kicker">02 / Settings</span>
             <h2 id="playersettings-heading" data-od-id="playersettings-heading">Configuration: PlayerSettings</h2>
-            <p><code>ScriptableObject</code> (Create ▸ <strong>Player ▸ Settings</strong>). Referenced by most components, so it's the single place to tune feel. <code>beginnerMode</code> toggles a simplified inspector view.</p>
+            <p>ScriptableObject (<code>Create ▸ Player ▸ Settings</code>). Most components read from it, so it is the single place to tune feel. <code>beginnerMode</code> toggles a simplified Inspector view.</p>
             <div class="table-wrap" data-od-id="settings-table-wrap">
               <table data-od-id="settings-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Meaning (default)</th></tr></thead>
                 <tbody>
-                  <tr><td><code>beginnerMode</code></td><td><code>bool</code></td><td>When enabled, the Inspector will show a simplified view for beginners. (default: true)</td></tr>
-                  <tr><td><code>walkSpeed</code></td><td><code>float</code></td><td>Walking speed in units per second. (default: 3.0f)</td></tr>
-                  <tr><td><code>sprintSpeed</code></td><td><code>float</code></td><td>Sprinting speed in units per second. (default: 6.0f)</td></tr>
-                  <tr><td><code>crouchSpeed</code></td><td><code>float</code></td><td>Movement speed while crouching in units per second. (default: 1.5f)</td></tr>
-                  <tr><td><code>crouchHeight</code></td><td><code>float</code></td><td>CharacterController height while crouching. (default: 1.0f)</td></tr>
-                  <tr><td><code>standHeight</code></td><td><code>float</code></td><td>CharacterController height while standing. (default: 2.0f)</td></tr>
-                  <tr><td><code>crouchTransitionSpeed</code></td><td><code>float</code></td><td>Speed of crouch/stand transition. (default: 8f)</td></tr>
-                  <tr><td><code>jumpHeight</code></td><td><code>float</code></td><td>Jump height in units. (default: 1.2f)</td></tr>
-                  <tr><td><code>gravity</code></td><td><code>float</code></td><td>Gravity force (should be negative). (default: -15f)</td></tr>
-                  <tr><td><code>groundCheckDistance</code></td><td><code>float</code></td><td>Distance to check for ground below player. (default: 0.2f)</td></tr>
-                  <tr><td><code>groundedVelocityReset</code></td><td><code>float</code></td><td>Velocity applied when grounded to keep player grounded. (default: -2f)</td></tr>
-                  <tr><td><code>inputDeadzone</code></td><td><code>float</code></td><td>Minimum input magnitude to register movement. (default: 0.01f)</td></tr>
-                  <tr><td><code>animationSmoothTime</code></td><td><code>float</code></td><td>Time to smooth animation parameter changes. (default: 0.1f)</td></tr>
-                  <tr><td><code>sprintAnimMultiplier</code></td><td><code>float</code></td><td>Animation speed multiplier when sprinting. (default: 1.5f)</td></tr>
-                  <tr><td><code>defaultHeadHeight</code></td><td><code>float</code></td><td>Default head height when no head bone is available. (default: 1.6f)</td></tr>
-                  <tr><td><code>lookTargetDistance</code></td><td><code>float</code></td><td>Distance to place look target in front of player. (default: 2f)</td></tr>
-                  <tr><td><code>cameraFallbackHeadHeight</code></td><td><code>float</code></td><td>Fallback head height when head bone is not assigned. (default: 1.7f)</td></tr>
-                  <tr><td><code>verticalLookLimit</code></td><td><code>float</code></td><td>Maximum vertical look angle for the camera. (default: 80f)</td></tr>
-                  <tr><td><code>handVerticalLimitUpper/Lower</code></td><td><code>float</code></td><td>Maximum vertical look angle for the hand IK tracking when looking UP; Maximum vertical look angle for the hand IK tracking when looking DOWN. (default: 45f / 45f)</td></tr>
-                  <tr><td><code>enableSpineStabilization</code></td><td><code>bool</code></td><td>Enable spine stabilization logic. (default: true)</td></tr>
-                  <tr><td><code>spineStiffness</code></td><td><code>float</code></td><td>Weight of stabilization. (default: 1.0f)</td></tr>
-                  <tr><td><code>spineDamping</code></td><td><code>float</code></td><td>Smoothing speed. (default: 10f)</td></tr>
-                  <tr><td><code>lowerSpineWeight</code></td><td><code>float</code></td><td>Rotation weight for lower spine. (default: 0.3f)</td></tr>
-                  <tr><td><code>middleSpineWeight</code></td><td><code>float</code></td><td>Rotation weight for middle spine. (default: 0.3f)</td></tr>
-                  <tr><td><code>upperSpineWeight</code></td><td><code>float</code></td><td>Rotation weight for upper spine. (default: 0.4f)</td></tr>
-                  <tr><td><code>enableFootIK</code></td><td><code>bool</code></td><td>Enable foot IK targeting. (default: true)</td></tr>
-                  <tr><td><code>footIKWeight</code></td><td><code>float</code></td><td>Overall weight of the foot IK effect. (default: 1f)</td></tr>
-                  <tr><td><code>footIKLayerMask</code></td><td><code>LayerMask</code></td><td>Layers the foot trace hits; the player's own colliders are always ignored. (default: ~0)</td></tr>
-                  <tr><td><code>footIKTraceDistance</code></td><td><code>float</code></td><td>Downward sweep distance of the foot trace. (default: 1f)</td></tr>
-                  <tr><td><code>footIKTraceOffset</code></td><td><code>float</code></td><td>Height above the foot where the downward trace starts. (default: 0.3f)</td></tr>
-                  <tr><td><code>footIKTraceRadius</code></td><td><code>float</code></td><td>Radius of the foot trace sphere. (default: 0.05f)</td></tr>
-                  <tr><td><code>footIKFootHeightOffset</code></td><td><code>float</code></td><td>Extra height kept between the foot and the ground. (default: 0.02f)</td></tr>
-                  <tr><td><code>footIKInterpSpeed</code></td><td><code>float</code></td><td>Smoothing speed for foot offsets and rotations. (default: 20f)</td></tr>
-                  <tr><td><code>footIKMaxSlopeAngle</code></td><td><code>float</code></td><td>Maximum ground slope angle in degrees; foot rotation blends out past this limit. (default: 30f)</td></tr>
-                  <tr><td><code>footIKMaxStepUp</code></td><td><code>float</code></td><td>Maximum foot lift to match a step up. (default: 0.3f)</td></tr>
-                  <tr><td><code>footIKMaxStepDown</code></td><td><code>float</code></td><td>Maximum foot sink to match a step down. (default: 0.4f)</td></tr>
-                  <tr><td><code>footIKPelvisDropMultiplier</code></td><td><code>float</code></td><td>How much the pelvis follows a lower foot contact; 0 keeps the body level, 1 follows the full offset. (default: 0.65f)</td></tr>
+                  <tr><td><code>beginnerMode</code></td><td><code>bool</code></td><td>simplified Inspector view (default: true)</td></tr>
+                  <tr><td><code>walkSpeed</code></td><td><code>float</code></td><td>walking speed in units per second (3)</td></tr>
+                  <tr><td><code>sprintSpeed</code></td><td><code>float</code></td><td>sprinting speed in units per second (6)</td></tr>
+                  <tr><td><code>crouchSpeed</code></td><td><code>float</code></td><td>speed while crouching (1.5)</td></tr>
+                  <tr><td><code>crouchHeight</code>, <code>standHeight</code></td><td><code>float</code></td><td><code>CharacterController</code> height while crouching (1) and standing (2)</td></tr>
+                  <tr><td><code>crouchTransitionSpeed</code></td><td><code>float</code></td><td>speed of the crouch and stand transition (8)</td></tr>
+                  <tr><td><code>jumpHeight</code></td><td><code>float</code></td><td>jump height in units (1.2)</td></tr>
+                  <tr><td><code>gravity</code></td><td><code>float</code></td><td>gravity, negative (−15)</td></tr>
+                  <tr><td><code>groundCheckDistance</code></td><td><code>float</code></td><td>distance below the player checked for ground (0.2)</td></tr>
+                  <tr><td><code>groundedVelocityReset</code></td><td><code>float</code></td><td>vertical velocity applied while grounded (−2)</td></tr>
+                  <tr><td><code>inputDeadzone</code></td><td><code>float</code></td><td>minimum input magnitude that counts as movement (0.01)</td></tr>
+                  <tr><td><code>animationSmoothTime</code></td><td><code>float</code></td><td>smoothing of animation parameter changes (0.1)</td></tr>
+                  <tr><td><code>sprintAnimMultiplier</code></td><td><code>float</code></td><td>animation speed multiplier while sprinting (1.5)</td></tr>
+                  <tr><td><code>defaultHeadHeight</code></td><td><code>float</code></td><td>head height when no head bone is assigned (1.6)</td></tr>
+                  <tr><td><code>lookTargetDistance</code></td><td><code>float</code></td><td>distance of the look target in front of the player (2)</td></tr>
+                  <tr><td><code>cameraFallbackHeadHeight</code></td><td><code>float</code></td><td>fallback head height when the head bone is not assigned (1.7)</td></tr>
+                  <tr><td><code>verticalLookLimit</code></td><td><code>float</code></td><td>maximum vertical look angle in degrees (80)</td></tr>
+                  <tr><td><code>handVerticalLimitUpper</code>, <code>handVerticalLimitLower</code></td><td><code>float</code></td><td>hand IK limit when looking up and down (45 / 45)</td></tr>
+                  <tr><td><code>enableSpineStabilization</code>, <code>spineStiffness</code>, <code>spineDamping</code></td><td><code>bool</code>, <code>float</code></td><td>spine stabilization switch, weight (1) and smoothing (10)</td></tr>
+                  <tr><td><code>lowerSpineWeight</code>, <code>middleSpineWeight</code>, <code>upperSpineWeight</code></td><td><code>float</code></td><td>rotation weights of the spine segments (0.3 / 0.3 / 0.4)</td></tr>
                 </tbody>
               </table>
             </div>
           </section>
 
           <section class="doc-section" id="playerinputhandler" data-od-id="playerinputhandler-section" aria-labelledby="playerinputhandler-heading">
+            <span class="section-kicker">03 / Input</span>
             <h2 id="playerinputhandler-heading" data-od-id="playerinputhandler-heading">Input: PlayerInputHandler</h2>
-            <p>Reads the Unity Input System asset (<code>inputActions</code>, <code>actionMapName = "Player"</code>).</p>
+            <p>Reads the Unity Input System asset <code>FBInputActions</code> (<code>inputActions</code>, <code>actionMapName = "Player"</code>).</p>
             <h3 data-od-id="input-state-heading">Per-frame state (read-only)</h3>
             <div class="table-wrap" data-od-id="input-state-table-wrap">
               <table data-od-id="input-state-table">
                 <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>MoveInput</code></td><td><code>Vector2</code></td><td>Current movement input vector (X = Strafe, Y = Forward), normalized between -1 and 1.</td></tr>
-                  <tr><td><code>LookInput</code></td><td><code>Vector2</code></td><td>Current look input vector (X = Horizontal, Y = Vertical) from mouse/joystick.</td></tr>
-                  <tr><td><code>IsSprinting</code></td><td><code>bool</code></td><td>Whether the sprint button is currently held.</td></tr>
-                  <tr><td><code>JumpTriggered</code></td><td><code>bool</code></td><td>Whether a jump was triggered this frame; true for the single frame jump is pressed.</td></tr>
-                  <tr><td><code>IsCrouching</code></td><td><code>bool</code></td><td>Whether the player is in the crouch state (toggled on each press).</td></tr>
-                  <tr><td><code>FlashlightTriggered</code></td><td><code>bool</code></td><td>Whether the flashlight was toggled this frame; true for the single frame it is pressed.</td></tr>
+                  <tr><td><code>MoveInput</code></td><td><code>Vector2</code></td><td>X = strafe, Y = forward, between −1 and 1</td></tr>
+                  <tr><td><code>LookInput</code></td><td><code>Vector2</code></td><td>X = horizontal, Y = vertical</td></tr>
+                  <tr><td><code>IsSprinting</code></td><td><code>bool</code></td><td>sprint is held</td></tr>
+                  <tr><td><code>IsCrouching</code></td><td><code>bool</code></td><td>toggled on each press</td></tr>
+                  <tr><td><code>JumpTriggered</code></td><td><code>bool</code></td><td>true for the single frame the key is pressed</td></tr>
+                  <tr><td><code>FlashlightTriggered</code></td><td><code>bool</code></td><td>true for the single frame the key is pressed (use item)</td></tr>
+                  <tr><td><code>InteractTriggered</code></td><td><code>bool</code></td><td>true for the single frame the <code>Interact</code> action is pressed</td></tr>
                 </tbody>
               </table>
             </div>
@@ -481,36 +473,31 @@ player.EnableAllControls();    // resume gameplay</code></pre>
               <table data-od-id="input-methods-table">
                 <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>LockCursor</code></td><td><code>LockCursor()</code></td><td>Locks the cursor for first-person gameplay (sets <code>Cursor.lockState</code> to Locked, hides cursor).</td></tr>
-                  <tr><td><code>UnlockCursor</code></td><td><code>UnlockCursor()</code></td><td>Unlocks the cursor for UI interaction (sets <code>Cursor.lockState</code> to None, shows cursor).</td></tr>
+                  <tr><td><code>LockCursor</code></td><td><code>LockCursor()</code></td><td>locks and hides the cursor for gameplay</td></tr>
+                  <tr><td><code>UnlockCursor</code></td><td><code>UnlockCursor()</code></td><td>frees the cursor for UI</td></tr>
                 </tbody>
               </table>
             </div>
             <h3 data-od-id="action-map-heading">Player action map (<code>FBInputActions</code>)</h3>
-            <ul data-od-id="action-map-list">
-              <li><code>Move</code></li><li><code>Look</code></li><li><code>Attack</code></li><li><code>Interact</code></li><li><code>Crouch</code></li><li><code>Jump</code></li><li><code>Previous</code></li><li><code>Next</code></li><li><code>Sprint</code></li><li><code>Flashlight</code></li>
-            </ul>
+            <p><code>Move</code>, <code>Look</code>, <code>Sprint</code>, <code>Jump</code>, <code>Crouch</code>, <code>Flashlight</code>, <code>Attack</code>, <code>Interact</code>, <code>Previous</code> and <code>Next</code>.</p>
           </section>
 
           <section class="doc-section" id="playerlocomotion" data-od-id="playerlocomotion-section" aria-labelledby="playerlocomotion-heading">
+            <span class="section-kicker">04 / Locomotion</span>
             <h2 id="playerlocomotion-heading" data-od-id="playerlocomotion-heading">Locomotion: PlayerLocomotion</h2>
-            <p><code>[RequireComponent(typeof(CharacterController))]</code>.</p>
+            <p><code>[RequireComponent(typeof(CharacterController))]</code>. Fires the locomotion events in section 7.</p>
             <h3 data-od-id="locomotion-config-heading">Configurable fields</h3>
             <div class="table-wrap" data-od-id="locomotion-config-table-wrap">
               <table data-od-id="locomotion-config-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Meaning (default)</th></tr></thead>
                 <tbody>
-                  <tr><td><code>walkSpeed</code></td><td><code>float</code></td><td>Horizontal movement speed while walking. (default: 3.0f)</td></tr>
-                  <tr><td><code>sprintSpeed</code></td><td><code>float</code></td><td>Horizontal movement speed while sprinting. (default: 6.0f)</td></tr>
-                  <tr><td><code>jumpHeight</code></td><td><code>float</code></td><td>Vertical height of a single jump. (default: 1.2f)</td></tr>
-                  <tr><td><code>gravity</code></td><td><code>float</code></td><td>Gravity force applied to the player (negative value). (default: -15f)</td></tr>
-                  <tr><td><code>crouchSpeed</code></td><td><code>float</code></td><td>Horizontal movement speed while crouching. (default: 1.5f)</td></tr>
-                  <tr><td><code>crouchHeight</code></td><td><code>float</code></td><td>CharacterController height when fully crouched. (default: 1.0f)</td></tr>
-                  <tr><td><code>standHeight</code></td><td><code>float</code></td><td>CharacterController height when standing. (default: 2.0f)</td></tr>
-                  <tr><td><code>crouchTransitionSpeed</code></td><td><code>float</code></td><td>Speed of height interpolation between states. (default: 8f)</td></tr>
-                  <tr><td><code>groundCheckDistance</code></td><td><code>float</code></td><td>Distance below feet to check for ground. (default: 0.2f)</td></tr>
-                  <tr><td><code>groundLayers</code></td><td><code>LayerMask</code></td><td>Layers to consider as ground. (default: ~0)</td></tr>
-                  <tr><td><code>inputDeadzone</code></td><td><code>float</code></td><td>Minimum input magnitude to trigger movement. (default: 0.01f)</td></tr>
+                  <tr><td><code>walkSpeed</code> / <code>sprintSpeed</code></td><td><code>float</code></td><td>walk and sprint speed (3 / 6)</td></tr>
+                  <tr><td><code>crouchSpeed</code></td><td><code>float</code></td><td>speed while crouching (1.5)</td></tr>
+                  <tr><td><code>jumpHeight</code> / <code>gravity</code></td><td><code>float</code></td><td>jump height (1.2) and gravity (−15)</td></tr>
+                  <tr><td><code>crouchHeight</code> / <code>standHeight</code> / <code>crouchTransitionSpeed</code></td><td><code>float</code></td><td>controller height while crouching (1) and standing (2), and the transition speed</td></tr>
+                  <tr><td><code>groundCheckDistance</code></td><td><code>float</code></td><td>distance below the feet checked for ground (0.2)</td></tr>
+                  <tr><td><code>groundLayers</code></td><td><code>LayerMask</code></td><td>layers that count as ground (<code>~0</code>)</td></tr>
+                  <tr><td><code>inputDeadzone</code></td><td><code>float</code></td><td>minimum input magnitude (0.01)</td></tr>
                 </tbody>
               </table>
             </div>
@@ -519,425 +506,506 @@ player.EnableAllControls();    // resume gameplay</code></pre>
               <table data-od-id="locomotion-state-table">
                 <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>IsGrounded</code></td><td><code>bool</code></td><td>True if the player is currently touching the ground (CharacterController + raycast fallback).</td></tr>
-                  <tr><td><code>IsSprinting</code></td><td><code>bool</code></td><td>True if the player is currently sprinting; only possible when grounded and not crouching.</td></tr>
-                  <tr><td><code>CurrentSpeed</code></td><td><code>float</code></td><td>The current horizontal speed of the player in units per second.</td></tr>
-                  <tr><td><code>MaxSpeed</code></td><td><code>float</code></td><td>The theoretical maximum speed in the current state (crouch/walk/sprint).</td></tr>
+                  <tr><td><code>IsGrounded</code></td><td><code>bool</code></td><td>true while touching the ground</td></tr>
+                  <tr><td><code>IsCrouching</code></td><td><code>bool</code></td><td>true while in the crouch state</td></tr>
+                  <tr><td><code>IsSprinting</code></td><td><code>bool</code></td><td>true only while grounded and sprinting</td></tr>
+                  <tr><td><code>CurrentSpeed</code></td><td><code>float</code></td><td>current horizontal speed in units per second</td></tr>
+                  <tr><td><code>MaxSpeed</code></td><td><code>float</code></td><td>maximum speed in the current state (crouch, walk or sprint)</td></tr>
+                  <tr><td><code>CrouchFactor</code></td><td><code>float</code></td><td>crouch progress</td></tr>
+                  <tr><td><code>RegisterListener</code> / <code>UnregisterListener</code></td><td><code>(ILocomotionEventListener)</code></td><td>add or remove a listener at runtime</td></tr>
                 </tbody>
               </table>
             </div>
-            <p>Fires the locomotion events listed below.</p>
           </section>
 
           <section class="doc-section" id="playercameracontroller" data-od-id="playercameracontroller-section" aria-labelledby="playercameracontroller-heading">
+            <span class="section-kicker">05 / Camera</span>
             <h2 id="playercameracontroller-heading" data-od-id="playercameracontroller-heading">Camera: PlayerCameraController</h2>
-            <p>Cinemachine-based.</p>
+            <p>Cinemachine-based. The camera target follows the head bone and is not affected by head animation sway.</p>
             <h3 data-od-id="camera-config-heading">Configurable</h3>
             <div class="table-wrap" data-od-id="camera-config-table-wrap">
               <table data-od-id="camera-config-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Meaning (default)</th></tr></thead>
                 <tbody>
-                  <tr><td><code>eyeOffset</code></td><td><code>Vector3</code></td><td>Offset from head bone position while standing. (default: (0, 0.05, 0.1))</td></tr>
-                  <tr><td><code>crouchEyeOffset</code></td><td><code>Vector3</code></td><td>Offset from head bone position while crouching. (default: (0, 0.05, 0.05))</td></tr>
-                  <tr><td><code>lookSensitivity</code></td><td><code>float</code></td><td>Mouse sensitivity multiplier. (default: 0.1f)</td></tr>
-                  <tr><td><code>verticalLookLimit</code></td><td><code>float</code></td><td>Maximum vertical look angle (degrees). (default: 80f)</td></tr>
+                  <tr><td><code>eyeOffset</code></td><td><code>Vector3</code></td><td>offset from the head bone while standing (0, 0.05, 0.1)</td></tr>
+                  <tr><td><code>crouchEyeOffset</code></td><td><code>Vector3</code></td><td>offset from the head bone while crouching (0, 0.05, 0.05)</td></tr>
+                  <tr><td><code>lookSensitivity</code></td><td><code>float</code></td><td>look sensitivity multiplier (0.1)</td></tr>
+                  <tr><td><code>verticalLookLimit</code></td><td><code>float</code></td><td>maximum vertical look angle in degrees (80)</td></tr>
                 </tbody>
               </table>
             </div>
             <h3 data-od-id="camera-api-heading">Public API</h3>
             <div class="table-wrap" data-od-id="camera-api-table-wrap">
               <table data-od-id="camera-api-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>CameraTarget</code></td><td><code>Transform</code></td><td>The actual transform the Cinemachine camera follows and looks at.</td></tr>
-                  <tr><td><code>Pitch</code></td><td><code>float</code></td><td>Current vertical look angle in degrees (used by Animation Rigging).</td></tr>
-                  <tr><td><code>Yaw</code></td><td><code>float</code></td><td>Current horizontal look angle in degrees.</td></tr>
-                  <tr><td><code>GetLookAngles</code></td><td><code>GetLookAngles() → Vector2</code></td><td>Gets the current look direction as a Vector2 (X = Yaw, Y = Pitch).</td></tr>
-                  <tr><td><code>SetLookDirection</code></td><td><code>SetLookDirection(float yaw, float pitch)</code></td><td>Sets the look direction programmatically (useful for respawning, cutscenes, etc.).</td></tr>
-                  <tr><td><code>SyncCameraTargetToHead</code></td><td><code>SyncCameraTargetToHead()</code></td><td>Syncs the camera target position to the animated head bone; called in LateUpdate; external IK systems may call it manually.</td></tr>
-                  <tr><td><code>SetVerticalLimitOverride</code></td><td><code>SetVerticalLimitOverride(float upper, float lower)</code></td><td>Sets the vertical limit override for asymmetric look limits (used by item IK data).</td></tr>
-                  <tr><td><code>EnsureCameraTarget</code></td><td><code>EnsureCameraTarget()</code></td><td>Creates/reassigns the camera target if missing (used by external systems like the FishNet bridge).</td></tr>
-                  <tr><td><code>SetLocalCameraActive</code></td><td><code>SetLocalCameraActive(bool)</code></td><td>Enables/disables the local camera rig; the FishNet addon disables it on remote players.</td></tr>
+                  <tr><td><code>CameraTarget</code></td><td><code>Transform</code></td><td>the transform the Cinemachine camera follows</td></tr>
+                  <tr><td><code>Pitch</code>, <code>Yaw</code></td><td><code>float</code></td><td>current look angles in degrees</td></tr>
+                  <tr><td><code>GetLookAngles</code></td><td><code>Vector2 GetLookAngles()</code></td><td>X = yaw, Y = pitch</td></tr>
+                  <tr><td><code>SetLookDirection</code></td><td><code>SetLookDirection(float yaw, float pitch)</code></td><td>sets the look direction, for example on respawn</td></tr>
+                  <tr><td><code>SyncCameraTargetToHead</code></td><td><code>SyncCameraTargetToHead()</code></td><td>runs in <code>LateUpdate</code>; external IK may call it manually</td></tr>
+                  <tr><td><code>SetVerticalLimitOverride</code> / <code>ResetVerticalLimitOverride</code></td><td><code>SetVerticalLimitOverride(float upper, float lower)</code></td><td>asymmetric look limits, used by item IK data</td></tr>
+                  <tr><td><code>SetBodyYawOverride</code> / <code>ClearBodyYawOverride</code></td><td><code>SetBodyYawOverride(float targetYaw)</code></td><td>overrides the body yaw</td></tr>
+                  <tr><td><code>EnsureCameraTarget</code></td><td><code>EnsureCameraTarget()</code></td><td>creates or reassigns the camera target if missing</td></tr>
+                  <tr><td><code>SetLocalCameraActive</code></td><td><code>SetLocalCameraActive(bool)</code></td><td>enables the local camera rig; the FishNet addon disables it on remote players</td></tr>
+                  <tr><td><code>IsLocalCameraActive</code></td><td><code>bool</code> (property)</td><td>whether the local camera rig is active</td></tr>
                 </tbody>
               </table>
             </div>
           </section>
 
           <section class="doc-section" id="items" data-od-id="items-section" aria-labelledby="items-heading">
+            <span class="section-kicker">06 / Items</span>
             <h2 id="items-heading" data-od-id="items-heading">Items</h2>
-
             <h3 data-od-id="hand-socket-heading">HandItemSocket: canonical equip event source</h3>
-            <p>The single owner of equip/unequip events.</p>
-            <h4 data-od-id="hand-socket-properties-heading">Properties</h4>
+            <p>The single owner of equip and unequip events. Switching plays a holster animation: the current item is lowered out of view, then the new one is raised (see <code>PlayerHandIK</code>).</p>
             <div class="table-wrap" data-od-id="socket-props-table-wrap">
               <table data-od-id="socket-props-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Property</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>CurrentItem</code></td><td><code>GameObject</code></td><td>The currently equipped item.</td></tr>
-                  <tr><td><code>HasItem</code></td><td><code>bool</code></td><td>Whether an item is currently equipped.</td></tr>
-                  <tr><td><code>Socket</code></td><td><code>Transform</code></td><td>The socket transform where items are attached.</td></tr>
-                  <tr><td><code>Locomotion</code></td><td><code>PlayerLocomotion</code></td><td>The player locomotion system (used for crouch offsets).</td></tr>
+                  <tr><td><code>CurrentItem</code></td><td><code>GameObject</code></td><td>logical current item; changes at once when a switch starts</td></tr>
+                  <tr><td><code>HasItem</code></td><td><code>bool</code></td><td>whether an item is equipped</td></tr>
+                  <tr><td><code>StowingItem</code></td><td><code>GameObject</code></td><td>old item still being lowered during a switch</td></tr>
+                  <tr><td><code>PendingItem</code></td><td><code>GameObject</code></td><td>new item waiting to be drawn</td></tr>
+                  <tr><td><code>IsTransitioning</code></td><td><code>bool</code></td><td>true while a switch is in progress</td></tr>
+                  <tr><td><code>Socket</code></td><td><code>Transform</code></td><td>socket transform where items attach</td></tr>
+                  <tr><td><code>Locomotion</code></td><td><code>PlayerLocomotion</code></td><td>used for crouch offsets</td></tr>
                 </tbody>
               </table>
             </div>
-            <h4 data-od-id="hand-socket-methods-heading">Methods</h4>
             <div class="table-wrap" data-od-id="socket-methods-table-wrap">
               <table data-od-id="socket-methods-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Method</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>AttachItem</code></td><td><code>AttachItem(GameObject, Vector3? pos, Vector3? rot)</code></td><td>Attaches an item to the hand socket with optional position/rotation offsets.</td></tr>
-                  <tr><td><code>AttachItem</code></td><td><code>AttachItem(GameObject, ItemAttachmentData)</code></td><td>Attaches an item using an ItemAttachmentData configuration (offsets + animation info).</td></tr>
-                  <tr><td><code>EquipFromContainer</code></td><td><code>EquipFromContainer(GameObject, int slotIndex = -1)</code></td><td>Equips an item from a container; activates it and applies ItemHoldData offsets, animator layer, and IK.</td></tr>
-                  <tr><td><code>UseCurrentItem</code></td><td><code>UseCurrentItem()</code></td><td>triggered by the <code>Flashlight/Use</code> input; fires the <code>OnUse</code> event on the equipped item's ItemHoldData.</td></tr>
+                  <tr><td><code>AttachItem</code></td><td><code>AttachItem(GameObject, Vector3? positionOffset, Vector3? rotationOffset)</code> or <code>AttachItem(GameObject, ItemAttachmentData)</code></td><td>attaches an item to the socket</td></tr>
+                  <tr><td><code>DetachItem</code></td><td><code>DetachItem(bool destroy = false)</code></td><td>detaches the current item</td></tr>
+                  <tr><td><code>EquipFromContainer</code></td><td><code>EquipFromContainer(GameObject item, int slotIndex = -1)</code></td><td>equips a container item and applies its <code>ItemHoldData</code></td></tr>
+                  <tr><td><code>UnequipToContainer</code></td><td><code>UnequipToContainer()</code> or <code>UnequipToContainer(bool hideImmediately)</code></td><td>puts the item back into its container; the parameterless overload is kept for existing UnityEvents</td></tr>
+                  <tr><td><code>HideStowingItem</code></td><td><code>HideStowingItem()</code></td><td>hides the item that is being lowered</td></tr>
+                  <tr><td><code>CompleteTransitionImmediately</code></td><td><code>CompleteTransitionImmediately()</code></td><td>finishes a running switch at once</td></tr>
+                  <tr><td><code>UseCurrentItem</code></td><td><code>UseCurrentItem()</code></td><td>fires <code>OnUse</code> on the equipped item; ignored until the new item has been drawn</td></tr>
+                  <tr><td><code>RegisterListener</code> / <code>UnregisterListener</code></td><td><code>(IItemEventListener)</code></td><td>add or remove an item listener at runtime</td></tr>
                 </tbody>
               </table>
             </div>
-            <p>Events: see <a class="doc-link" href="#event-api">Event API</a>.</p>
+            <p>Inspector fields on <code>HandItemSocket</code>: <strong>Smooth Transitions</strong> (on by default; off gives the instant pre-1.6 behaviour) and <strong>Stow Timeout</strong> (1 s). The <code>OnItemEquipped</code> and <code>OnItemUnequipped</code> UnityEvents are listed in section 7.</p>
 
             <h3 data-od-id="item-container-heading">ItemContainer: orchestration</h3>
-            <p>Manages a list of items and equips them <strong>through</strong> the socket (it no longer emits its own equip events).</p>
-            <h4 data-od-id="item-container-properties-heading">Properties</h4>
+            <p>Holds the item list and equips items through the socket. It does not emit equip events itself.</p>
             <div class="table-wrap" data-od-id="container-props-table-wrap">
               <table data-od-id="container-props-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Property</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>CurrentItem</code></td><td><code>GameObject</code></td><td>The currently equipped item, or null if none.</td></tr>
-                  <tr><td><code>HasEquippedItem</code></td><td><code>bool</code></td><td>Whether an item is currently equipped.</td></tr>
-                  <tr><td><code>CurrentIndex</code></td><td><code>int</code></td><td>The index of the currently equipped item, or -1 if none.</td></tr>
-                  <tr><td><code>ItemCount</code></td><td><code>int</code></td><td>Number of items in the container.</td></tr>
-                  <tr><td><code>HandSocket</code></td><td><code>HandItemSocket</code></td><td>The hand socket this container equips items through; subscribe to its canonical item events (e.g. <code>ItemEquipped</code>).</td></tr>
+                  <tr><td><code>CurrentItem</code></td><td><code>GameObject</code></td><td>the equipped item, or null</td></tr>
+                  <tr><td><code>HasEquippedItem</code></td><td><code>bool</code></td><td>whether an item is equipped</td></tr>
+                  <tr><td><code>CurrentIndex</code></td><td><code>int</code></td><td>index of the equipped item, or −1</td></tr>
+                  <tr><td><code>ItemCount</code></td><td><code>int</code></td><td>number of items in the container</td></tr>
+                  <tr><td><code>HandSocket</code></td><td><code>HandItemSocket</code></td><td>the socket items are equipped through</td></tr>
                 </tbody>
               </table>
             </div>
-            <h4 data-od-id="item-container-methods-heading">Methods</h4>
             <div class="table-wrap" data-od-id="container-methods-table-wrap">
               <table data-od-id="container-methods-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Method</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>EquipItem</code></td><td><code>EquipItem(int)</code></td><td>Equips an item by index in the items list.</td></tr>
-                  <tr><td><code>EquipItemById</code></td><td><code>EquipItemById(string)</code></td><td>Equips an item by its unique ID defined in ItemHoldData.</td></tr>
-                  <tr><td><code>EquipItem</code></td><td><code>EquipItem(GameObject)</code></td><td>Equips a specific item GameObject (must be in the items list).</td></tr>
-                  <tr><td><code>UnequipCurrent</code></td><td><code>UnequipCurrent()</code></td><td>Unequips the currently equipped item.</td></tr>
-                  <tr><td><code>EquipNext</code></td><td><code>EquipNext()</code></td><td>Cycles to the next item in the container (wraps around to index 0).</td></tr>
-                  <tr><td><code>EquipPrevious</code></td><td><code>EquipPrevious()</code></td><td>Cycles to the previous item in the container (wraps around to the last item).</td></tr>
-                  <tr><td><code>GetItem</code></td><td><code>GetItem(int)</code></td><td>Gets an item by index without equipping it.</td></tr>
-                  <tr><td><code>GetItemById</code></td><td><code>GetItemById(string)</code></td><td>Gets an item GameObject by its unique ID defined in ItemHoldData.</td></tr>
-                  <tr><td><code>AddItem</code></td><td><code>AddItem(GameObject)</code></td><td>Adds an item to the container's list (deactivated until equipped); fires <code>OnContainerChanged</code>.</td></tr>
-                  <tr><td><code>RemoveItem</code></td><td><code>RemoveItem(GameObject) → bool</code></td><td>Removes an item from the container; unequips it first if currently equipped; fires <code>OnContainerChanged</code>; returns true if removed.</td></tr>
+                  <tr><td><code>EquipItem</code></td><td><code>EquipItem(int index)</code>, <code>EquipItem(GameObject item)</code></td><td>equips by list index, or a listed item</td></tr>
+                  <tr><td><code>EquipItemById</code></td><td><code>EquipItemById(string id)</code></td><td>equips by the <code>ItemHoldData</code> id</td></tr>
+                  <tr><td><code>EquipNext</code>, <code>EquipPrevious</code></td><td><code>EquipNext()</code>, <code>EquipPrevious()</code></td><td>cycles and wraps around</td></tr>
+                  <tr><td><code>UnequipCurrent</code></td><td><code>UnequipCurrent()</code> or <code>UnequipCurrent(bool hideImmediately)</code></td><td>unequips the current item</td></tr>
+                  <tr><td><code>GetItem</code></td><td><code>GetItem(int index)</code>, <code>GetItem(ItemDefinition definition)</code></td><td>gets an item without equipping it</td></tr>
+                  <tr><td><code>GetItemById</code></td><td><code>GetItemById(string id)</code></td><td>gets an item by its id</td></tr>
+                  <tr><td><code>AddItem</code></td><td><code>AddItem(GameObject item)</code></td><td>adds an item (inactive until equipped); fires <code>OnContainerChanged</code></td></tr>
+                  <tr><td><code>RemoveItem</code></td><td><code>bool RemoveItem(GameObject item)</code></td><td>unequips first if needed; fires <code>OnContainerChanged</code></td></tr>
                 </tbody>
               </table>
             </div>
-            <h4 data-od-id="item-container-event-heading">Event</h4>
-            <div class="table-wrap" data-od-id="container-event-table-wrap">
-              <table data-od-id="container-event-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
-                <tbody>
-                  <tr><td><code>OnContainerChanged</code></td><td><code>UnityEvent</code></td><td>fires when the item list itself changes: add/remove</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <p>Event: <code>OnContainerChanged</code> (<code>UnityEvent</code>), fired when the item list changes.</p>
 
-            <h3 data-od-id="item-hold-data-heading">ItemHoldData: per-item config &amp; reactions</h3>
-            <p>Attach to item <code>GameObject</code>s.</p>
+            <h3 data-od-id="item-hold-data-heading">ItemHoldData: per-item config and reactions</h3>
+            <p>Attach to the item GameObject. Assign an <code>ItemDefinition</code> (below) or use a plain <code>itemId</code>; with a definition, the id, category and world prefab come from the definition.</p>
             <div class="table-wrap" data-od-id="holddata-table-wrap">
               <table data-od-id="holddata-table">
                 <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>itemId</code></td><td><code>string</code></td><td>identity; unique identifier used to equip items via code or ID-based systems. (default: "NewItem")</td></tr>
-                  <tr><td><code>OnEquip</code></td><td><code>UnityEvent</code></td><td>item-local event; fires alongside the system events</td></tr>
-                  <tr><td><code>OnUnequip</code></td><td><code>UnityEvent</code></td><td>item-local event; fires alongside the system events</td></tr>
-                  <tr><td><code>OnUse</code></td><td><code>UnityEvent</code></td><td>item-local event; fires alongside the system events</td></tr>
-                  <tr><td><code>attachmentData</code></td><td><code>ItemAttachmentData</code></td><td>config</td></tr>
-                  <tr><td><code>worldItemPrefab</code></td><td><code>GameObject</code></td><td>config; should carry a <code>WorldItem</code> component; prefab to spawn when this item is dropped</td></tr>
-                  <tr><td><code>ItemId</code></td><td><code>string</code></td><td>property; unique identifier for this item</td></tr>
-                  <tr><td><code>AttachmentData</code></td><td><code>ItemAttachmentData</code></td><td>property; configuration for how this item is attached and held</td></tr>
-                  <tr><td><code>WorldItemPrefab</code></td><td><code>GameObject</code></td><td>property; prefab used when dropping this item into the world</td></tr>
+                  <tr><td><code>itemId</code></td><td><code>string</code></td><td>id used by <code>EquipItemById</code>; default <code>"NewItem"</code></td></tr>
+                  <tr><td><code>definition</code></td><td><code>ItemDefinition</code></td><td>optional shared definition (section 6)</td></tr>
+                  <tr><td><code>category</code></td><td><code>ItemCategory</code></td><td>flags, used without a definition</td></tr>
+                  <tr><td><code>worldItemPrefab</code></td><td><code>GameObject</code></td><td>prefab spawned when the item is dropped; should carry a <code>WorldItem</code></td></tr>
+                  <tr><td><code>attachmentData</code></td><td><code>ItemAttachmentData</code></td><td>hold and IK configuration</td></tr>
+                  <tr><td><code>OnEquip</code>, <code>OnUnequip</code>, <code>OnUse</code></td><td><code>UnityEvent</code></td><td>item-local reactions; <code>OnEquip</code> and <code>OnUnequip</code> only fire for items that are shown</td></tr>
+                  <tr><td><code>ItemId</code>, <code>Definition</code></td><td>property</td><td>effective id (the definition's id when one is assigned), and the definition</td></tr>
+                  <tr><td><code>Category</code></td><td><code>ItemCategory</code></td><td>effective category</td></tr>
+                  <tr><td><code>Is(ItemCategory flags)</code></td><td><code>bool</code></td><td>true when all given flags are set</td></tr>
+                  <tr><td><code>AttachmentData</code>, <code>WorldItemPrefab</code></td><td>property</td><td>the configuration and the world prefab</td></tr>
                 </tbody>
               </table>
             </div>
 
-            <h3 data-od-id="attachment-data-heading">ItemAttachmentData: hold &amp; IK config</h3>
-            <p><code>[Serializable]</code>.</p>
-            <div class="table-wrap" data-od-id="attachment-table-wrap">
-              <table data-od-id="attachment-table">
+            <h3 data-od-id="item-definition-heading">ItemDefinition: shared item description</h3>
+            <p><code>ScriptableObject</code> (<code>Create ▸ Player ▸ Item Definition</code>) that describes an item in one place: id, display name, category flags and its held, world and network prefabs. <code>ItemHoldData</code>, <code>WorldItem</code> and the demo <code>PlayerInventory</code> can reference it. The id follows the asset name until you lock it in the Inspector.</p>
+            <div class="table-wrap" data-od-id="definition-table-wrap">
+              <table data-od-id="definition-table">
                 <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>animatorLayerIndex</code></td><td><code>int</code></td><td>The index of the override animation layer for this item; used to play specific hold/use animations. (default: 1)</td></tr>
-                  <tr><td><code>holdStyle</code></td><td><code>OneHandedRight</code> | <code>TwoHanded</code></td><td>Defines if the item is held with one hand or two hands. (default: OneHandedRight)</td></tr>
-                  <tr><td><code>gripPositionOffset</code></td><td><code>Vector3</code></td><td>Local position offset of the item mesh relative to the hand socket transform. (default: Vector3.zero)</td></tr>
-                  <tr><td><code>gripRotationOffset</code></td><td><code>Vector3</code></td><td>Local rotation offset of the item mesh relative to the hand socket transform (Euler angles). (default: Vector3.zero)</td></tr>
-                  <tr><td><code>debugMode</code></td><td><code>bool</code></td><td>editor-only; tune live in the editor; when enabled, offsets update in real-time (field lives on <code>ItemHoldData</code>). (default: false)</td></tr>
-                  <tr><td><code>tuneGripMode</code></td><td><code>bool</code></td><td>editor-only; tune live in the editor; when enabled, transform changes are captured into the grip offsets (field lives on <code>ItemHoldData</code>). (default: false)</td></tr>
+                  <tr><td><code>Id</code></td><td><code>string</code></td><td>the locked id, or the id derived from the asset name</td></tr>
+                  <tr><td><code>IsIdLocked</code></td><td><code>bool</code></td><td>true once the id is locked</td></tr>
+                  <tr><td><code>DisplayName</code></td><td><code>string</code></td><td>name shown in UI; defaults to the asset name</td></tr>
+                  <tr><td><code>Category</code></td><td><code>ItemCategory</code></td><td>category flags</td></tr>
+                  <tr><td><code>HeldPrefab</code>, <code>WorldPrefab</code>, <code>NetworkPrefab</code></td><td><code>GameObject</code></td><td>prefabs for the hand, the world and networking</td></tr>
+                  <tr><td><code>Is(ItemCategory flags)</code></td><td><code>bool</code></td><td>true when all given flags are set</td></tr>
+                  <tr><td><code>ItemDefinition.ToId(string assetName)</code></td><td><code>static string</code></td><td>derives the id from an asset name</td></tr>
                 </tbody>
               </table>
             </div>
-            <p>Plus standing/crouching hand and elbow IK overrides.</p>
+            <p><code>ItemCategory</code> is a flags enum: <code>None</code>, <code>Tool</code>, <code>Electric</code>, <code>Consumable</code>. An item can have several categories.</p>
+
+            <h3 data-od-id="attachment-data-heading">ItemAttachmentData: hold and IK config</h3>
+            <div class="table-wrap" data-od-id="attachment-table-wrap">
+              <table data-od-id="attachment-table">
+                <thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>animatorLayerIndex</code></td><td><code>int</code></td><td>override animation layer for the hold and use animations (default 1)</td></tr>
+                  <tr><td><code>holdStyle</code></td><td><code>HoldStyle</code></td><td><code>OneHandedRight</code> (default) or two-handed</td></tr>
+                  <tr><td><code>gripPositionOffset</code>, <code>gripRotationOffset</code></td><td><code>Vector3</code></td><td>item offset relative to the hand socket</td></tr>
+                  <tr><td><code>overrideHandOffset</code>, <code>handOffset</code>, <code>handRotationOffset</code></td><td><code>bool</code>, <code>Vector3</code></td><td>hand target while standing</td></tr>
+                  <tr><td><code>crouchHandOffset</code>, <code>crouchHandRotationOffset</code></td><td><code>Vector3</code></td><td>hand target while crouching</td></tr>
+                  <tr><td><code>overrideElbowOffset</code>, <code>elbowHintOffset</code>, <code>crouchElbowHintOffset</code></td><td><code>bool</code>, <code>Vector3</code></td><td>elbow hint while standing and crouching</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><code>ItemHoldData</code> also has the editor-only flags <code>debugMode</code> and <code>tuneGripMode</code>, and <code>tuneHandlesMode</code> for Scene view handles.</p>
 
             <h3 data-od-id="ik-preset-heading">ItemIKPreset: share IK config</h3>
-            <p><code>ScriptableObject</code> (Create ▸ <strong>Player ▸ Item IK Preset</strong>).</p>
+            <p><code>ScriptableObject</code> (<code>Create ▸ Player ▸ Item IK Preset</code>) that stores a complete <code>ItemAttachmentData</code> in its <code>data</code> field.</p>
             <div class="table-wrap" data-od-id="ikpreset-table-wrap">
               <table data-od-id="ikpreset-table">
                 <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>CaptureFromScene</code></td><td><code>CaptureFromScene()</code></td><td>context menu; copies IK config between items</td></tr>
-                  <tr><td><code>ApplyToScene</code></td><td><code>ApplyToScene()</code></td><td>context menu; copies IK config between items</td></tr>
+                  <tr><td><code>CaptureFromScene</code></td><td><code>CaptureFromScene()</code></td><td>context menu: copies the item's IK config into the preset</td></tr>
+                  <tr><td><code>ApplyToScene</code></td><td><code>ApplyToScene()</code></td><td>context menu: applies the preset to the item</td></tr>
+                  <tr><td><code>ApplyTo</code> / <code>CaptureFrom</code></td><td><code>ApplyTo(ItemAttachmentData target)</code>, <code>CaptureFrom(ItemAttachmentData source)</code></td><td>copies data in code</td></tr>
                 </tbody>
               </table>
             </div>
           </section>
 
           <section class="doc-section" id="event-api" data-od-id="event-api-section" aria-labelledby="event-api-heading">
-            <h2 id="event-api-heading" data-od-id="event-api-heading">Event API: PlayerEventAPI</h2>
-            <p>Three complementary mechanisms, each fired <strong>once per transition</strong> from a single canonical chokepoint:</p>
+            <span class="section-kicker">07 / Events</span>
+            <h2 id="event-api-heading" data-od-id="event-api-heading">Event API</h2>
+            <p>Every equip, unequip, locomotion change, footstep and vitals change is announced in three ways:</p>
             <div class="table-wrap" data-od-id="event-mechanisms-table-wrap">
               <table data-od-id="event-mechanisms-table">
                 <thead><tr><th scope="col">Mechanism</th><th scope="col">For</th></tr></thead>
                 <tbody>
-                  <tr><td>C# <code>event Action&lt;TArgs&gt;</code></td><td>code subscribers (struct args, no per-call allocation)</td></tr>
-                  <tr><td><code>UnityEvent</code></td><td>Inspector / no-code wiring</td></tr>
-                  <tr><td>Listener interfaces</td><td>full extension / structured contract; <strong>auto-discovered</strong></td></tr>
+                  <tr><td>C# <code>event</code></td><td>code subscribers; struct payloads avoid per-call allocation</td></tr>
+                  <tr><td><code>UnityEvent</code></td><td>Inspector and no-code wiring</td></tr>
+                  <tr><td>Listener interfaces</td><td>structured extension; any component in the player hierarchy that implements one is found automatically</td></tr>
                 </tbody>
               </table>
             </div>
+
             <h3 data-od-id="event-payloads-heading">Event payloads</h3>
-            <ul data-od-id="payloads-list">
-              <li><strong><code>ItemEquipArgs</code></strong>: <code>Item</code> (<code>GameObject</code>), <code>SlotIndex</code> (<code>int</code>, -1 if equipped outside a container), <code>HoldData</code> (<code>ItemHoldData</code>), <code>FromContainer</code> (<code>bool</code>).</li>
-              <li><strong><code>LandArgs</code></strong>: <code>ImpactVelocity</code> (<code>float</code>), <code>FallDistance</code> (<code>float</code>).</li>
-            </ul>
+            <div class="table-wrap" data-od-id="payload-table-wrap">
+              <table data-od-id="payload-table">
+                <thead><tr><th scope="col">Struct</th><th scope="col">Fields</th></tr></thead>
+                <tbody>
+                  <tr><td><code>ItemEquipArgs</code></td><td><code>Item</code> (GameObject), <code>SlotIndex</code> (int, −1 if not from a container), <code>HoldData</code> (ItemHoldData), <code>FromContainer</code> (bool)</td></tr>
+                  <tr><td><code>LandArgs</code></td><td><code>ImpactVelocity</code> (float), <code>FallDistance</code> (float)</td></tr>
+                  <tr><td><code>FootStepArgs</code></td><td><code>IsLeft</code> (bool), <code>Point</code> (Vector3), <code>IsReStep</code> (bool)</td></tr>
+                </tbody>
+              </table>
+            </div>
 
             <h3 data-od-id="item-events-heading">Item events: <code>HandItemSocket</code></h3>
-            <p data-od-id="item-csharp-events-heading"><strong>C# events</strong></p>
             <div class="table-wrap" data-od-id="socket-cs-events-table-wrap">
               <table data-od-id="socket-cs-events-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">C# event</th><th scope="col">Type</th><th scope="col">UnityEvent</th></tr></thead>
                 <tbody>
-                  <tr><td><code>ItemEquipped</code></td><td><code>event Action&lt;ItemEquipArgs&gt;</code></td><td></td></tr>
-                  <tr><td><code>ItemUnequipped</code></td><td><code>event Action&lt;ItemEquipArgs&gt;</code></td><td></td></tr>
+                  <tr><td><code>ItemEquipped</code></td><td><code>Action&lt;ItemEquipArgs&gt;</code></td><td><code>OnItemEquipped</code> (<code>ItemEvent</code>, <code>UnityEvent&lt;GameObject&gt;</code>)</td></tr>
+                  <tr><td><code>ItemUnequipped</code></td><td><code>Action&lt;ItemEquipArgs&gt;</code></td><td><code>OnItemUnequipped</code> (<code>ItemEvent</code>)</td></tr>
                 </tbody>
               </table>
             </div>
-            <p data-od-id="item-inspector-heading"><strong>Inspector</strong></p>
-            <div class="table-wrap" data-od-id="socket-inspector-events-table-wrap">
-              <table data-od-id="socket-inspector-events-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
-                <tbody>
-                  <tr><td><code>OnItemEquipped</code></td><td><code>ItemEvent : UnityEvent&lt;GameObject&gt;</code></td><td></td></tr>
-                  <tr><td><code>OnItemUnequipped</code></td><td><code>ItemEvent : UnityEvent&lt;GameObject&gt;</code></td><td></td></tr>
-                </tbody>
-              </table>
-            </div>
-            <p>Fire for <strong>every</strong> socket-backed equip/unequip (manual attach, container equip, detach).</p>
+            <p>With smooth transitions, <code>ItemUnequipped</code> fires while the old item is still visible, and <code>ItemEquipped</code> can fire for an item that is still waiting to be drawn.</p>
 
             <h3 data-od-id="locomotion-events-heading">Locomotion events: <code>PlayerLocomotion</code></h3>
-            <p data-od-id="locomotion-csharp-events-heading"><strong>C# events</strong></p>
             <div class="table-wrap" data-od-id="loc-cs-events-table-wrap">
               <table data-od-id="loc-cs-events-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">C# event</th><th scope="col">Type</th><th scope="col">UnityEvent</th></tr></thead>
                 <tbody>
-                  <tr><td><code>Jumped</code></td><td><code>Action&lt;LandArgs&gt;</code></td><td></td></tr>
-                  <tr><td><code>Landed</code></td><td><code>Action&lt;LandArgs&gt;</code></td><td></td></tr>
-                  <tr><td><code>CrouchStarted</code></td><td><code>Action</code></td><td>fires when crouch begins</td></tr>
-                  <tr><td><code>CrouchEnded</code></td><td><code>Action</code></td><td>fires when crouch ends</td></tr>
-                  <tr><td><code>SprintStarted</code></td><td><code>Action</code></td><td>fires when sprint begins</td></tr>
-                  <tr><td><code>SprintEnded</code></td><td><code>Action</code></td><td>fires when sprint ends</td></tr>
-                  <tr><td><code>GroundedChanged</code></td><td><code>Action&lt;bool&gt;</code></td><td></td></tr>
+                  <tr><td><code>Jumped</code></td><td><code>Action</code></td><td><code>OnJumped</code></td></tr>
+                  <tr><td><code>Landed</code></td><td><code>Action&lt;LandArgs&gt;</code></td><td><code>OnLanded</code></td></tr>
+                  <tr><td><code>CrouchStarted</code>, <code>CrouchEnded</code></td><td><code>Action</code></td><td><code>OnCrouchStarted</code>, <code>OnCrouchEnded</code></td></tr>
+                  <tr><td><code>SprintStarted</code>, <code>SprintEnded</code></td><td><code>Action</code></td><td><code>OnSprintStarted</code>, <code>OnSprintEnded</code></td></tr>
+                  <tr><td><code>GroundedChanged</code></td><td><code>Action&lt;bool&gt;</code></td><td><code>OnGroundedChanged</code></td></tr>
                 </tbody>
               </table>
             </div>
-            <p data-od-id="unity-event-mirrors-heading"><strong>Inspector <code>UnityEvent</code> mirrors</strong></p>
-            <div class="table-wrap" data-od-id="loc-inspector-events-table-wrap">
-              <table data-od-id="loc-inspector-events-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Notes</th></tr></thead>
+
+            <h3 data-od-id="foot-events-heading">Footstep and foot planting events</h3>
+            <div class="table-wrap" data-od-id="foot-events-table-wrap">
+              <table data-od-id="foot-events-table">
+                <thead><tr><th scope="col">Source</th><th scope="col">C# event</th><th scope="col">UnityEvent</th></tr></thead>
                 <tbody>
-                  <tr><td><code>OnJumped</code></td><td></td></tr>
-                  <tr><td><code>OnLanded</code></td><td></td></tr>
-                  <tr><td><code>OnCrouchStarted</code></td><td></td></tr>
-                  <tr><td><code>OnCrouchEnded</code></td><td></td></tr>
-                  <tr><td><code>OnSprintStarted</code></td><td></td></tr>
-                  <tr><td><code>OnSprintEnded</code></td><td></td></tr>
+                  <tr><td><code>PlayerFootsteps</code></td><td><code>FootPlanted</code> (<code>Action&lt;FootStepArgs&gt;</code>)</td><td><code>OnFootPlanted</code></td></tr>
+                  <tr><td><code>PlayerFootPlanting</code></td><td><code>ReStepLanded</code> (<code>Action&lt;FootStepArgs&gt;</code>)</td><td>none</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 data-od-id="vitals-events-heading">Vitals events: <code>PlayerVitals</code></h3>
+            <div class="table-wrap" data-od-id="vitals-events-table-wrap">
+              <table data-od-id="vitals-events-table">
+                <thead><tr><th scope="col">C# event</th><th scope="col">Type</th><th scope="col">UnityEvent</th></tr></thead>
+                <tbody>
+                  <tr><td><code>HealthChanged</code></td><td><code>Action&lt;float&gt;</code></td><td><code>OnHealthChanged</code></td></tr>
+                  <tr><td><code>Died</code></td><td><code>Action</code></td><td><code>OnDied</code></td></tr>
+                  <tr><td><code>Revived</code></td><td><code>Action</code></td><td><code>OnRevived</code></td></tr>
                 </tbody>
               </table>
             </div>
 
             <h3 data-od-id="listener-interfaces-heading">Listener interfaces</h3>
-            <p>Implement on any <code>MonoBehaviour</code> under the player; it's found at startup automatically. Unhandled methods are no-ops; override only what you need.</p>
-            <pre data-od-id="listener-interfaces-code"><code>using Player;
+            <p>Implement only the methods you need; the others are no-ops. Listeners on the player hierarchy are found at startup. Use <code>RegisterListener</code> for objects added at runtime.</p>
+            <ul class="step-list" data-od-id="listener-interfaces-list">
+              <li><code>IItemEventListener</code>: <code>OnItemEquipped(ItemEquipArgs)</code>, <code>OnItemUnequipped(ItemEquipArgs)</code></li>
+              <li><code>ILocomotionEventListener</code>: <code>OnJumped()</code>, <code>OnLanded(LandArgs)</code>, <code>OnCrouchStarted()</code>, <code>OnCrouchEnded()</code>, <code>OnSprintStarted()</code>, <code>OnSprintEnded()</code>, <code>OnGroundedChanged(bool)</code></li>
+            </ul>
+<pre data-od-id="listener-interfaces-code"><code>using Player;
+using UnityEngine;
 
 public class MyListener : MonoBehaviour, IItemEventListener, ILocomotionEventListener
 {
     public void OnItemEquipped(ItemEquipArgs args) =&gt; Debug.Log($"equipped {args.Item.name}");
-    public void OnItemUnequipped(ItemEquipArgs args) { }
-    public void OnLanded(LandArgs args) =&gt; Debug.Log($"landed at {args.ImpactVelocity}");
-    // OnJumped, OnCrouchStarted/Ended, OnSprintStarted/Ended, OnGroundedChanged default to no-op
+    public void OnLanded(LandArgs args) =&gt; Debug.Log($"landed at {args.ImpactVelocity} m/s");
 }</code></pre>
-            <p>Runtime-added listeners:</p>
             <div class="table-wrap" data-od-id="listener-register-table-wrap">
               <table data-od-id="listener-register-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Method</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>locomotion.RegisterListener(ILocomotionEventListener)</code></td><td>register a locomotion listener</td></tr>
-                  <tr><td><code>socket.RegisterListener(IItemEventListener)</code></td><td>register an item listener</td></tr>
-                  <tr><td><code>UnregisterListener(...)</code></td><td>matching unregister on both</td></tr>
+                  <tr><td><code>locomotion.RegisterListener(ILocomotionEventListener)</code></td><td>adds a locomotion listener at runtime</td></tr>
+                  <tr><td><code>socket.RegisterListener(IItemEventListener)</code></td><td>adds an item listener at runtime</td></tr>
+                  <tr><td><code>UnregisterListener(...)</code></td><td>removes a listener from either source</td></tr>
                 </tbody>
               </table>
             </div>
+
             <h3 data-od-id="subscribe-code-heading">Subscribe in code</h3>
-            <pre data-od-id="subscribe-code"><code>player.Locomotion.Jumped += () =&gt; Debug.Log("jumped");
+<pre data-od-id="subscribe-code"><code>player.Locomotion.Jumped += () =&gt; Debug.Log("jumped");
 player.HandItemSocket.ItemEquipped += args =&gt;
     Debug.Log($"equipped {args.Item.name} from slot {args.SlotIndex}");</code></pre>
-
-            <aside class="callout callout--warning" data-od-id="event-contract-callout">
+            <aside class="callout" data-od-id="event-contract-callout">
               <h2 data-od-id="event-contract-heading">Event contract</h2>
-              <ul>
-                <li>Each transition fires its C# event, its <code>UnityEvent</code>, and every discovered listener <strong>once</strong>, in that order, from one private notify method.</li>
-                <li>Equip/unequip events require a connected <code>HandItemSocket</code>; the socket is the source. A container without a socket emits <strong>no</strong> equip event.</li>
-                <li>Dispatch is best-effort: a handler that throws interrupts the remaining handlers for that transition. Keep handlers exception-free.</li>
-              </ul>
+              <p>Each transition fires its C# event and its UnityEvent once, from one place in the code.</p>
             </aside>
           </section>
 
           <section class="doc-section" id="fpcutter" data-od-id="fpcutter-section" aria-labelledby="fpcutter-heading">
+            <span class="section-kicker">08 / Mesh</span>
             <h2 id="fpcutter-heading" data-od-id="fpcutter-heading">FPCutter: FPCutterController</h2>
-            <p>Hides body parts in first person (default: <code>Head</code>) while keeping shadow casting. Generated by the FPCutter Wizard.</p>
+            <p>Namespace <code>FPCutter</code>. Hides body parts in first person (default: Head) while keeping shadow casting. Generated by the FPCutter Wizard for each processed character, which is a complete copy of the character with its own skeleton and Animator.</p>
             <h3 data-od-id="fpcutter-methods-heading">Methods</h3>
             <div class="table-wrap" data-od-id="fpcutter-methods-table-wrap">
               <table data-od-id="fpcutter-methods-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Method</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>SetFirstPerson</code></td><td><code>SetFirstPerson()</code></td><td></td></tr>
-                  <tr><td><code>SetThirdPerson</code></td><td><code>SetThirdPerson()</code></td><td></td></tr>
-                  <tr><td><code>HidePart</code></td><td><code>HidePart(BodyPart)</code></td><td></td></tr>
-                  <tr><td><code>ShowPart</code></td><td><code>ShowPart(BodyPart)</code></td><td></td></tr>
+                  <tr><td><code>SetFirstPerson</code></td><td><code>SetFirstPerson()</code></td><td>hides the parts listed in <em>Hide In First Person</em></td></tr>
+                  <tr><td><code>SetThirdPerson</code></td><td><code>SetThirdPerson()</code></td><td>shows all parts</td></tr>
+                  <tr><td><code>HidePart</code> / <code>ShowPart</code></td><td><code>HidePart(BodyPart part)</code>, <code>ShowPart(BodyPart part)</code></td><td>individual control</td></tr>
                 </tbody>
               </table>
             </div>
             <h3 data-od-id="fpcutter-config-heading">Config</h3>
             <div class="table-wrap" data-od-id="fpcutter-config-table-wrap">
               <table data-od-id="fpcutter-config-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Inspector label</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>HideInFirstPerson</code></td><td><code>List&lt;BodyPart&gt;</code></td><td></td></tr>
-                  <tr><td><code>invisibleMaterial</code></td><td><code>Material</code></td><td>uses the <code>FPCutter_Invisible</code> shader</td></tr>
+                  <tr><td>Hide In First Person</td><td><code>List&lt;BodyPart&gt;</code></td><td>default: <code>Head</code></td></tr>
+                  <tr><td>Invisible Material</td><td><code>Material</code></td><td>uses the <code>FPCutter/InvisibleShadowCaster</code> shader</td></tr>
                 </tbody>
               </table>
             </div>
-            <p>The <code>BodyPart</code> enum is defined in <code>FPCutterData</code>.</p>
+            <p><code>BodyPart</code> (defined in <code>FPCutterData</code>): <code>Body</code>, <code>Head</code>, <code>LeftArm</code>, <code>RightArm</code>, <code>LeftLeg</code>, <code>RightLeg</code>.</p>
           </section>
 
           <section class="doc-section" id="animator" data-od-id="animator-section" aria-labelledby="animator-heading">
+            <span class="section-kicker">09 / Animation</span>
             <h2 id="animator-heading" data-od-id="animator-heading">Animator: PlayerAnimatorController</h2>
-            <p>Drives animator parameters and item animation layers.</p>
+            <p>Drives animator parameters and the item animation layers.</p>
             <div class="table-wrap" data-od-id="animator-table-wrap">
               <table data-od-id="animator-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>SetItemLayer</code></td><td><code>SetItemLayer(int)</code></td><td></td></tr>
-                  <tr><td><code>SetFlashlightActive</code></td><td><code>SetFlashlightActive(bool)</code></td><td></td></tr>
-                  <tr><td><code>ToggleFlashlight</code></td><td><code>ToggleFlashlight()</code></td><td></td></tr>
-                  <tr><td><code>TriggerAnimation</code></td><td><code>TriggerAnimation(string)</code></td><td></td></tr>
-                  <tr><td><code>GetAnimator</code></td><td><code>GetAnimator() → Animator</code></td><td></td></tr>
-                  <tr><td><code>IsFlashlightActive</code></td><td><code>property</code></td><td></td></tr>
+                  <tr><td><code>SetItemLayer</code></td><td><code>SetItemLayer(int layerIndex)</code></td><td>activates an item animation layer</td></tr>
+                  <tr><td><code>ToggleFlashlight</code>, <code>SetFlashlightActive</code></td><td><code>ToggleFlashlight()</code>, <code>SetFlashlightActive(bool)</code></td><td>flashlight state</td></tr>
+                  <tr><td><code>IsFlashlightActive</code></td><td>property</td><td>true when the flashlight layer is active</td></tr>
+                  <tr><td><code>TriggerAnimation</code></td><td><code>TriggerAnimation(string triggerName)</code></td><td>sets an Animator trigger</td></tr>
+                  <tr><td><code>GetAnimator</code></td><td><code>Animator GetAnimator()</code></td><td>returns the Animator</td></tr>
                 </tbody>
               </table>
             </div>
           </section>
 
           <section class="doc-section" id="procedural-ik" data-od-id="procedural-ik-section" aria-labelledby="procedural-ik-heading">
-            <h2 id="procedural-ik-heading" data-od-id="procedural-ik-heading">Procedural IK (advanced)</h2>
-            <p>Tuned by the Setup Wizard; adjust only for advanced customization. The components run in a fixed OnAnimatorIK order: <strong>FootIK (5) → HeadIK (10) → Spine (15) → HandIK (20)</strong>.</p>
-            <h3 data-od-id="foot-ik-heading">PlayerFootIK</h3>
-            <p><code>[RequireComponent(typeof(Animator))]</code>, runs first in the IK chain. SphereCast ground trace per foot; lifts/sinks the animated foot and lowers the pelvis to match the surface. Works in first and third person.</p>
-            <div class="table-wrap" data-od-id="footik-table-wrap">
-              <table data-od-id="footik-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+            <span class="section-kicker">10 / Feet, hands, head, vitals</span>
+            <h2 id="procedural-ik-heading" data-od-id="procedural-ik-heading">Feet, hands, head and vitals</h2>
+            <p>Most of these components are configured by the Setup Wizard. Adjust them directly only for advanced customization.</p>
+
+            <h3 data-od-id="foot-planting-heading">PlayerFootPlanting</h3>
+            <p>On the model. Runs at execution order <code>-200</code>, before the camera syncs to the head. Keeps both feet anchored to the ground; a foot that drifts out of place takes a curved re-step. Step behaviour is set with <code>StepSettings</code>.</p>
+            <div class="table-wrap" data-od-id="footplanting-table-wrap">
+              <table data-od-id="footplanting-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature / type</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>enableFootIK</code></td><td><code>bool</code></td><td>master toggle (default: true)</td></tr>
-                  <tr><td><code>footIKWeight</code></td><td><code>float</code></td><td>overall IK weight 0–1 (default: 1)</td></tr>
-                  <tr><td><code>footIKLayerMask</code></td><td><code>LayerMask</code></td><td>layers the foot trace hits; own colliders always ignored</td></tr>
-                  <tr><td><code>traceDistance</code> / <code>traceOffset</code> / <code>traceRadius</code></td><td><code>float</code></td><td>sweep distance below the foot, trace start height above the foot, sphere radius (defaults: 1 / 0.3 / 0.05)</td></tr>
-                  <tr><td><code>footHeightOffset</code></td><td><code>float</code></td><td>extra height kept between foot and ground (default: 0.02)</td></tr>
-                  <tr><td><code>interpSpeed</code></td><td><code>float</code></td><td>frame-rate independent smoothing for offsets/rotations (default: 20)</td></tr>
-                  <tr><td><code>maxSlopeAngle</code></td><td><code>float</code></td><td>max ground slope in degrees; foot rotation blends out beyond it (default: 30)</td></tr>
-                  <tr><td><code>maxStepUp</code> / <code>maxStepDown</code></td><td><code>float</code></td><td>clamp how far a foot may lift/sink per step (defaults: 0.3 / 0.4)</td></tr>
-                  <tr><td><code>pelvisDropMultiplier</code></td><td><code>float</code></td><td>how much the pelvis follows a lower foot contact, 0–1 (default: 0.65)</td></tr>
-                  <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td>toggle at runtime</td></tr>
-                  <tr><td><code>ResetGroundCalibration</code></td><td><code>ResetGroundCalibration()</code></td><td>re-measures the ground baseline (call after teleporting the player)</td></tr>
-                  <tr><td><code>GroundedOverride</code></td><td><code>bool?</code></td><td>override the grounded state used by the trace (e.g. from external locomotion logic)</td></tr>
+                  <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td>toggles planting at runtime</td></tr>
+                  <tr><td><code>ResetPlanting</code></td><td><code>ResetPlanting()</code></td><td>resets the anchors (call after teleporting)</td></tr>
+                  <tr><td><code>SetExternalDriveState</code> / <code>ClearExternalDriveState</code></td><td><code>SetExternalDriveState(bool grounded, Vector2 moveDirection)</code></td><td>feeds remote players from a network add-on; the PurrNet bridge uses it</td></tr>
+                  <tr><td><code>ReStepLanded</code></td><td><code>event Action&lt;FootStepArgs&gt;</code></td><td>fires when a re-step lands</td></tr>
+                  <tr><td><code>PlantMode</code></td><td><code>enum</code></td><td><code>Idle</code>, <code>Moving</code>, <code>Automatic</code> (follows the locomotion state)</td></tr>
+                  <tr><td><code>StepSettings</code></td><td>nested class</td><td>re-step duration, path, arc, lift, rotation and catch-up curves</td></tr>
                 </tbody>
               </table>
             </div>
+
+            <h3 data-od-id="footsteps-heading">PlayerFootsteps</h3>
+            <p>On the root. Detects steps from the animated feet, without animation events. Assign <code>stepClips</code> (Step Clips) and optionally <code>reStepClips</code> (quieter clips for re-steps and turning in place). Steps are silent while airborne or standing still.</p>
+
+            <h3 data-od-id="hand-pose-heading">HandPoseController and FingerPose</h3>
+            <p><code>HandPoseController</code> (on the model) poses the fingers around the held item on top of the animation. It calibrates itself from the Humanoid muscle limits, so any humanoid rig works.</p>
+            <div class="table-wrap" data-od-id="handpose-table-wrap">
+              <table data-od-id="handpose-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>CalibrateFromAvatar</code></td><td><code>bool CalibrateFromAvatar()</code></td><td>re-reads the finger limits from the avatar</td></tr>
+                  <tr><td><code>Rebind</code></td><td><code>Rebind()</code></td><td>rebinds the finger bones</td></tr>
+                  <tr><td><code>RecaptureReference</code></td><td><code>RecaptureReference()</code></td><td>captures the reference pose</td></tr>
+                  <tr><td><code>Snap</code></td><td><code>Snap()</code></td><td>applies the current target at once (spawn or equip at start)</td></tr>
+                  <tr><td><code>ResolvedBoneCount</code></td><td><code>int</code> (property)</td><td>number of finger bones found</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><code>FingerPose</code> is a <code>ScriptableObject</code> (<code>Create ▸ Player ▸ Finger Grip Pose</code>) with five finger curls (<code>thumbCurl</code>, <code>indexCurl</code>, <code>middleCurl</code>, <code>ringCurl</code>, <code>littleCurl</code>), <code>thumbOpposition</code> and <code>spread</code>. Its <code>ToValues()</code> and <code>FromValues(...)</code> methods convert to and from <code>FingerPoseValues</code>.</p>
+
+            <h3 data-od-id="vitals-heading">PlayerVitals and PlayerExertion</h3>
+            <p><code>PlayerVitals</code> is optional and lives on the root. It adds local health and heart-rate based sprint stamina.</p>
+            <div class="table-wrap" data-od-id="vitals-table-wrap">
+              <table data-od-id="vitals-table">
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature / type</th><th scope="col">Notes</th></tr></thead>
+                <tbody>
+                  <tr><td><code>Health</code>, <code>MaxHealth</code>, <code>NormalizedHealth</code></td><td><code>float</code> (properties)</td><td>current and maximum health</td></tr>
+                  <tr><td><code>IsDead</code></td><td><code>bool</code></td><td>true at zero health or below</td></tr>
+                  <tr><td><code>ApplyDamage</code> / <code>Heal</code></td><td><code>bool ApplyDamage(float amount)</code>, <code>bool Heal(float amount)</code></td><td>return false when ignored (dead or invalid amount), true otherwise</td></tr>
+                  <tr><td><code>Revive</code></td><td><code>bool Revive()</code></td><td>brings a dead player back to full health; returns false if the player is alive</td></tr>
+                  <tr><td><code>SetHealth</code></td><td><code>SetHealth(float value)</code></td><td>sets the value directly; use it to mirror a server value</td></tr>
+                  <tr><td><code>Bpm</code>, <code>CanSprint</code></td><td>property</td><td>heart rate, and whether sprinting is allowed</td></tr>
+                  <tr><td><code>Exertion</code></td><td><code>PlayerExertion</code> (property)</td><td>the stamina model: <code>Bpm</code>, <code>Exhausted</code>, <code>NeedsSprintRelease</code>, <code>CanSprint</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+
             <h3 data-od-id="head-ik-heading">PlayerHeadIK</h3>
             <div class="table-wrap" data-od-id="headik-table-wrap">
               <table data-od-id="headik-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>Weight</code></td><td><code>get/set</code></td><td></td></tr>
-                  <tr><td><code>SetWeight</code></td><td><code>SetWeight(float)</code></td><td></td></tr>
-                  <tr><td><code>SetWeights</code></td><td><code>SetWeights(body, head, eyes, clamp)</code></td><td></td></tr>
-                  <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>Weight</code></td><td><code>float</code> (get, set)</td><td>current IK weight</td></tr>
+                  <tr><td><code>SetWeight</code> / <code>SetWeightSmooth</code></td><td><code>SetWeight(float)</code>, <code>SetWeightSmooth(float)</code></td><td>immediate or smoothed weight</td></tr>
+                  <tr><td><code>SetWeights</code></td><td><code>SetWeights(float body, float head, float eyes, float clamp)</code></td><td>body, head and eye weights and the clamp</td></tr>
+                  <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td>toggles head look-at</td></tr>
                 </tbody>
               </table>
             </div>
+
             <h3 data-od-id="hand-ik-heading">PlayerHandIK</h3>
+            <p>Hand and elbow IK for held items, including the holster animation. Execution order <code>20</code>, after head and spine.</p>
             <div class="table-wrap" data-od-id="handik-table-wrap">
               <table data-od-id="handik-table">
-                <thead><tr><th scope="col">Member</th><th scope="col">Type / Signature</th><th scope="col">Notes</th></tr></thead>
+                <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
                 <tbody>
-                  <tr><td><code>IKPositionWeight</code></td><td><code>get/set</code></td><td></td></tr>
-                  <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td></td></tr>
+                  <tr><td><code>HolsterProgress</code></td><td><code>float</code> (property)</td><td>0 = raised at the item pose, 1 = lowered out of view</td></tr>
+                  <tr><td><code>SetHolstered</code></td><td><code>SetHolstered(bool)</code></td><td>lowers or raises the hand</td></tr>
+                  <tr><td><code>BeginDraw</code></td><td><code>BeginDraw()</code></td><td>starts raising the hand</td></tr>
+                  <tr><td><code>SetIKWeight</code> / <code>SetIKWeightSmooth</code></td><td><code>SetIKWeight(float position, float rotation, float hint = 1)</code></td><td>right hand weights; steady partial weights are applied unchanged</td></tr>
+                  <tr><td><code>SetLeftIKWeight</code></td><td><code>SetLeftIKWeight(float position, float rotation, float hint = 1)</code></td><td>left hand weights for two-handed items</td></tr>
+                  <tr><td><code>SetTwoHanded</code></td><td><code>SetTwoHanded(bool)</code></td><td>fades the left hand on or off</td></tr>
+                  <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td>toggles hand IK</td></tr>
+                  <tr><td><code>IKPositionWeight</code>, <code>IKRotationWeight</code></td><td><code>float</code> (get, set)</td><td>right hand IK weights</td></tr>
                 </tbody>
               </table>
             </div>
-            <h3 data-od-id="spine-stabilizer-heading">PlayerSpineStabilizer</h3>
-            <p><code>[RequireComponent(typeof(Animator))]</code>; aligns spine yaw to the camera.</p>
-            <h3 data-od-id="hand-pose-debugger-heading">PlayerHandPoseDebugger (debug)</h3>
-            <p>Debug helper: previews hand/IK poses from the <code>ItemContainer</code> without activating the item mesh — only HandIK offsets and the animator layer are driven. Attach to the player root; works in Play and Edit mode. Unequip first (<code>Q</code>/<code>0</code>): while a real item is equipped, <code>HandItemSocket</code> overwrites the preview every LateUpdate.</p>
+            <p>Holster timings are Inspector fields under <em>Holster</em>: <code>holsterOffset</code>, <code>holsterTiltAngle</code>, <code>holsterDuration</code> (Holster Duration), <code>drawDuration</code> (Draw Duration), <code>drawStartWeight</code> (the IK weight needed before the draw starts), <code>leftHolsterOffset</code> and <code>twoHandedBlendDuration</code>. Turn the whole animation off with <em>Smooth Transitions</em> on <code>HandItemSocket</code>.</p>
 
-            <details data-od-id="demo-editor-note">
-              <summary data-od-id="demo-note-heading">Demo &amp; Editor code (not part of the runtime API)</summary>
-              <p><strong>Demo</strong> (<code>Project/Scripts/Player/Demo/</code>): <code>PlayerEventLogger</code> (implements both listener interfaces; copy it as a template), <code>PlayerDropSystem</code>, <code>PlayerInventory</code>, <code>PlayerInteraction</code>, <code>WorldItem</code>. <strong>Editor</strong>: custom inspectors plus the tools under <code>Tools ▸ FBSystem</code>: <code>Setup Wizard</code>, <code>Item Container Setup</code>, <code>Transfer Configuration</code> (copies a tuned player's config onto a new character), and the <code>FPCutter Wizard</code>; the optional FishNet addon adds <code>Tools ▸ FBSystem ▸ FishNet ▸ Setup Wizard</code>.</p>
-            </details>
-            <div class="cta-panel" data-od-id="interfaces-cta-panel">
-              <p>Easy FP Full Body Controller is available as a paid asset in the Asset Store.</p>
-              <a class="button button--primary" data-od-id="interfaces-cta" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">View on Asset Store ↗</a>
-            </div>
+            <h3 data-od-id="spine-stabilizer-heading">PlayerSpineStabilizer</h3>
+            <p><code>[RequireComponent(typeof(Animator))]</code>. Keeps the upper body steady while the head looks around. Execution order <code>15</code>, between head and hand IK. Tuned through the spine fields of <code>PlayerSettings</code>.</p>
+
+            <h3 data-od-id="hand-pose-debugger-heading">PlayerHandPoseDebugger (debug)</h3>
+            <p>Debug helper that previews hand and IK poses from the <code>ItemContainer</code> without showing the item mesh. Attach it to the player root.</p>
           </section>
-          <a class="back-top" href="#top" data-od-id="back-to-top">Back to top ↑</a>
+
+          <section class="doc-section" id="addons" data-od-id="addons-section" aria-labelledby="addons-heading">
+            <span class="section-kicker">11 / Add-ons</span>
+            <h2 id="addons-heading" data-od-id="addons-heading">Multiplayer add-on bridges</h2>
+            <p>The optional add-ons contain one bridge per network library. Both expose the same item-state hook, and both keep a list of networked world item prefabs.</p>
+            <div class="table-wrap" data-od-id="bridge-table-wrap">
+              <table data-od-id="bridge-table">
+                <thead><tr><th scope="col">Class</th><th scope="col">Namespace</th><th scope="col">Public API</th></tr></thead>
+                <tbody>
+                  <tr><td><code>FishNetPlayerBridge</code></td><td><code>FBSystem.FishNet</code></td><td><code>NotifyLocalItemStateChanged(ItemEquipArgs)</code>; serialized <code>networkWorldItemPrefabs</code></td></tr>
+                  <tr><td><code>PurrNetPlayerBridge</code></td><td><code>FBSystem.PurrNet</code></td><td><code>NotifyLocalItemStateChanged(ItemEquipArgs)</code>; serialized <code>networkWorldItemPrefabs</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>The bridges are configured by their Setup Wizards. See <a class="doc-link" href="fishnet.html">Multiplayer (FishNet)</a> and <a class="doc-link" href="purrnet.html">Multiplayer (PurrNet)</a>.</p>
+          </section>
+
+          <section class="doc-section" id="demo-editor" data-od-id="demo-editor-section" aria-labelledby="demo-editor-heading">
+            <span class="section-kicker">12 / Demo and editor</span>
+            <h2 id="demo-editor-heading" data-od-id="demo-editor-heading">Demo and editor code</h2>
+            <p>These classes are demo-only and not part of the core runtime API. They live in namespace <code>Player.Demo</code>: <code>PlayerEventLogger</code> (implements both listener interfaces; a good template), <code>PlayerInventory</code>, <code>PlayerInteraction</code> (E), <code>PlayerDropSystem</code> (G), <code>WorldItem</code>, <code>DemoGuidePanel</code> (F1) and <code>DemoGripToggle</code> (H).</p>
+          </section>
+
+          <a class="back-top" href="#top" data-od-id="back-to-top">Back to top &#8593;</a>
         </article>
         <nav class="doc-footer-nav" aria-label="Page navigation" data-od-id="doc-footer-navigation">
-          <a class="doc-footer-link" href="quick-start.html" data-od-id="previous-page-link"><span class="doc-footer-label">Previous</span><strong>← Quick Start</strong></a>
-          <a class="doc-footer-link" href="fishnet.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Multiplayer →</strong></a>
+          <a class="doc-footer-link" href="quick-start.html" data-od-id="previous-page-link"><span class="doc-footer-label">Previous</span><strong>&#8592; Quick Start</strong></a>
+          <a class="doc-footer-link" href="fishnet.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Multiplayer (FishNet) &#8594;</strong></a>
         </nav>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer" data-od-id="site-footer">
+<footer class="site-footer" data-od-id="site-footer">
     <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.3.0</p>
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.6.0</p>
       <nav class="footer-links" aria-label="Footer navigation" data-od-id="footer-navigation">
         <a href="../unity-asset-portfolio.html" data-od-id="footer-home-link">Home</a>
+        <a href="index.html" data-od-id="footer-docs-hub-link">All docs</a>
         <a href="overview.html" data-od-id="footer-overview-link">Overview</a>
         <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
         <a href="interfaces.html" aria-current="page" data-od-id="footer-interfaces-link">Interfaces</a>
-        <a href="fishnet.html" data-od-id="footer-fishnet-link">Multiplayer</a>
+        <a href="fishnet.html" data-od-id="footer-fishnet-link">Multiplayer (FishNet)</a>
+        <a href="purrnet.html" data-od-id="footer-purrnet-link">Multiplayer (PurrNet)</a>
         <a href="dungeon-generator.html" data-od-id="footer-dungeon-generator-link">Dungeon Generator</a>
         <a href="dungeon-quick-start.html" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
         <a href="dungeon-api.html" data-od-id="footer-dungeon-api-link">Dungeon API</a>
+        <a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener noreferrer" data-od-id="footer-dungeon-store-link">Easy Dungeon Generator ↗</a>
         <a href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="footer-github-link">GitHub</a>
-        <a href="mailto:dinlinwin@gmail.com">Email</a>
+        <a href="mailto:karakask2004@gmail.com">Email</a>
       </nav>
     </div>
   </footer>
+
   <script type="application/json" id="doc-search-index">
     [
-      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity: full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, dynamic items, procedural IK incl. Foot IK, extensible events, config transfer, and an optional FishNet multiplayer addon.","url":"overview.html"},
-      {"title":"Quick Start","headings":["Requirements","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Validation","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","7. Multiplayer (optional)","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, prepare a Humanoid model, run the 7-step Setup Wizard, configure FPCutter and input, then press Play.","url":"quick-start.html"},
-      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus / cutscenes / pausing):","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config & reactions","ItemAttachmentData: hold & IK config","ItemIKPreset: share IK config","Event API: PlayerEventAPI","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Procedural IK (advanced)","PlayerFootIK","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items, event API, FPCutter, animation, and procedural IK (foot, head, hand, spine).","url":"interfaces.html"},
-      {"title":"Multiplayer (FishNet Addon)","headings":["What the addon does","Requirements","1. Install FishNet and the addon","Video: FishNet Quick Setup","2. FishNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: FishNet Components","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host and remote client","Troubleshooting"],"excerpt":"Optional FBSystemFishNet addon for FishNet 4.7.2: make scenes and players multiplayer-ready — networked movement, animation, item sync, world items, and remote Foot IK.","url":"fishnet.html"},
-      {"title":"Dungeon Generator","headings":["Authoring vs. assembly","Editor tools","How generation works","Getting started","Chunk streaming","Extending the toolkit","Status"],"excerpt":"Procedural Dungeon Generator for Unity: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, editor tools under Tools/DungeonGen, chunk streaming, and extension contracts.","url":"dungeon-generator.html"},
-      {"title":"Dungeon Quick Start","headings":["1. Package & setup","2. Create a theme","3. Paint a room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","7. Decorate rooms (optional)","8. Chunk streaming (optional)","9. Next steps"],"excerpt":"Minimal flow for the Procedural Dungeon Generator: package setup, Theme Wizard, Room Designer, DungeonTemplate, and DungeonManager Generate.","url":"dungeon-quick-start.html"},
-      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","ChunkDungeonStreamer","RoomDecorator","Rendering & room geometry","Post-processing & culling","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API in namespace DungeonGen: DungeonManager, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
+      {"title":"All docs","headings":["Assets","Easy FP Full Body Controller","Easy Dungeon Generator","Earshot"],"excerpt":"Documentation hub for the vedaloiv Unity assets: Easy FP Full Body Controller v1.6.0, Easy Dungeon Generator v1.1.0, and Earshot (in development).","url":"index.html"},
+      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity (URP): full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, item system with definitions and holster animation, finger grips, foot planting, footsteps, optional health and stamina, demo scenes and ready-made prefabs, and optional FishNet and PurrNet multiplayer add-ons.","url":"overview.html"},
+      {"title":"Quick Start","headings":["Requirements","Fastest start: demo scenes and prefabs","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Final Health Check","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","7. Multiplayer (optional)","Upgrading from 1.3","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, run the 7-step Setup Wizard or start from the ready-made FBSystem_Player and FBSystem_CameraRig prefabs, configure FPCutter and input, then press Play. Includes upgrade notes from 1.3.","url":"quick-start.html"},
+      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus, cutscenes, pausing)","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config and reactions","ItemDefinition: shared item description","ItemAttachmentData: hold and IK config","ItemIKPreset: share IK config","Event API","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Footstep and foot planting events","Vitals events: PlayerVitals","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Feet, hands, head and vitals","PlayerFootPlanting","PlayerFootsteps","HandPoseController and FingerPose","PlayerVitals and PlayerExertion","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer","PlayerHandPoseDebugger (debug)","Multiplayer add-on bridges","Demo and editor code"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items and item definitions, event API, FPCutter, animation, foot planting, footsteps, finger grips, vitals, and procedural IK.","url":"interfaces.html"},
+      {"title":"Multiplayer (FishNet Addon)","headings":["What the addon does","Requirements","1. Install FishNet and the addon","Video: FishNet quick setup","2. FishNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: FishNet Components","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & remote client","Host test in the editor","Remote-client test","Troubleshooting"],"excerpt":"Optional FBSystemFishNet addon for FishNet 4.7.2: make scenes and players multiplayer-ready with a 5-step Setup Wizard, networked movement, animator and item sync, and networked world items.","url":"fishnet.html"},
+      {"title":"Multiplayer (PurrNet Addon)","headings":["What the addon does","Requirements","1. Install PurrNet and the addon","2. PurrNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: Network Player","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & clients","Host test in the editor","Remote client test","Troubleshooting"],"excerpt":"Optional FBSystemPurrNet addon for PurrNet v1.22.0: host-client co-op for 2 to 4 players with a 5-step Setup Wizard, owner-authoritative movement, animator and foot-planting sync, and item sync.","url":"purrnet.html"},
+      {"title":"Easy Dungeon Generator","headings":["Authoring vs. assembly","Components","Editor tools","How generation works","Requirements","Demo scenes","Getting started","Chunk streaming","Extending the toolkit","Status and store facts"],"excerpt":"Easy Dungeon Generator v1.1.0 for Unity 6000.5.0+: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, components, requirements, four demo scenes, chunk streaming, and store facts (released 2026-10-08, €33.11).","url":"dungeon-generator.html"},
+      {"title":"Dungeon Quick Start","headings":["1. Package & setup","Create a setup object","Create authoring assets","2. Create a theme","3. Paint a room","Multi-floor rooms","Doors and socket types","Save the room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","DungeonManager inspector","7. Decorate rooms (optional)","8. Chunk streaming (optional)","Setup","World & streaming","Locks, gizmos & logging","9. Next steps"],"excerpt":"Minimal flow for Easy Dungeon Generator v1.1.0: package setup, Theme Wizard, Room Designer, DungeonTemplate, DungeonManager Generate, and the optional decoration and chunk streaming steps.","url":"dungeon-quick-start.html"},
+      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","Methods","Key fields","ChunkDungeonStreamer","Methods","Key fields","Supporting chunk architecture","RoomDecorator","Rendering & room geometry","IDungeonRenderer","IRoomGeometry","Post-processing & culling","Post-processing contracts","DungeonNavMeshPostProcessor","DungeonCulling and rules","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API of Easy Dungeon Generator v1.1.0 in namespace DungeonGen: DungeonManager with Wall Mode, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
     ]
   </script>
   <script>

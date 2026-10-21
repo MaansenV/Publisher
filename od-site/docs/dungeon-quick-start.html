@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Dungeon Generator quick start: package setup, Theme Wizard, Room Designer, DungeonTemplate, and generating a dungeon with DungeonManager.">
-  <title>Dungeon Quick Start / Procedural Dungeon Generator docs</title>
+  <meta name="description" content="Easy Dungeon Generator quick start: package setup, Theme Wizard, Room Designer, DungeonTemplate, and generating a dungeon with DungeonManager.">
+  <title>Dungeon Quick Start / Easy Dungeon Generator docs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -228,7 +228,7 @@
       .button:hover { transform: none; }
     }
 
-    /* VitePress-style documentation shell: compact, searchable, and offline. */
+    /* Documentation shell: compact, searchable, and offline. */
     .site-header { background: color-mix(in oklch, var(--surface-raised) 92%, var(--bg)); backdrop-filter: blur(16px); }
     .nav-wrap { min-height: 64px; gap: 18px; }
     .brand { min-height: 44px; }
@@ -376,6 +376,7 @@
       </a>
       <nav class="top-nav" aria-label="Primary navigation" data-od-id="top-navigation">
         <a class="nav-link" href="../unity-asset-portfolio.html" data-od-id="home-nav-link">Home</a>
+        <a class="nav-link" href="index.html" data-od-id="docs-hub-nav-link">All docs</a>
         <a class="nav-link" href="overview.html" data-od-id="controller-nav-link">Easy FP Controller</a>
         <a class="nav-link" href="dungeon-generator.html" data-od-id="dungeon-generator-nav-link">Dungeon Generator</a>
         <a class="nav-link" data-od-id="asset-store-nav-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener noreferrer">Asset Store</a>
@@ -400,9 +401,9 @@
       <div class="container doc-hero-grid">
         <div>
           <span class="eyebrow">Documentation / Quick Start</span>
-          <h1 id="dungeon-quick-start-title" data-od-id="dungeon-quick-start-heading">Dungeon Generator Quick Start</h1>
+          <h1 id="dungeon-quick-start-title" data-od-id="dungeon-quick-start-heading">Easy Dungeon Generator Quick Start</h1>
           <p class="doc-lead">From import to a generated dungeon in a few steps: set up the package, create a theme, paint a room, build a template, and let <strong>DungeonManager</strong> generate the layout.</p>
-          <div class="doc-hero-note"><span>Minimal flow</span><span>Tools ▸ DungeonGen</span><span>namespace DungeonGen</span></div>
+          <div class="doc-hero-note"><span>v1.1.0</span><span>Minimal flow</span><span>Tools ▸ DungeonGen</span><span>namespace DungeonGen</span></div>
         </div>
         <figure class="doc-hero-media" data-od-id="dungeon-quick-start-hero-image">
           <img src="../assets/web/dungen-editor.jpg" alt="Dungeon Generator editor tools in Unity with room designer and template views" fetchpriority="high" decoding="async">
@@ -414,14 +415,21 @@
     <section class="doc-shell" data-od-id="dungeon-quick-start-content">
       <div class="container doc-layout">
         <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Documentation">
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-hub">vedaloiv</p>
+          <p class="doc-sidebar-section">Documentation hub</p>
+          <nav aria-label="All docs" data-od-id="docs-hub-sidebar-nav">
+            <a href="index.html" data-od-id="sidebar-docs-hub-link">All docs</a>
+          </nav>
           <p class="doc-sidebar-title" data-od-id="docs-sidebar-title">Easy FP Full Body Controller</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Documentation pages">
             <a href="overview.html" data-od-id="sidebar-overview-link">Overview</a>
             <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
             <a href="interfaces.html" data-od-id="sidebar-interfaces-link">Interfaces</a>
+            <a href="fishnet.html" data-od-id="sidebar-fishnet-link">Multiplayer (FishNet)</a>
+            <a href="purrnet.html" data-od-id="sidebar-purrnet-link">Multiplayer (PurrNet)</a>
           </nav>
-          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Procedural Dungeon Generator</p>
+          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Easy Dungeon Generator</p>
           <p class="doc-sidebar-section">Documentation</p>
           <nav aria-label="Dungeon Generator pages">
             <a href="dungeon-generator.html" data-od-id="sidebar-dungeon-overview-link">Overview</a>
@@ -454,7 +462,7 @@
             <span class="section-kicker">01 / Install</span>
             <h2 id="setup-heading" data-od-id="qs-setup-heading">1. Package &amp; setup</h2>
             <p>This is an Assets-folder toolkit, not a UPM package. Keep it at exactly <code>Assets/DungeonGenerator/</code> — several editor windows load their <code>.uss</code> stylesheets from that path, and renaming or moving the folder breaks them.</p>
-            <p>Before using the tools, install the package dependencies: <strong>AI Navigation</strong>, <strong>Burst</strong>, <strong>Collections</strong>, <strong>Mathematics</strong>, and <strong>Alchemy</strong> (the exact versions used in development are listed in the shipped User Guide). Burst, Collections, and Mathematics are compile-time dependencies even when <code>DungeonManager.useBurstPlanner</code> is disabled.</p>
+            <p>Before using the tools, install the package dependencies: <strong>AI Navigation 2.0.13</strong>, <strong>Burst 1.8.30</strong>, <strong>Collections 6.5.0</strong>, and <strong>Mathematics 1.4.0</strong>. <strong>Alchemy</strong> is bundled with the package. Burst, Collections, and Mathematics are compile-time dependencies even when <code>DungeonManager.useBurstPlanner</code> is disabled. <strong>Input System</strong> is optional.</p>
             <h3 data-od-id="qs-setup-object-heading">Create a setup object</h3>
             <p>Open <strong>Tools ▸ DungeonGen ▸ Dungeon Setup</strong> to create a basic <code>DungeonManager</code> or <code>ChunkDungeonStreamer</code> setup object. You can also add <code>DungeonManager</code> directly to a scene GameObject.</p>
             <figure class="doc-screenshot" data-od-id="qs-setup-screenshot-figure">
@@ -486,7 +494,7 @@
           <section class="doc-section" id="room" data-od-id="qs-room-section" aria-labelledby="room-heading">
             <span class="section-kicker">03 / Authoring</span>
             <h2 id="room-heading" data-od-id="qs-room-heading">3. Paint a room</h2>
-            <p>Open <strong>Tools ▸ DungeonGen ▸ Room Designer</strong>. In Layout mode: the <strong>Floor brush</strong> paints walkable cells, the <strong>Door brush</strong> places a door overlay on a wall cell, the <strong>Stair brush</strong> anchors stairs between adjacent floors, and the <strong>Hole brush</strong> places an explicit opening. <strong>RectDelete</strong> removes a rectangular region. Right-click erases, middle mouse pans, the wheel zooms, <code>F</code>/<code>D</code>/<code>S</code>/<code>H</code> select common brushes, <code>0</code> fits the design to view, and <code>R</code> cycles the stair axis.</p>
+            <p>Open <strong>Tools ▸ DungeonGen ▸ Room Designer</strong>. In Layout mode: the <strong>Floor brush</strong> paints walkable cells, the <strong>Door brush</strong> places a door overlay on a wall cell, the <strong>Room Door brush</strong> replaces a floor cell that lies between two opposite floor cells with a static two-sided door (no connector), the <strong>Stair brush</strong> anchors stairs between adjacent floors, and the <strong>Hole brush</strong> places an explicit opening. <strong>Rect Delete</strong> removes a rectangular region. Right-click erases, middle mouse pans, the wheel zooms, <code>F</code>/<code>D</code>/<code>P</code>/<code>S</code>/<code>H</code> select the Floor, Door, Room Door, Stair, and Hole brushes, <code>I</code> inverts the next Room Door, <code>0</code> fits the design to view, and <code>R</code> cycles the stair axis.</p>
             <figure class="doc-screenshot" data-od-id="qs-room-screenshot-figure">
               <img src="images/dungeon/Unity_HZVGaM9JGn.png" alt="Room Designer Layout mode showing floor, door, stair, and hole brushes for a new room." loading="lazy" decoding="async">
               <figcaption>Paint a room layout and configure its grid, brushes, stair direction, and floors.</figcaption>
@@ -497,13 +505,13 @@
             <h3 data-od-id="qs-doors-heading">Doors and socket types</h3>
             <p>Door direction is detected from neighboring wall geometry. A <code>DoorSocketType</code> controls compatibility between connections: a socket with no type is a wildcard, typed sockets normally require the same type asset, and compatible type relations can explicitly allow two different types to connect. Chunk portal selection also uses socket-type compatibility. Create types with <code>Assets ▸ Create ▸ DungeonGen ▸ Door Socket Type</code>.</p>
             <h3 data-od-id="qs-save-heading">Save the room</h3>
-            <p>Save designs and prefabs outside <code>Assets/DungeonGenerator/</code>. A saved room should contain a <code>RoomData</code> root, valid <code>DoorSocket</code> components, the intended <code>DungeonTheme</code> reference, and optionally a baked <code>RoomDecorationAuthoring</code> snapshot. Use <strong>Tools ▸ DungeonGen ▸ Setup Room Prefab</strong> if the prefab needs <code>RoomData</code>, sockets, or wall-fill setup, then confirm that each doorway has the intended <code>DoorSocket</code> and that socket coordinates snap to the room grid.</p>
+            <p>Save designs and prefabs outside <code>Assets/DungeonGenerator/</code>. A saved room should contain a <code>RoomData</code> root, valid <code>DoorSocket</code> components, the intended <code>DungeonTheme</code> reference, and optionally a baked <code>RoomDecorationAuthoring</code> snapshot. Use <strong>Tools ▸ DungeonGen ▸ Setup Room Prefab</strong> if the prefab needs <code>RoomData</code>, sockets, or wall-fill setup, then confirm that each doorway has the intended <code>DoorSocket</code> and that socket coordinates snap to the room grid. After you change a theme or design, regenerate the saved prefabs with <strong>Tools ▸ DungeonGen ▸ Room Prefab Manager</strong>.</p>
           </section>
 
           <section class="doc-section" id="pool" data-od-id="qs-pool-section" aria-labelledby="pool-heading">
             <span class="section-kicker">04 / Content</span>
             <h2 id="pool-heading" data-od-id="qs-pool-heading">4. Add rooms to the pool</h2>
-            <p>On the <code>DungeonManager</code>, add room pool entries. Each entry needs a prefab, a positive selection weight, and an allowed placement context (<code>Template</code>, <code>SequenceFiller</code>, or <code>RandomBranch</code>). Template nodes can instead pin a specific prefab directly, bypassing the weighted pool.</p>
+            <p>On the <code>DungeonManager</code>, add room pool entries. Each entry needs a prefab, a positive selection weight, and an allowed placement context (<code>Template</code>, <code>SequenceFiller</code>, or <code>RandomBranch</code>). Template nodes can instead pin a specific prefab directly, bypassing the weighted pool. A weight of 0 disables random selection, but pinned template nodes still work.</p>
           </section>
 
           <section class="doc-section" id="template" data-od-id="qs-template-section" aria-labelledby="template-heading">
@@ -546,10 +554,10 @@
               <li><strong>Generation Mode:</strong> chooses how the template is used for this generation.</li>
               <li><strong>Use Burst Planner:</strong> switches to the Burst planner when enabled.</li>
               <li><strong>Add Random Branches in Exact:</strong> allows random branches while using Exact mode.</li>
-              <li><strong>Dungeon Template:</strong> is the template asset to generate; assign one first.</li>
+              <li><strong>Template (required):</strong> is the template asset to generate; assign one first.</li>
               <li><strong>Max Search Nodes:</strong> limits the planner's search attempts.</li>
               <li><strong>Allow Rotation:</strong> allows room rotation; use it only when layouts and sockets support it.</li>
-              <li><strong>Expansion — Main Path:</strong> controls expansion of the main route.</li>
+              <li><strong>Expansion — Main Path Room Count:</strong> sets how many rooms lie along the main path in Sequenced Random mode.</li>
               <li><strong>Expansion — Min Offshoot Sequence Fillers:</strong> sets the lower bound for sequence-filler rooms on an offshoot.</li>
               <li><strong>Expansion — Max Offshoot Sequence Fillers:</strong> sets the upper bound for sequence-filler rooms on an offshoot.</li>
               <li><strong>Expansion — Max Random Branch Rooms:</strong> caps rooms added to random branches.</li>
@@ -559,6 +567,8 @@
               <li><strong>Expansion — Max Branch Depth:</strong> caps the number of random branch levels.</li>
               <li><strong>Placement — Seam Padding:</strong> adds spacing around room seams.</li>
               <li><strong>Placement — Allowed Seam Overlap:</strong> sets how much adjacent seams may overlap.</li>
+              <li><strong>Placement — Wall Mode:</strong> SingleOnly keeps each room's own walls (default), DoubleOnly shares one wall per connection and needs double-sided rooms, and AllowBoth shares walls where both rooms support it. See <a class="doc-link" href="dungeon-generator.html#how-it-works">How generation works</a>.</li>
+              <li><strong>Placement — Use Entrance Seam Padding / Entrance Seam Padding:</strong> override the seam padding for rooms attached directly to the scene-placed Entrance.</li>
               <li><strong>Placement — Root:</strong> selects the scene root used for generated content.</li>
               <li><strong>Placement — Scene Entrance:</strong> selects the scene entrance object.</li>
             </ul>
@@ -573,6 +583,8 @@
               <li><strong>Runtime — Generation Frames:</strong> sets how many frames generation work may use.</li>
               <li><strong>Runtime — Room Pool Prewarm:</strong> prepares room instances before they are needed.</li>
               <li><strong>Runtime — Decoration Pool Prewarm:</strong> prepares decoration instances before they are needed.</li>
+              <li><strong>Runtime — Generation Frame Budget Ms:</strong> spreads materialization and decoration over frames with a millisecond budget (play mode).</li>
+              <li><strong>Runtime — Prewarm On Awake:</strong> runs the one-time preparation (measuring prefabs and prewarming the pool) in Awake.</li>
               <li><strong>Determinism &amp; Retry — Seed:</strong> sets the value used when random seeding is off.</li>
               <li><strong>Determinism &amp; Retry — Use Random Seed:</strong> chooses a changing seed when enabled; turn it off to use <strong>Seed</strong> for repeatable tests.</li>
               <li><strong>Determinism &amp; Retry — Max Plan Retries:</strong> sets how many extra planning attempts are allowed.</li>
@@ -605,18 +617,18 @@
               <figcaption>Assign a player, corridor, entry room, and room pool before generating the streamed world.</figcaption>
             </figure>
             <ul data-od-id="qs-chunk-setup-list">
-              <li><strong>Generate / Rebuild / Clear World / Recenter:</strong> create the world, rebuild it, remove it, or recenter it.</li>
+              <li><strong>Generate World / Rebuild World / Clear World / Recenter on Player:</strong> create the world, rebuild it, remove it, or recenter it on the player.</li>
               <li><strong>Setup / Preview:</strong> switch between setup controls and the preview view.</li>
               <li><strong>Player:</strong> assigns the player transform used by streaming.</li>
               <li><strong>Player Prefab:</strong> provides a prefab the streamer can use as the player.</li>
-              <li><strong>Dedicated Entry:</strong> uses a dedicated entry room when enabled.</li>
+              <li><strong>Use Dedicated Entry:</strong> uses dedicated entry room prefabs for the first room of every chunk; off = pool-only mode.</li>
               <li><strong>Entry Prefabs:</strong> supplies prefabs that can be used for the entry room.</li>
               <li><strong>Corridor Prefab:</strong> supplies the connector placed between rooms.</li>
-              <li><strong>Min Rooms / Max Rooms:</strong> set the lower and upper room counts.</li>
+              <li><strong>Min. Rooms per Chunk / Max. Rooms per Chunk:</strong> set the lower and upper room counts per chunk, Entry included.</li>
               <li><strong>Room Pool Prefabs:</strong> supplies room prefabs for streamed chunks.</li>
-              <li><strong>Random Seed:</strong> changes the seed between runs when enabled; disable it for a fixed test seed.</li>
-              <li><strong>World Seed:</strong> is the seed used when Random Seed is off.</li>
-              <li><strong>Chunk Size:</strong> sets the dimensions of a chunk in cells.</li>
+              <li><strong>Use Random Seed:</strong> draws a new seed on every generation when enabled; disable it for a fixed test seed.</li>
+              <li><strong>World Seed:</strong> is the seed used when Use Random Seed is off.</li>
+              <li><strong>Chunk Size (Cells per Side):</strong> sets the dimensions of a chunk in cells.</li>
             </ul>
             <ol data-od-id="chunk-steps">
               <li>Assign a <code>player</code> transform or a <code>playerPrefab</code>.</li>
@@ -634,18 +646,19 @@
             </figure>
             <ul data-od-id="qs-chunk-world-streaming-list">
               <li><strong>World Seed:</strong> identifies the generated world for repeatable tests.</li>
-              <li><strong>Chunk Size:</strong> sets the chunk dimensions in cells.</li>
-              <li><strong>Cell Size:</strong> sets the world size of one cell; match it to the room grid.</li>
-              <li><strong>Safety Margin:</strong> leaves a buffer around chunk edges for safe placement.</li>
-              <li><strong>Retry Slots:</strong> sets how many fallback planning slots are available.</li>
-              <li><strong>Exit Seams:</strong> controls the exit connections kept at chunk seams.</li>
+              <li><strong>Chunk Size (Cells per Side):</strong> sets the chunk dimensions in cells.</li>
+              <li><strong>Cell Size (meters):</strong> sets the world size of one cell; match it to the room grid.</li>
+              <li><strong>Safety Margin (Cells):</strong> leaves a buffer around chunk edges for safe placement.</li>
+              <li><strong>Retry-Slots:</strong> sets how many extra retry slots the open-edge plan ladder may use (0 to 2).</li>
+              <li><strong>Exit-Seams:</strong> sets the minimum number of open edges (seams) of the center chunk (1 to 4).</li>
               <li><strong>Portal Socket Types:</strong> filters portal connections by socket type.</li>
-              <li><strong>Planned Radius:</strong> sets how far ahead chunks are planned.</li>
-              <li><strong>Loaded Radius:</strong> sets how far around the player chunks stay loaded.</li>
+              <li><strong>Planned Radius (Chunks):</strong> sets how far ahead chunks are planned.</li>
+              <li><strong>Loaded Radius (Chunks):</strong> sets how far around the player chunks stay loaded.</li>
               <li><strong>Diamond Neighborhood:</strong> uses a diamond-shaped neighborhood when enabled.</li>
               <li><strong>Builds per Frame:</strong> sets how much chunk-building work may run in one frame.</li>
-              <li><strong>Prewarm Rooms:</strong> prepares room instances before they are needed.</li>
-              <li><strong>Prewarm Corridors:</strong> prepares corridor instances before they are needed.</li>
+              <li><strong>Frame Budget (ms):</strong> optional time budget per frame for chunk building; 0 turns it off.</li>
+              <li><strong>Prewarm Room Copies:</strong> pre-creates inactive room instances per room prefab.</li>
+              <li><strong>Prewarm Corridor Tiles:</strong> pre-creates inactive corridor tiles.</li>
             </ul>
             <h3 id="chunk-locks-heading" data-od-id="qs-chunk-locks-heading">Locks, gizmos &amp; logging</h3>
             <p>Use the lock and diagnostic controls while you test the streamed layout.</p>
@@ -657,13 +670,13 @@
               <li><strong>Lock Chance:</strong> controls how often locks can appear; <strong>Lock Chance 0</strong> disables locks.</li>
               <li><strong>Spawn Protection Radius:</strong> sets how far the spawn-protection area extends.</li>
               <li><strong>Key Prefab:</strong> supplies the key used for locked connections; locked worlds need one.</li>
-              <li><strong>Seed-lock status note:</strong> it shows whether the current seed is locked.</li>
-              <li><strong>Debug Gizmos — Chunk Gizmos:</strong> shows or hides chunk debug overlays.</li>
-              <li><strong>Debug Gizmos — Areas:</strong> shows or hides area guides.</li>
-              <li><strong>Debug Gizmos — Footprints:</strong> shows or hides room footprint guides.</li>
-              <li><strong>Debug Gizmos — Corridors:</strong> shows or hides corridor guides.</li>
-              <li><strong>Debug Gizmos — Portal Seams:</strong> shows or hides portal seam guides.</li>
-              <li><strong>Debug Gizmos — Locked Labels:</strong> shows or hides locked-state labels.</li>
+              <li><strong>Seed-Locks:</strong> shows how many seams are seed-locked in the planned window.</li>
+              <li><strong>Debug Gizmos — Show Chunk Gizmos:</strong> master switch for the chunk debug overlays in the Scene view.</li>
+              <li><strong>Debug Gizmos — Show Chunk Areas:</strong> shows or hides the chunk area rectangles.</li>
+              <li><strong>Debug Gizmos — Show Room Footprints:</strong> shows or hides room footprint rectangles.</li>
+              <li><strong>Debug Gizmos — Show Corridor Paths:</strong> shows or hides corridor paths.</li>
+              <li><strong>Debug Gizmos — Show Portal Seams:</strong> shows or hides portal seam markers.</li>
+              <li><strong>Debug Gizmos — Show Locked Edge Labels:</strong> labels locked seams with red LOCKED text (off by default).</li>
               <li><strong>Log Details:</strong> adds detailed streaming information to the log; use it for troubleshooting.</li>
               <li><strong>Status:</strong> reports the current streamer state.</li>
             </ul>
@@ -677,13 +690,13 @@
               <li><a class="doc-link" href="dungeon-generator.html">Dungeon Generator Overview</a> — the authoring/assembly model and the full editor tool set.</li>
               <li><a class="doc-link" href="dungeon-api.html">Dungeon API Reference</a> — source-verified signatures for <code>DungeonManager</code>, <code>ChunkDungeonStreamer</code>, <code>RoomDecorator</code>, the contracts, and the ScriptableObjects.</li>
             </ul>
-            <p>Deep details — dependency versions, folder rules, smoke tests, troubleshooting, and the export checklist — ship in the package's User Guide. A dedicated detail page is planned as future documentation.</p>
+            <p>Deep details — dependency versions, folder rules, smoke tests, troubleshooting, and the export checklist — ship in the package's User Guide.</p>
           </section>
           <a class="back-top" href="#top" data-od-id="back-to-top">Back to top ↑</a>
         </article>
         <nav class="doc-footer-nav" aria-label="Page navigation" data-od-id="doc-footer-navigation">
-          <a class="doc-footer-link" href="dungeon-generator.html" data-od-id="prev-page-link"><span class="doc-footer-label">Previous</span><strong>← Dungeon Overview</strong></a>
-          <a class="doc-footer-link" href="dungeon-api.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Dungeon API Reference →</strong></a>
+          <a class="doc-footer-link" href="dungeon-generator.html" data-od-id="previous-page-link"><span class="doc-footer-label">Previous</span><strong>&#8592; Dungeon Overview</strong></a>
+          <a class="doc-footer-link" href="dungeon-api.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Dungeon API Reference &#8594;</strong></a>
         </nav>
       </div>
     </section>
@@ -691,28 +704,35 @@
 
   <footer class="site-footer" data-od-id="site-footer">
     <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Procedural Dungeon Generator · quick start</p>
+      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy Dungeon Generator · quick start</p>
       <nav class="footer-links" aria-label="Footer navigation" data-od-id="footer-navigation">
         <a href="../unity-asset-portfolio.html" data-od-id="footer-home-link">Home</a>
+        <a href="index.html" data-od-id="footer-docs-hub-link">All docs</a>
         <a href="overview.html" data-od-id="footer-overview-link">Overview</a>
         <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
         <a href="interfaces.html" data-od-id="footer-interfaces-link">Interfaces</a>
+        <a href="fishnet.html" data-od-id="footer-fishnet-link">Multiplayer (FishNet)</a>
+        <a href="purrnet.html" data-od-id="footer-purrnet-link">Multiplayer (PurrNet)</a>
         <a href="dungeon-generator.html" data-od-id="footer-dungeon-generator-link">Dungeon Generator</a>
         <a href="dungeon-quick-start.html" aria-current="page" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
         <a href="dungeon-api.html" data-od-id="footer-dungeon-api-link">Dungeon API</a>
+        <a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener noreferrer" data-od-id="footer-dungeon-store-link">Easy Dungeon Generator ↗</a>
         <a href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="footer-github-link">GitHub</a>
-        <a href="mailto:dinlinwin@gmail.com">Email</a>
+        <a href="mailto:karakask2004@gmail.com">Email</a>
       </nav>
     </div>
   </footer>
   <script type="application/json" id="doc-search-index">
     [
-      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity: full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, dynamic items, procedural IK, and extensible events.","url":"overview.html"},
-      {"title":"Quick Start","headings":["Requirements","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Validation","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, prepare a Humanoid model, run the 7-step Setup Wizard, configure FPCutter and input, then press Play.","url":"quick-start.html"},
-      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus / cutscenes / pausing):","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config & reactions","ItemAttachmentData: hold & IK config","ItemIKPreset: share IK config","Event API: PlayerEventAPI","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Procedural IK (advanced)","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items, event API, FPCutter, animation, and procedural IK.","url":"interfaces.html"},
-      {"title":"Dungeon Generator","headings":["Authoring vs. assembly","Editor tools","How generation works","Getting started","Chunk streaming","Extending the toolkit","Status"],"excerpt":"Procedural Dungeon Generator for Unity: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, editor tools under Tools/DungeonGen, chunk streaming, and extension contracts.","url":"dungeon-generator.html"},
-      {"title":"Dungeon Quick Start","headings":["1. Package & setup","2. Create a theme","3. Paint a room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","7. Decorate rooms (optional)","8. Chunk streaming (optional)","9. Next steps"],"excerpt":"Minimal flow for the Procedural Dungeon Generator: package setup, Theme Wizard, Room Designer, DungeonTemplate, and DungeonManager Generate.","url":"dungeon-quick-start.html"},
-      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","ChunkDungeonStreamer","RoomDecorator","Rendering & room geometry","Post-processing & culling","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API in namespace DungeonGen: DungeonManager, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
+      {"title":"All docs","headings":["Assets","Easy FP Full Body Controller","Easy Dungeon Generator","Earshot"],"excerpt":"Documentation hub for the vedaloiv Unity assets: Easy FP Full Body Controller v1.6.0, Easy Dungeon Generator v1.1.0, and Earshot (in development).","url":"index.html"},
+      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity (URP): full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, item system with definitions and holster animation, finger grips, foot planting, footsteps, optional health and stamina, demo scenes and ready-made prefabs, and optional FishNet and PurrNet multiplayer add-ons.","url":"overview.html"},
+      {"title":"Quick Start","headings":["Requirements","Fastest start: demo scenes and prefabs","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Final Health Check","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","7. Multiplayer (optional)","Upgrading from 1.3","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, run the 7-step Setup Wizard or start from the ready-made FBSystem_Player and FBSystem_CameraRig prefabs, configure FPCutter and input, then press Play. Includes upgrade notes from 1.3.","url":"quick-start.html"},
+      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus, cutscenes, pausing)","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config and reactions","ItemDefinition: shared item description","ItemAttachmentData: hold and IK config","ItemIKPreset: share IK config","Event API","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Footstep and foot planting events","Vitals events: PlayerVitals","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Feet, hands, head and vitals","PlayerFootPlanting","PlayerFootsteps","HandPoseController and FingerPose","PlayerVitals and PlayerExertion","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer","PlayerHandPoseDebugger (debug)","Multiplayer add-on bridges","Demo and editor code"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items and item definitions, event API, FPCutter, animation, foot planting, footsteps, finger grips, vitals, and procedural IK.","url":"interfaces.html"},
+      {"title":"Multiplayer (FishNet Addon)","headings":["What the addon does","Requirements","1. Install FishNet and the addon","Video: FishNet quick setup","2. FishNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: FishNet Components","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & remote client","Host test in the editor","Remote-client test","Troubleshooting"],"excerpt":"Optional FBSystemFishNet addon for FishNet 4.7.2: make scenes and players multiplayer-ready with a 5-step Setup Wizard, networked movement, animator and item sync, and networked world items.","url":"fishnet.html"},
+      {"title":"Multiplayer (PurrNet Addon)","headings":["What the addon does","Requirements","1. Install PurrNet and the addon","2. PurrNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: Network Player","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & clients","Host test in the editor","Remote client test","Troubleshooting"],"excerpt":"Optional FBSystemPurrNet addon for PurrNet v1.22.0: host-client co-op for 2 to 4 players with a 5-step Setup Wizard, owner-authoritative movement, animator and foot-planting sync, and item sync.","url":"purrnet.html"},
+      {"title":"Easy Dungeon Generator","headings":["Authoring vs. assembly","Components","Editor tools","How generation works","Requirements","Demo scenes","Getting started","Chunk streaming","Extending the toolkit","Status and store facts"],"excerpt":"Easy Dungeon Generator v1.1.0 for Unity 6000.5.0+: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, components, requirements, four demo scenes, chunk streaming, and store facts (released 2026-10-08, €33.11).","url":"dungeon-generator.html"},
+      {"title":"Dungeon Quick Start","headings":["1. Package & setup","Create a setup object","Create authoring assets","2. Create a theme","3. Paint a room","Multi-floor rooms","Doors and socket types","Save the room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","DungeonManager inspector","7. Decorate rooms (optional)","8. Chunk streaming (optional)","Setup","World & streaming","Locks, gizmos & logging","9. Next steps"],"excerpt":"Minimal flow for Easy Dungeon Generator v1.1.0: package setup, Theme Wizard, Room Designer, DungeonTemplate, DungeonManager Generate, and the optional decoration and chunk streaming steps.","url":"dungeon-quick-start.html"},
+      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","Methods","Key fields","ChunkDungeonStreamer","Methods","Key fields","Supporting chunk architecture","RoomDecorator","Rendering & room geometry","IDungeonRenderer","IRoomGeometry","Post-processing & culling","Post-processing contracts","DungeonNavMeshPostProcessor","DungeonCulling and rules","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API of Easy Dungeon Generator v1.1.0 in namespace DungeonGen: DungeonManager with Wall Mode, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
     ]
   </script>
   <script>
