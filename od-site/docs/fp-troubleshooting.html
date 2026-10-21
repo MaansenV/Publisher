@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Troubleshooting | Easy FP Full Body Controller docs</title>
+  <meta name="description" content="Fixes for the Setup Wizard health check messages and common setup and runtime problems with Easy FP Full Body Controller.">
+  <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/fp-troubleshooting.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vedaloiv">
+  <meta property="og:title" content="Troubleshooting | Easy FP Full Body Controller docs">
+  <meta property="og:description" content="Fixes for the Setup Wizard health check messages and common setup and runtime problems with Easy FP Full Body Controller.">
+  <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/fp-troubleshooting.html">
+  <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f0f0f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M7 9l9 15 9-15' fill='none' stroke='%23ffe343' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='6' width='4' height='4' fill='%232748c9'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
+  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+</head>
+<body data-page="fp-troubleshooting" data-group="fp">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Menu</span>
+      </button>
+      <a class="brand" href="index.html" aria-label="vedaloiv documentation home">
+        <span class="brand-name">vedaloiv</span><span class="brand-sub">docs</span>
+      </a>
+      <nav class="topnav" aria-label="Site">
+        <a href="../unity-asset-portfolio.html">Home</a>
+        <a href="index.html">All docs</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="search-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
+          <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="search-btn-label">Search docs</span>
+          <kbd class="search-btn-kbd" data-shortcut>Ctrl K</kbd>
+        </button>
+        <a class="top-store" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener"><span class="top-store-long">Asset Store</span><span class="sr-only"> page for Easy FP Full Body Controller (opens in a new tab)</span><svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation">
+      <nav class="sidebar-nav" aria-label="Documentation pages">
+<a class="nav-home" href="index.html">Docs home</a>
+<section class="nav-group is-current" data-group="fp">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <ul class="nav-list" id="nav-fp">
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="fp-setup-wizard.html">Setup Wizard</a></li>
+    <li><a href="fp-items.html">Items</a></li>
+    <li><a href="fp-body-ik.html">Body IK</a></li>
+    <li><a href="fp-fpcutter.html">FPCutter</a></li>
+    <li><a href="fp-vitals.html">Vitals &amp; Stamina</a></li>
+    <li><a href="fp-demos.html">Demos</a></li>
+    <li class="nav-label">Multiplayer</li>
+    <li><a href="fishnet.html">FishNet</a></li>
+    <li><a href="purrnet.html">PurrNet</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="interfaces.html">Interfaces</a></li>
+    <li><a href="fp-troubleshooting.html" class="is-active" aria-current="page">Troubleshooting</a></li>
+    <li><a href="fp-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+<section class="nav-group" data-group="dungeon">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-dungeon"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy Dungeon Generator</span><span class="nav-version">v1.1.0</span></button>
+  <ul class="nav-list" id="nav-dungeon">
+    <li><a href="dungeon-generator.html">Overview</a></li>
+    <li><a href="dungeon-quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="dungeon-room-designer.html">Room Designer</a></li>
+    <li><a href="dungeon-templates.html">Templates &amp; Generation</a></li>
+    <li><a href="dungeon-decoration.html">Decoration &amp; Themes</a></li>
+    <li><a href="dungeon-streaming.html">Chunk Streaming</a></li>
+    <li><a href="dungeon-culling-navmesh.html">Culling &amp; NavMesh</a></li>
+    <li><a href="dungeon-demos.html">Demo Scenes</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="dungeon-api.html">API Reference</a></li>
+    <li><a href="dungeon-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="dungeon-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+      </nav>
+    </aside>
+    <div class="scrim" data-close-nav hidden></div>
+
+    <main class="main" id="content" tabindex="-1">
+      <article class="doc">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Docs</a></li><li><a href="overview.html">Easy FP Full Body Controller</a></li><li><span aria-current="page">Troubleshooting</span></li></ol></nav>
+        <header class="doc-header">
+  <p class="kicker">Reference</p>
+  <h1>Troubleshooting</h1>
+  <p class="doc-meta"><span>Documentation for v1.6.0</span></p>
+</header>
+        <div class="prose">
+<p class="lead">Find your symptom or health check message and follow the fix. Most problems come from a missing reference, a non-humanoid model, or an input setup that does not match the package.</p>
+<details class="toc-inline"><summary>On this page</summary><ol class="toc-list">
+<li class="toc-l2"><a href="#health-check">Health check messages</a></li>
+<li class="toc-l2"><a href="#problems">Problems and fixes</a></li>
+<li class="toc-l2"><a href="#pink">Pink or magenta materials</a></li>
+<li class="toc-l2"><a href="#report">Still stuck?</a></li>
+</ol></details>
+
+<h2 id="health-check">Health check messages<a class="anchor" href="#health-check" aria-label="Link to this section">#</a></h2>
+<p>The Setup Wizard's final step and the <code>PlayerController</code> Inspector both report these messages. <strong>Error</strong> blocks the wizard. <strong>Warning</strong> and <strong>Info</strong> do not.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Message</th><th scope="col">Level</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td><code>Player root is null</code></td><td>Error</td><td>Set the player root in Step 1.</td></tr>
+    <tr><td><code>Player Settings asset is missing.</code></td><td>Warning</td><td>Create or assign a <code>PlayerSettings</code> asset in Step 2.</td></tr>
+    <tr><td><code>Input Actions asset is missing.</code></td><td>Warning</td><td>Assign <code>FBInputActions</code> in Step 2 (Search button).</td></tr>
+    <tr><td><code>CharacterController is missing (required by PlayerLocomotion)</code></td><td>Error</td><td>Add it to the root, or run Step 4.</td></tr>
+    <tr><td><code>Main Logic Hub (PlayerController) is missing</code>, <code>Input Reader (PlayerInputHandler) is missing</code>, <code>Walking Logic (PlayerLocomotion) is missing</code>, <code>Camera &amp; Look Logic (PlayerCameraController) is missing</code>, <code>Animation Manager (PlayerAnimatorController) is missing</code>, <code>Hand Item Socket is missing</code>, <code>Item Switcher (Inventory) is missing</code></td><td>Error</td><td>Run Step 4 to add the component on the root.</td></tr>
+    <tr><td><code>No Character Model (Animator) found</code></td><td>Error</td><td>Assign the model in Step 2.</td></tr>
+    <tr><td><code>Character Model is not set to 'Humanoid'</code></td><td>Error</td><td>Set the model's Animation Type to Humanoid and click Apply.</td></tr>
+    <tr><td><code>Animator Controller is missing. Assign Player.controller or another compatible controller.</code></td><td>Warning</td><td>Assign <code>Player.controller</code> from <code>Assets/FBSystem/Project/Animations/</code> to the Animator.</td></tr>
+    <tr><td><code>Head Look IK is missing from model</code>, <code>Hand Placement IK is missing from model</code>, <code>Body Stabilizer is missing from model</code></td><td>Error</td><td>Run Step 4 to add the components on the model.</td></tr>
+    <tr><td><code>Foot IK is missing from model (optional, recommended)</code>, <code>Finger grips (HandPoseController) are missing from model (optional, recommended)</code></td><td>Warning</td><td>Add <code>PlayerFootPlanting</code> and <code>HandPoseController</code> to the model, or ignore the warning.</td></tr>
+    <tr><td><code>Check: 'IK Pass' must be enabled on your Animator Layer</code></td><td>Info</td><td>In the Animator window, open the layer settings and enable <em>IK Pass</em>.</td></tr>
+    <tr><td><code>Camera Target (Eye Level) helper not found</code></td><td>Warning</td><td>Run Step 5.</td></tr>
+    <tr><td><code>Item Container not found in hand hierarchy</code>, <code>ItemSwitcher: No ItemContainer found in children.</code></td><td>Warning</td><td>Run Step 5 to create the item container under the right hand.</td></tr>
+    <tr><td><code>PlayerCameraController: CameraTarget is not assigned.</code></td><td>Error</td><td>Run Step 6 (Connect All Systems).</td></tr>
+  </tbody>
+</table></div>
+<p>Use <strong>Fix</strong> next to an issue or <strong>FIX ALL ISSUES</strong> in the <code>PlayerController</code> Inspector to apply automatic fixes where the validator offers one.</p>
+
+<h2 id="problems">Problems and fixes<a class="anchor" href="#problems" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td>The player does not move</td><td>Check that <code>PlayerInputHandler</code> has the <code>FBInputActions</code> asset and the action map is named <em>Player</em>. Check that <em>Active Input Handling</em> in Player Settings includes the Input System Package (or Both). Check that a <code>CharacterController</code> is on the root. If your code calls <code>SetInputEnabled(false)</code> or <code>DisableAllControls()</code>, call <code>SetInputEnabled(true)</code> or <code>EnableAllControls()</code> again.</td></tr>
+    <tr><td>The camera is inside the head, or the head is visible</td><td>Use the FPCutter variant of the character, and call <code>SetFirstPerson()</code> on its <code>FPCutterController</code>. Check that <em>Head</em> is in <em>Hide In First Person</em>. See <a href="fp-fpcutter.html">FPCutter</a>.</td></tr>
+    <tr><td>There is no camera view</td><td><code>PlayerCameraController</code> looks for a Cinemachine camera in the scene when none is assigned. Add <code>FBSystem_CameraRig</code>, or a Cinemachine camera and a Cinemachine Brain on the Main Camera.</td></tr>
+    <tr><td>Look feels too fast or too slow</td><td>Change <code>lookSensitivity</code> (default 0.1) on <code>PlayerCameraController</code>. <code>verticalLookLimit</code> comes from the <code>PlayerSettings</code> asset when one is assigned, otherwise from the component.</td></tr>
+    <tr><td>Movement speeds do not match the Inspector</td><td>When a <code>PlayerSettings</code> asset is assigned, its values override the fields on the components, for example walk speed. Change the value in the asset.</td></tr>
+    <tr><td>An item does not equip</td><td>The item must be in the <strong>Items</strong> list of the container, and it needs an <code>ItemHoldData</code>. The container needs its hand socket. Step 6 connects it.</td></tr>
+    <tr><td>The item sits in the wrong place</td><td>Tune it with <em>Tune Grip Mode</em> or the Scene view handles, then save the result as an IK preset. See <a href="fp-items.html#tune">Tune an item in the scene</a>.</td></tr>
+    <tr><td>Pickup does nothing</td><td>The world item's id must match an item in the container. The pickup's <em>Interactable Layer</em> must include the layer of the world item, which needs a collider.</td></tr>
+    <tr><td>Fingers bend the wrong way or not at all</td><td>The model must be Humanoid, with finger bones mapped in the avatar. Press <strong>Calibrate</strong> on <code>HandPoseController</code>, and check the finger muscle limits in the avatar configuration.</td></tr>
+    <tr><td>Feet slide or float</td><td>Check <em>Ground Layers</em> on <code>PlayerFootPlanting</code>. Make sure no other foot IK runs on the character.</td></tr>
+    <tr><td>The holster feels too slow or too fast</td><td>Adjust <em>Holster Duration</em> and <em>Draw Duration</em> on <code>PlayerHandIK</code>, or turn off <em>Smooth Transitions</em> on <code>HandItemSocket</code>.</td></tr>
+    <tr><td>Hands or the body look wrong after a model change</td><td>Run the Setup Wizard again from Step 3 so the bones are detected on the new rig. Use Transfer Configuration to keep your tuning. See <a href="fp-setup-wizard.html#transfer">Transfer Configuration</a>.</td></tr>
+    <tr><td>Health or stamina does not change</td><td><code>PlayerVitals</code> must be on the player root, next to <code>PlayerLocomotion</code>. <code>ApplyDamage</code> returns <code>false</code> for dead players and for amounts of zero or less.</td></tr>
+    <tr><td>Footstep sounds are missing</td><td>Add <code>PlayerFootsteps</code> to the root and assign <em>Step Clips</em>. It is not added by the wizard.</td></tr>
+    <tr><td>Foot settings reset after an update</td><td>Version 1.6 renamed the foot component. Note your values before you update, then re-enter them. See <a href="fp-changelog.html#v1-6-0">1.6.0</a>.</td></tr>
+    <tr><td>Compile errors after updating an add-on</td><td>Add-on packages from older versions do not compile against 1.6. Re-import the FishNet or PurrNet add-on after you update the base package.</td></tr>
+    <tr><td>Hidden parts are visible or magenta</td><td>The invisible material is missing or uses a different shader. Assign a material that uses <code>FPCutter/InvisibleShadowCaster</code> to <em>Invisible Material</em>. On GLES, WebGL or Android, update to 1.6.</td></tr>
+    <tr><td>Binding <code>Previous</code> or <code>Next</code> does not switch items</td><td>No shipped script reads these actions. Item switching uses the keys directly in <code>ItemSwitcher</code>.</td></tr>
+    <tr><td>Multiplayer spawn errors such as <code>PrefabId 65535</code></td><td>The player spawner must reference a prefab asset, not a scene object. See <a href="fishnet.html#troubleshooting">FishNet troubleshooting</a>.</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="pink">Pink or magenta materials<a class="anchor" href="#pink" aria-label="Link to this section">#</a></h2>
+<p>The project must use the Universal Render Pipeline. Set the pipeline asset in Project Settings › Graphics. Then re-import or convert the materials to a URP shader.</p>
+
+<h2 id="report">Still stuck?<a class="anchor" href="#report" aria-label="Link to this section">#</a></h2>
+<p>Email <a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a>. Include:</p>
+<ul>
+  <li>Unity version and render pipeline.</li>
+  <li>FBSystem version (1.6.0, as shown in <code>CHANGELOG.md</code>) and the add-on version, if you use one.</li>
+  <li>The health check messages, and the Console errors with the full stack trace.</li>
+  <li>What you tried and what happened.</li>
+</ul>
+        </div>
+        <nav class="pager" aria-label="Previous and next page"><a class="pager-link pager-prev" href="interfaces.html" rel="prev"><span class="pager-dir">Previous</span><strong>Interfaces</strong></a><a class="pager-link pager-next" href="fp-changelog.html" rel="next"><span class="pager-dir">Next</span><strong>Changelog</strong></a></nav>
+      </article>
+    </main>
+
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p><ol class="toc-list">
+<li class="toc-l2"><a href="#health-check">Health check messages</a></li>
+<li class="toc-l2"><a href="#problems">Problems and fixes</a></li>
+<li class="toc-l2"><a href="#pink">Pink or magenta materials</a></li>
+<li class="toc-l2"><a href="#report">Still stuck?</a></li>
+</ol>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><a class="brand" href="../unity-asset-portfolio.html"><span class="brand-name">vedaloiv</span></a><p>Unity tools, documented for the people who use them.</p></div>
+    <div class="footer-col"><p class="footer-h">Asset Store</p><ul><li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li><li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li></ul></div>
+    <div class="footer-col"><p class="footer-h">Support</p><ul><li><a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></li><li><a href="../unity-asset-portfolio.html">vedaloiv home</a></li><li><a href="index.html">All docs</a></li></ul></div>
+  </div>
+  <p class="footer-copy">© 2026 vedaloiv</p>
+</footer>
+
+  <dialog class="search-dialog" aria-label="Search the documentation">
+    <form class="search-form" role="search" method="dialog">
+      <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input class="search-input" type="search" placeholder="Search pages and sections" autocomplete="off" spellcheck="false"
+        role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Search the documentation">
+      <button class="search-close" type="button" data-close-search><kbd>Esc</kbd><span class="sr-only">Close search</span></button>
+    </form>
+    <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+    <p class="search-status" aria-live="polite"></p>
+  </dialog>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" data-close-lightbox>Close <kbd>Esc</kbd></button>
+    <img alt="">
+    <p class="lightbox-caption"></p>
+  </dialog>
+</body>
+</html>

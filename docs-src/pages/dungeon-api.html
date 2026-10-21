@@ -1,0 +1,297 @@
+<!--meta
+{"title": "Dungeon API Reference", "navTitle": "API Reference", "description": "Easy Dungeon Generator 1.1.0 API reference in namespace DungeonGen: DungeonManager, ChunkDungeonStreamer, RoomDecorator, RoomDecorationAuthoring, rendering and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.", "group": "dungeon", "kicker": "Reference", "chips": ["namespace DungeonGen", "Unity 6000.5.0+"]}
+-->
+<p class="lead">The public API of Easy Dungeon Generator 1.1.0, in <strong>namespace <code>DungeonGen</code></strong>. It covers the managers, decoration, rendering and geometry contracts, post-processing and culling, and the authoring assets. For how to use these in a project, read the guides.</p>
+
+<h2 id="overview">Namespace overview</h2>
+<table>
+  <thead><tr><th scope="col">Area</th><th scope="col">Types</th></tr></thead>
+  <tbody>
+    <tr><td>Generation</td><td><code>DungeonManager</code>, <code>ChunkDungeonStreamer</code>, <code>ChunkStreamer</code>, <code>ChunkPlanner</code>, <code>ChunkMaterializer</code>, <code>ChunkRoomProviderFactory</code>, <code>RoomDecorator</code>, <code>RoomDecorationAuthoring</code></td></tr>
+    <tr><td>Rendering</td><td><code>IDungeonRenderer</code>, <code>PrefabDungeonRenderer</code>, <code>DungeonTheme</code></td></tr>
+    <tr><td>Post-processing and culling</td><td><code>IDungeonPostProcessor</code>, <code>IDungeonPreClearProcessor</code>, <code>DungeonPostProcessor</code>, <code>DungeonPostProcessContext</code>, <code>DungeonNavMeshPostProcessor</code>, <code>DungeonNavMeshSurfaceHost</code>, <code>DungeonCulling</code>, <code>ICullConnectionRule</code>, <code>ICullRoomRule</code>, <code>DoorSocketRule</code></td></tr>
+    <tr><td>Authoring assets</td><td><code>RoomDesign</code>, <code>DungeonTemplate</code>, <code>DecorationProfile</code>, <code>DoorSocketType</code>, <code>ProgressionRequirement</code></td></tr>
+    <tr><td>Geometry and core</td><td><code>IRoomGeometry</code>, <code>RoomData</code>, <code>DoorSocket</code>, <code>GeneratedRoomInfo</code>, <code>DungeonObjectPool</code>, <code>DungeonData</code>, <code>DungeonConfig</code></td></tr>
+    <tr><td>Progression</td><td><code>IItemSpawnPoint</code>, <code>ItemSpawnPoint</code>, <code>ItemSpawnRequest</code>, <code>IConnectionGate</code>, <code>BasicConnectionGate</code>, <code>ProgressionItemToken</code></td></tr>
+    <tr><td>Enums</td><td><code>DungeonGenerationMode</code>, <code>SeamMode</code>, <code>DungeonGenerationStatus</code>, <code>RoomPlacementContext</code>, <code>RoomType</code>, <code>TileType</code>, <code>DungeonCullingMode</code>, <code>ChunkSocketRole</code>, <code>Direction</code></td></tr>
+  </tbody>
+</table>
+
+<h2 id="dungeon-manager">DungeonManager</h2>
+<p><code>DungeonManager : MonoBehaviour</code> plans the whole <code>DungeonTemplate</code> first and only then replaces the previous output. Generation is rejected while a run is in progress.</p>
+<h3 id="dungeon-manager-methods">Methods</h3>
+<table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>void Generate()</code></td><td>Validates the template, plans, materializes the rooms, wires the doors, places progression items, decorates, and runs the post-processors. Also the inspector button <strong>Generate Dungeon</strong> and the context menu <em>Generate Dungeon</em>.</td></tr>
+    <tr><td><code>void ClearAllChildren()</code></td><td>Removes the generated rooms and the spawned prototype player. Deferred until the current generation step ends.</td></tr>
+    <tr><td><code>void PrewarmForGeneration()</code></td><td>Measures the room prefabs and fills the object pool in advance. Safe to call repeatedly; <code>Generate()</code> calls it too.</td></tr>
+    <tr><td><code>void AddNavMeshSupport()</code></td><td>Adds <code>DungeonNavMeshPostProcessor</code>, with its <code>DungeonNavMeshSurfaceHost</code> and a <code>NavMeshSurface</code>. Does nothing when it is already present.</td></tr>
+    <tr><td><code>void AddCullingSupport()</code></td><td>Adds <code>DungeonCulling</code>. Does nothing when it is already present. The mode stays <code>Disabled</code> until you set it.</td></tr>
+  </tbody>
+</table>
+<h3 id="dungeon-manager-status">Status and events</h3>
+<dl class="props">
+  <dt><code>Status</code> <span class="type">DungeonGenerationStatus</span> <span class="default">read-only</span></dt>
+  <dd>State of the latest run: <code>Idle</code>, <code>Generating</code>, <code>Ready</code>, <code>Failed</code>, or <code>Cancelled</code>. A failed run keeps the previous dungeon.</dd>
+  <dt><code>IsGenerating</code> <span class="type">bool</span> <span class="default">read-only</span></dt>
+  <dd>True while <code>Status</code> is <code>Generating</code>.</dd>
+  <dt><code>GenerationProgress</code> <span class="type">float</span> <span class="default">read-only, 0 to 1</span></dt>
+  <dd>Progress of the current run.</dd>
+  <dt><code>StatusChanged</code> <span class="type">event Action&lt;DungeonGenerationStatus&gt;</span></dt>
+  <dd>Raised with the new status each time it changes.</dd>
+</dl>
+<h3 id="dungeon-manager-fields">Serialized fields</h3>
+<p>The inspector shows these fields under its section names. The guide <a href="dungeon-templates.html#manager-settings">DungeonManager settings</a> describes each one.</p>
+<dl class="props">
+  <dt><code>template</code> <span class="type">DungeonTemplate</span> <span class="default">required</span></dt>
+  <dd>Generation stops with an error when it is empty.</dd>
+  <dt><code>generationMode</code> <span class="type">DungeonGenerationMode</span> <span class="default">default TemplateExact</span></dt>
+  <dd><code>TemplateExact</code> (0) or <code>TemplateSequencedRandom</code> (1).</dd>
+  <dt><code>useBurstPlanner</code>, <code>addRandomBranchesInExact</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Burst planner, and random branches in exact mode.</dd>
+  <dt><code>roomPool</code> <span class="type">List&lt;RoomPoolEntry&gt;</span></dt>
+  <dd>Weighted candidates: <code>prefab</code>, <code>weight</code> (minimum 0; the constructor default is 1), and <code>allowedContexts</code>. An empty context value means all contexts.</dd>
+  <dt><code>maxSearchNodes</code> <span class="type">int</span> <span class="default">default 10000, minimum 100</span></dt>
+  <dd>Placement attempts before the planner gives up.</dd>
+  <dt><code>allowRotation</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Allows 90° steps to match socket directions.</dd>
+  <dt><code>mainPathRoomCount</code>, <code>minOffshootSequenceFillers</code>, <code>maxOffshootSequenceFillers</code>, <code>maxRandomBranchRooms</code>, <code>minRandomBranchStarts</code>, <code>maxRandomBranchStarts</code>, <code>allowRandomSubbranches</code>, <code>maxRandomBranchDepth</code> <span class="type">int, bool</span></dt>
+  <dd>Sequenced random tuning. Defaults: 10, 0, 2, 10, 1, 1, on, 4.</dd>
+  <dt><code>seed</code> <span class="type">int</span> <span class="default">default 0</span>, <code>useRandomSeed</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>The seed is used when <code>useRandomSeed</code> is off.</dd>
+  <dt><code>seamPadding</code>, <code>allowedSeamOverlap</code> <span class="type">float</span> <span class="default">default 0 and 0</span></dt>
+  <dd>Space kept between adjacent rooms, and the overlap allowed at a seam.</dd>
+  <dt><code>wallMode</code> <span class="type">SeamMode</span> <span class="default">default SingleOnly</span></dt>
+  <dd><code>SingleOnly</code> (0), <code>DoubleOnly</code> (1), or <code>AllowBoth</code> (2). See <a href="dungeon-templates.html#wall-mode">Wall mode</a>.</dd>
+  <dt><code>root</code> <span class="type">Transform</span> <span class="default">null = this transform</span></dt>
+  <dd>Parent for the instantiated rooms.</dd>
+  <dt><code>sceneEntrance</code> <span class="type">RoomData</span></dt>
+  <dd>Optional room placed in the scene, used as the root of the dungeon.</dd>
+  <dt><code>useEntranceSeamPadding</code>, <code>entranceSeamPadding</code> <span class="type">bool, float</span> <span class="default">default off and 0</span></dt>
+  <dd>Seam padding for the rooms attached directly to <code>sceneEntrance</code>.</dd>
+  <dt><code>prototypePlayerPrefab</code>, <code>spawnPrototypePlayer</code> <span class="type">GameObject, bool</span> <span class="default">empty and on</span></dt>
+  <dd>Player spawned at the entrance in Play Mode after generation.</dd>
+  <dt><code>generationFrames</code> <span class="type">int</span> <span class="default">default 1</span>, <code>generationFrameBudgetMs</code> <span class="type">float</span> <span class="default">default 0</span></dt>
+  <dd>Frames over which generation is spread in Play Mode, and the millisecond budget per frame. A budget of 0 turns it off.</dd>
+  <dt><code>roomPoolPrewarm</code>, <code>decorationPoolPrewarm</code> <span class="type">int</span> <span class="default">default 5 and 20</span></dt>
+  <dd>Pre-created copies of each room and decoration prefab.</dd>
+  <dt><code>prewarmOnAwake</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Runs <code>PrewarmForGeneration</code> in <code>Awake</code>.</dd>
+  <dt><code>maxPlanRetries</code> <span class="type">int</span> <span class="default">default 50</span>, <code>planRetryTimeoutMs</code> <span class="type">int</span> <span class="default">default 2000</span></dt>
+  <dd>Retries with a new seed when rooms do not fit, and the time limit for all retries.</dd>
+  <dt><code>decorateAfterGeneration</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Decorates each room that has a <code>RoomDecorationAuthoring</code>.</dd>
+  <dt><code>logGeneration</code>, <code>logDecorationDiagnostics</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Informational log output. Errors and warnings are always logged.</dd>
+</dl>
+<p>Supporting types: <code>DungeonGenerationMode</code> (<code>TemplateExact = 0</code>, <code>TemplateSequencedRandom = 1</code>); <code>SeamMode</code> (<code>SingleOnly = 0</code>, <code>DoubleOnly = 1</code>, <code>AllowBoth = 2</code>); <code>DungeonGenerationStatus</code> (<code>Idle = 0</code>, <code>Generating = 1</code>, <code>Ready = 2</code>, <code>Failed = 3</code>, <code>Cancelled = 4</code>); <code>RoomPlacementContext</code> (<code>[Flags]</code>: <code>Template</code>, <code>SequenceFiller</code>, <code>RandomBranch</code>, <code>All</code>); <code>RoomPoolEntry</code> (struct with <code>Allows(context)</code>); <code>RoomType</code> (<code>Normal</code>, <code>Entrance</code>, <code>Exit</code>, <code>Treasure</code>, <code>Boss</code>).</p>
+
+<h2 id="chunk-streamer">ChunkDungeonStreamer</h2>
+<p><code>ChunkDungeonStreamer : MonoBehaviour</code> plans a <code>(2·plannedRadius+1)²</code> area of chunks around the player and builds a <code>(2·loadedRadius+1)²</code> area. The initial load completes in one call, so the player spawns into a finished world. Later moves are spread over frames. Unloaded chunks stay inactive in a pool and are reused.</p>
+<h3 id="chunk-streamer-methods">Methods</h3>
+<table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>bool Initialize()</code></td><td>Measures the prefabs and builds the initial area. Returns false, and logs why, when the configuration is invalid. Also the inspector button <strong>Generate</strong>.</td></tr>
+    <tr><td><code>bool UpdateCenterFromPlayer()</code></td><td>Moves the streamed area to the player's current chunk. Does nothing while the player stays in the same chunk. Also the inspector button <strong>Recenter</strong>.</td></tr>
+    <tr><td><code>ChunkCoord CenterFromPosition(Vector3 position)</code></td><td>The chunk coordinate of a world position.</td></tr>
+    <tr><td><code>void Dispose()</code></td><td>Destroys the loaded chunks and the pool. Removes a player that the streamer spawned, but never a player you assigned. Also the button <strong>Clear World</strong>.</td></tr>
+    <tr><td><code>void Rebuild()</code></td><td><code>Dispose()</code> followed by <code>Initialize()</code>. Also the inspector button <strong>Rebuild</strong>.</td></tr>
+    <tr><td><code>static int ChunkSizeMinimum(int maxRoomWidth, int maxRoomHeight, int safetyMarginCells)</code></td><td>Three times the largest room side, plus twice the safety margin.</td></tr>
+    <tr><td><code>static int ChunkSizeRecommended(int maxRoomWidth, int maxRoomHeight, int safetyMarginCells)</code></td><td>The minimum plus <code>MainPathWidthCells</code> (2).</td></tr>
+  </tbody>
+</table>
+<h3 id="chunk-streamer-state">State and events</h3>
+<dl class="props">
+  <dt><code>LoadedCount</code>, <code>PlannedCount</code> <span class="type">int</span> <span class="default">read-only</span></dt>
+  <dd>Number of chunks built and planned.</dd>
+  <dt><code>Center</code> <span class="type">ChunkCoord</span>, <code>CenterKey</code> <span class="type">string</span> <span class="default">read-only</span></dt>
+  <dd>The chunk the streamed area is centered on.</dd>
+  <dt><code>IsInitialized</code> <span class="type">bool</span> <span class="default">read-only</span></dt>
+  <dd>True after a successful <code>Initialize()</code>.</dd>
+  <dt><code>ChunkWorld</code> <span class="type">Transform</span> <span class="default">read-only</span></dt>
+  <dd>The root object of the streamed chunks.</dd>
+  <dt><code>LastError</code> <span class="type">string</span> <span class="default">read-only</span></dt>
+  <dd>The most recent error message.</dd>
+  <dt><code>WorldChanged</code> <span class="type">event Action&lt;Transform&gt;</span></dt>
+  <dd>Raised with the world root.</dd>
+</dl>
+<h3 id="chunk-streamer-fields">Serialized fields</h3>
+<p>The settings are described in <a href="dungeon-streaming.html#settings">Chunk Streaming settings</a>. The most used ones are:</p>
+<dl class="props">
+  <dt><code>player</code> <span class="type">Transform</span>, <code>playerPrefab</code> <span class="type">GameObject</span></dt>
+  <dd>The player that the streaming follows. A prefab is spawned at the entry room when no player is assigned.</dd>
+  <dt><code>corridorPrefab</code> <span class="type">GameObject</span> <span class="default">required</span></dt>
+  <dd>A 1 × 1 corridor module with one <code>DoorSocket</code> on each cardinal side. There is no built-in fallback.</dd>
+  <dt><code>useDedicatedEntry</code> <span class="type">bool</span> <span class="default">default on</span>, <code>entryPrefabs</code> <span class="type">List&lt;GameObject&gt;</span></dt>
+  <dd>Dedicated entry rooms for the first room of each chunk. Off = pool-only mode.</dd>
+  <dt><code>roomPrefabs</code> <span class="type">List&lt;GameObject&gt;</span></dt>
+  <dd>Rooms for the pool. Each one must have a <code>DoorSocket</code> on every cardinal side.</dd>
+  <dt><code>minRooms</code>, <code>maxRooms</code> <span class="type">int</span> <span class="default">default 4 and 4</span></dt>
+  <dd>Rooms per chunk, Entry included.</dd>
+  <dt><code>cellsPerSide</code> <span class="type">int</span> <span class="default">default 24</span>, <code>cellSize</code> <span class="type">float</span> <span class="default">default 3</span></dt>
+  <dd>Chunk size in cells, and the size of one cell in meters. The cell size must match the room grid.</dd>
+  <dt><code>worldSeed</code> <span class="type">int</span> <span class="default">default 42</span>, <code>useRandomSeed</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Repeatable world seed, and whether a new seed is drawn each time.</dd>
+  <dt><code>plannedRadius</code> <span class="type">int</span> <span class="default">default 2</span>, <code>loadedRadius</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Planned and built radius in chunks. <code>loadedRadius</code> must not exceed <code>plannedRadius</code>.</dd>
+  <dt><code>lockChance</code> <span class="type">float</span> <span class="default">default 0</span>, <code>keyPrefab</code> <span class="type">GameObject</span></dt>
+  <dd>Random lock fraction, and the key used to open locks.</dd>
+  <dt><code>materializePerFrame</code> <span class="type">int</span> <span class="default">default 1</span>, <code>materializeFrameBudgetMs</code> <span class="type">float</span> <span class="default">default 0</span></dt>
+  <dd>Build work per frame, and the optional millisecond budget. 0 turns the budget off.</dd>
+  <dt><code>prewarmRoomCopies</code>, <code>prewarmCorridorCopies</code> <span class="type">int</span> <span class="default">default 4 and 24</span></dt>
+  <dd>Inactive copies created in advance for the rooms and corridor tiles.</dd>
+</dl>
+<h3 id="chunk-streamer-architecture">Supporting chunk types</h3>
+<p>These types back the streamer and are public in <code>namespace DungeonGen</code>. You rarely need them directly.</p>
+<table>
+  <thead><tr><th scope="col">Type</th><th scope="col">Role</th></tr></thead>
+  <tbody>
+    <tr><td><code>ChunkStreamer</code></td><td>Schedules loading and unloading. <code>Dispose()</code>, <code>LoadedCount</code>, and <code>LastError</code>.</td></tr>
+    <tr><td><code>ChunkPlanner</code></td><td>Plans the layout of a chunk, deterministically, with <code>Plan(settings, coord, worldSeed, …)</code>. Returns a <code>ChunkPlanResult</code> with a <code>ChunkPlanStatus</code> (<code>Success</code>, <code>Failed</code>) and a <code>ChunkPlanFailureKind</code>.</td></tr>
+    <tr><td><code>ChunkMaterializer</code></td><td>Instantiates the rooms and corridor tiles of a plan.</td></tr>
+    <tr><td><code>ChunkRoomProviderFactory</code></td><td><code>Measure(prefab, cellSize, out provider, out error)</code> measures a room prefab.</td></tr>
+    <tr><td><code>ChunkGridSettings</code></td><td>Chunk dimensions, room limits, and streaming distance. <code>IsValid(out error)</code> checks them.</td></tr>
+    <tr><td><code>ChunkCoord</code></td><td><code>X</code>, <code>Z</code>, <code>Floor</code>, <code>Zero</code>, and <code>ToKey()</code>.</td></tr>
+    <tr><td><code>ChunkKeyPickup</code>, <code>ChunkRoomRequiresKey</code></td><td>Components for the key item, and for rooms that need a key.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="room-decorator">RoomDecorator and RoomDecorationAuthoring</h2>
+<p><code>RoomDecorator</code> is a plain C# class, not a component. It fills a room from a <code>DecorationProfile</code>. The editor preview and the runtime use the same solver. <code>RoomDecorationAuthoring</code> is the component on a room prefab. It holds a baked snapshot of the room geometry, and it creates a <code>RoomDecorator</code> at runtime when it is decorated.</p>
+<p>Constructors: <code>RoomDecorator(RoomDesign design, Transform root, DecorationProfile profile, int seed)</code> and <code>RoomDecorator(IRoomGeometry geo, Transform root, DecorationProfile profile, int seed)</code>.</p>
+<table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>DecorationResult DecorateAll()</code></td><td>Clears earlier placements, then solves every category, highest priority first.</td></tr>
+    <tr><td><code>DecorationResult DecorateCategory(string categoryId)</code></td><td>Solves one category again. Removes its earlier instances first.</td></tr>
+    <tr><td><code>void DespawnCategory(string categoryId)</code>, <code>void DespawnAll()</code></td><td>Removes the instances of one category, or of all categories.</td></tr>
+    <tr><td><code>IReadOnlyList&lt;PlacedInstance&gt; Placed</code></td><td>The current placements.</td></tr>
+  </tbody>
+</table>
+<h3 id="room-decorationauthoring">RoomDecorationAuthoring</h3>
+<dl class="props">
+  <dt><code>Profile</code> <span class="type">DecorationProfile</span>, <code>Seed</code> <span class="type">int</span> <span class="default">default 12345</span></dt>
+  <dd>The profile and seed used for the room.</dd>
+  <dt><code>HasBakedDecoration</code> <span class="type">bool</span></dt>
+  <dd>True when the furniture is saved in the prefab. The runtime then skips the room.</dd>
+  <dt><code>LastResult</code> <span class="type">DecorationResult</span></dt>
+  <dd>The result of the last decoration run.</dd>
+</dl>
+<table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>DecorationResult DecorateAll(int runtimeSeed)</code></td><td>Decorates the room with the given seed. Does nothing when the furniture is baked.</td></tr>
+    <tr><td><code>DecorationResult DecorateCategory(string categoryId)</code></td><td>Decorates one category.</td></tr>
+    <tr><td><code>DecorationResult RerollCategory(string categoryId)</code></td><td>Picks a new result for one category. Each call moves to the next result.</td></tr>
+    <tr><td><code>void DespawnCategory(string categoryId)</code>, <code>void DespawnAll()</code></td><td>Removes the decoration.</td></tr>
+    <tr><td><code>void Initialize(DecorationProfile profile, int seed)</code></td><td>Sets the profile and the seed.</td></tr>
+    <tr><td><code>void MarkDecorationBaked()</code></td><td>Marks the furniture as part of the prefab.</td></tr>
+  </tbody>
+</table>
+<p>Result types: <code>DecorationResult</code> (<code>placed</code>, <code>diagnostics</code>, <code>hasErrors</code>, <code>errorMessage</code>); <code>PlacedInstance</code> (<code>instance</code>, <code>categoryId</code>, <code>categoryName</code>, <code>worldPosition</code>, <code>worldRotation</code>, <code>footprint</code>, <code>boundsSize</code>, <code>padding</code>, <code>floor</code>, <code>gridX</code>, <code>gridY</code>, <code>prefab</code>, <code>occupancy</code>); <code>GroupDiagnostic</code> (<code>targetCount</code>, <code>placedCount</code>, <code>candidateCount</code>, <code>solveMilliseconds</code>, <code>instantiateMilliseconds</code>, <code>groupDead</code>, <code>groupDeadReason</code>, <code>rejectionCounts</code>).</p>
+<p>Authoring enums: <code>PlacementSurface</code>, <code>PlacementRegion</code>, <code>AmountMode</code>, <code>FailurePolicy</code>, <code>WallRegion</code>, <code>OccupancyMode</code>, <code>DistributionMode</code>, <code>OrientationMode</code>, <code>RelationType</code>, <code>FloorScope</code>, and <code>FitMode</code>.</p>
+
+<h2 id="rendering">Rendering and room geometry</h2>
+<h3 id="idungeon-renderer">IDungeonRenderer</h3>
+<table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature</th></tr></thead>
+  <tbody>
+    <tr><td>Render</td><td><code>void Render(DungeonData data, DungeonTheme theme, Transform root)</code></td></tr>
+    <tr><td>Clear</td><td><code>void Clear(Transform root)</code></td></tr>
+    <tr><td>PlaceCeilings</td><td><code>void PlaceCeilings(DungeonData data, DungeonTheme theme, Transform root)</code></td></tr>
+  </tbody>
+</table>
+<p>The default implementation is <code>PrefabDungeonRenderer</code>. Implement or wrap <code>IDungeonRenderer</code> to use another rendering backend.</p>
+<h3 id="iroom-geometry">IRoomGeometry</h3>
+<p>The geometry contract for the decorator. It is implemented by <code>RoomDesign</code> in the editor and by <code>RoomDecorationAuthoring</code> at runtime. Members: <code>Width</code>, <code>Height</code>, <code>FloorIndices</code>, <code>TileSize</code>, <code>FloorHeight</code>, <code>WallThickness</code>, <code>CenterPivot</code>, <code>GetFloor(int)</code>, <code>InBounds(x, y)</code>, <code>IsWallAt(x, y, floor)</code>, <code>HasDoorAt</code>, <code>HasRoomDoorAt</code>, <code>IsStairFloorOpeningAt</code>, <code>IsStairCeilingOpeningAt</code>, <code>IsInStairFootprint</code>, <code>Doors</code>, <code>RoomDoors</code>, and <code>Stairs</code>.</p>
+
+<h2 id="post-processing">Post-processing and culling</h2>
+<h3 id="post-processing-contracts">Post-processing contracts</h3>
+<ul>
+  <li><code>IDungeonPostProcessor</code>: <code>int Priority { get; }</code> and <code>void Process(DungeonPostProcessContext context)</code>. The manager runs every enabled processor on its GameObject after generation, highest priority first. Processors with equal priority keep their component order, and <code>DungeonCulling</code> runs last among them.</li>
+  <li><code>DungeonPostProcessor</code>: an abstract <code>MonoBehaviour</code> with a serialized <code>Priority</code>. Override <code>DefaultPriority</code> to change the value a new component starts with.</li>
+  <li><code>DungeonPostProcessContext</code>: a read-only snapshot of one run, with <code>RunSeed</code>, <code>Root</code>, <code>Rooms</code>, <code>LayoutRooms</code>, and <code>Connections</code>. It is valid only during <code>Process</code>.</li>
+  <li><code>IDungeonPreClearProcessor</code>: <code>void BeforeClear()</code>. It runs before the manager clears the rooms, so that a processor can release references to them, for example a baked NavMesh.</li>
+</ul>
+<h3 id="navmesh-processor">DungeonNavMeshPostProcessor</h3>
+<p>Implements both contracts and bakes one NavMesh over the whole dungeon per generation. It requires <code>DungeonNavMeshSurfaceHost</code>, which is added automatically. The fields are described in the <a href="dungeon-culling-navmesh.html#navmesh">NavMesh guide</a>. Key fields: <code>agentTypeID</code>, <code>boundsPadding</code>, <code>layerMask</code>, <code>buildOnProcess</code>, <code>useDoorLinks</code>, <code>bakeConnectors</code>, <code>connectorWidth</code>, <code>logErrors</code>.</p>
+<h3 id="culling">DungeonCulling and rules</h3>
+<p><code>DungeonCulling</code> is an additive portal-culling post-processor. It reads the room graph and the door states, and changes only the rendering or activation of the rooms. Removing the component restores the normal behavior.</p>
+<dl class="props">
+  <dt><code>Mode</code> <span class="type">DungeonCullingMode</span> <span class="default">default Disabled</span></dt>
+  <dd><code>Disabled</code> (0), <code>DisableRenderers</code> (1), or <code>DeactivateRooms</code> (2).</dd>
+  <dt><code>MaxHops</code> <span class="type">int</span> <span class="default">default 4</span>, <code>OcclusionTolerance</code> <span class="type">int</span> <span class="default">default 0</span></dt>
+  <dd>Door distance from the reference room, and how many closed doors a room may lie behind.</dd>
+  <dt><code>ViewDistance</code> <span class="type">float</span> <span class="default">default 60</span>, <code>RevealDistance</code> <span class="type">float</span> <span class="default">default 45</span></dt>
+  <dd>Distance limit, and the smaller distance at which a hidden room becomes visible.</dd>
+  <dt><code>ProtectedNeighborHops</code> <span class="type">int</span> <span class="default">default 1</span>, <code>MaxVisibleRooms</code> <span class="type">int</span> <span class="default">default 0</span></dt>
+  <dd>Rooms kept visible next to the reference, and the visible room budget. 0 means no budget.</dd>
+  <dt><code>PollInterval</code> <span class="type">float</span> <span class="default">default 0.25</span>, <code>MaxTogglesPerFrame</code> <span class="type">int</span> <span class="default">default 20</span></dt>
+  <dd>Seconds between checks, and the number of rooms switched per frame.</dd>
+  <dt><code>ReferenceTransform</code> <span class="type">Transform</span>, <code>ReferencePosition</code> <span class="type">Vector3</span></dt>
+  <dd>The point the culling is measured from. Setting <code>ReferencePosition</code> turns on <code>UseReferencePosition</code>.</dd>
+  <dt><code>DebugDraw</code> <span class="type">bool</span> <span class="default">default off</span>, <code>CullLights</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Scene view gizmos, and whether the lights of hidden rooms are turned off.</dd>
+  <dt><code>UseDoorState</code>, <code>UseMaxHops</code>, <code>UseOcclusionTolerance</code>, <code>UseDistanceCulling</code>, <code>UseDistanceHysteresis</code>, <code>UseProtectedNeighborHops</code>, <code>UseVisibilityLeases</code>, <code>UseRoomRules</code>, <code>UseVisibleRoomBudget</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Switches for each mechanism.</dd>
+</dl>
+<table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>void Refresh()</code></td><td>Applies the visibility to every room now. Use it after you change the state of the rooms by other means.</td></tr>
+    <tr><td><code>void PollNow()</code></td><td>Checks the door states and the reference position now.</td></tr>
+    <tr><td><code>bool IsRoomVisible(RoomData room)</code></td><td>The current visibility of a room.</td></tr>
+    <tr><td><code>void SetReference(Transform reference)</code></td><td>Sets the reference transform.</td></tr>
+    <tr><td><code>void SetConnectionRule(ICullConnectionRule rule)</code></td><td>Replaces the rule that decides whether a connection is passable.</td></tr>
+    <tr><td><code>void AddRoomRule(ICullRoomRule rule)</code>, <code>void RemoveRoomRule(ICullRoomRule rule)</code></td><td>Adds or removes a room rule.</td></tr>
+    <tr><td><code>VisibilityLease AcquireVisibility(RoomData room, string reason = null, float durationSeconds = 0f)</code></td><td>Keeps a room visible until the returned lease is disposed, or until the duration ends.</td></tr>
+    <tr><td><code>static void RegisterLocalViewpoint(Transform viewpoint)</code>, <code>UnregisterLocalViewpoint</code></td><td>Registers a viewpoint that the culling uses when no reference is set.</td></tr>
+  </tbody>
+</table>
+<table>
+  <thead><tr><th scope="col">Contract</th><th scope="col">Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><code>ICullConnectionRule</code>: <code>bool IsPassable(DungeonConnectionInfo connection)</code></td><td>Decides whether a connection is passable for the visibility search. The default is <code>DoorSocketRule</code>, which passes a connection when both doors are open and unlocked.</td></tr>
+    <tr><td><code>ICullRoomRule</code>: <code>bool? OverrideVisibility(RoomData room)</code></td><td>Forces a room visible or hidden. A null return leaves the decision to the rest of the culling. The first rule that returns a value wins.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="scriptable-objects">Authoring ScriptableObjects</h2>
+<p>All assets are created with <span class="menu">Assets › Create › DungeonGen › …</span>.</p>
+<table>
+  <thead><tr><th scope="col">Asset</th><th scope="col">Key members</th></tr></thead>
+  <tbody>
+    <tr><td><code>RoomDesign</code> (Room Design)</td><td><code>roomName</code>, <code>roomType</code>, <code>width</code> (default 12), <code>height</code> (default 10), <code>activeFloor</code>, <code>doors</code>, <code>roomDoors</code>, <code>stairs</code>, <code>theme</code>, <code>decorationProfile</code>, <code>decorationSeed</code> (default 12345), <code>bakeDecorIntoPrefab</code>; <code>GetFloor(int)</code>, <code>InBounds</code>, <code>IsWallAt</code>, <code>HasDoorAt</code>, <code>HasRoomDoorAt</code>, <code>IsStairFloorOpeningAt</code>, <code>IsStairCeilingOpeningAt</code>, <code>HasFloor</code>, <code>AddFloor</code>, <code>RemoveFloor</code>, <code>Floors</code>, <code>ToDungeonData(int)</code>. Structs: <code>FloorTiles</code>, <code>StairPlacement</code>, <code>DoorPlacement</code>, <code>RoomDoorPlacement</code>.</td></tr>
+    <tr><td><code>DungeonTemplate</code> (Dungeon Template)</td><td><code>nodes</code>, <code>edges</code>, <code>rootNodeId</code>; <code>FindNode(id)</code>, <code>FindEdge(from, to)</code>, <code>DefaultColor(RoomType)</code>. <code>TemplateNode</code>: <code>id</code>, <code>type</code>, <code>pinnedPrefab</code>, <code>providedRequirements</code>, <code>graphPos</code>. <code>TemplateEdge</code>: <code>id</code>, <code>fromNode</code>, <code>toNode</code>, <code>requirement</code>.</td></tr>
+    <tr><td><code>DungeonTheme</code> (DungeonTheme)</td><td><code>tileSize</code> (default 1), <code>floorHeight</code> (default 3), <code>wallThickness</code> (default 0.25), <code>doubleSidedWalls</code>, <code>doubleSidedCeilings</code>, <code>pivot</code> (<code>Corner</code> or <code>Center</code>), <code>prefabs</code> (the <code>TilePrefab</code> entries with <code>prefab</code>, <code>sizeX</code>, <code>sizeY</code>, and <code>canRotate</code>), <code>stairProfile</code>, <code>ResolveStairProfile()</code>.</td></tr>
+    <tr><td><code>DecorationProfile</code> (Decoration Profile)</td><td><code>categories</code>; <code>FindCategory(id)</code>, <code>GetSortedByPriority()</code>. Each <code>DecorationCategory</code> has the surface, region, pool, footprint, relations, and failure policy. See the <a href="dungeon-decoration.html#decoration-profiles">decoration guide</a>.</td></tr>
+    <tr><td><code>DoorSocketType</code> (Door Socket Type)</td><td><code>DisplayName</code>, <code>Color</code>, <code>CompatibleTypes</code>; <code>SetCompatibleType(other, bool)</code> writes both sides; <code>HasCompatibleType(other)</code>; <code>IsCompatibleWith(other)</code>. An untyped socket is a wildcard.</td></tr>
+    <tr><td><code>ProgressionRequirement</code> (Progression Requirement)</td><td><code>StableId</code>, <code>DisplayName</code>, <code>DefaultItemPrefab</code>. Gates a main-path template edge.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="progression">Progression contracts</h2>
+<ul>
+  <li><code>IItemSpawnPoint</code>: <code>bool CanSpawn(ProgressionRequirement requirement)</code> and <code>bool TrySpawn(ItemSpawnRequest request)</code>. The default is <code>ItemSpawnPoint</code>, with an optional target transform and prefab override.</li>
+  <li><code>ItemSpawnRequest</code>: a readonly struct with <code>requirement</code> and <code>roomRoot</code>.</li>
+  <li><code>ProgressionItemToken</code>: the component on a spawned item, with <code>Requirement</code> and <code>Configure(requirement)</code>.</li>
+  <li><code>IConnectionGate</code>: <code>Requirement</code>, <code>IsLocked</code>, <code>CanHandle(requirement)</code>, <code>Configure(requirement)</code>, and <code>Unlock()</code>. The default is <code>BasicConnectionGate</code>.</li>
+</ul>
+<p>A gate on a door locks the connection until the requirement is unlocked, and an item spawn point in the providing room places the item. The guide <a href="dungeon-templates.html#progression">Progression requirements</a> describes the setup.</p>
+
+<h2 id="core">Supporting core types</h2>
+<table>
+  <thead><tr><th scope="col">Type</th><th scope="col">Role</th></tr></thead>
+  <tbody>
+    <tr><td><code>RoomData</code> (MonoBehaviour)</td><td>Root component of a room prefab: <code>width</code>, <code>height</code>, <code>tileSize</code>, <code>EffectiveTileSize</code>, <code>roomType</code>, <code>doorSockets</code>, <code>supportsDoubleWalls</code>; <code>TryGetOrderedSockets(out, out)</code>, <code>FindSocket(gridX, gridY)</code>, <code>CloseAllDoors()</code>, <code>OpenDoor(IDoorSocket)</code>, <code>OpenDoorAt(gridX, gridY)</code>, <code>Sockets</code>.</td></tr>
+    <tr><td><code>DoorSocket</code> (MonoBehaviour)</td><td>The state of one doorway: <code>IsOpen</code>, <code>IsLocked</code>, <code>Direction</code>, <code>SocketType</code>, <code>SocketRole</code> (<code>Unspecified</code>, <code>ExternalPortal</code>, or <code>InternalRoom</code>). Setters: <code>SetOpen(bool)</code>, <code>SetPassage()</code>, <code>SetVariant()</code>, <code>SetLocked(bool)</code>, <code>ShowConnectorVisual(int seed)</code>.</td></tr>
+    <tr><td><code>RoomType</code> and <code>TileType</code></td><td>Room roles: <code>Normal</code>, <code>Entrance</code>, <code>Exit</code>, <code>Treasure</code>, <code>Boss</code>. Cell types: <code>Empty</code>, <code>Floor</code>, <code>Wall</code>, <code>Door</code>, <code>CorridorFloor</code>, <code>CorridorWall</code>, <code>Hole</code>, <code>Ceiling</code>.</td></tr>
+    <tr><td><code>GeneratedRoomInfo</code> (MonoBehaviour)</td><td>Marker on the root of each generated room. It holds the room's origin.</td></tr>
+    <tr><td><code>DungeonObjectPool</code> (MonoBehaviour)</td><td>Pooling of room and decoration prefabs at runtime.</td></tr>
+    <tr><td><code>DungeonData</code>, <code>DungeonConfig</code></td><td>Data containers for the renderer and the generation pipeline.</td></tr>
+    <tr><td>Helpers</td><td><code>Corridor</code>, <code>Direction</code>, <code>Vec2Int</code>, <code>DoorConnectionResolver</code> (socket matching), <code>DungeonTemplateValidator</code>, and <code>DungeonTemplateGraph</code> (main path and gate helpers).</td></tr>
+  </tbody>
+</table>
+<p>See also the <a href="dungeon-quick-start.html">Quick Start</a> for the basic flow, and the <a href="dungeon-generator.html">Overview</a> for the authoring and assembly model.</p>

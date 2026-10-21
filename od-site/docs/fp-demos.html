@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demos | Easy FP Full Body Controller docs</title>
+  <meta name="description" content="The three guided demo scenes, the ready-made FBSystem_Player and FBSystem_CameraRig prefabs, their controls, and what each one demonstrates.">
+  <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/fp-demos.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vedaloiv">
+  <meta property="og:title" content="Demos | Easy FP Full Body Controller docs">
+  <meta property="og:description" content="The three guided demo scenes, the ready-made FBSystem_Player and FBSystem_CameraRig prefabs, their controls, and what each one demonstrates.">
+  <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/fp-demos.html">
+  <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f0f0f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M7 9l9 15 9-15' fill='none' stroke='%23ffe343' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='6' width='4' height='4' fill='%232748c9'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
+  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+</head>
+<body data-page="fp-demos" data-group="fp">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Menu</span>
+      </button>
+      <a class="brand" href="index.html" aria-label="vedaloiv documentation home">
+        <span class="brand-name">vedaloiv</span><span class="brand-sub">docs</span>
+      </a>
+      <nav class="topnav" aria-label="Site">
+        <a href="../unity-asset-portfolio.html">Home</a>
+        <a href="index.html">All docs</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="search-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
+          <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="search-btn-label">Search docs</span>
+          <kbd class="search-btn-kbd" data-shortcut>Ctrl K</kbd>
+        </button>
+        <a class="top-store" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener"><span class="top-store-long">Asset Store</span><span class="sr-only"> page for Easy FP Full Body Controller (opens in a new tab)</span><svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation">
+      <nav class="sidebar-nav" aria-label="Documentation pages">
+<a class="nav-home" href="index.html">Docs home</a>
+<section class="nav-group is-current" data-group="fp">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <ul class="nav-list" id="nav-fp">
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="fp-setup-wizard.html">Setup Wizard</a></li>
+    <li><a href="fp-items.html">Items</a></li>
+    <li><a href="fp-body-ik.html">Body IK</a></li>
+    <li><a href="fp-fpcutter.html">FPCutter</a></li>
+    <li><a href="fp-vitals.html">Vitals &amp; Stamina</a></li>
+    <li><a href="fp-demos.html" class="is-active" aria-current="page">Demos</a></li>
+    <li class="nav-label">Multiplayer</li>
+    <li><a href="fishnet.html">FishNet</a></li>
+    <li><a href="purrnet.html">PurrNet</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="interfaces.html">Interfaces</a></li>
+    <li><a href="fp-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="fp-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+<section class="nav-group" data-group="dungeon">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-dungeon"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy Dungeon Generator</span><span class="nav-version">v1.1.0</span></button>
+  <ul class="nav-list" id="nav-dungeon">
+    <li><a href="dungeon-generator.html">Overview</a></li>
+    <li><a href="dungeon-quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="dungeon-room-designer.html">Room Designer</a></li>
+    <li><a href="dungeon-templates.html">Templates &amp; Generation</a></li>
+    <li><a href="dungeon-decoration.html">Decoration &amp; Themes</a></li>
+    <li><a href="dungeon-streaming.html">Chunk Streaming</a></li>
+    <li><a href="dungeon-culling-navmesh.html">Culling &amp; NavMesh</a></li>
+    <li><a href="dungeon-demos.html">Demo Scenes</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="dungeon-api.html">API Reference</a></li>
+    <li><a href="dungeon-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="dungeon-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+      </nav>
+    </aside>
+    <div class="scrim" data-close-nav hidden></div>
+
+    <main class="main" id="content" tabindex="-1">
+      <article class="doc">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Docs</a></li><li><a href="overview.html">Easy FP Full Body Controller</a></li><li><span aria-current="page">Demos</span></li></ol></nav>
+        <header class="doc-header">
+  <p class="kicker">Guide</p>
+  <h1>Demos</h1>
+  <p class="doc-meta"><span>Documentation for v1.6.0</span><span>3 scenes</span><span>2 prefabs</span></p>
+</header>
+        <div class="prose">
+<p class="lead">Try the controller before you change anything. Three guided scenes show movement and camera, items and events, and finger grips. Each scene has an on-screen guide with its controls and live player state. Two prefabs give you a complete player in a few drags.</p>
+<details class="toc-inline"><summary>On this page</summary><ol class="toc-list">
+<li class="toc-l2"><a href="#scenes">Demo scenes</a></li>
+<li class="toc-l3"><a href="#controls">Controls</a></li>
+<li class="toc-l2"><a href="#prefabs">Ready-made prefabs</a></li>
+<li class="toc-l2"><a href="#quick-use">Use the prefabs in your scene</a></li>
+<li class="toc-l2"><a href="#learn">Use the demo scripts as templates</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common pitfalls</a></li>
+</ol></details>
+
+<h2 id="scenes">Demo scenes<a class="anchor" href="#scenes" aria-label="Link to this section">#</a></h2>
+<p>The scenes are in <code>Assets/FBSystem/Scenes/Demos/</code>. Press <kbd>F1</kbd> in a scene to hide or show its guide panel.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Scene</th><th scope="col">What it shows</th></tr></thead>
+  <tbody>
+    <tr><td><code>01_Movement_Camera</code></td><td>Walking, sprinting, jumping and crouching. The stations are a crouch tunnel with a low ceiling (you cannot stand up under it), a ramp, stairs, uneven ground and a turn pad for re-steps when you turn in place. The panel shows the locomotion state and the events.</td></tr>
+    <tr><td><code>02_Items_Events</code></td><td>Picking up, switching (with the holster animation), using and dropping a one-handed flashlight and a two-handed box. The panel shows the hand state and a live feed of the C# events.</td></tr>
+    <tr><td><code>03_Finger_Grips</code></td><td>Finger grips on both items. Press <kbd>H</kbd> to turn the grips off and compare them with the plain animation.</td></tr>
+  </tbody>
+</table></div>
+
+<h3 id="controls">Controls<a class="anchor" href="#controls" aria-label="Link to this section">#</a></h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Key</th><th scope="col">Action</th><th scope="col">Scenes</th></tr></thead>
+  <tbody>
+    <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>, mouse</td><td>Move and look</td><td>all</td></tr>
+    <tr><td><kbd>Shift</kbd></td><td>Sprint while moving</td><td>all</td></tr>
+    <tr><td><kbd>Space</kbd></td><td>Jump</td><td>all</td></tr>
+    <tr><td><kbd>C</kbd></td><td>Crouch (toggle)</td><td>all</td></tr>
+    <tr><td><kbd>E</kbd></td><td>Pick up the item you look at</td><td>02</td></tr>
+    <tr><td><kbd>1</kbd>, <kbd>2</kbd>, mouse wheel</td><td>Switch item. In 03 the keys select the flashlight (1) and the box (2).</td><td>02, 03</td></tr>
+    <tr><td><kbd>Q</kbd></td><td>Put the item away</td><td>02, 03</td></tr>
+    <tr><td><kbd>F</kbd></td><td>Use the held item</td><td>02</td></tr>
+    <tr><td><kbd>G</kbd></td><td>Drop the held item</td><td>02</td></tr>
+    <tr><td><kbd>H</kbd></td><td>Finger grips on or off</td><td>03</td></tr>
+    <tr><td><kbd>F1</kbd></td><td>Show or hide the guide panel</td><td>all</td></tr>
+  </tbody>
+</table></div>
+<aside class="callout note">
+  <strong class="callout-title">Key bindings</strong>
+  <p>Movement, sprint, jump, crouch, flashlight and interact come from the <code>FBInputActions</code> asset. Pick up, drop, grip toggle and the guide panel are read from the keyboard by the demo scripts. Number keys and <kbd>Q</kbd> are read by <code>ItemSwitcher</code>.</p>
+</aside>
+
+<h2 id="prefabs">Ready-made prefabs<a class="anchor" href="#prefabs" aria-label="Link to this section">#</a></h2>
+<p>Both prefabs are in <code>Assets/FBSystem/Demo/Prefabs/</code>.</p>
+<dl class="props">
+  <dt><code>FBSystem_CameraRig</code></dt>
+  <dd>The camera: a <strong>Main Camera</strong> with a Cinemachine Brain, and a Cinemachine camera. The player finds the Cinemachine camera automatically.</dd>
+  <dt><code>FBSystem_Player</code></dt>
+  <dd>A complete player with the Humanoid demo character. It has the full controller, all model IK (head, hand, spine and foot planting), finger grips, and an item container with two items: the flashlight in slot 1 and the box in slot 2. The prefab also contains the demo scripts <code>PlayerInventory</code>, <code>PlayerInteraction</code> and <code>PlayerDropSystem</code>. The character's first-person mesh is cut with FPCutter, so the head is hidden in first person.</dd>
+</dl>
+
+<h2 id="quick-use">Use the prefabs in your scene<a class="anchor" href="#quick-use" aria-label="Link to this section">#</a></h2>
+<ol class="steps">
+  <li>Open a scene with a floor that has a collider.</li>
+  <li>Drag <code>FBSystem_CameraRig</code> into the scene. Delete any other Main Camera.</li>
+  <li>Drag <code>FBSystem_Player</code> onto the floor and press Play.</li>
+</ol>
+<p>The prefabs reference the shipped <code>PlayerSettings</code> asset in <code>Assets/FBSystem/Project/</code>, which is tuned for the demo character. For your own character, use the <a href="fp-setup-wizard.html">Setup Wizard</a> instead.</p>
+
+<h2 id="learn">Use the demo scripts as templates<a class="anchor" href="#learn" aria-label="Link to this section">#</a></h2>
+<p>The demo scripts live in <code>Scripts/Player/Demo</code> and use the namespace <code>Player.Demo</code>. They are examples and not part of the core API.</p>
+<ul>
+  <li><code>PlayerEventLogger</code> logs item and locomotion events to the Console. It is not on the prefab or in the scenes. Add it to the player to see every event in order.</li>
+  <li><code>PlayerInteraction</code> and <code>PlayerDropSystem</code> show pickup and drop. The interaction reads the <kbd>E</kbd> key and uses its <em>Interactable Layer</em>. In the demo this is layer 4.</li>
+  <li><code>DemoGripToggle</code> toggles the finger grips with <kbd>H</kbd>.</li>
+</ul>
+
+<h2 id="pitfalls">Common pitfalls<a class="anchor" href="#pitfalls" aria-label="Link to this section">#</a></h2>
+<aside class="callout warn">
+  <strong class="callout-title">Two cameras</strong>
+  <p>A scene with more than one Main Camera can show the wrong view. Delete the extra camera and keep the one from <code>FBSystem_CameraRig</code>.</p>
+</aside>
+<aside class="callout note">
+  <strong class="callout-title">Build a demo</strong>
+  <p>Add a demo scene to Build Settings before you build it.</p>
+</aside>
+        </div>
+        <nav class="pager" aria-label="Previous and next page"><a class="pager-link pager-prev" href="fp-vitals.html" rel="prev"><span class="pager-dir">Previous</span><strong>Vitals &amp; Stamina</strong></a><a class="pager-link pager-next" href="fishnet.html" rel="next"><span class="pager-dir">Next</span><strong>FishNet</strong></a></nav>
+      </article>
+    </main>
+
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p><ol class="toc-list">
+<li class="toc-l2"><a href="#scenes">Demo scenes</a></li>
+<li class="toc-l3"><a href="#controls">Controls</a></li>
+<li class="toc-l2"><a href="#prefabs">Ready-made prefabs</a></li>
+<li class="toc-l2"><a href="#quick-use">Use the prefabs in your scene</a></li>
+<li class="toc-l2"><a href="#learn">Use the demo scripts as templates</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common pitfalls</a></li>
+</ol>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><a class="brand" href="../unity-asset-portfolio.html"><span class="brand-name">vedaloiv</span></a><p>Unity tools, documented for the people who use them.</p></div>
+    <div class="footer-col"><p class="footer-h">Asset Store</p><ul><li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li><li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li></ul></div>
+    <div class="footer-col"><p class="footer-h">Support</p><ul><li><a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></li><li><a href="../unity-asset-portfolio.html">vedaloiv home</a></li><li><a href="index.html">All docs</a></li></ul></div>
+  </div>
+  <p class="footer-copy">© 2026 vedaloiv</p>
+</footer>
+
+  <dialog class="search-dialog" aria-label="Search the documentation">
+    <form class="search-form" role="search" method="dialog">
+      <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input class="search-input" type="search" placeholder="Search pages and sections" autocomplete="off" spellcheck="false"
+        role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Search the documentation">
+      <button class="search-close" type="button" data-close-search><kbd>Esc</kbd><span class="sr-only">Close search</span></button>
+    </form>
+    <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+    <p class="search-status" aria-live="polite"></p>
+  </dialog>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" data-close-lightbox>Close <kbd>Esc</kbd></button>
+    <img alt="">
+    <p class="lightbox-caption"></p>
+  </dialog>
+</body>
+</html>

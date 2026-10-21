@@ -1,0 +1,124 @@
+<!--meta
+{"title": "Decoration and Themes", "navTitle": "Decoration & Themes", "description": "Build a DungeonTheme from modular prefabs with the Dungeon Theme Wizard, and fill rooms with rule-based decoration using DecorationProfile and RoomDecorationAuthoring.", "group": "dungeon", "kicker": "Guide", "chips": ["Unity 6000.5.0+", "Built-in · URP · HDRP"]}
+-->
+<p class="lead">A <strong>theme</strong> tells the generator which prefab to use for each part of a room: floors, walls, doors, ceilings, and stairs. A <strong>decoration profile</strong> fills the room with furniture, props, and clutter by rule, not by hand.</p>
+
+<h2 id="themes">Themes</h2>
+<p>Create a theme with <span class="menu">Assets › Create › DungeonGen › DungeonTheme</span> in your content folder. The theme maps each tile type to a prefab family. A family can be empty: if no ceiling prefabs are set, the renderer creates no ceilings.</p>
+<dl class="props">
+  <dt><code>tileSize</code> <span class="type">float</span> <span class="default">default 1</span></dt>
+  <dd>Size of one grid cell in meters. Match it to your modules. Rooms saved from the theme copy this value.</dd>
+  <dt><code>floorHeight</code> <span class="type">float</span> <span class="default">default 3</span></dt>
+  <dd>Height of one floor in meters.</dd>
+  <dt><code>wallThickness</code> <span class="type">float</span> <span class="default">default 0.25</span></dt>
+  <dd>Wall thickness in meters.</dd>
+  <dt><code>doubleSidedWalls</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>The wall kit looks right from both sides. Rooms saved from the theme can then share walls at seams. See <a href="dungeon-templates.html#wall-mode">Wall mode</a>.</dd>
+  <dt><code>doubleSidedCeilings</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>The floor slab above is also the ceiling. Keep the ceiling prefab list empty when you turn this on.</dd>
+  <dt><code>pivot</code> <span class="type">Corner or Center</span> <span class="default">default Center</span></dt>
+  <dd>Where the pivot of each module sits in its cell.</dd>
+  <dt>Prefab families</dt>
+  <dd><code>floorPrefabs</code>, <code>wallPrefabs</code>, <code>doorPrefabs</code>, <code>corridorFloorPrefabs</code>, <code>corridorWallPrefabs</code>, <code>holePrefabs</code>, <code>ceilingPrefabs</code>, and <code>stairPrefabs</code>. Each entry sets the prefab, its size in cells, an offset, a rotation, and whether it may rotate.</dd>
+  <dt><code>stairProfile</code> <span class="type">StairProfile</span></dt>
+  <dd>The stair shape: its assembly mode, its length, back length, and width, and the pieces that make up the stair.</dd>
+</dl>
+
+<h3 id="theme-wizard">Dungeon Theme Wizard</h3>
+<p>The wizard measures your prefabs and proposes sizes and offsets. Open <span class="menu">Tools › DungeonGen › Dungeon Theme Wizard</span>.</p>
+<ol class="steps">
+  <li>
+    <p>Pick a theme in <strong>Source</strong>, or click <strong>Create New Theme</strong>. Click <strong>Reload</strong> to reread the theme from disk.</p>
+  </li>
+  <li>
+    <p>In <strong>Grid</strong>, click <strong>Detect Tile Size From Floors</strong> and, if the stairs need it, <strong>Detect Floor Height From Walls</strong>. Turn on <strong>Double-Sided Walls</strong> if your kit needs it.</p>
+  </li>
+  <li>
+    <p>Click <strong>Analyze All</strong>. Each row then shows a proposal. Apply only the proposals that match your kit with <strong>Use Proposal</strong>.</p>
+  </li>
+  <li>
+    <p>Check the Floors, Walls &amp; Doors, Corridors, Ceilings, and Stairs cards for each family.</p>
+    <figure>
+      <img src="images/dungeon/Unity_p5iVVEUj5y.png" alt="Dungeon Theme Wizard with no theme selected. The Source section offers Create New Theme and Reload, and the steps Grid, Floors, Walls and Doors, Corridors, Ceilings, Stairs, and Preview and Apply are listed below it.">
+      <figcaption>Select or create a theme first. Every later step works on that theme.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <p>Open <strong>Preview &amp; Apply</strong> and check the seams in the preview. Click <strong>Apply</strong> to save the changes to the theme, or <strong>Cancel</strong> to discard them. Until you apply, the wizard only edits a temporary copy.</p>
+  </li>
+</ol>
+<aside class="callout tip">
+  <strong class="callout-title">Check seams in the preview</strong>
+  <p>A wall or door offset that looks small can leave a visible gap between two rooms. Always check the preview after you change an offset.</p>
+</aside>
+
+<h2 id="decoration-profiles">Decoration profiles</h2>
+<p>A <strong>DecorationProfile</strong> is an ordered list of categories. Create one with <span class="menu">Assets › Create › DungeonGen › Decoration Profile</span>. Each category places one kind of object:</p>
+<dl class="props">
+  <dt><code>priority</code> <span class="type">0–100</span> <span class="default">default 50</span></dt>
+  <dd>Higher priority is placed first. Relations between categories can change the order.</dd>
+  <dt><code>pool</code> <span class="type">list</span></dt>
+  <dd>The prefabs to pick from. Each entry has a <code>weight</code> (default 1), an optional <code>maxUses</code> (0 means unlimited), and optional overrides for position, rotation, scale, footprint, padding, and orientation.</dd>
+  <dt><code>amountMode</code> <span class="type">Fixed, Range, or Density</span> <span class="default">default Range</span></dt>
+  <dd>How many objects to place: exactly <code>minCount</code>, a random count between <code>minCount</code> and <code>maxCount</code> (default 1 to 3), or a density per square meter.</dd>
+  <dt><code>surface</code> <span class="type">Floor, Wall, or Ceiling</span> <span class="default">default Floor</span></dt>
+  <dd>Where objects go. Wall and ceiling objects are mounted automatically.</dd>
+  <dt><code>region</code> <span class="type">Anywhere, Edge, Interior, Corner, or Center</span> <span class="default">default Anywhere</span></dt>
+  <dd>Which part of the room to use. <code>Interior</code> keeps <code>interiorWallCells</code> (default 2) cells away from walls.</dd>
+  <dt><code>wallRegion</code> <span class="type">AnyWall, StraightWall, NearCorner, AwayFromCorner, NearDoor, or AwayFromDoor</span> <span class="default">default AnyWall</span></dt>
+  <dd>For wall objects: which part of the wall to use.</dd>
+  <dt><code>occupancy</code> <span class="type">Solid, GroundOverlay, WallMounted, CeilingMounted, or NonBlocking</span> <span class="default">default Solid</span></dt>
+  <dd>Solid objects block paths and collide with other decoration. Non-blocking objects, such as rugs, can overlap.</dd>
+  <dt><code>orientation</code> <span class="type">OrientationMode</span> <span class="default">default Random</span></dt>
+  <dd>How objects turn: random, cardinal (0, 90, 180, 270 degrees), fixed, aligned to the surface, or facing the nearest wall, the room center, or another category.</dd>
+  <dt><code>distribution</code> <span class="type">Natural, Even, or Clustered</span> <span class="default">default Natural</span></dt>
+  <dd>How objects spread across the candidate cells.</dd>
+  <dt><code>floorScope</code> <span class="type">All, Specific, Range, Bottom, or Top</span> <span class="default">default All</span></dt>
+  <dd>Which floors of a multi-floor room receive the category.</dd>
+  <dt><code>preservePaths</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Keeps paths between doors open. <code>minimumPathWidth</code> (default 1 m) sets the width that must stay clear.</dd>
+  <dt><code>fitMode</code> <span class="type">Fixed or AutoFit</span> <span class="default">default Fixed</span></dt>
+  <dd><code>AutoFit</code> moves the object so its back touches the wall, ceiling, or nearest wall, leaving <code>fitMargin</code> (default 0.02 m), and corrects by at most <code>fitMaxCorrection</code> (default 1 m).</dd>
+  <dt><code>relations</code> <span class="type">list</span></dt>
+  <dd>Rules between categories: <code>Avoid</code>, <code>PreferNear</code>, or <code>RequireNear</code>, with a distance in meters (default 1).</dd>
+  <dt><code>sameCategoryCellGap</code>, <code>doorDistanceCells</code>, <code>stairDistanceCells</code> <span class="type">int</span> <span class="default">default 1 each</span></dt>
+  <dd>Minimum gap in cells between objects of this category, and between objects and doors or stairs.</dd>
+  <dt><code>footprintPadding</code> <span class="type">float</span> <span class="default">default 0.1</span></dt>
+  <dd>Extra space in meters kept around each object's footprint.</dd>
+  <dt><code>failurePolicy</code> <span class="type">AllowPartial, RequireMinimum, or RequireExact</span> <span class="default">default AllowPartial</span></dt>
+  <dd>What happens when the target count cannot be reached. <code>AllowPartial</code> keeps the objects that fit. <code>RequireMinimum</code> removes the whole category from the room when fewer than <code>minCount</code> fit. <code>RequireExact</code> removes it unless exactly the target count fits.</dd>
+  <dt><code>enabled</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Turns the category off without deleting it.</dd>
+</dl>
+<p>Decoration is deterministic. The same seed gives the same result. Each category has its own seed offset, so you can reroll one category without changing the others.</p>
+
+<h3 id="objects-mode">Objects mode</h3>
+<p>Switch the Room Designer to <strong>Objects</strong> to edit the profile for the current room.</p>
+<ul>
+  <li><strong>Profile</strong> selects the profile. <strong>Seed &amp; Randomness</strong> sets the seed (default 12345); tick <strong>Random</strong> for a new seed each time.</li>
+  <li><strong>Rebake All Footprints</strong> measures each object's footprint again. Save Prefab does this for you, but it helps when you change an object.</li>
+  <li><strong>Spawn All</strong>, <strong>Respawn All</strong>, and <strong>Despawn All</strong> place, redo, and remove the decoration in the scene view. The canvas toolbar has the same actions as <strong>Spawn</strong>, <strong>Respawn</strong>, and <strong>Despawn</strong>.</li>
+  <li><strong>+ Add</strong>, <strong>Duplicate</strong>, and <strong>Delete</strong> manage categories.</li>
+  <li>Left-click a cell to add a <strong>manual pin</strong>, which places an object on that cell first. Right-click a pin to remove it. Pins are stored in the profile, so every room that uses the profile gets them.</li>
+  <li><strong>Bake Decor</strong> decides how Save Prefab handles the furniture. See <a href="dungeon-room-designer.html#save-prefab">Save a room prefab</a>.</li>
+</ul>
+
+<h2 id="runtime-decoration">Decoration at runtime</h2>
+<p>A room prefab with a <code>RoomDecorationAuthoring</code> component can be decorated at runtime. Save Prefab adds this component. It stores the room geometry, the profile, and the seed.</p>
+<p>When <code>DungeonManager.decorateAfterGeneration</code> is on (the default), the manager decorates each generated room that has the component. The same solver runs in the editor preview and at runtime, so the result you see while editing is the result in play mode.</p>
+<ul>
+  <li>To rebuild the decoration of one category at runtime, call <code>RerollCategory</code> on the room's <code>RoomDecorationAuthoring</code>. Each call picks a new result for that category.</li>
+  <li>If <strong>Bake Decor</strong> was on when the prefab was saved, the furniture is already in the prefab, and the runtime skips the room.</li>
+</ul>
+
+<aside class="callout warn">
+  <strong class="callout-title">Profile errors block the save</strong>
+  <p>A profile with errors stops Save Prefab and shows the list. Typical errors are an empty pool, a pool entry with weight 0, a relation to a category that no longer exists, a minimum above the maximum count, and an object whose footprint is not baked. For footprints, click <strong>Rebake All Footprints</strong>, then save again.</p>
+</aside>
+
+<h2 id="pitfalls">Common mistakes</h2>
+<ul>
+  <li><strong>Decoration does not appear.</strong> Check that the room prefab has <code>RoomDecorationAuthoring</code> and that <code>decorateAfterGeneration</code> is on. Then check the category's failure policy, because <code>RequireMinimum</code> and <code>RequireExact</code> drop the category when its count is not reached.</li>
+  <li><strong>Pins appear in every room.</strong> Pins belong to the profile. Use a separate profile for rooms that need different pins.</li>
+  <li><strong>Doors blocked by furniture.</strong> Keep <code>preservePaths</code> on, and raise <code>minimumPathWidth</code> if the paths are still too narrow.</li>
+</ul>

@@ -1,0 +1,99 @@
+<!--meta
+{"title": "Easy Dungeon Generator", "navTitle": "Overview", "description": "Easy Dungeon Generator 1.1.0: paint multi-floor rooms by hand and assemble them into template-driven or endless chunk-streamed dungeons in Unity 6.", "group": "dungeon", "kicker": "Overview", "chips": ["Unity 6000.5.0+", "Built-in · URP · HDRP", "namespace DungeonGen"]}
+-->
+<p class="lead">Easy Dungeon Generator is a Unity toolkit for dungeons built from rooms you paint yourself. You design each room in the editor, describe how the dungeon is structured, and <strong>DungeonManager</strong> places and connects the rooms at runtime. For endless worlds, <strong>ChunkDungeonStreamer</strong> builds the dungeon around the player as they move.</p>
+
+<h2 id="model">Authoring and assembly</h2>
+<p>The package separates what you create from what the generator builds. You paint rooms and set up themes; the generator chooses, places, and connects the room prefabs.</p>
+<table>
+  <thead><tr><th scope="col">Layer</th><th scope="col">What you work with</th><th scope="col">What it does</th></tr></thead>
+  <tbody>
+    <tr><td>Authoring</td><td>Room designs, themes, decoration profiles, door socket types, templates</td><td>Describe rooms, their look, their doorways, and the dungeon's structure.</td></tr>
+    <tr><td>Assembly</td><td><code>DungeonManager</code>, <code>ChunkDungeonStreamer</code></td><td>Plan the layout, instantiate the rooms, wire the doors, and decorate and post-process the result.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="features">Features</h2>
+<div class="cards">
+  <a class="card" href="dungeon-room-designer.html"><strong>Room Designer</strong><span>Paint multi-floor rooms with floors, doors, stairs, and holes, then save them as prefabs.</span></a>
+  <a class="card" href="dungeon-templates.html"><strong>Templates and generation</strong><span>Describe the structure as a node tree and generate exact or seeded random layouts.</span></a>
+  <a class="card" href="dungeon-decoration.html"><strong>Decoration and themes</strong><span>Build themes from modular prefabs and fill rooms with rule-based decoration.</span></a>
+  <a class="card" href="dungeon-streaming.html"><strong>Chunk streaming</strong><span>Stream an endless dungeon around a moving player.</span></a>
+  <a class="card" href="dungeon-culling-navmesh.html"><strong>Culling and NavMesh</strong><span>Hide rooms behind closed doors and bake one NavMesh for the whole dungeon.</span></a>
+  <a class="card" href="dungeon-demos.html"><strong>Demo scenes</strong><span>Four ready-to-play scenes with sample content. They need a free art pack.</span></a>
+</div>
+
+<h2 id="components">Main components</h2>
+<table>
+  <thead><tr><th scope="col">Component or asset</th><th scope="col">Where it goes</th><th scope="col">Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><code>DungeonManager</code></td><td>Scene object</td><td>Generates a template-driven dungeon.</td></tr>
+    <tr><td><code>ChunkDungeonStreamer</code></td><td>Scene object</td><td>Streams an endless chunk world around a player.</td></tr>
+    <tr><td><code>RoomData</code>, <code>DoorSocket</code></td><td>Room prefab root and its doorways</td><td>Room size, room type, and doorway state.</td></tr>
+    <tr><td><code>DungeonCulling</code>, <code>DungeonNavMeshPostProcessor</code></td><td>Same object as <code>DungeonManager</code> (optional)</td><td>Portal culling and runtime NavMesh bake after generation.</td></tr>
+    <tr><td><code>DungeonTheme</code>, <code>DecorationProfile</code>, <code>DoorSocketType</code></td><td>Project assets</td><td>Visual kit, decoration rules, and doorway compatibility tags.</td></tr>
+  </tbody>
+</table>
+<p>The full members and signatures are in the <a href="dungeon-api.html">API Reference</a>.</p>
+
+<h2 id="tools">Editor tools</h2>
+<table>
+  <thead><tr><th scope="col">Tool</th><th scope="col">Menu item</th><th scope="col">Guide</th></tr></thead>
+  <tbody>
+    <tr><td>Room Designer</td><td><span class="menu">Tools › DungeonGen › Room Designer</span></td><td><a href="dungeon-room-designer.html">Room Designer</a></td></tr>
+    <tr><td>Dungeon Template Designer</td><td><span class="menu">Tools › DungeonGen › Dungeon Template Designer</span></td><td><a href="dungeon-templates.html">Templates and generation</a></td></tr>
+    <tr><td>Dungeon Theme Wizard</td><td><span class="menu">Tools › DungeonGen › Dungeon Theme Wizard</span></td><td><a href="dungeon-decoration.html">Decoration and themes</a></td></tr>
+    <tr><td>Dungeon Setup</td><td><span class="menu">Tools › DungeonGen › Dungeon Setup</span></td><td><a href="dungeon-quick-start.html">Quick Start</a></td></tr>
+    <tr><td>Setup Room Prefab</td><td><span class="menu">Tools › DungeonGen › Setup Room Prefab</span></td><td><a href="dungeon-room-designer.html#setup-room-prefab">Room Designer</a></td></tr>
+    <tr><td>Room Prefab Manager</td><td><span class="menu">Tools › DungeonGen › Room Prefab Manager</span></td><td><a href="dungeon-room-designer.html#room-prefab-manager">Room Designer</a></td></tr>
+  </tbody>
+</table>
+<figure>
+  <img src="images/dungeon/LRXJJEem0w.png" alt="The DungeonGen entries in the Unity Tools menu: Setup Room Prefab, Dungeon Setup, Dungeon Template Designer, Dungeon Theme Wizard, and Room Designer.">
+  <figcaption>The DungeonGen entries under the Unity Tools menu.</figcaption>
+</figure>
+<p>Authoring assets are created with <span class="menu">Assets › Create › DungeonGen › …</span>: Room Design, Dungeon Template, DungeonTheme, Decoration Profile, Door Socket Type, and Progression Requirement.</p>
+
+<h2 id="how-it-works">How generation works</h2>
+<p>A <code>DungeonManager</code> run validates the template, measures the room prefabs and their doors, plans the layout, and only then replaces the previous dungeon. The steps are:</p>
+<ol class="steps">
+  <li>Validate the template and the room pool.</li>
+  <li>Plan the layout. The managed planner is the default; the optional Burst planner is a separate implementation.</li>
+  <li>Instantiate the rooms, wire the matching doors, and place progression items.</li>
+  <li>Decorate rooms, then run the post-processors such as culling and NavMesh.</li>
+</ol>
+<p>If planning fails, the previous dungeon stays in the scene. Set the same fixed seed to reproduce a layout. The planner may retry with a derived seed when rooms do not fit, and the requested seed still gives the same result.</p>
+<p>Two modes decide how the template is used. <strong>TemplateExact</strong> (default) builds every template node as one room. <strong>TemplateSequencedRandom</strong> treats template nodes as milestones and adds filler rooms and random branches. See <a href="dungeon-templates.html#generation-modes">Generation modes</a>.</p>
+<p><strong>Wall Mode</strong> decides how neighboring walls meet at a seam. <code>SingleOnly</code> (default) keeps every room's own walls. <code>DoubleOnly</code> and <code>AllowBoth</code> share one wall for double-sided kits. Details are in <a href="dungeon-templates.html#wall-mode">Wall mode for double-sided kits</a>.</p>
+
+<h2 id="requirements">Requirements</h2>
+<table>
+  <thead><tr><th scope="col">Dependency</th><th scope="col">Version</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Unity</td><td>6000.5.0 or newer</td><td>Developed on 6000.5.0f1.</td></tr>
+    <tr><td>AI Navigation</td><td><code>2.0.13</code></td><td>Required. Used by <code>DungeonNavMeshPostProcessor</code>.</td></tr>
+    <tr><td>Burst</td><td><code>1.8.30</code></td><td>Required to compile, even when the Burst planner is off.</td></tr>
+    <tr><td>Collections</td><td><code>6.5.0</code></td><td>Required to compile.</td></tr>
+    <tr><td>Mathematics</td><td><code>1.4.0</code></td><td>Required to compile.</td></tr>
+    <tr><td>Alchemy</td><td>Bundled</td><td>Included under <code>ThirdParty/Alchemy/</code> with its MIT license. Nothing to install.</td></tr>
+    <tr><td>Universal RP</td><td><code>17.5.0</code> (recommended)</td><td>The demo scenes and materials target URP. The generator code does not use URP APIs.</td></tr>
+    <tr><td>Input System</td><td><code>1.19.0</code> (optional)</td><td><code>ClickToMoveAgent</code> also works with the legacy Input Manager.</td></tr>
+  </tbody>
+</table>
+<p>The package is an Assets-folder toolkit, not a UPM package. Keep it at <code>Assets/DungeonGenerator/</code>. The generator runs on Built-in, URP, and HDRP. Only the demo content is tuned for URP.</p>
+
+<h2 id="get-it">Get it</h2>
+<table>
+  <thead><tr><th scope="col">Item</th><th scope="col">Value</th></tr></thead>
+  <tbody>
+    <tr><td>Publisher</td><td>vedaloiv</td></tr>
+    <tr><td>Version</td><td>1.1.0, released 2026-10-08</td></tr>
+    <tr><td>Price</td><td>€33.11</td></tr>
+    <tr><td>Package size</td><td>1.1 MB</td></tr>
+    <tr><td>Unity</td><td>6000.5.0 or newer</td></tr>
+    <tr><td>Render pipelines</td><td>Built-in, URP, HDRP</td></tr>
+    <tr><td>Store page</td><td><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094">Easy Dungeon Generator on the Asset Store</a></td></tr>
+    <tr><td>Support</td><td><a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></td></tr>
+  </tbody>
+</table>
+<p>Upgrading from 1.0? See the <a href="dungeon-changelog.html">Changelog</a>.</p>

@@ -1,0 +1,72 @@
+<!--meta
+{"title": "Demos", "navTitle": "Demos", "description": "The three guided demo scenes, the ready-made FBSystem_Player and FBSystem_CameraRig prefabs, their controls, and what each one demonstrates.", "group": "fp", "kicker": "Guide", "chips": ["3 scenes", "2 prefabs"]}
+-->
+<p class="lead">Try the controller before you change anything. Three guided scenes show movement and camera, items and events, and finger grips. Each scene has an on-screen guide with its controls and live player state. Two prefabs give you a complete player in a few drags.</p>
+
+<h2 id="scenes">Demo scenes</h2>
+<p>The scenes are in <code>Assets/FBSystem/Scenes/Demos/</code>. Press <kbd>F1</kbd> in a scene to hide or show its guide panel.</p>
+<table>
+  <thead><tr><th scope="col">Scene</th><th scope="col">What it shows</th></tr></thead>
+  <tbody>
+    <tr><td><code>01_Movement_Camera</code></td><td>Walking, sprinting, jumping and crouching. The stations are a crouch tunnel with a low ceiling (you cannot stand up under it), a ramp, stairs, uneven ground and a turn pad for re-steps when you turn in place. The panel shows the locomotion state and the events.</td></tr>
+    <tr><td><code>02_Items_Events</code></td><td>Picking up, switching (with the holster animation), using and dropping a one-handed flashlight and a two-handed box. The panel shows the hand state and a live feed of the C# events.</td></tr>
+    <tr><td><code>03_Finger_Grips</code></td><td>Finger grips on both items. Press <kbd>H</kbd> to turn the grips off and compare them with the plain animation.</td></tr>
+  </tbody>
+</table>
+
+<h3 id="controls">Controls</h3>
+<table>
+  <thead><tr><th scope="col">Key</th><th scope="col">Action</th><th scope="col">Scenes</th></tr></thead>
+  <tbody>
+    <tr><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>, mouse</td><td>Move and look</td><td>all</td></tr>
+    <tr><td><kbd>Shift</kbd></td><td>Sprint while moving</td><td>all</td></tr>
+    <tr><td><kbd>Space</kbd></td><td>Jump</td><td>all</td></tr>
+    <tr><td><kbd>C</kbd></td><td>Crouch (toggle)</td><td>all</td></tr>
+    <tr><td><kbd>E</kbd></td><td>Pick up the item you look at</td><td>02</td></tr>
+    <tr><td><kbd>1</kbd>, <kbd>2</kbd>, mouse wheel</td><td>Switch item. In 03 the keys select the flashlight (1) and the box (2).</td><td>02, 03</td></tr>
+    <tr><td><kbd>Q</kbd></td><td>Put the item away</td><td>02, 03</td></tr>
+    <tr><td><kbd>F</kbd></td><td>Use the held item</td><td>02</td></tr>
+    <tr><td><kbd>G</kbd></td><td>Drop the held item</td><td>02</td></tr>
+    <tr><td><kbd>H</kbd></td><td>Finger grips on or off</td><td>03</td></tr>
+    <tr><td><kbd>F1</kbd></td><td>Show or hide the guide panel</td><td>all</td></tr>
+  </tbody>
+</table>
+<aside class="callout note">
+  <strong class="callout-title">Key bindings</strong>
+  <p>Movement, sprint, jump, crouch, flashlight and interact come from the <code>FBInputActions</code> asset. Pick up, drop, grip toggle and the guide panel are read from the keyboard by the demo scripts. Number keys and <kbd>Q</kbd> are read by <code>ItemSwitcher</code>.</p>
+</aside>
+
+<h2 id="prefabs">Ready-made prefabs</h2>
+<p>Both prefabs are in <code>Assets/FBSystem/Demo/Prefabs/</code>.</p>
+<dl class="props">
+  <dt><code>FBSystem_CameraRig</code></dt>
+  <dd>The camera: a <strong>Main Camera</strong> with a Cinemachine Brain, and a Cinemachine camera. The player finds the Cinemachine camera automatically.</dd>
+  <dt><code>FBSystem_Player</code></dt>
+  <dd>A complete player with the Humanoid demo character. It has the full controller, all model IK (head, hand, spine and foot planting), finger grips, and an item container with two items: the flashlight in slot 1 and the box in slot 2. The prefab also contains the demo scripts <code>PlayerInventory</code>, <code>PlayerInteraction</code> and <code>PlayerDropSystem</code>. The character's first-person mesh is cut with FPCutter, so the head is hidden in first person.</dd>
+</dl>
+
+<h2 id="quick-use">Use the prefabs in your scene</h2>
+<ol class="steps">
+  <li>Open a scene with a floor that has a collider.</li>
+  <li>Drag <code>FBSystem_CameraRig</code> into the scene. Delete any other Main Camera.</li>
+  <li>Drag <code>FBSystem_Player</code> onto the floor and press Play.</li>
+</ol>
+<p>The prefabs reference the shipped <code>PlayerSettings</code> asset in <code>Assets/FBSystem/Project/</code>, which is tuned for the demo character. For your own character, use the <a href="fp-setup-wizard.html">Setup Wizard</a> instead.</p>
+
+<h2 id="learn">Use the demo scripts as templates</h2>
+<p>The demo scripts live in <code>Scripts/Player/Demo</code> and use the namespace <code>Player.Demo</code>. They are examples and not part of the core API.</p>
+<ul>
+  <li><code>PlayerEventLogger</code> logs item and locomotion events to the Console. It is not on the prefab or in the scenes. Add it to the player to see every event in order.</li>
+  <li><code>PlayerInteraction</code> and <code>PlayerDropSystem</code> show pickup and drop. The interaction reads the <kbd>E</kbd> key and uses its <em>Interactable Layer</em>. In the demo this is layer 4.</li>
+  <li><code>DemoGripToggle</code> toggles the finger grips with <kbd>H</kbd>.</li>
+</ul>
+
+<h2 id="pitfalls">Common pitfalls</h2>
+<aside class="callout warn">
+  <strong class="callout-title">Two cameras</strong>
+  <p>A scene with more than one Main Camera can show the wrong view. Delete the extra camera and keep the one from <code>FBSystem_CameraRig</code>.</p>
+</aside>
+<aside class="callout note">
+  <strong class="callout-title">Build a demo</strong>
+  <p>Add a demo scene to Build Settings before you build it.</p>
+</aside>

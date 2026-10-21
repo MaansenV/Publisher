@@ -1,0 +1,125 @@
+<!--meta
+{"title": "PurrNet Multiplayer Addon", "navTitle": "PurrNet", "description": "FBSystem PurrNet multiplayer addon: host-client co-op for 2 to 4 players with PurrNet v1.22.0 — owner-authoritative movement, animator and foot planting sync, item equip, pickup and drop, networked world items.", "group": "fp", "kicker": "Multiplayer", "chips": ["Optional addon", "PurrNet v1.22.0", "FBSystem v1.6.0"]}
+-->
+<p class="lead">Add host-client co-op for <strong>2 to 4 players</strong> to FBSystem with the optional <strong>FBSystemPurrNet</strong> addon: owner-authoritative movement, synced animator and foot planting, item equip, pickup and drop, and networked world items, wired by a dedicated Setup Wizard.</p>
+
+<aside class="callout note">
+<p>The addon targets <strong>PurrNet v1.22.0</strong>. PurrNet is not bundled and must be installed first.</p>
+</aside>
+
+<h2 id="what">What the addon does</h2>
+<p>An <strong>optional package</strong> in <code>Assets/FBSystemPurrNet/</code> that adds host-client co-op to any FBSystem scene. It does not depend on FishNet and does not change the base package.</p>
+<ul>
+  <li>A <strong>5-step Setup Wizard</strong> (<code>Tools &#9656; FBSystem &#9656; PurrNet &#9656; Setup Wizard</code>) builds the scene, converts the player and world items, and validates the result. Every step is idempotent: existing objects are reused.</li>
+  <li><code>PurrNetPlayerBridge</code> (namespace <code>FBSystem.PurrNet</code>) replicates movement, animator parameters, look pitch, the foot planting drive state and item slots.</li>
+  <li>Item sync: equip and unequip by slot, pickup and drop with request and confirm round trips, revision gates and automatic reconcile on divergence.</li>
+  <li>A prepared test scene, player prefab and network prefab collection are included.</li>
+</ul>
+
+<h2 id="requirements">Requirements</h2>
+<table>
+    <thead><tr><th scope="col">Requirement</th><th scope="col">Version</th><th scope="col">Notes</th></tr></thead>
+    <tbody>
+      <tr><td>FBSystem</td><td>v1.6.0</td><td>base asset must already be in the project; add-on packages from older versions do not compile against 1.6</td></tr>
+      <tr><td>PurrNet</td><td>v1.22.0</td><td>install <strong>before</strong> importing <code>FBSystemPurrNet</code>; PurrNet is not bundled in the addon</td></tr>
+      <tr><td>Unity</td><td>6000.5.0+ (Unity 6.5)</td><td>same as the base asset</td></tr>
+      <tr><td>Render Pipeline</td><td>URP</td><td>inherited from the base asset (demo + FPCutter)</td></tr>
+    </tbody>
+  </table>
+
+<h2 id="install">1. Install PurrNet and the addon</h2>
+<ol class="steps">
+  <li>In the Package Manager, choose <em>Add package from git URL</em> and add <code>https://github.com/PurrNet/PurrNet.git?path=/Assets/PurrNet#v1.22.0</code>.</li>
+  <li>Import the optional <code>FBSystemPurrNet</code> addon folder or package.</li>
+  <li>Open the scene you want to make multiplayer-ready.</li>
+</ol>
+
+<h2 id="wizard">2. PurrNet Setup Wizard</h2>
+<p>Menu: <strong><code>Tools &#9656; FBSystem &#9656; PurrNet &#9656; Setup Wizard</code></strong>. The wizard has five steps with a progress bar, <code>&lt; Back</code> and <code>Next &gt;</code> buttons, and <code>Finish Setup</code> on the last step. To run only the scene part, use <strong><code>Make Scene PurrNet Ready</code></strong> from the same menu. The wizard does not change core files under <code>Assets/FBSystem</code>.</p>
+
+<h3 id="step-scene-setup">Step 1: Scene Setup</h3>
+<p>Creates or reuses the <code>PurrNetNetworkManager</code> with UDP transport on port <strong>5000</strong>, a <code>PlayerSpawner</code>, network prefabs and rules, and an <code>EventSystem</code>. It also adds the <code>FBSystemConnectionHUD</code> with <em>Start Host</em>, <em>Start Client</em> and <em>Disconnect</em> buttons. Existing objects are reused.</p>
+
+<h3 id="step-select-player">Step 2: Select Player</h3>
+<p>Pick the FBSystem player <code>GameObject</code> in the scene. The wizard uses it as the source for the network player.</p>
+
+<h3 id="step-network-player">Step 3: Network Player</h3>
+<p>Converts the scene player into <code>Assets/FBSystemPurrNet/Testing/FBSystemPurrNetPlayer.prefab</code>. The prefab gets the bridge and an owner-authoritative <code>NetworkTransform</code>. The scene player is replaced by <code>SpawnPoint1</code> to <code>SpawnPoint4</code>, and the <code>PlayerSpawner</code> is wired to the prefab. The bridge replicates the animator blend parameters itself with remote smoothing. The wizard does not add PurrNet's stock <code>NetworkAnimator</code> and removes one left over from an earlier run.</p>
+<p>Individual action: <code>Tools &#9656; FBSystem &#9656; PurrNet &#9656; Setup Network Player</code>.</p>
+
+<h3 id="step-world-items">Step 4: World Items</h3>
+<p>Converts the player's <code>WorldItem</code> prefabs to <code>*_Net</code> variants under <code>Assets/FBSystemPurrNet/Testing/WorldItems/</code>, registers them as network prefabs and fills the bridge's <code>networkWorldItemPrefabs</code> list. For a manual list, use <code>Tools &#9656; FBSystem &#9656; PurrNet &#9656; Setup Networked World Items</code>.</p>
+
+<h3 id="step-validation">Step 5: Validation</h3>
+<p>Final health check: the NetworkManager, the connection HUD, the player prefab, the spawner wiring, the world items and the EventSystem. Fix any warnings, then press <strong>Finish Setup</strong>.</p>
+<p>Press Play and use the <code>FBSystemConnectionHUD</code> buttons (<em>Start Host</em> / <em>Start Client</em>).</p>
+
+<h2 id="world-items">3. Networked world items</h2>
+<p>Menu: <strong><code>Tools &#9656; FBSystem &#9656; PurrNet &#9656; Setup Networked World Items</code></strong> opens the drag-and-drop window for a manual list. The window:</p>
+<ul>
+  <li>Creates <code>*_Net</code> WorldItem variants.</li>
+  <li>Registers them as PurrNet network prefabs.</li>
+  <li>Fills the bridge's <code>networkWorldItemPrefabs</code> list.</li>
+</ul>
+<p>A pickup despawns the server object. A drop spawns a networked WorldItem that all clients see.</p>
+
+<h2 id="sync">What gets synchronized</h2>
+<table>
+    <thead><tr><th scope="col">What</th><th scope="col">How</th></tr></thead>
+    <tbody>
+      <tr><td>Root position &amp; rotation</td><td>PurrNet <code>NetworkTransform</code>, owner-authoritative</td></tr>
+      <tr><td>Animator parameters</td><td>bridge SyncVars with remote smoothing; no stock <code>NetworkAnimator</code></td></tr>
+      <tr><td>Look pitch</td><td>networked for camera-dependent remote IK</td></tr>
+      <tr><td>Foot planting</td><td>remote feet plant from the owner's synced drive state (<code>SetExternalDriveState</code>)</td></tr>
+      <tr><td>Equip / unequip</td><td>slot sync with revision gates and automatic reconcile on divergence</td></tr>
+      <tr><td>Item pickup &amp; drop</td><td>request and confirm round trips; pickup despawns the server object, drop spawns a networked WorldItem for all clients</td></tr>
+      <tr><td>Health (<code>PlayerVitals</code>)</td><td>not synchronized</td></tr>
+      <tr><td>Camera &amp; input</td><td>local-only camera ownership and owner-only local input</td></tr>
+      <tr><td>Server sanity checks</td><td>movement validation, a heuristic and not anti-cheat</td></tr>
+    </tbody>
+  </table>
+
+<h2 id="scope">Not included by design</h2>
+<aside class="callout warn"><strong class="callout-title">Out of scope for the addon</strong>
+  <ul>
+    <li><strong>Host-client only.</strong> The host is a player. There is no dedicated server, relay or NAT traversal, and the session ends when the host leaves.</li>
+    <li><strong>Client-authoritative movement.</strong> There is no server prediction and no authoritative movement correction.</li>
+    <li><strong>Item use</strong> stays local. There is no server-side usage logic.</li>
+    <li><strong>Reconnect</strong> creates a new player. Nothing is persisted, and ownership transfer on host migration is not supported.</li>
+  </ul>
+</aside>
+
+<h2 id="testing">Testing host &amp; clients</h2>
+<p>The addon ships a prepared test setup, and its scene is already in Build Settings:</p>
+<ul>
+  <li>Scene: <code>Assets/FBSystemPurrNet/Testing/Demo.unity</code></li>
+  <li>Player: <code>Assets/FBSystemPurrNet/Testing/FBSystemPurrNetPlayer.prefab</code></li>
+  <li>Network prefab collection: <code>Assets/FBSystemPurrNet/Testing/FBSystemPurrNetPrefabs.asset</code></li>
+</ul>
+<h3>Host test in the editor</h3>
+<ol class="steps">
+  <li>Open <code>Demo.unity</code>. It must contain <code>PurrNetNetworkManager</code> with UDP transport, the <code>PlayerSpawner</code> and the network prefabs.</li>
+  <li>Press Play and click <strong>Start Host</strong> on the HUD. A player spawns at a spawn point.</li>
+  <li>Verify movement, jump, sprint, crouch, root rotation, remote animator state, remote look pitch and remote foot placement. The remote player must not process local input.</li>
+  <li>Switch items (number keys, <code>Q</code>, or scroll) and verify that equip and unequip sync to the other instance. Item use stays local.</li>
+  <li>Disconnect the client and check for ghost players or items.</li>
+</ol>
+<h3>Remote client test</h3>
+<ol class="steps">
+  <li>Recommended for iteration: add a Multiplayer Play Mode virtual player.</li>
+  <li>Alternatively, build the scene for Windows and start the build as a client with the launch argument <code>-purrnet-client 127.0.0.1:5000</code>, or enter the address and port in the HUD and click <strong>Start Client</strong>.</li>
+  <li>Repeat the same verification as above across both instances.</li>
+</ol>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+    <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
+    <tbody>
+      <tr><td>No player spawns, or the spawner reports no player prefab</td><td>Run the <strong>Network Player</strong> step again so <code>PlayerSpawner</code> points to <code>FBSystemPurrNetPlayer.prefab</code>.</td></tr>
+      <tr><td>Spawner has no spawn points</td><td>Run the <strong>Network Player</strong> step again. It creates <code>SpawnPoint1</code> to <code>SpawnPoint4</code> if they are missing.</td></tr>
+      <tr><td>Items not visible to other players</td><td>Run the <strong>World Items</strong> step so the bridge's <code>networkWorldItemPrefabs</code> list is filled with <code>*_Net</code> variants.</td></tr>
+    </tbody>
+  </table>
+<div class="cards">
+<a class="card" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454"><strong>View on Asset Store &#8599;</strong><span>Easy FP Full Body Controller and the PurrNet addon are available on the Unity Asset Store.</span></a>
+</div>

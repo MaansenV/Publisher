@@ -1,0 +1,81 @@
+{
+  "site": {
+    "name": "vedaloiv",
+    "baseUrl": "https://vedaloiv.wasmer.app/docs/",
+    "landing": "../unity-asset-portfolio.html",
+    "supportEmail": "karakask2004@gmail.com",
+    "ogImage": "https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg"
+  },
+  "groups": [
+    {
+      "id": "hub",
+      "title": "vedaloiv docs",
+      "pages": ["index"]
+    },
+    {
+      "id": "fp",
+      "title": "Easy FP Full Body Controller",
+      "short": "Easy FP Controller",
+      "anchor": "easy-fp-full-body-controller",
+      "version": "1.6.0",
+      "store": "https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454",
+      "summary": "Full-body first- and third-person controller with procedural IK, foot planting, a 7-step Setup Wizard, FPCutter, an item system, and optional FishNet and PurrNet multiplayer add-ons.",
+      "facts": ["Unity 6000.5+", "URP"],
+      "image": "../assets/web/fp-overview.jpg",
+      "ogImage": "https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg",
+      "pages": [
+        "overview",
+        "quick-start",
+        { "label": "Guides" },
+        "fp-setup-wizard",
+        "fp-items",
+        "fp-body-ik",
+        "fp-fpcutter",
+        "fp-vitals",
+        "fp-demos",
+        { "label": "Multiplayer" },
+        "fishnet",
+        "purrnet",
+        { "label": "Reference" },
+        "interfaces",
+        "fp-troubleshooting",
+        "fp-changelog"
+      ]
+    },
+    {
+      "id": "dungeon",
+      "title": "Easy Dungeon Generator",
+      "short": "Dungeon Generator",
+      "anchor": "easy-dungeon-generator",
+      "version": "1.1.0",
+      "store": "https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094",
+      "summary": "Hand-painted rooms and template-driven, multi-floor dungeons with door sockets, chunk streaming, procedural decoration, portal culling, and NavMesh support.",
+      "facts": ["Unity 6000.5.0+", "Built-in / URP / HDRP"],
+      "image": "../assets/web/dungen-main.jpg",
+      "ogImage": "https://vedaloiv.wasmer.app/assets/web/dungen-main.jpg",
+      "pages": [
+        "dungeon-generator",
+        "dungeon-quick-start",
+        { "label": "Guides" },
+        "dungeon-room-designer",
+        "dungeon-templates",
+        "dungeon-decoration",
+        "dungeon-streaming",
+        "dungeon-culling-navmesh",
+        "dungeon-demos",
+        { "label": "Reference" },
+        "dungeon-api",
+        "dungeon-troubleshooting",
+        "dungeon-changelog"
+      ]
+    }
+  ],
+  "upcoming": [
+    {
+      "title": "Earshot",
+      "anchor": "earshot",
+      "status": "In development",
+      "summary": "Real-time sound occlusion for Unity. Documentation is published with the release."
+    }
+  ]
+}

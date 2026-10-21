@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chunk Streaming | Easy Dungeon Generator docs</title>
+  <meta name="description" content="Stream an endless dungeon with ChunkDungeonStreamer: set up the player, corridor, and rooms, choose the chunk size and radii, and tune build pacing.">
+  <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/dungeon-streaming.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vedaloiv">
+  <meta property="og:title" content="Chunk Streaming | Easy Dungeon Generator docs">
+  <meta property="og:description" content="Stream an endless dungeon with ChunkDungeonStreamer: set up the player, corridor, and rooms, choose the chunk size and radii, and tune build pacing.">
+  <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/dungeon-streaming.html">
+  <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/dungen-main.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f0f0f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M7 9l9 15 9-15' fill='none' stroke='%23ffe343' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='6' width='4' height='4' fill='%232748c9'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
+  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+</head>
+<body data-page="dungeon-streaming" data-group="dungeon">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Menu</span>
+      </button>
+      <a class="brand" href="index.html" aria-label="vedaloiv documentation home">
+        <span class="brand-name">vedaloiv</span><span class="brand-sub">docs</span>
+      </a>
+      <nav class="topnav" aria-label="Site">
+        <a href="../unity-asset-portfolio.html">Home</a>
+        <a href="index.html">All docs</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="search-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
+          <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="search-btn-label">Search docs</span>
+          <kbd class="search-btn-kbd" data-shortcut>Ctrl K</kbd>
+        </button>
+        <a class="top-store" href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener"><span class="top-store-long">Asset Store</span><span class="sr-only"> page for Easy Dungeon Generator (opens in a new tab)</span><svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation">
+      <nav class="sidebar-nav" aria-label="Documentation pages">
+<a class="nav-home" href="index.html">Docs home</a>
+<section class="nav-group" data-group="fp">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <ul class="nav-list" id="nav-fp">
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="fp-setup-wizard.html">Setup Wizard</a></li>
+    <li><a href="fp-items.html">Items</a></li>
+    <li><a href="fp-body-ik.html">Body IK</a></li>
+    <li><a href="fp-fpcutter.html">FPCutter</a></li>
+    <li><a href="fp-vitals.html">Vitals &amp; Stamina</a></li>
+    <li><a href="fp-demos.html">Demos</a></li>
+    <li class="nav-label">Multiplayer</li>
+    <li><a href="fishnet.html">FishNet</a></li>
+    <li><a href="purrnet.html">PurrNet</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="interfaces.html">Interfaces</a></li>
+    <li><a href="fp-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="fp-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+<section class="nav-group is-current" data-group="dungeon">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-dungeon"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy Dungeon Generator</span><span class="nav-version">v1.1.0</span></button>
+  <ul class="nav-list" id="nav-dungeon">
+    <li><a href="dungeon-generator.html">Overview</a></li>
+    <li><a href="dungeon-quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="dungeon-room-designer.html">Room Designer</a></li>
+    <li><a href="dungeon-templates.html">Templates &amp; Generation</a></li>
+    <li><a href="dungeon-decoration.html">Decoration &amp; Themes</a></li>
+    <li><a href="dungeon-streaming.html" class="is-active" aria-current="page">Chunk Streaming</a></li>
+    <li><a href="dungeon-culling-navmesh.html">Culling &amp; NavMesh</a></li>
+    <li><a href="dungeon-demos.html">Demo Scenes</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="dungeon-api.html">API Reference</a></li>
+    <li><a href="dungeon-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="dungeon-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+      </nav>
+    </aside>
+    <div class="scrim" data-close-nav hidden></div>
+
+    <main class="main" id="content" tabindex="-1">
+      <article class="doc">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Docs</a></li><li><a href="dungeon-generator.html">Easy Dungeon Generator</a></li><li><span aria-current="page">Chunk Streaming</span></li></ol></nav>
+        <header class="doc-header">
+  <p class="kicker">Guide</p>
+  <h1>Chunk Streaming</h1>
+  <p class="doc-meta"><span>Documentation for v1.1.0</span><span>Unity 6000.5.0+</span><span>namespace DungeonGen</span></p>
+</header>
+        <div class="prose">
+<p class="lead"><strong>ChunkDungeonStreamer</strong> builds an endless dungeon in chunks. It plans the chunks around the player, builds the nearby ones, and removes or reuses the ones the player leaves behind. Use it for open-ended worlds; use <code>DungeonManager</code> when you want a fixed, authored structure.</p>
+<details class="toc-inline"><summary>On this page</summary><ol class="toc-list">
+<li class="toc-l2"><a href="#set-up">Set up a streamed world</a></li>
+<li class="toc-l2"><a href="#chunk-size">Chunk size</a></li>
+<li class="toc-l2"><a href="#settings">Settings</a></li>
+<li class="toc-l3"><a href="#settings-rooms">Rooms</a></li>
+<li class="toc-l3"><a href="#settings-world">World and seed</a></li>
+<li class="toc-l3"><a href="#settings-streaming">Streaming and performance</a></li>
+<li class="toc-l3"><a href="#settings-locks">Locks and key</a></li>
+<li class="toc-l3"><a href="#settings-debug">Debug and logging</a></li>
+<li class="toc-l2"><a href="#performance">Performance</a></li>
+<li class="toc-l2"><a href="#events">Events and API</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common mistakes</a></li>
+</ol></details>
+
+<h2 id="set-up">Set up a streamed world<a class="anchor" href="#set-up" aria-label="Link to this section">#</a></h2>
+<ol class="steps">
+  <li>
+    <p>Open <span class="menu">Tools › DungeonGen › Dungeon Setup</span> and click <strong>Create Infinite Dungeon</strong>. This adds a <code>ChunkDungeonStreamer</code> to the scene.</p>
+  </li>
+  <li>
+    <p>Assign the player. Set <strong>Player</strong> to the player's transform, or set <strong>Player Prefab</strong> so the streamer spawns the player in the entry room of the start chunk. Use one of the two.</p>
+  </li>
+  <li>
+    <p>Assign the <strong>Corridor Prefab</strong>. It must be a 1 × 1 corridor module from the Room Designer with exactly one <code>DoorSocket</code> on each of the four sides. There is no built-in fallback corridor.</p>
+  </li>
+  <li>
+    <p>Set the entry rooms. Either add prefabs to <strong>Entry Prefabs</strong>, or turn <strong>Use Dedicated Entry</strong> off to use pool-only mode, where the first room of each chunk comes from the room pool.</p>
+  </li>
+  <li>
+    <p>Add rooms to <strong>Room Pool Prefabs</strong>. Each room must have a <code>DoorSocket</code> on every cardinal side. Different room sizes are allowed.</p>
+  </li>
+  <li>
+    <p>Set <strong>Cell Size (m)</strong> to the tile size of the rooms. It must match the Room Designer grid.</p>
+  </li>
+  <li>
+    <p>Set <strong>Chunk Size (Cells)</strong> to at least the measured minimum. Once rooms are assigned, the inspector shows the minimum and the recommended value. See <a href="#chunk-size">Chunk size</a>.</p>
+    <figure>
+      <img src="images/dungeon/Unity_V3loHYnweB.png" alt="Chunk Dungeon Streamer Inspector in Setup mode, with empty Player and Player Prefab fields, Use Dedicated Entry on, empty Entry Prefabs and Corridor Prefab fields, Min. Rooms and Max. Rooms set to 4, and Chunk Size set to 24." fetchpriority="high" decoding="async" width="626" height="1293">
+      <figcaption>Setup mode: player, rooms, and corridor, with the chunk size below.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <p>Click <strong>Generate</strong> in the inspector. The world builds around the player. Use <strong>Recenter</strong> to move the streamed area to the player's current chunk, <strong>Rebuild</strong> to build it again, and <strong>Clear World</strong> to remove it.</p>
+  </li>
+</ol>
+
+<aside class="callout warn">
+  <strong class="callout-title">The corridor is required</strong>
+  <p>Without a valid corridor prefab, initialization fails. The Console names the missing sides of its <code>DoorSocket</code>s.</p>
+</aside>
+
+<h2 id="chunk-size">Chunk size<a class="anchor" href="#chunk-size" aria-label="Link to this section">#</a></h2>
+<p>The chunk size must be big enough for the largest room to fit with its corridors:</p>
+<dl class="props">
+  <dt><code>ChunkSizeMinimum</code> <span class="type">cells</span></dt>
+  <dd>Three times the largest room side, plus twice the safety margin. Below this value the streamer refuses to start.</dd>
+  <dt><code>ChunkSizeRecommended</code> <span class="type">cells</span></dt>
+  <dd>The minimum plus 2. The extra cells keep corridors away from the chunk border.</dd>
+</dl>
+<p>Below the minimum, initialization fails with an error. Between the minimum and the recommended size, it logs a warning and continues, and corridors may feel cramped at the chunk border.</p>
+<p>Both values are available from code as <code>ChunkDungeonStreamer.ChunkSizeMinimum(width, height, safetyMarginCells)</code> and <code>ChunkSizeRecommended(...)</code>.</p>
+
+<h2 id="settings">Settings<a class="anchor" href="#settings" aria-label="Link to this section">#</a></h2>
+<h3 id="settings-rooms">Rooms<a class="anchor" href="#settings-rooms" aria-label="Link to this section">#</a></h3>
+<dl class="props">
+  <dt><code>useDedicatedEntry</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Uses the entry prefabs as the first room of every chunk. Off = pool-only mode.</dd>
+  <dt><code>entryPrefabs</code> <span class="type">list</span></dt>
+  <dd>Entry rooms. Each chunk picks one with its chunk seed.</dd>
+  <dt><code>corridorPrefab</code> <span class="type">GameObject</span> <span class="default">required</span></dt>
+  <dd>The 1 × 1 corridor module that joins rooms.</dd>
+  <dt><code>roomPrefabs</code> <span class="type">list</span></dt>
+  <dd>Additional rooms for the pool. Duplicate references are rejected.</dd>
+  <dt><code>minRooms</code>, <code>maxRooms</code> <span class="type">int</span> <span class="default">default 4 and 4</span></dt>
+  <dd>Rooms per chunk, Entry included. <code>minRooms</code> must be at least 1 and at most <code>maxRooms</code>.</dd>
+</dl>
+
+<h3 id="settings-world">World and seed<a class="anchor" href="#settings-world" aria-label="Link to this section">#</a></h3>
+<dl class="props">
+  <dt><code>useRandomSeed</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Draws a new world seed on every generation. Turn it off to use <code>worldSeed</code>.</dd>
+  <dt><code>worldSeed</code> <span class="type">int</span> <span class="default">default 42</span></dt>
+  <dd>The seed for a repeatable world. The same seed gives the same layout.</dd>
+  <dt><code>cellsPerSide</code> <span class="type">int</span> <span class="default">default 24</span></dt>
+  <dd>Chunk size in cells. It must be at least the minimum in <a href="#chunk-size">Chunk size</a>.</dd>
+  <dt><code>cellSize</code> <span class="type">float</span> <span class="default">default 3</span></dt>
+  <dd>Size of one cell in meters. It must match the tile size of your room prefabs.</dd>
+  <dt><code>safetyMarginCells</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Cells kept free at the chunk edges so corridors stay clear of the border.</dd>
+  <dt><code>openSubsetRetrySlots</code> <span class="type">int</span> <span class="default">default 2, range 0 to 2</span></dt>
+  <dd>Extra attempts with derived seeds when a chunk's seams do not fit.</dd>
+  <dt><code>openSubsetExitCount</code> <span class="type">int</span> <span class="default">default 2, range 1 to 4</span></dt>
+  <dd>Minimum number of open seams on the start chunk.</dd>
+  <dt><code>portalSocketTypes</code> <span class="type">list of DoorSocketType</span></dt>
+  <dd>Socket types for the seams between chunks. The list order decides the type, so do not sort it. An empty list means untyped seams.</dd>
+</dl>
+
+<h3 id="settings-streaming">Streaming and performance<a class="anchor" href="#settings-streaming" aria-label="Link to this section">#</a></h3>
+<dl class="props">
+  <dt><code>plannedRadius</code> <span class="type">int</span> <span class="default">default 2</span></dt>
+  <dd>Chunks within this radius around the player are planned and cached, but not built. The planned area is (2r + 1)² chunks.</dd>
+  <dt><code>loadedRadius</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Chunks within this radius are built and active. Must not exceed <code>plannedRadius</code>.</dd>
+  <dt><code>diamondLoadedNeighborhood</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Builds only the chunks that connect by a side, in a diamond shape. This skips the diagonal corners, which never connect.</dd>
+  <dt><code>materializePerFrame</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Build work per frame (Inspector: <em>Builds per Frame</em>). One work item is a chunk container, one room or corridor instantiate, or one step of corridor planning.</dd>
+  <dt><code>materializeFrameBudgetMs</code> <span class="type">float</span> <span class="default">default 0</span></dt>
+  <dd>Optional time budget per frame (Inspector: <em>Frame Budget (ms)</em>). 0 turns it off. When it is set, the builds per frame still run first.</dd>
+  <dt><code>prewarmRoomCopies</code>, <code>prewarmCorridorCopies</code> <span class="type">int</span> <span class="default">default 4 and 24</span></dt>
+  <dd>Inactive copies created in advance for each room prefab and for the corridor tiles. The first build then reuses them.</dd>
+</dl>
+
+<h3 id="settings-locks">Locks and key<a class="anchor" href="#settings-locks" aria-label="Link to this section">#</a></h3>
+<dl class="props">
+  <dt><code>lockChance</code> <span class="type">float 0–1</span> <span class="default">default 0</span></dt>
+  <dd>Fraction of seams that start locked. 0 turns random locks off.</dd>
+  <dt><code>spawnProtectionRadius</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Chunks around the start that never get locks. The 3 × 3 start area is always protected.</dd>
+  <dt><code>keyPrefab</code> <span class="type">GameObject</span></dt>
+  <dd>The key the player picks up to open locks. It needs a <code>ChunkKeyPickup</code> component and an enabled trigger collider on its root. Locked worlds need one.</dd>
+</dl>
+<p>Door locks follow the world seed. Room locks come from the <strong>Requires Key</strong> setting on each room prefab, which adds a <code>ChunkRoomRequiresKey</code> component.</p>
+
+<h3 id="settings-debug">Debug and logging<a class="anchor" href="#settings-debug" aria-label="Link to this section">#</a></h3>
+<dl class="props">
+  <dt><code>showChunkGizmos</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Master switch for the Scene view overlays. The four overlay toggles below (<strong>Show Areas</strong>, <strong>Show Footprints</strong>, <strong>Show Corridors</strong>, <strong>Show Portal Seams</strong>) are each on by default.</dd>
+  <dt><code>showLockedEdgeLabels</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Labels locked seams with red text.</dd>
+  <dt><code>logDetails</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Informational logs. Errors and warnings are always logged.</dd>
+</dl>
+
+<figure>
+  <img src="images/dungeon/Unity_EroYs8nVu9.png" alt="Chunk Dungeon Streamer World and Streaming settings: Use Random Seed on, Chunk Size 24, Cell Size 3, Safety Margin 1, Retry-Slots 2, Exit-Seams 2, Planned Radius 2, Loaded Radius 1, Diamond Neighborhood off, Builds per Frame 1, Prewarm Rooms 4, and Prewarm Corridors 24." loading="lazy" decoding="async" width="626" height="1293">
+  <figcaption>World and streaming settings. Match Cell Size to the room grid, then balance the radii against build cost.</figcaption>
+</figure>
+
+<h2 id="performance">Performance<a class="anchor" href="#performance" aria-label="Link to this section">#</a></h2>
+<ul>
+  <li><strong>Radii:</strong> the loaded area is what costs time and memory. Keep <code>loadedRadius</code> as small as the gameplay allows. The planned radius is cheaper, because it is computed but not built.</li>
+  <li><strong>Pacing:</strong> <code>materializePerFrame</code> limits how many items are built per frame. Increase it for faster loading, or set a <code>materializeFrameBudgetMs</code> to cap the time spent per frame.</li>
+  <li><strong>Pooling:</strong> chunks you leave are deactivated and reused when the player comes back, so revisiting an area costs little.</li>
+  <li><strong>Prewarming:</strong> raise <code>prewarmRoomCopies</code> and <code>prewarmCorridorCopies</code> if the first builds of a chunk stutter. Each copy costs memory.</li>
+  <li><strong>Chunk size:</strong> a smaller chunk puts rooms and corridors closer together. Below the minimum, planning fails; use the recommended size when you can.</li>
+</ul>
+
+<h2 id="events">Events and API<a class="anchor" href="#events" aria-label="Link to this section">#</a></h2>
+<p><code>ChunkDungeonStreamer</code> exposes <code>Initialize()</code>, <code>UpdateCenterFromPlayer()</code>, <code>Dispose()</code>, and <code>Rebuild()</code>, plus the <code>WorldChanged</code> event. The event passes the transform of the world root. Full signatures are in the <a href="dungeon-api.html#chunk-streamer">API Reference</a>.</p>
+<pre><code class="lang-csharp">using DungeonGen;
+using UnityEngine;
+
+public class StreamedWorldLogger : MonoBehaviour
+{
+    [SerializeField] private ChunkDungeonStreamer streamer;
+
+    private void OnEnable()  => streamer.WorldChanged += OnWorldChanged;
+    private void OnDisable() => streamer.WorldChanged -= OnWorldChanged;
+
+    private void OnWorldChanged(Transform worldRoot)
+    {
+        Debug.Log($"World root: {worldRoot.name}, loaded chunks: {streamer.LoadedCount}");
+    }
+}</code></pre>
+
+<h2 id="pitfalls">Common mistakes<a class="anchor" href="#pitfalls" aria-label="Link to this section">#</a></h2>
+<ul>
+  <li><strong>The world does not start.</strong> Check the Console. The usual causes are a missing corridor socket, a chunk size below the minimum, or a cell size that does not match the rooms.</li>
+  <li><strong>Rooms do not line up.</strong> The cell size must equal the room grid. Check it on every room kit.</li>
+  <li><strong>Locks appear unexpectedly.</strong> Set <code>lockChance</code> to 0 while you test, or assign a key prefab first.</li>
+</ul>
+<p>See also <a href="dungeon-troubleshooting.html#chunks">Troubleshooting: chunk streaming</a>.</p>
+        </div>
+        <nav class="pager" aria-label="Previous and next page"><a class="pager-link pager-prev" href="dungeon-decoration.html" rel="prev"><span class="pager-dir">Previous</span><strong>Decoration &amp; Themes</strong></a><a class="pager-link pager-next" href="dungeon-culling-navmesh.html" rel="next"><span class="pager-dir">Next</span><strong>Culling &amp; NavMesh</strong></a></nav>
+      </article>
+    </main>
+
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p><ol class="toc-list">
+<li class="toc-l2"><a href="#set-up">Set up a streamed world</a></li>
+<li class="toc-l2"><a href="#chunk-size">Chunk size</a></li>
+<li class="toc-l2"><a href="#settings">Settings</a></li>
+<li class="toc-l3"><a href="#settings-rooms">Rooms</a></li>
+<li class="toc-l3"><a href="#settings-world">World and seed</a></li>
+<li class="toc-l3"><a href="#settings-streaming">Streaming and performance</a></li>
+<li class="toc-l3"><a href="#settings-locks">Locks and key</a></li>
+<li class="toc-l3"><a href="#settings-debug">Debug and logging</a></li>
+<li class="toc-l2"><a href="#performance">Performance</a></li>
+<li class="toc-l2"><a href="#events">Events and API</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common mistakes</a></li>
+</ol>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><a class="brand" href="../unity-asset-portfolio.html"><span class="brand-name">vedaloiv</span></a><p>Unity tools, documented for the people who use them.</p></div>
+    <div class="footer-col"><p class="footer-h">Asset Store</p><ul><li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li><li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li></ul></div>
+    <div class="footer-col"><p class="footer-h">Support</p><ul><li><a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></li><li><a href="../unity-asset-portfolio.html">vedaloiv home</a></li><li><a href="index.html">All docs</a></li></ul></div>
+  </div>
+  <p class="footer-copy">© 2026 vedaloiv</p>
+</footer>
+
+  <dialog class="search-dialog" aria-label="Search the documentation">
+    <form class="search-form" role="search" method="dialog">
+      <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input class="search-input" type="search" placeholder="Search pages and sections" autocomplete="off" spellcheck="false"
+        role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Search the documentation">
+      <button class="search-close" type="button" data-close-search><kbd>Esc</kbd><span class="sr-only">Close search</span></button>
+    </form>
+    <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+    <p class="search-status" aria-live="polite"></p>
+  </dialog>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" data-close-lightbox>Close <kbd>Esc</kbd></button>
+    <img alt="">
+    <p class="lightbox-caption"></p>
+  </dialog>
+</body>
+</html>

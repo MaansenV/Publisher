@@ -1,0 +1,57 @@
+<!--meta
+{"title": "Easy Dungeon Generator Quick Start", "navTitle": "Quick Start", "description": "Generate your first dungeon with Easy Dungeon Generator: install the packages, paint a room, build a template, and press Generate on a DungeonManager.", "group": "dungeon", "kicker": "Quick Start", "chips": ["Unity 6000.5.0+", "namespace DungeonGen"]}
+-->
+<p class="lead">This is the shortest path to a generated dungeon: one theme, one painted room, one template, and one <strong>DungeonManager</strong> in your scene. Each step links to the guide that explains it in full.</p>
+
+<h2 id="before-you-start">Before you start</h2>
+<ul>
+  <li>Import the package and keep its folder at <code>Assets/DungeonGenerator/</code>.</li>
+  <li>Install AI Navigation <code>2.0.13</code>, Burst <code>1.8.30</code>, Collections <code>6.5.0</code>, and Mathematics <code>1.4.0</code> from the Package Manager. Alchemy is bundled.</li>
+  <li>Create a content folder such as <code>Assets/MyDungeonContent/</code>. Save all your assets there, never inside the package folder.</li>
+</ul>
+
+<h2 id="build-a-dungeon">Build a dungeon</h2>
+<ol class="steps">
+  <li>
+    <p>Create a theme. Choose <span class="menu">Assets › Create › DungeonGen › DungeonTheme</span> in your content folder, assign your floor, wall, and door prefabs, and check the tile size with the <span class="menu">Tools › DungeonGen › Dungeon Theme Wizard</span>.</p>
+    <p>See <a href="dungeon-decoration.html#themes">Themes</a>.</p>
+  </li>
+  <li>
+    <p>Paint two rooms. Open <span class="menu">Tools › DungeonGen › Room Designer</span>, paint floor cells with the Floor brush, and add doors on the walls. Set the Room Type to <strong>Entrance</strong> for the first room and to <strong>Exit</strong> for the second. Assign the theme to each, and click <strong>Save Prefab</strong> to save both in your content folder.</p>
+    <p>See <a href="dungeon-room-designer.html">Room Designer</a>.</p>
+  </li>
+  <li>
+    <p>Build a template. Open <span class="menu">Tools › DungeonGen › Dungeon Template Designer</span>. The root node is the Entrance. Add an Exit node, connect it to the Entrance, and click <strong>Validate</strong> until the result is clean.</p>
+    <p>See <a href="dungeon-templates.html">Templates and generation</a>.</p>
+  </li>
+  <li>
+    <p>Create the manager. Open <span class="menu">Tools › DungeonGen › Dungeon Setup</span> and click <strong>Create Template Dungeon</strong>. This adds a <code>DungeonManager</code> to the scene.</p>
+  </li>
+  <li>
+    <p>Assign the template and the rooms. In the <code>DungeonManager</code> Inspector, assign the template. Drag your saved room prefabs onto the Room Pool drop zone. Each dropped prefab gets weight 1 and all placement contexts.</p>
+  </li>
+  <li>
+    <p>Click <strong>Generate Dungeon</strong>. Use <strong>Clear Generated</strong> to remove the result. Generate the dungeon again after each change.</p>
+  </li>
+</ol>
+
+<aside class="callout warn">
+  <strong class="callout-title">Every template node needs a room</strong>
+  <p>Each node needs either a pinned prefab or a room pool prefab with the same Room Type. The template validator reports a missing room, and generation does not start until it is fixed. Check the Console if nothing happens.</p>
+</aside>
+
+<aside class="callout tip">
+  <strong class="callout-title">Keep the seed fixed while you test</strong>
+  <p>Turn off <strong>Use Random Seed</strong> and set a <strong>Seed</strong> on the manager. The same seed gives the same layout, so changes are easier to compare.</p>
+</aside>
+
+<h2 id="next-steps">Next steps</h2>
+<div class="cards">
+  <a class="card" href="dungeon-room-designer.html"><strong>Room Designer</strong><span>Brushes, room doors, stairs, socket types, and saving prefabs.</span></a>
+  <a class="card" href="dungeon-templates.html"><strong>Templates and generation</strong><span>Exact or seeded random layouts, progression requirements, and wall mode.</span></a>
+  <a class="card" href="dungeon-decoration.html"><strong>Decoration and themes</strong><span>Theme Wizard, decoration profiles, and runtime decoration.</span></a>
+  <a class="card" href="dungeon-streaming.html"><strong>Chunk streaming</strong><span>An endless world that streams around the player.</span></a>
+  <a class="card" href="dungeon-culling-navmesh.html"><strong>Culling and NavMesh</strong><span>Portal culling, runtime NavMesh, and the Burst planner option.</span></a>
+  <a class="card" href="dungeon-demos.html"><strong>Demo scenes</strong><span>Run the four demos to see each feature working.</span></a>
+</div>
+<p>Problems during setup? See <a href="dungeon-troubleshooting.html">Troubleshooting</a>.</p>

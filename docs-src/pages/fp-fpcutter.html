@@ -1,0 +1,98 @@
+<!--meta
+{"title": "FPCutter", "navTitle": "FPCutter", "description": "Use the FPCutter Wizard to split a character into body parts so the head and other parts are hidden in first person while still casting shadows.", "group": "fp", "kicker": "Guide", "chips": ["Non-destructive", "URP"]}
+-->
+<p class="lead">Hide the head, and any other body part you choose, from the first-person camera without losing the character's shadow. The FPCutter Wizard splits your character's meshes by bone weight and generates a playable copy that uses the split meshes.</p>
+
+<h2 id="what-it-does">What FPCutter does</h2>
+<p>FPCutter reads the bone weights of each <code>SkinnedMeshRenderer</code> and sorts the triangles into body parts: <code>Body</code>, <code>Head</code>, <code>LeftArm</code>, <code>RightArm</code>, <code>LeftLeg</code> and <code>RightLeg</code>. In first person, the parts in <em>Hide In First Person</em> switch to an invisible material. That material writes nothing to the screen but still casts a shadow.</p>
+<ul>
+  <li><strong>Non-destructive.</strong> Your original character is not changed. The wizard creates a second, complete copy with its own skeleton and Animator, placed beside the original.</li>
+  <li><strong>Saved meshes.</strong> The generated meshes go to <code>FPCutter/Generated/&lt;character&gt;/</code> in the asset folder.</li>
+  <li><strong>Several meshes.</strong> A character built from several meshes (for example a suit, a mask and a helmet on one skeleton) works. One controller handles all of them.</li>
+</ul>
+
+<h2 id="process">Process a character</h2>
+<p>Open <span class="menu">Tools › FBSystem › FPCutter Wizard</span>. The wizard has three steps: <strong>Select</strong>, <strong>Map Bones</strong> and <strong>Generate</strong>.</p>
+<ol class="steps">
+  <li>
+    <p><strong>Select.</strong> Drag the character root into <strong>Character Root</strong>. The wizard finds its meshes and Animator automatically. Under <strong>Manual Overrides</strong> you can set a <strong>Target Mesh</strong> (drives bone detection and the preview) or an <strong>Animator</strong>.</p>
+    <p>The <strong>Meshes to Process</strong> list shows every <code>SkinnedMeshRenderer</code> under the root. All are selected by default. Untick the meshes you do not want to cut.</p>
+  </li>
+  <li>
+    <p><strong>Map Bones.</strong> Click <strong>Auto-Detect Bones</strong>, then check the fields:</p>
+    <ul>
+      <li><strong>Root Bone</strong>: always required, usually the hips.</li>
+      <li><strong>Head Bone</strong>: required while <em>Head</em> is on in the settings.</li>
+      <li><strong>Left Arm</strong> and <strong>Right Arm</strong>: required while <em>Arms</em> is on.</li>
+      <li><strong>Left Leg</strong> and <strong>Right Leg</strong>: required while <em>Legs</em> is on.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Generate.</strong> Check the settings below, then click <strong>Generate First-Person Mesh</strong>. The wizard reports how many meshes it processed and where they were saved.</p>
+  </li>
+</ol>
+<aside class="callout tip">
+  <strong class="callout-title">Preview before you generate</strong>
+  <p>Enable <strong>Enable Real-time Preview</strong> under <strong>Advanced Settings</strong>. The Scene view colours the vertices: white for the body, red for the head, blue for the arms and green for the legs.</p>
+</aside>
+
+<h2 id="settings">Settings</h2>
+<p>The settings are under <strong>Advanced Settings</strong> in the Generate step:</p>
+<dl class="props">
+  <dt><code>WeightThreshold</code> <span class="type">Weight Threshold</span> <span class="default">default 0.5</span></dt>
+  <dd>The minimum bone weight (0 to 1) a vertex needs to belong to a body part. Raise it if the head cut bleeds into the neck. Lower it if the head is missing parts.</dd>
+  <dt><code>VertexThreshold</code> <span class="type">Vertex Threshold</span> <span class="default">default 2, range 1 to 3</span></dt>
+  <dd>How many vertices of a triangle must match a part before the whole triangle goes to it. 1 makes a greedy cut with jagged edges. 2 or 3 gives a cleaner, weight-based cut.</dd>
+  <dt><em>Head</em>, <em>Arms</em>, <em>Legs</em> <span class="default">default on, on, off</span></dt>
+  <dd>Which parts are separated. Parts that are not separated stay in the body mesh.</dd>
+  <dt><em>Preview Mesh</em> <span class="type">SkinnedMeshRenderer</span></dt>
+  <dd>The mesh shown in the preview. It can be any selected mesh.</dd>
+</dl>
+
+<h2 id="controller">FPCutterController</h2>
+<p>The generated copy carries an <code>FPCutterController</code>. It switches the parts between first and third person.</p>
+<dl class="props">
+  <dt><code>Hide In First Person</code> <span class="type">List&lt;BodyPart&gt;</span> <span class="default">default Head</span></dt>
+  <dd>The parts that become invisible in first person. Add <code>Body</code>, <code>LeftArm</code> and so on if needed.</dd>
+  <dt><code>Invisible Material</code> <span class="type">Material</span></dt>
+  <dd>The material for hidden parts. The wizard assigns the shipped <code>FPCutter_invisible</code> material, which uses the <code>FPCutter/InvisibleShadowCaster</code> shader.</dd>
+</dl>
+<p>Switch the mode in the Inspector with <strong>Set First Person</strong> and <strong>Set Third Person</strong>. In Edit Mode, save the scene or prefab afterwards so the state is kept. The same actions are in the component's context menu under <span class="menu">View › Set First Person</span> and <span class="menu">View › Set Third Person</span>.</p>
+<p>At runtime, call the methods of the <code>FPCutter</code> namespace:</p>
+<pre><code class="lang-csharp">using FPCutter;
+
+var cutter = GetComponent&lt;FPCutterController&gt;();
+cutter.SetFirstPerson();                        // hide the parts in Hide In First Person
+cutter.SetThirdPerson();                        // show every part
+cutter.HidePart(BodyPart.Head);                 // hide one part
+cutter.ShowPart(BodyPart.Head);                 // show it again</code></pre>
+
+<h2 id="shadows">Shadows and the URP shader</h2>
+<p>The hidden parts use <code>FPCutter/InvisibleShadowCaster</code>. The shader has two passes:</p>
+<ul>
+  <li>A forward pass that draws nothing on screen, so the part is invisible to the camera. It also keeps the shader active when shadows are disabled.</li>
+  <li>A shadow caster pass, so the hidden body still casts a shadow. Spot and point lights are handled as well as directional lights.</li>
+</ul>
+<p>The shader is tagged for the Universal Render Pipeline, so use it in URP projects only.</p>
+<aside class="callout note">
+  <strong class="callout-title">GLES, WebGL and Android</strong>
+  <p>Version 1.6 removed the exclusion of the shader on GLES, WebGL and Android. Builds for those platforms could show hidden parts in magenta. See <a href="fp-changelog.html#v1-6-0">1.6.0</a>.</p>
+</aside>
+
+<h2 id="pitfalls">Common pitfalls</h2>
+<aside class="callout warn">
+  <strong class="callout-title">Head is still visible in first person</strong>
+  <p>Make sure the camera uses the generated copy of the character, not the original. Then check that <strong>Head</strong> is in <strong>Hide In First Person</strong>.</p>
+</aside>
+<aside class="callout warn">
+  <strong class="callout-title">Jagged or bleeding cut</strong>
+  <p>Adjust <strong>Vertex Threshold</strong> for the edge shape and <strong>Weight Threshold</strong> for the neck area. Generate again. The wizard does not change the original mesh.</p>
+</aside>
+<aside class="callout note">
+  <strong class="callout-title">Shader not found</strong>
+  <p>If the shipped material is missing, the wizard builds one from the shader. If the shader is missing too, the wizard logs a warning and falls back to a visible <code>Universal Render Pipeline/Lit</code> material, so hidden parts stay visible. Assign a material that uses <code>FPCutter/InvisibleShadowCaster</code> to <strong>Invisible Material</strong> by hand.</p>
+</aside>
+<aside class="callout note">
+  <strong class="callout-title">Multiplayer</strong>
+  <p>The FishNet add-on hides the head for the local player and shows the full body for remote players. See <a href="fishnet.html">FishNet</a>.</p>
+</aside>

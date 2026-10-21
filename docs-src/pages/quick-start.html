@@ -1,0 +1,78 @@
+<!--meta
+{"title": "Quick Start", "navTitle": "Quick Start", "description": "The shortest path to a playable first-person full-body character with Easy FP Full Body Controller: the demo prefabs, or the 7-step Setup Wizard for your own Humanoid model.", "group": "fp", "kicker": "Getting started", "chips": ["Humanoid", "URP", "Unity 6000.5+"]}
+-->
+<p class="lead">Get a playable first-person character in a few minutes. Start with the demo prefabs to see the controller work, then set up your own Humanoid model with the Setup Wizard. Each step links to the guide with the details.</p>
+
+<h2 id="requirements">Requirements</h2>
+<p>A URP project on Unity 6000.5 (Unity 6.5) or newer, and a Humanoid character model for your own character. The full list is in the <a href="overview.html#requirements">Overview</a>.</p>
+
+<h2 id="fastest-start">Fastest start: demo prefabs</h2>
+<ol class="steps">
+  <li>Import the asset (see <a href="#import">Import</a>).</li>
+  <li>In a scene with a floor that has a collider, drag <code>Assets/FBSystem/Demo/Prefabs/FBSystem_CameraRig.prefab</code> into the scene. Delete any other Main Camera.</li>
+  <li>Drag <code>Assets/FBSystem/Demo/Prefabs/FBSystem_Player.prefab</code> onto the floor.</li>
+  <li>Press Play. Move with <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>, look with the mouse, and press <kbd>1</kbd> to take out the flashlight.</li>
+</ol>
+<p>The demo scenes walk you through the controller station by station. See <a href="fp-demos.html">Demos</a>.</p>
+
+<h2 id="import">Import the asset</h2>
+<ol class="steps">
+  <li>Import Easy FP Full Body Controller from the <a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">Asset Store</a> into your URP project. The package installs to <code>Assets/FBSystem/</code>.</li>
+  <li>Install the <strong>Input System</strong> and <strong>Cinemachine 3</strong> packages if they are not in the project yet.</li>
+  <li>In <span class="menu">Project Settings › Player › Other Settings</span>, set <strong>Active Input Handling</strong> to <em>Input System Package</em> or <em>Both</em>.</li>
+</ol>
+
+<h2 id="model">Prepare a Humanoid model</h2>
+<ol class="steps">
+  <li>Select your character FBX in the Project window.</li>
+  <li>In the Inspector, set <span class="menu">Rig › Animation Type</span> to <strong>Humanoid</strong>, then click <strong>Apply</strong>.</li>
+</ol>
+<p>The Setup Wizard checks this and does not continue without a Humanoid avatar.</p>
+
+<h2 id="wizard">Set up your own character</h2>
+<p>Open <span class="menu">Tools › FBSystem › Setup Wizard</span> and work through the seven steps. The wizard checks each step before you can continue. The guide <a href="fp-setup-wizard.html">Setup Wizard</a> explains what each step creates.</p>
+<ol class="steps">
+  <li id="step-1"><a href="fp-setup-wizard.html#step-1">Select Player Root</a>: the object that moves the player.</li>
+  <li id="step-2"><a href="fp-setup-wizard.html#step-2">Assign Model</a>: your Humanoid Animator, the input actions and the player settings.</li>
+  <li id="step-3"><a href="fp-setup-wizard.html#step-3">Find Bones</a>: the head, spine and right hand are detected automatically.</li>
+  <li id="step-4"><a href="fp-setup-wizard.html#step-4">Add Player Scripts</a>: adds the controller and IK components.</li>
+  <li id="step-5"><a href="fp-setup-wizard.html#step-5">Setup Helper Objects</a>: the camera target, the elbow hints and the item container.</li>
+  <li id="step-6"><a href="fp-setup-wizard.html#step-6">Connect Everything</a>: wires all references.</li>
+  <li id="step-7"><a href="fp-setup-wizard.html#step-7">Final Health Check</a>: fix all errors, then finish.</li>
+</ol>
+
+<h2 id="fpcutter">Cut the mesh with FPCutter</h2>
+<p>To hide the head in first person while keeping its shadow, run the <strong>FPCutter Wizard</strong> (<span class="menu">Tools › FBSystem › FPCutter Wizard</span>) on your character root. It splits the meshes into body parts and generates a copy of the character that hides the head. The guide is <a href="fp-fpcutter.html">FPCutter</a>.</p>
+
+<h2 id="input">Input</h2>
+<p>The asset ships <code>FBInputActions</code> with a <strong>Player</strong> action map, and <code>PlayerInputHandler</code> reads it. Bindings are in the Input Actions editor. The Setup Wizard links the asset for you. The actions that the code reads are:</p>
+<ul>
+  <li><code>Move</code>, <code>Look</code>, <code>Sprint</code>, <code>Jump</code> and <code>Crouch</code> (toggle) drive the locomotion and camera.</li>
+  <li><code>Flashlight</code> (<kbd>F</kbd>) uses the held item.</li>
+  <li><code>Interact</code> (<kbd>E</kbd>) sets <code>InteractTriggered</code>. The demo pickup reads the key directly.</li>
+</ul>
+<p>Item switching reads the number keys, <kbd>Q</kbd> and the mouse wheel directly in <code>ItemSwitcher</code>. See <a href="fp-items.html">Items</a>.</p>
+
+<h2 id="play">Press Play</h2>
+<p>Enter Play Mode. You should see your own full body in first person, with working movement, look and a held item. To see every event as it happens, add the demo <code>PlayerEventLogger</code> to the player. It logs item and locomotion events to the Console. The event reference is in <a href="interfaces.html#event-api">Interfaces</a>.</p>
+
+<h2 id="multiplayer">Multiplayer (optional)</h2>
+<p>For networked play, install the networking library first and then the matching add-on. For FishNet, use <strong>FishNet 4.7.2</strong> and the <code>FBSystemFishNet</code> add-on. For PurrNet, use <strong>PurrNet v1.22.0</strong> and the <code>FBSystemPurrNet</code> add-on, which supports 2 to 4 players. Each add-on has its own Setup Wizard. See <a href="fishnet.html">FishNet</a> and <a href="purrnet.html">PurrNet</a>.</p>
+
+<h2 id="upgrading">Upgrading</h2>
+<aside class="callout warn">
+  <strong class="callout-title">Upgrading from 1.3</strong>
+  <p>Version 1.6 renamed the foot component and resets the foot settings, and add-ons must be re-imported. Read the steps in <a href="fp-changelog.html#upgrade-from-1-3">Upgrading from 1.3</a> before you update.</p>
+</aside>
+
+<h2 id="video">Video walkthrough</h2>
+<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" title="FBSystem Quick Start Guide" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<p><a href="https://www.youtube.com/watch?v=_X0HWXqQ3_k" target="_blank" rel="noopener">Open the walkthrough on YouTube</a></p>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If the character does not move, the camera is wrong or a health check fails, start with the <a href="fp-troubleshooting.html">Troubleshooting</a> page. It lists every health check message and its fix.</p>
+<div class="cards">
+  <a class="card" href="fp-setup-wizard.html"><strong>Setup Wizard</strong><span>All seven steps, plus Transfer Configuration.</span></a>
+  <a class="card" href="fp-demos.html"><strong>Demos</strong><span>The three guided scenes and the ready-made prefabs.</span></a>
+  <a class="card" href="fp-troubleshooting.html"><strong>Troubleshooting</strong><span>Health check messages and fixes.</span></a>
+</div>

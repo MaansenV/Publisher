@@ -1,0 +1,123 @@
+<!--meta
+{"title": "Setup Wizard", "navTitle": "Setup Wizard", "description": "Set up your own Humanoid character with the 7-step Setup Wizard: player root, model, bones, scripts, helper objects, wiring and health check, plus the Transfer Configuration tool.", "group": "fp", "kicker": "Guide", "chips": ["7 steps", "Humanoid model"]}
+-->
+<p class="lead">Turn your own Humanoid character into a first-person full-body player. The Setup Wizard adds the components, creates the helper objects, wires every reference and runs a health check. You work through seven steps and cannot skip ahead while a step is incomplete.</p>
+
+<h2 id="before-you-start">Before you start</h2>
+<ul>
+  <li>A URP project on Unity 6000.5 or newer. See <a href="overview.html#requirements">Requirements</a>.</li>
+  <li>Your character imported as <strong>Humanoid</strong>: select the model FBX, set <span class="menu">Inspector › Rig › Animation Type</span> to <strong>Humanoid</strong>, then click <strong>Apply</strong>.</li>
+  <li>The character inside your scene, not as a prefab asset. Drag it into the scene first.</li>
+</ul>
+<p>Open the wizard with <span class="menu">Tools › FBSystem › Setup Wizard</span>. Use <code>Next &gt;</code> and <code>&lt; Back</code> to move between steps, and <code>Finish Setup</code> on the last step.</p>
+
+<h2 id="step-1">Step 1: Select Player Root</h2>
+<ol class="steps">
+  <li>Drag an existing GameObject from the scene into <strong>Player Root</strong>, or click <strong>Create New Player Root</strong>.</li>
+  <li>The button creates an empty GameObject named <code>PlayerCharacter</code> at the origin and selects it.</li>
+</ol>
+<p>The root holds the movement and camera logic. Your model becomes a child of it. The step is complete when the root is a scene object.</p>
+
+<h2 id="step-2">Step 2: Assign Model</h2>
+<ol class="steps">
+  <li>Check that <strong>Model Animator</strong> is filled. The wizard finds the first <code>Animator</code> below the root automatically. Drag another one in if needed.</li>
+  <li>Confirm the message <em>Humanoid model verified</em>. A non-humanoid Animator shows an error and blocks the next step.</li>
+  <li>Under <strong>Global Dependencies</strong>, check <strong>Input Actions</strong> (click <strong>Search</strong> if it is empty; the wizard looks for <code>FBInputActions</code>) and <strong>Player Settings</strong> (click <strong>Create</strong> to make a new <code>PlayerSettings</code> asset).</li>
+</ol>
+<figure>
+  <img src="images/QuickStart/Unity_0dJzXrSKBX.png" alt="Setup Wizard step 2, Assign Model: the Model Animator field is empty and the wizard reports that no Animator was found, while Input Actions and Player Settings show green checks">
+  <figcaption>Step 2 before an Animator is assigned. Input Actions and Player Settings are already set.</figcaption>
+</figure>
+
+<h2 id="step-3">Step 3: Find Bones</h2>
+<ol class="steps">
+  <li>Click <strong>Auto-Detect Bones</strong>. The wizard reads the Humanoid avatar and fills three fields.</li>
+  <li>Check the fields. Only <strong>Head (Viewpoint Focus)</strong> is required to continue. <strong>Spine (Body Balance)</strong> and <strong>Right Hand (Item Socket)</strong> show a warning until they are set.</li>
+</ol>
+<p>Override any field by dragging a bone from the Hierarchy. Bones are only referenced, never created. The right hand becomes the parent of the item container in step 5.</p>
+
+<h2 id="step-4">Step 4: Add Player Scripts</h2>
+<p>This step adds the components. Each row shows whether the component exists and has an <strong>Add</strong> button. Click <strong>Add All Required Scripts</strong> to add everything in the root and model lists at once.</p>
+<table>
+  <thead><tr><th scope="col">Object</th><th scope="col">Components</th></tr></thead>
+  <tbody>
+    <tr><td>Player root</td><td><code>PlayerController</code>, <code>CharacterController</code>, <code>PlayerInputHandler</code>, <code>PlayerLocomotion</code>, <code>PlayerCameraController</code>, <code>PlayerAnimatorController</code>, <code>HandItemSocket</code>, <code>ItemSwitcher</code></td></tr>
+    <tr><td>Model (the object with the Animator)</td><td><code>PlayerHeadIK</code>, <code>PlayerHandIK</code>, <code>PlayerSpineStabilizer</code>, <code>PlayerFootPlanting</code>, <code>HandPoseController</code></td></tr>
+  </tbody>
+</table>
+<p>The wizard only requires the root components plus head, hand and spine IK to continue. <code>PlayerFootPlanting</code> and <code>HandPoseController</code> are recommended. The button adds them too, so remove them if you do not want them.</p>
+<p>Three demo components are listed separately: <code>PlayerInventory</code>, <code>PlayerInteraction</code> and <code>PlayerDropSystem</code>. They are not needed for a clean player. The wizard does not add <code>PlayerFootsteps</code> or <code>PlayerVitals</code>; add them by hand (see <a href="fp-body-ik.html#footsteps">Footsteps</a> and <a href="fp-vitals.html">Vitals</a>).</p>
+
+<h2 id="step-5">Step 5: Setup Helper Objects</h2>
+<p>This step creates the objects the components expect. Click <strong>Create Missing Hierarchy Objects</strong>, or use the <strong>Create</strong> button on each row.</p>
+<ul>
+  <li><strong>Camera Target</strong>: child of the root at local position (0, 1.6, 0). The camera follows it.</li>
+  <li><strong>Right Elbow Hint</strong> and <strong>Left Elbow Hint</strong>: children of the root at (0.3, 1.2, −0.2) and (−0.3, 1.2, −0.2). They guide the elbows of the hand IK.</li>
+  <li><strong>Item Container</strong>: child of the right hand bone, with an <code>ItemContainer</code> component. Without a detected right hand, it is created under the model instead.</li>
+</ul>
+<p>Next becomes available when the camera target, both elbow hints and an <code>ItemContainer</code> exist below the root.</p>
+<figure>
+  <img src="images/QuickStart/Unity_zhE8XJutFj.png" alt="Setup Wizard step 5, Setup Helper Objects: four rows for Camera Target, Right Elbow Hint, Left Elbow Hint and Item Container, each with a Create button, and a Create Missing Hierarchy Objects button">
+  <figcaption>Step 5 before the helper objects are created.</figcaption>
+</figure>
+
+<h2 id="step-6">Step 6: Connect Everything</h2>
+<ol class="steps">
+  <li>Click <strong>Connect All Systems</strong>. The wizard fills every reference field. You do not need to drag anything.</li>
+</ol>
+<p>The connections it makes:</p>
+<ul>
+  <li><code>PlayerInputHandler</code> gets the <code>FBInputActions</code> asset.</li>
+  <li><code>PlayerController</code> gets the player settings and all subsystems: input, locomotion, camera, animator, head, hand, spine, foot planting and the item socket.</li>
+  <li><code>PlayerCameraController</code> gets the head bone and the Camera Target. <code>PlayerLocomotion</code> gets the Camera Target as its camera transform.</li>
+  <li><code>HandItemSocket</code> uses the right hand bone as its socket. <code>PlayerHandIK</code> gets both elbow hints.</li>
+  <li><code>ItemContainer</code> gets the hand socket, and <code>ItemSwitcher</code> gets the container.</li>
+  <li>Demo components, if you added them in step 4, are wired as well.</li>
+</ul>
+<p>Run this step again after you change the hierarchy. It is safe to repeat.</p>
+
+<h2 id="step-7">Step 7: Final Health Check</h2>
+<ol class="steps">
+  <li>Click <strong>Run Health Check</strong>.</li>
+  <li>Fix every <strong>error</strong> (red). Use <strong>Fix</strong> next to an issue, or select the player with <strong>Select Player in Scene</strong> and fix it by hand.</li>
+  <li>Click <strong>Finish Setup</strong>. It is enabled when no errors remain. Warnings do not block it.</li>
+</ol>
+<p>The same validator runs from the <code>PlayerController</code> Inspector (<strong>Perform Manual Health Check</strong> and <strong>FIX ALL ISSUES</strong>). Each message and its fix is listed in <a href="fp-troubleshooting.html#health-check">Health check messages</a>.</p>
+
+<aside class="callout tip">
+  <strong class="callout-title">Test the setup</strong>
+  <p>Press Play after the health check. Walk, sprint, crouch and equip an item. If something does not behave as expected, check the <a href="fp-troubleshooting.html">troubleshooting</a> page.</p>
+</aside>
+
+<h2 id="transfer">Transfer Configuration</h2>
+<p>Use <span class="menu">Tools › FBSystem › Transfer Configuration</span> to move the tuning of a finished player to a new character. You do not re-tune IK, camera, locomotion or items.</p>
+<ol class="steps">
+  <li>Click <strong>1. Setup Target Structure (opens Setup Wizard)</strong>. The wizard opens with the target root, model, input actions and player settings filled in. Run its steps as described above.</li>
+  <li>Click <strong>2. Copy Tuning + Add Missing Items</strong>. With <strong>Create missing items from source prefabs</strong> switched off, the button reads <em>2. Copy Tuning (Existing Items Only)</em>.</li>
+</ol>
+<p>What is copied:</p>
+<ul>
+  <li>The tuning values of <code>PlayerHandIK</code>, <code>PlayerHeadIK</code>, <code>PlayerCameraController</code>, <code>PlayerLocomotion</code>, <code>PlayerAnimatorController</code> and <code>HandItemSocket</code>.</li>
+  <li>For each item: its item id, world item prefab and attachment (IK and grip) data.</li>
+  <li>Missing items from the source's prefabs are added under the target <code>ItemContainer</code>, inactive. Existing target items are reused and nothing is deleted.</li>
+  <li>The <code>PlayerSettings</code> asset is shared, not copied.</li>
+</ul>
+<p>Bones and references are never copied. The wizard detects them again on the target rig.</p>
+<aside class="callout warn">
+  <strong class="callout-title">Source items must be prefabs</strong>
+  <p>Items that exist only in the source scene are skipped, and the tool shows a warning. Save them as prefabs first if you want them copied.</p>
+</aside>
+
+<h2 id="pitfalls">Common pitfalls</h2>
+<aside class="callout warn">
+  <strong class="callout-title">Prefab asset as the root</strong>
+  <p>Step 1 rejects a prefab asset. Drag the prefab into the scene and use the instance.</p>
+</aside>
+<aside class="callout warn">
+  <strong class="callout-title">Not Humanoid</strong>
+  <p>A non-humanoid model stops the wizard at step 2, because the IK and the animations need a Humanoid avatar. Change the Animation Type to Humanoid and click Apply.</p>
+</aside>
+<aside class="callout note">
+  <strong class="callout-title">IK Pass on the Animator layer</strong>
+  <p>The body IK runs in the Animator's IK pass. The shipped <code>Player.controller</code> has it enabled. If you use your own controller, open the Animator window, choose <em>Layers</em>, open the gear menu and enable <em>IK Pass</em>.</p>
+</aside>

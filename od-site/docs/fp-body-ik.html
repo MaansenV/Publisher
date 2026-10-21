@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Body IK | Easy FP Full Body Controller docs</title>
+  <meta name="description" content="Procedural head, spine and hand IK, ground-anchored foot planting with re-steps, finger grips with automatic calibration, and footsteps detected from the animated feet.">
+  <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/fp-body-ik.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vedaloiv">
+  <meta property="og:title" content="Body IK | Easy FP Full Body Controller docs">
+  <meta property="og:description" content="Procedural head, spine and hand IK, ground-anchored foot planting with re-steps, finger grips with automatic calibration, and footsteps detected from the animated feet.">
+  <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/fp-body-ik.html">
+  <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f0f0f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M7 9l9 15 9-15' fill='none' stroke='%23ffe343' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='6' width='4' height='4' fill='%232748c9'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
+  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+</head>
+<body data-page="fp-body-ik" data-group="fp">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Menu</span>
+      </button>
+      <a class="brand" href="index.html" aria-label="vedaloiv documentation home">
+        <span class="brand-name">vedaloiv</span><span class="brand-sub">docs</span>
+      </a>
+      <nav class="topnav" aria-label="Site">
+        <a href="../unity-asset-portfolio.html">Home</a>
+        <a href="index.html">All docs</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="search-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
+          <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="search-btn-label">Search docs</span>
+          <kbd class="search-btn-kbd" data-shortcut>Ctrl K</kbd>
+        </button>
+        <a class="top-store" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener"><span class="top-store-long">Asset Store</span><span class="sr-only"> page for Easy FP Full Body Controller (opens in a new tab)</span><svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation">
+      <nav class="sidebar-nav" aria-label="Documentation pages">
+<a class="nav-home" href="index.html">Docs home</a>
+<section class="nav-group is-current" data-group="fp">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <ul class="nav-list" id="nav-fp">
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="fp-setup-wizard.html">Setup Wizard</a></li>
+    <li><a href="fp-items.html">Items</a></li>
+    <li><a href="fp-body-ik.html" class="is-active" aria-current="page">Body IK</a></li>
+    <li><a href="fp-fpcutter.html">FPCutter</a></li>
+    <li><a href="fp-vitals.html">Vitals &amp; Stamina</a></li>
+    <li><a href="fp-demos.html">Demos</a></li>
+    <li class="nav-label">Multiplayer</li>
+    <li><a href="fishnet.html">FishNet</a></li>
+    <li><a href="purrnet.html">PurrNet</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="interfaces.html">Interfaces</a></li>
+    <li><a href="fp-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="fp-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+<section class="nav-group" data-group="dungeon">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-dungeon"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy Dungeon Generator</span><span class="nav-version">v1.1.0</span></button>
+  <ul class="nav-list" id="nav-dungeon">
+    <li><a href="dungeon-generator.html">Overview</a></li>
+    <li><a href="dungeon-quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="dungeon-room-designer.html">Room Designer</a></li>
+    <li><a href="dungeon-templates.html">Templates &amp; Generation</a></li>
+    <li><a href="dungeon-decoration.html">Decoration &amp; Themes</a></li>
+    <li><a href="dungeon-streaming.html">Chunk Streaming</a></li>
+    <li><a href="dungeon-culling-navmesh.html">Culling &amp; NavMesh</a></li>
+    <li><a href="dungeon-demos.html">Demo Scenes</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="dungeon-api.html">API Reference</a></li>
+    <li><a href="dungeon-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="dungeon-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+      </nav>
+    </aside>
+    <div class="scrim" data-close-nav hidden></div>
+
+    <main class="main" id="content" tabindex="-1">
+      <article class="doc">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Docs</a></li><li><a href="overview.html">Easy FP Full Body Controller</a></li><li><span aria-current="page">Body IK</span></li></ol></nav>
+        <header class="doc-header">
+  <p class="kicker">Guide</p>
+  <h1>Body IK</h1>
+  <p class="doc-meta"><span>Documentation for v1.6.0</span><span>Procedural IK</span><span>Foot planting</span></p>
+</header>
+        <div class="prose">
+<p class="lead">Make the body believable in first person: the head looks where you look, the hands hold items, the feet stay on the ground and the fingers wrap around what you carry. This guide shows which component does each job and which settings you will change.</p>
+<details class="toc-inline"><summary>On this page</summary><ol class="toc-list">
+<li class="toc-l2"><a href="#overview">The components at a glance</a></li>
+<li class="toc-l2"><a href="#head">Head and spine</a></li>
+<li class="toc-l2"><a href="#hands">Hands and holding items</a></li>
+<li class="toc-l2"><a href="#foot-planting">Foot planting</a></li>
+<li class="toc-l3"><a href="#planting-steps">Set it up</a></li>
+<li class="toc-l3"><a href="#planting-basic">Basic settings</a></li>
+<li class="toc-l3"><a href="#planting-advanced">Advanced settings</a></li>
+<li class="toc-l2"><a href="#fingers">Finger grips</a></li>
+<li class="toc-l2"><a href="#footsteps">Footsteps</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common pitfalls</a></li>
+</ol></details>
+
+<h2 id="overview">The components at a glance<a class="anchor" href="#overview" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Component</th><th scope="col">On</th><th scope="col">Job</th><th scope="col">Execution order</th></tr></thead>
+  <tbody>
+    <tr><td><code>PlayerFootPlanting</code></td><td>model</td><td>Anchors the feet to the ground and re-steps them</td><td>−200</td></tr>
+    <tr><td><code>PlayerHeadIK</code></td><td>model</td><td>Head look-at</td><td>10</td></tr>
+    <tr><td><code>PlayerSpineStabilizer</code></td><td>model</td><td>Keeps the upper body steady while you look around</td><td>15</td></tr>
+    <tr><td><code>PlayerHandIK</code></td><td>model</td><td>Hands and elbows for held items, including the holster</td><td>20</td></tr>
+    <tr><td><code>HandPoseController</code></td><td>model</td><td>Finger grips on held items</td><td>100</td></tr>
+    <tr><td><code>PlayerFootsteps</code></td><td>root</td><td>Footstep sounds and events</td><td>−300</td></tr>
+  </tbody>
+</table></div>
+<p>The Setup Wizard adds the model components (except footsteps). The lower the order, the earlier the component runs, so the head is solved before the hands.</p>
+
+<h2 id="head">Head and spine<a class="anchor" href="#head" aria-label="Link to this section">#</a></h2>
+<p><code>PlayerHeadIK</code> turns the head toward the look direction. Its weights decide how much of the look goes to the body, head, eyes, and how far the head may turn:</p>
+<dl class="props">
+  <dt><code>weight</code> <span class="type">float</span> <span class="default">default 1</span></dt>
+  <dd>Overall strength. <code>SetWeight</code> and <code>SetWeightSmooth</code> change it at runtime.</dd>
+  <dt><code>bodyWeight</code>, <code>headWeight</code>, <code>eyesWeight</code> <span class="default">default 0, 1, 0</span></dt>
+  <dd>Share of the look that the body, head and eyes take. <code>SetWeights</code> sets all of them and the clamp together.</dd>
+  <dt><code>clampWeight</code> <span class="type">float</span> <span class="default">default 0.5</span></dt>
+  <dd>How far the head may turn away from the body.</dd>
+</dl>
+<p><code>PlayerSpineStabilizer</code> keeps the spine upright while the head moves. It is configured in <code>PlayerSettings</code>:</p>
+<dl class="props">
+  <dt><code>enableSpineStabilization</code> <span class="type">bool</span> <span class="default">default true</span></dt>
+  <dd>Turns the stabilizer on or off.</dd>
+  <dt><code>spineStiffness</code> <span class="type">float</span> <span class="default">default 1</span></dt>
+  <dd>Strength of the correction. 0 switches it off.</dd>
+  <dt><code>spineDamping</code> <span class="type">float</span> <span class="default">default 10</span></dt>
+  <dd>Smoothing speed of the correction.</dd>
+  <dt><code>lowerSpineWeight</code>, <code>middleSpineWeight</code>, <code>upperSpineWeight</code> <span class="default">default 0.3, 0.3, 0.4</span></dt>
+  <dd>How much each spine segment takes part in the correction.</dd>
+</dl>
+
+<h2 id="hands">Hands and holding items<a class="anchor" href="#hands" aria-label="Link to this section">#</a></h2>
+<p>The hands are driven by <code>PlayerHandIK</code>. Where an item sits in your hands comes from its <code>ItemAttachmentData</code>, described in <a href="fp-items.html#grips-ik">Items: Grips and IK</a>. Global limits come from <code>PlayerSettings</code>:</p>
+<dl class="props">
+  <dt><code>handVerticalLimitUpper</code>, <code>handVerticalLimitLower</code> <span class="type">float</span> <span class="default">default 45 / 45</span></dt>
+  <dd>Degrees of look up and down before the hand stops following the view. Items can override them.</dd>
+</dl>
+<p>The holster timings (<code>holsterDuration</code>, <code>drawDuration</code>, <code>drawStartWeight</code>) are described in <a href="fp-items.html#equip">Items: Equip, switch, holster and use</a>. Two-handed items fade the left hand on and off over <code>twoHandedBlendDuration</code> (default 0.2 seconds).</p>
+
+<h2 id="foot-planting">Foot planting<a class="anchor" href="#foot-planting" aria-label="Link to this section">#</a></h2>
+<p><code>PlayerFootPlanting</code> keeps each foot anchored to the ground where it was set down. While you stand or turn in place, a foot that moves too far from its anchor takes a short curved re-step to a new anchor, instead of sliding. Feet also align to the ground height and slope, and the pelvis lowers so both feet reach uneven ground. The component uses its own leg solver and runs before the camera syncs to the head.</p>
+
+<h3 id="planting-steps">Set it up<a class="anchor" href="#planting-steps" aria-label="Link to this section">#</a></h3>
+<ol class="steps">
+  <li>Check that <code>PlayerFootPlanting</code> is on the model. The Setup Wizard adds it in step 4.</li>
+  <li>Make sure <strong>Ground Layers</strong> includes the floor. The default is the Default layer only.</li>
+  <li>Enter Play Mode and walk over an uneven surface or turn in place to test it.</li>
+</ol>
+
+<h3 id="planting-basic">Basic settings<a class="anchor" href="#planting-basic" aria-label="Link to this section">#</a></h3>
+<p>The Beginner view shows the settings most projects need:</p>
+<dl class="props">
+  <dt><code>enablePlanting</code> <span class="default">Enable Foot Planting, default on</span></dt>
+  <dd>Turns the whole system on or off. <code>PlayerController.SetFootIKEnabled</code> does the same at runtime.</dd>
+  <dt><code>plantMode</code> <span class="type">PlantMode</span> <span class="default">default Automatic</span></dt>
+  <dd><code>Idle</code> and <code>Moving</code> fix the planting mode. <code>Automatic</code> (default) switches between them with the locomotion state, using idle hysteresis.</dd>
+  <dt><code>groundLayers</code> <span class="type">LayerMask</span> <span class="default">default Default layer</span></dt>
+  <dd>The layers the feet stand on.</dd>
+  <dt><code>stepSettings.stepDuration</code> <span class="default">Step Duration, default 0.375</span></dt>
+  <dd>Seconds per re-step.</dd>
+  <dt><code>stepSettings.minLiftHeight</code>, <code>maxLiftHeight</code> <span class="default">Min / Max Foot Lift, default 0.1 / 0.4</span></dt>
+  <dd>How high the foot lifts during a re-step.</dd>
+</dl>
+
+<h3 id="planting-advanced">Advanced settings<a class="anchor" href="#planting-advanced" aria-label="Link to this section">#</a></h3>
+<p>Click <strong>Advanced Settings</strong> to show the foldouts:</p>
+<ul>
+  <li><strong>Planting</strong>: <code>anchorCaptureRange</code> (default 0.375) is how far the animated foot may move from its anchor before it is released. <code>releaseAngle</code> (30 degrees) releases a planted foot that twists too far. <code>maxLegExtension</code> (0.99) pulls the anchor back when the leg is stretched too far.</li>
+  <li><strong>Ground Align</strong>: <code>alignFeetToGround</code> (on), <code>maxFootYaw</code> (30 degrees) and the speed of ground alignment.</li>
+  <li><strong>Ground Probe</strong>: <code>groundLayers</code>, <code>triggerInteraction</code> (ignores triggers by default) and <code>probeLength</code> (default 1).</li>
+  <li><strong>Pelvis</strong>: <code>pelvisFollowWeight</code> (1), <code>pelvisDropWeight</code> (0.5) and <code>pelvisRaiseLimit</code> (0).</li>
+  <li><strong>Re-Steps</strong>: the <code>StepSettings</code> curves for path, arc, lift and rotation, plus <code>arcStrength</code> (0.3), <code>catchUpBoost</code> (0.4) and <code>restepDistance</code> (0.055).</li>
+</ul>
+
+<aside class="callout note">
+  <strong class="callout-title">Remote players</strong>
+  <p>Multiplayer add-ons can feed the drive state of a remote player through <code>SetExternalDriveState</code>. The PurrNet add-on does this. Details are in <a href="purrnet.html">PurrNet</a>.</p>
+</aside>
+
+<h2 id="fingers">Finger grips<a class="anchor" href="#fingers" aria-label="Link to this section">#</a></h2>
+<p><code>HandPoseController</code> sets the fingers around the held item on top of the animation. It reads the finger limits from the Humanoid avatar, so it works on any humanoid rig with mapped finger bones. Press <strong>Calibrate</strong> in its Inspector after you change the avatar. Items without a grip keep the animated fingers.</p>
+<p>A grip has two parts. A <code>FingerPose</code> asset is a reusable template. Per item, you add tweaks on top of the template.</p>
+<ol class="steps">
+  <li>Create a template with <span class="menu">Create › Player › Finger Grip Pose</span>. Set the five finger curls (0 open, 1 closed), <code>thumbOpposition</code> (wrap of the thumb) and <code>spread</code>.</li>
+  <li>Select the item's <code>ItemHoldData</code> and open <strong>Finger Grip</strong>. Assign the right-hand template. For two-handed items, assign the left-hand template as well.</li>
+  <li>Adjust the item with the tweaks: <strong>Hand Tweak</strong> (whole hand), <strong>Index Tweak</strong> and <strong>Thumb Tweak</strong>. The tweaks stay on the item and never change the shared template. <strong>Reset Tweaks</strong> clears them.</li>
+  <li>Click <strong>Open Preview</strong> to see the grip on the player in Edit Mode. Use <strong>Save As New Template…</strong> to keep a tweaked grip as a new template.</li>
+</ol>
+<p>Grips follow the item that is visible. During a holster animation, the fingers change with the item.</p>
+
+<h2 id="footsteps">Footsteps<a class="anchor" href="#footsteps" aria-label="Link to this section">#</a></h2>
+<p><code>PlayerFootsteps</code> plays a sound when a foot lands. It reads the animated feet, so no animation events are needed. Add it to the player root by hand, because the Setup Wizard does not add it.</p>
+<ol class="steps">
+  <li>Add <code>PlayerFootsteps</code> to the player root.</li>
+  <li>Assign <strong>Step Clips</strong> (<code>stepClips</code>). One clip is picked at random for each step.</li>
+  <li>Optional: assign <strong>Re-Step Clips</strong> (<code>reStepClips</code>) for steps taken while turning in place. Leave it empty to use the step clips.</li>
+</ol>
+<dl class="props">
+  <dt><code>stepVolume</code> <span class="default">default 0.6</span> · <code>reStepVolume</code> <span class="default">default 0.3</span></dt>
+  <dd>Volume of walking steps and of re-steps.</dd>
+  <dt><code>pitchRange</code> <span class="default">default 0.92 to 1.08</span></dt>
+  <dd>Random pitch per step.</dd>
+  <dt><code>minRootSpeed</code> <span class="default">default 0.3 m/s</span></dt>
+  <dd>Slower movement stays silent. Steps are silent while airborne or standing still.</dd>
+  <dt><code>minIntervalPerFoot</code>, <code>minIntervalGlobal</code> <span class="default">default 0.2 s and 0.08 s</span></dt>
+  <dd>Minimum time between steps of one foot, and between any two steps.</dd>
+</dl>
+<p>Your own effects can listen to <code>FootPlanted</code> (C#, receives <code>FootStepArgs</code>) or to <code>OnFootPlanted</code> (UnityEvent). Both fire for walking steps and re-steps.</p>
+
+<h2 id="pitfalls">Common pitfalls<a class="anchor" href="#pitfalls" aria-label="Link to this section">#</a></h2>
+<aside class="callout warn">
+  <strong class="callout-title">Feet slide or float</strong>
+  <p>Check <strong>Ground Layers</strong> on <code>PlayerFootPlanting</code>. Make sure no other foot IK runs on the same character.</p>
+</aside>
+<aside class="callout warn">
+  <strong class="callout-title">Foot settings were reset after an update</strong>
+  <p>Version 1.6 renamed the foot component and its settings. Re-enter your values. See <a href="fp-changelog.html#v1-6-0">1.6.0</a>.</p>
+</aside>
+<aside class="callout note">
+  <strong class="callout-title">Hands in the wrong place</strong>
+  <p>Tune the item's grip and hand offsets. Use <a href="fp-items.html#tune">Tune an item in the scene</a> and save the result as an IK preset.</p>
+</aside>
+        </div>
+        <nav class="pager" aria-label="Previous and next page"><a class="pager-link pager-prev" href="fp-items.html" rel="prev"><span class="pager-dir">Previous</span><strong>Items</strong></a><a class="pager-link pager-next" href="fp-fpcutter.html" rel="next"><span class="pager-dir">Next</span><strong>FPCutter</strong></a></nav>
+      </article>
+    </main>
+
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p><ol class="toc-list">
+<li class="toc-l2"><a href="#overview">The components at a glance</a></li>
+<li class="toc-l2"><a href="#head">Head and spine</a></li>
+<li class="toc-l2"><a href="#hands">Hands and holding items</a></li>
+<li class="toc-l2"><a href="#foot-planting">Foot planting</a></li>
+<li class="toc-l3"><a href="#planting-steps">Set it up</a></li>
+<li class="toc-l3"><a href="#planting-basic">Basic settings</a></li>
+<li class="toc-l3"><a href="#planting-advanced">Advanced settings</a></li>
+<li class="toc-l2"><a href="#fingers">Finger grips</a></li>
+<li class="toc-l2"><a href="#footsteps">Footsteps</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common pitfalls</a></li>
+</ol>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><a class="brand" href="../unity-asset-portfolio.html"><span class="brand-name">vedaloiv</span></a><p>Unity tools, documented for the people who use them.</p></div>
+    <div class="footer-col"><p class="footer-h">Asset Store</p><ul><li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li><li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li></ul></div>
+    <div class="footer-col"><p class="footer-h">Support</p><ul><li><a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></li><li><a href="../unity-asset-portfolio.html">vedaloiv home</a></li><li><a href="index.html">All docs</a></li></ul></div>
+  </div>
+  <p class="footer-copy">© 2026 vedaloiv</p>
+</footer>
+
+  <dialog class="search-dialog" aria-label="Search the documentation">
+    <form class="search-form" role="search" method="dialog">
+      <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input class="search-input" type="search" placeholder="Search pages and sections" autocomplete="off" spellcheck="false"
+        role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Search the documentation">
+      <button class="search-close" type="button" data-close-search><kbd>Esc</kbd><span class="sr-only">Close search</span></button>
+    </form>
+    <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+    <p class="search-status" aria-live="polite"></p>
+  </dialog>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" data-close-lightbox>Close <kbd>Esc</kbd></button>
+    <img alt="">
+    <p class="lightbox-caption"></p>
+  </dialog>
+</body>
+</html>

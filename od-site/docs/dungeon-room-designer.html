@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Room Designer | Easy Dungeon Generator docs</title>
+  <meta name="description" content="Paint multi-floor dungeon rooms in the DungeonGen Room Designer: floor, door, room door, stair and hole brushes, socket types, and saving room prefabs.">
+  <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/dungeon-room-designer.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vedaloiv">
+  <meta property="og:title" content="Room Designer | Easy Dungeon Generator docs">
+  <meta property="og:description" content="Paint multi-floor dungeon rooms in the DungeonGen Room Designer: floor, door, room door, stair and hole brushes, socket types, and saving room prefabs.">
+  <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/dungeon-room-designer.html">
+  <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/dungen-main.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f0f0f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M7 9l9 15 9-15' fill='none' stroke='%23ffe343' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='6' width='4' height='4' fill='%232748c9'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
+  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+</head>
+<body data-page="dungeon-room-designer" data-group="dungeon">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Menu</span>
+      </button>
+      <a class="brand" href="index.html" aria-label="vedaloiv documentation home">
+        <span class="brand-name">vedaloiv</span><span class="brand-sub">docs</span>
+      </a>
+      <nav class="topnav" aria-label="Site">
+        <a href="../unity-asset-portfolio.html">Home</a>
+        <a href="index.html">All docs</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="search-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
+          <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="search-btn-label">Search docs</span>
+          <kbd class="search-btn-kbd" data-shortcut>Ctrl K</kbd>
+        </button>
+        <a class="top-store" href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener"><span class="top-store-long">Asset Store</span><span class="sr-only"> page for Easy Dungeon Generator (opens in a new tab)</span><svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation">
+      <nav class="sidebar-nav" aria-label="Documentation pages">
+<a class="nav-home" href="index.html">Docs home</a>
+<section class="nav-group" data-group="fp">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <ul class="nav-list" id="nav-fp">
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="fp-setup-wizard.html">Setup Wizard</a></li>
+    <li><a href="fp-items.html">Items</a></li>
+    <li><a href="fp-body-ik.html">Body IK</a></li>
+    <li><a href="fp-fpcutter.html">FPCutter</a></li>
+    <li><a href="fp-vitals.html">Vitals &amp; Stamina</a></li>
+    <li><a href="fp-demos.html">Demos</a></li>
+    <li class="nav-label">Multiplayer</li>
+    <li><a href="fishnet.html">FishNet</a></li>
+    <li><a href="purrnet.html">PurrNet</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="interfaces.html">Interfaces</a></li>
+    <li><a href="fp-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="fp-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+<section class="nav-group is-current" data-group="dungeon">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-dungeon"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy Dungeon Generator</span><span class="nav-version">v1.1.0</span></button>
+  <ul class="nav-list" id="nav-dungeon">
+    <li><a href="dungeon-generator.html">Overview</a></li>
+    <li><a href="dungeon-quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="dungeon-room-designer.html" class="is-active" aria-current="page">Room Designer</a></li>
+    <li><a href="dungeon-templates.html">Templates &amp; Generation</a></li>
+    <li><a href="dungeon-decoration.html">Decoration &amp; Themes</a></li>
+    <li><a href="dungeon-streaming.html">Chunk Streaming</a></li>
+    <li><a href="dungeon-culling-navmesh.html">Culling &amp; NavMesh</a></li>
+    <li><a href="dungeon-demos.html">Demo Scenes</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="dungeon-api.html">API Reference</a></li>
+    <li><a href="dungeon-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="dungeon-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+      </nav>
+    </aside>
+    <div class="scrim" data-close-nav hidden></div>
+
+    <main class="main" id="content" tabindex="-1">
+      <article class="doc">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Docs</a></li><li><a href="dungeon-generator.html">Easy Dungeon Generator</a></li><li><span aria-current="page">Room Designer</span></li></ol></nav>
+        <header class="doc-header">
+  <p class="kicker">Guide</p>
+  <h1>Room Designer</h1>
+  <p class="doc-meta"><span>Documentation for v1.1.0</span><span>Editor tool</span><span>Unity 6000.5.0+</span></p>
+</header>
+        <div class="prose">
+<p class="lead">The Room Designer is where you paint a room: floor cells, doors, stairs, and holes, on one or more floors. You save the result as a room prefab, and the generator uses that prefab to build dungeons.</p>
+<details class="toc-inline"><summary>On this page</summary><ol class="toc-list">
+<li class="toc-l2"><a href="#open-designer">Open the designer</a></li>
+<li class="toc-l2"><a href="#paint-first-room">Paint your first room</a></li>
+<li class="toc-l2"><a href="#layout-mode">Layout mode</a></li>
+<li class="toc-l3"><a href="#room-doors">Room doors</a></li>
+<li class="toc-l3"><a href="#doors-and-socket-types">Doors and socket types</a></li>
+<li class="toc-l2"><a href="#multi-floor">Multi-floor rooms and stairs</a></li>
+<li class="toc-l2"><a href="#save-prefab">Save a room prefab</a></li>
+<li class="toc-l3"><a href="#setup-room-prefab">Setup Room Prefab</a></li>
+<li class="toc-l3"><a href="#room-prefab-manager">Room Prefab Manager</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common mistakes</a></li>
+</ol></details>
+
+<h2 id="open-designer">Open the designer<a class="anchor" href="#open-designer" aria-label="Link to this section">#</a></h2>
+<p>Open <span class="menu">Tools › DungeonGen › Room Designer</span>. The window has two modes. <strong>Layout</strong> paints the room. <strong>Objects</strong> edits its decoration; see <a href="dungeon-decoration.html#objects-mode">Objects mode</a>.</p>
+
+<h2 id="paint-first-room">Paint your first room<a class="anchor" href="#paint-first-room" aria-label="Link to this section">#</a></h2>
+<ol class="steps">
+  <li>
+    <p>Open a room. Click <strong>New</strong> for an empty layout, or <strong>Open Layout</strong> for a saved one. Click <strong>Save Layout</strong> to store the layout as a Room Design asset. A new layout asks for a file path, and the file goes in your content folder.</p>
+  </li>
+  <li>
+    <p>Set the basics in the left panel: <strong>Name</strong>, <strong>Room Type</strong> (Normal, Entrance, Exit, Treasure, or Boss), and <strong>Theme</strong> (your <code>DungeonTheme</code>). Under <strong>Grid Size</strong>, enter Width and Height and click <strong>Apply Resize</strong>. New rooms start at 12 × 10 cells.</p>
+  </li>
+  <li>
+    <p>Paint the floor. Select the Floor brush, press <kbd>F</kbd>, and drag over the cells that should be walkable. Right-click erases a cell.</p>
+  </li>
+  <li>
+    <p>Add doors. Select the Door brush with <kbd>D</kbd> and click a floor cell that touches a wall. The door is placed on that wall. You can also click the wall cell directly.</p>
+  </li>
+  <li>
+    <p>Check the result. Click <strong>Generate</strong> to render the room in the scene. Use the <strong>Scene Preview</strong> toggles to show or hide walls, doors, stairs, and ceilings.</p>
+    <figure>
+      <img src="images/dungeon/Unity_HZVGaM9JGn.png" alt="Room Designer in Layout mode with a new empty room: Room Type buttons, Floor, Door, Stair and Hole brushes, stair opening settings, and the grid to paint on." fetchpriority="high" decoding="async" width="1693" height="1000">
+      <figcaption>Layout mode: room settings and brushes on the left, the grid on the right.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <p>Click <strong>Save Prefab</strong> and choose a file in your content folder. See <a href="#save-prefab">Save a room prefab</a>.</p>
+  </li>
+</ol>
+
+<h2 id="layout-mode">Layout mode<a class="anchor" href="#layout-mode" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Brush or action</th><th scope="col">Key</th><th scope="col">What it does</th></tr></thead>
+  <tbody>
+    <tr><td>Floor</td><td><kbd>F</kbd></td><td>Paints a walkable cell. Removes any door or room door on that cell.</td></tr>
+    <tr><td>Door</td><td><kbd>D</kbd></td><td>Places a connector door on a wall cell. Click a floor cell to use the wall next to it. After a generate, clicking a door in the preview opens or closes it.</td></tr>
+    <tr><td>Room Door</td><td><kbd>P</kbd></td><td>Turns a floor cell between two opposite floor cells into a fixed two-sided door, without a connector. See <a href="#room-doors">Room doors</a>.</td></tr>
+    <tr><td>Stair</td><td><kbd>S</kbd></td><td>Places a stair opening that links this floor to the floor above or below. See <a href="#multi-floor">Multi-floor rooms</a>.</td></tr>
+    <tr><td>Hole</td><td><kbd>H</kbd></td><td>Paints an explicit opening in the floor, for when a design needs one.</td></tr>
+    <tr><td>Rect Delete</td><td>—</td><td>Tool, not a brush: drag a rectangle to erase every cell in it.</td></tr>
+    <tr><td>Invert Room Door</td><td><kbd>I</kbd></td><td>Switches which side of the next Room Door shows the main visual and which shows the variant.</td></tr>
+    <tr><td>Rotate stair axis</td><td><kbd>R</kbd></td><td>Cycles the stair axis North → East → South → West.</td></tr>
+    <tr><td>Fit to view</td><td><kbd>0</kbd></td><td>Fits the design to the canvas.</td></tr>
+    <tr><td>Pan and zoom</td><td>Middle mouse, wheel</td><td>Middle-drag pans the canvas. The mouse wheel zooms.</td></tr>
+  </tbody>
+</table></div>
+<p>Doors are overlays. Walls are created from the neighboring walkable cells, so do not paint wall cells by hand.</p>
+
+<h3 id="room-doors">Room doors<a class="anchor" href="#room-doors" aria-label="Link to this section">#</a></h3>
+<p>A room door needs two opposite floor cells. The Room Door brush reads the direction from those neighbors, and a cell with floor on all four sides is rejected as ambiguous. Use the <strong>Invert</strong> toggle, or press <kbd>I</kbd>, to flip which side shows the main visual. A room door is a static two-sided door and gets no connector.</p>
+
+<h3 id="doors-and-socket-types">Doors and socket types<a class="anchor" href="#doors-and-socket-types" aria-label="Link to this section">#</a></h3>
+<p>Each usable doorway on a room prefab gets a <code>DoorSocket</code>. A socket has a direction and one of four states: closed, open, passage, or locked. The generator sets these states when it connects two rooms.</p>
+<p>A <strong>Door Socket Type</strong> tags a doorway so only compatible doorways connect:</p>
+<ul>
+  <li>A socket with no type is a wildcard and connects to any socket.</li>
+  <li>Two sockets with the same type asset connect.</li>
+  <li>Two different types connect only when one has been declared compatible with the other. The declaration is symmetric.</li>
+</ul>
+<p>Create a type with <span class="menu">Assets › Create › DungeonGen › Door Socket Type</span>. In the Room Designer, select the type in the <strong>Door Socket Types</strong> section before you paint doors. The same section lets you create a new type.</p>
+
+<aside class="callout warn">
+  <strong class="callout-title">Doors on an inner corner</strong>
+  <p>With double-sided kits, a door placed directly beside an inner corner can end up with no single wall piece that sits flush. Keep at least one straight wall cell on each side of a door. See <a href="dungeon-templates.html#wall-mode">Wall mode</a>.</p>
+</aside>
+
+<h2 id="multi-floor">Multi-floor rooms and stairs<a class="anchor" href="#multi-floor" aria-label="Link to this section">#</a></h2>
+<p>Use <strong>+ Below</strong> and <strong>+ Above</strong> in the Floors section to add floors. Paint each floor separately. <strong>Remove Current</strong> deletes the selected floor, but only if no stair uses it and the room keeps at least one floor.</p>
+<ol class="steps">
+  <li>Select the floor where the stair starts.</li>
+  <li>Choose the Stair brush (<kbd>S</kbd>) and set the <strong>Floor Delta</strong> to +1 (up) or −1 (down).</li>
+  <li>Choose the axis: North, East, South, or West. The stair climbs in that direction.</li>
+  <li>Click the cell where the stair starts. The connected floor is added if it does not exist yet.</li>
+</ol>
+<p>The stair's size (its length, back length, and width) comes from the theme's stair profile, not from the designer. Author it in the Dungeon Theme Wizard. The designer refuses a stair that would leave the grid, overlap a door, or overlap another stair, and it shows the reason in the status line.</p>
+<p>The renderer creates the floor opening, the wall gaps, and the ceiling cutout from the stair. Do not add a hole on the same spot.</p>
+
+<h2 id="save-prefab">Save a room prefab<a class="anchor" href="#save-prefab" aria-label="Link to this section">#</a></h2>
+<p><strong>Save Prefab</strong> generates the room and writes it to a prefab. Choose a folder outside <code>Assets/DungeonGenerator/</code>. The dialog opens in the folder you used last, or in <code>Assets/Prefabs</code> when it exists.</p>
+<p>The saved prefab contains:</p>
+<ul>
+  <li>a <code>RoomData</code> root, with the room type and the theme's tile size;</li>
+  <li>a <code>DoorSocket</code> for each doorway, with its socket type;</li>
+  <li>a <code>RoomDecorationAuthoring</code> component with a baked snapshot of the room geometry;</li>
+  <li><code>supportsDoubleWalls</code>, copied from the theme's <strong>Double-Sided Walls</strong> setting.</li>
+</ul>
+<p>If the room has a Decoration Profile, the save first validates the profile and bakes its footprints. A profile error stops the save and shows a <strong>Decoration Validation Failed</strong> dialog.</p>
+<p><strong>Bake Decor</strong> (shown in Objects mode) decides where the furniture goes. Off, the prefab stays bare and the furniture is placed at runtime from the profile and seed. On, the furniture is saved into the prefab in a <code>Decoration</code> folder, and the runtime skips it.</p>
+
+<aside class="callout warn">
+  <strong class="callout-title">Keep saved assets out of the package</strong>
+  <p>Save designs, prefabs, and themes in your own content folder. Files inside <code>Assets/DungeonGenerator/</code> are overwritten when you update the package.</p>
+</aside>
+
+<h3 id="setup-room-prefab">Setup Room Prefab<a class="anchor" href="#setup-room-prefab" aria-label="Link to this section">#</a></h3>
+<p>Use <span class="menu">Tools › DungeonGen › Setup Room Prefab</span> on a prefab you built by hand, without the Room Designer. Select the prefab root first. The tool adds <code>RoomData</code> and a <code>DoorSocket</code> to each door, and reads the grid coordinates from the names of the tiles. It expects the nested <code>Doors</code>, <code>Walls</code>, and <code>Floors</code> containers that the Room Designer creates. Without door meshes in a <code>Doors</code> container, it stops with an error.</p>
+
+<h3 id="room-prefab-manager">Room Prefab Manager<a class="anchor" href="#room-prefab-manager" aria-label="Link to this section">#</a></h3>
+<p>Open <span class="menu">Tools › DungeonGen › Room Prefab Manager</span> after you change a theme or a design. It lists every Room Design, links each one to its prefab, and regenerates prefabs from their designs.</p>
+<p>The labels in this window are German in version 1.1.0. Their meanings are:</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Label</th><th scope="col">Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><code>Aktualisieren</code></td><td>Refresh the list of designs.</td></tr>
+    <tr><td><code>Namen zuordnen</code></td><td>Link each design to a prefab with the same name.</td></tr>
+    <tr><td><code>Zuordnen…</code></td><td>Choose the prefab for one design.</td></tr>
+    <tr><td><code>Auswahl neu erzeugen</code></td><td>Regenerate the checked designs.</td></tr>
+    <tr><td><code>Neu erzeugen</code></td><td>Regenerate one design.</td></tr>
+    <tr><td><code>Diagnose</code></td><td>Check whether tiles stay nested prefabs or are baked flat.</td></tr>
+  </tbody>
+</table></div>
+<aside class="callout warn">
+  <strong class="callout-title">Regenerating overwrites the prefab</strong>
+  <p>Regeneration replaces the whole prefab. Any change you made by hand in the prefab is lost.</p>
+</aside>
+
+<h2 id="pitfalls">Common mistakes<a class="anchor" href="#pitfalls" aria-label="Link to this section">#</a></h2>
+<ul>
+  <li><strong>Walls painted by hand.</strong> Walls come from the floor. Paint floors and doors only.</li>
+  <li><strong>Two stairs or a hole on one stair.</strong> The stair already makes the opening.</li>
+  <li><strong>No room type on the template node.</strong> A room used by a template must have the matching Room Type. See <a href="dungeon-templates.html">Templates and generation</a>.</li>
+</ul>
+        </div>
+        <nav class="pager" aria-label="Previous and next page"><a class="pager-link pager-prev" href="dungeon-quick-start.html" rel="prev"><span class="pager-dir">Previous</span><strong>Quick Start</strong></a><a class="pager-link pager-next" href="dungeon-templates.html" rel="next"><span class="pager-dir">Next</span><strong>Templates &amp; Generation</strong></a></nav>
+      </article>
+    </main>
+
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p><ol class="toc-list">
+<li class="toc-l2"><a href="#open-designer">Open the designer</a></li>
+<li class="toc-l2"><a href="#paint-first-room">Paint your first room</a></li>
+<li class="toc-l2"><a href="#layout-mode">Layout mode</a></li>
+<li class="toc-l3"><a href="#room-doors">Room doors</a></li>
+<li class="toc-l3"><a href="#doors-and-socket-types">Doors and socket types</a></li>
+<li class="toc-l2"><a href="#multi-floor">Multi-floor rooms and stairs</a></li>
+<li class="toc-l2"><a href="#save-prefab">Save a room prefab</a></li>
+<li class="toc-l3"><a href="#setup-room-prefab">Setup Room Prefab</a></li>
+<li class="toc-l3"><a href="#room-prefab-manager">Room Prefab Manager</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common mistakes</a></li>
+</ol>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><a class="brand" href="../unity-asset-portfolio.html"><span class="brand-name">vedaloiv</span></a><p>Unity tools, documented for the people who use them.</p></div>
+    <div class="footer-col"><p class="footer-h">Asset Store</p><ul><li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li><li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li></ul></div>
+    <div class="footer-col"><p class="footer-h">Support</p><ul><li><a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></li><li><a href="../unity-asset-portfolio.html">vedaloiv home</a></li><li><a href="index.html">All docs</a></li></ul></div>
+  </div>
+  <p class="footer-copy">© 2026 vedaloiv</p>
+</footer>
+
+  <dialog class="search-dialog" aria-label="Search the documentation">
+    <form class="search-form" role="search" method="dialog">
+      <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input class="search-input" type="search" placeholder="Search pages and sections" autocomplete="off" spellcheck="false"
+        role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Search the documentation">
+      <button class="search-close" type="button" data-close-search><kbd>Esc</kbd><span class="sr-only">Close search</span></button>
+    </form>
+    <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+    <p class="search-status" aria-live="polite"></p>
+  </dialog>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" data-close-lightbox>Close <kbd>Esc</kbd></button>
+    <img alt="">
+    <p class="lightbox-caption"></p>
+  </dialog>
+</body>
+</html>

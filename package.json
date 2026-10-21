@@ -6,6 +6,7 @@
   "description": "Maansen — Unity Asset Store publisher page + asset documentation (static HTML, synced from Open Design).",
   "scripts": {
     "site:local": "node scripts/serve.mjs od-site",
-    "sync:od": "node scripts/sync-od.mjs"
+    "sync:od": "node scripts/sync-od.mjs",
+    "docs:build": "node scripts/build-docs.mjs"
   }
 }

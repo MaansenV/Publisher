@@ -3,732 +3,222 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Easy FP Full Body Controller documentation: overview, requirements, listing facts, quick start, and runtime API.">
-  <title>Overview / Easy FP Full Body Controller docs</title>
+  <title>Easy FP Full Body Controller | Easy FP Full Body Controller docs</title>
+  <meta name="description" content="Easy FP Full Body Controller: a first- and third-person full-body character controller for Unity 6.5 and URP, with procedural IK, a 7-step Setup Wizard, an item system, FPCutter and optional multiplayer add-ons.">
+  <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/overview.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vedaloiv">
+  <meta property="og:title" content="Easy FP Full Body Controller | Easy FP Full Body Controller docs">
+  <meta property="og:description" content="Easy FP Full Body Controller: a first- and third-person full-body character controller for Unity 6.5 and URP, with procedural IK, a 7-step Setup Wizard, an item system, FPCutter and optional multiplayer add-ons.">
+  <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/overview.html">
+  <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f0f0f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M7 9l9 15 9-15' fill='none' stroke='%23ffe343' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='6' width='4' height='4' fill='%232748c9'/%3E%3C/svg%3E" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      /* Wakeout palette: near-black foundation and elevated panels */
-      --bg: oklch(0.145 0 89.88);
-      --surface: oklch(0.218 0 89.88);
-      --surface-raised: oklch(0.285 0 89.88);
-
-      /* Text and selection */
-      --fg: oklch(0.99 0.01 97.35);
-      --muted: oklch(0.6 0.01 89.88);
-      --on-accent: oklch(0.145 0 89.88);
-
-      /* Borders */
-      --border: oklch(0.99 0.01 97.35 / 0.16);
-      --border-dark: oklch(0.145 0 89.88 / 0.18);
-
-      /* Signature yellow and restrained playful accents */
-      --accent: oklch(0.913 0.17 98.7);
-      --lime: oklch(0.904 0.21 124.11);
-      --pink: oklch(0.709 0.24 341.96);
-      --purple: oklch(0.597 0.23 285.53);
-      --teal: oklch(0.736 0.13 184.33);
-      --orange: oklch(0.749 0.17 53.84);
-      --cyan: oklch(0.837 0.14 202.63);
-
-      /* Focus stays bright against every dark surface */
-      --focus: oklch(0.913 0.17 98.7);
-
-      --font-display: "Rubik", "Avenir Next", system-ui, sans-serif;
-      --font-body: "Rubik", system-ui, -apple-system, sans-serif;
-      --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      overflow-x: hidden;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--font-body);
-      font-size: 17px;
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-    img { max-width: 100%; }
-    :focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
-    ::selection { background: var(--accent); color: var(--on-accent); }
-
-    .container { width: min(1240px, calc(100% - 48px)); margin-inline: auto; }
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: var(--surface-raised);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-wrap { min-height: 76px; display: flex; align-items: center; gap: 28px; }
-    .brand {
-      display: inline-flex;
-      min-height: 44px;
-      align-items: baseline;
-      gap: 10px;
-      flex: 0 0 auto;
-      color: var(--fg);
-      text-decoration: none;
-    }
-    .brand-name { font-family: var(--font-display); font-size: 19px; font-weight: 800; letter-spacing: -0.02em; }
-    .brand-context { color: var(--muted); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
-    .main-nav { display: flex; align-items: center; justify-content: flex-end; gap: 22px; flex: 1; }
-    .nav-links { display: flex; align-items: center; justify-content: flex-end; gap: 4px; flex-wrap: wrap; }
-    .nav-link, .nav-cta {
-      display: inline-flex;
-      min-height: 44px;
-      align-items: center;
-      padding: 8px 10px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-decoration: none;
-    }
-    .nav-link { color: var(--fg); }
-    .nav-link:hover, .nav-link[aria-current="page"] { color: var(--fg); text-decoration: underline; }
-    .nav-cta { border: 1px solid var(--border); border-radius: 999px; color: var(--fg); }
-    .nav-cta:hover { background: var(--surface); border-color: var(--surface); text-decoration: underline; }
-
-    .doc-hero {
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      padding: clamp(64px, 8vw, 116px) 0 70px;
-      background: var(--surface-raised);
-      border-bottom: 1px solid var(--border);
-    }
-    .doc-hero::before {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      inset: 0 0 0 63%;
-      background: var(--bg);
-      clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%);
-      pointer-events: none;
-    }
-    .doc-hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 7fr) minmax(280px, 5fr); gap: clamp(28px, 6vw, 88px); align-items: start; }
-    .eyebrow, .section-kicker, .mono, .footer-meta { font-family: var(--font-mono); }
-    .eyebrow {
-      display: inline-flex;
-      padding: 9px 13px;
-      border-radius: 999px;
-      background: var(--accent);
-      color: var(--on-accent);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      line-height: 1.3;
-      text-transform: uppercase;
-    }
-    .doc-hero h1 { max-width: 12ch; margin: 25px 0 22px; font-family: var(--font-display); font-size: clamp(44px, 6.5vw, 84px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.02; text-wrap: balance; }
-    .doc-lead { max-width: 64ch; margin: 0; font-size: clamp(17px, 2vw, 20px); line-height: 1.55; }
-    .doc-hero-note { display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: 38px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
-    .doc-hero-media { margin: 0; padding: 14px; border: 1px solid var(--surface); background: var(--surface); box-shadow: 16px 18px 0 color-mix(in oklch, var(--bg) 72%, var(--surface-raised) 28%); }
-    .doc-hero-media img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--surface-raised); }
-    .doc-hero-caption { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; padding-inline: 2px; color: var(--muted); font-family: var(--font-mono); font-size: 11px; }
-    .doc-hero-caption span:last-child { color: var(--cyan); }
-
-    .doc-shell { padding: clamp(54px, 7vw, 94px) 0; background: var(--bg); }
-    .doc-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
-    .doc-aside { position: sticky; top: 100px; grid-column: 1; padding: 18px; border: 1px solid var(--border); background: var(--surface); }
-    .doc-aside-title { margin: 0 0 12px; color: var(--teal); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .doc-aside nav { display: grid; gap: 2px; }
-    .doc-aside a { display: flex; min-height: 44px; align-items: center; padding: 8px 2px; color: var(--fg); font-size: 14px; text-decoration: none; border-bottom: 1px solid var(--border); }
-    .doc-aside a:last-child { border-bottom: 0; }
-    .doc-aside a:hover { color: var(--fg); background: var(--surface-raised); }
-    .doc-article { grid-column: 2; min-width: 0; }
-    .doc-section { padding: 0 0 54px; border-bottom: 1px solid var(--border); }
-    .doc-section + .doc-section { padding-top: 54px; }
-    .doc-section:last-child { padding-bottom: 0; border-bottom: 0; }
-    .section-kicker { display: block; margin-bottom: 12px; color: var(--teal); font-size: 11px; letter-spacing: 0.08em; line-height: 1.4; text-transform: uppercase; }
-    h2, h3, p { overflow-wrap: break-word; }
-    h2 { margin: 0 0 20px; font-family: var(--font-display); font-size: clamp(30px, 4vw, 48px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; text-wrap: balance; }
-    h3 { margin: 34px 0 12px; font-family: var(--font-display); font-size: clamp(22px, 2.7vw, 30px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
-    h3:first-child { margin-top: 0; }
-    p { max-width: 76ch; margin: 0 0 18px; }
-    strong { font-weight: 700; }
-    code, .mono { font-family: var(--font-mono); }
-    code { color: var(--cyan); font-size: 0.9em; overflow-wrap: anywhere; }
-    ul { max-width: 78ch; margin: 0 0 20px; padding-left: 1.35em; }
-    li { margin: 8px 0; padding-left: 4px; }
-    .feature-list li::marker { color: var(--teal); }
-    .callout { margin: 0 0 28px; padding: 19px 21px; border: 1px solid var(--teal); border-left: 5px solid var(--teal); background: color-mix(in oklch, var(--surface-raised) 88%, var(--teal) 12%); color: var(--fg); }
-    .callout h2 { margin: 0 0 7px; color: var(--teal); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; line-height: 1.4; text-transform: uppercase; }
-    .callout p { margin: 0; }
-    .table-wrap { width: 100%; margin: 20px 0 28px; border: 1px solid var(--border); background: var(--surface); }
-    table { width: 100%; border-collapse: collapse; table-layout: auto; font-size: 14px; line-height: 1.5; }
-    th, td { padding: 13px 15px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
-    th { color: var(--fg); background: var(--surface-raised); font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
-    tbody tr:nth-child(even) { background: color-mix(in oklch, var(--surface) 72%, var(--surface-raised) 28%); }
-    tbody tr:hover { background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--border); }
-    tbody tr:last-child td { border-bottom: 0; }
-    td code { font-size: 0.88em; }
-    .doc-link { color: var(--cyan); font-weight: 500; }
-    .doc-link:hover { color: var(--fg); }
-    .video-frame { position: relative; width: min(100%, 720px); aspect-ratio: 16 / 9; margin: 24px 0 9px; overflow: hidden; border: 2px solid var(--border); border-radius: 4px; background: var(--surface-raised); }
-.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .video-link { margin: 0 0 18px; }
-    .video-link a { display: inline-flex; min-height: 44px; align-items: center; padding: 10px 14px; border: 1px solid var(--accent); background: var(--accent); color: var(--on-accent); font-family: var(--font-mono); font-size: 13px; font-weight: 700; line-height: 1.3; text-decoration: none; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease; }
-    .video-link a:hover { background: color-mix(in oklch, var(--accent) 86%, var(--fg) 14%); color: var(--on-accent); }
-    .video-link a:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
-    .video-credit { color: var(--muted); font-size: 13px; font-style: italic; }
-    .cta-panel { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 30px; padding: 24px; border: 1px solid var(--border); background: var(--surface); }
-    .cta-panel p { margin: 0; }
-    .button { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 10px; padding: 12px 18px; border: 1px solid transparent; border-radius: 999px; font-weight: 700; line-height: 1.2; text-decoration: none; transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease; }
-    .button:hover { transform: translateY(-2px); }
-    .button--primary { background: var(--accent); color: var(--on-accent); }
-    .button--primary:hover { background: color-mix(in oklch, var(--accent) 86%, var(--fg) 14%); color: var(--on-accent); }
-    .button:active { transform: translateY(0); }
-    .cta-panel .button { flex: 0 0 auto; text-align: center; }
-    .site-footer { padding: 30px 0 36px; background: var(--surface-raised); border-top: 1px solid var(--border); }
-    .footer-wrap { display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
-    .footer-meta { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
-    .footer-links a { display: inline-flex; min-height: 44px; align-items: center; color: var(--fg); font-family: var(--font-mono); font-size: 12px; text-decoration: none; }
-    .footer-links a:hover { color: var(--fg); background: var(--surface); text-decoration: underline; }
-
-    @media (max-width: 900px) {
-      .doc-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(240px, 0.8fr); gap: 28px; }
-      .doc-layout { grid-template-columns: 1fr; }
-      .doc-aside, .doc-article { grid-column: auto; }
-      .doc-aside { position: static; }
-    }
-    @media (max-width: 680px) {
-      .container { width: min(100% - 32px, 560px); }
-      .nav-wrap { min-height: 68px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 8px; padding-block: 10px; }
-      .brand { grid-column: 1; grid-row: 1; }
-      .main-nav { display: contents; }
-      .nav-cta { grid-column: 2; grid-row: 1; }
-      .nav-links { grid-column: 1 / -1; grid-row: 2; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; width: 100%; }
-      .nav-link { justify-content: center; padding-inline: 2px; font-size: 10px; }
-      .doc-hero { padding-top: 58px; }
-      .doc-hero::before { inset: 58% 0 0; clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%); }
-      .doc-hero-grid { display: block; }
-      .doc-hero h1 { max-width: 11ch; font-size: clamp(44px, 14vw, 70px); }
-      .doc-hero-media { max-width: calc(100% - 16px); margin: 48px 16px 0 auto; }
-      .doc-layout { display: block; }
-      .doc-aside { margin-bottom: 38px; }
-      .doc-section + .doc-section { padding-top: 42px; }
-      .doc-section { padding-bottom: 42px; }
-      .table-wrap { border-radius: 2px; }
-      table { font-size: 13px; }
-      th, td { padding: 11px 9px; }
-      .cta-panel { align-items: stretch; flex-direction: column; }
-      .button { width: 100%; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
-      .button:hover { transform: none; }
-    }
-
-    /* Documentation shell: compact, searchable, and offline. */
-    .site-header { background: color-mix(in oklch, var(--surface-raised) 92%, var(--bg)); backdrop-filter: blur(16px); }
-    .nav-wrap { min-height: 64px; gap: 18px; }
-    .brand { min-height: 44px; }
-    .brand-name { letter-spacing: -0.04em; }
-    .brand-context { color: var(--teal); }
-    .top-nav { display: flex; align-items: center; gap: 2px; min-width: 0; flex: 1; }
-    .top-nav .nav-link { text-transform: none; letter-spacing: 0; font-size: 13px; border: 1px solid transparent; border-radius: 4px; }
-    .top-nav .nav-link:hover { background: var(--surface); color: var(--fg); text-decoration: none; }
-    .top-nav .nav-link[aria-current="page"] { color: var(--fg); background: var(--surface); box-shadow: inset 0 -2px var(--accent); font-weight: 700; text-decoration: none; }
-    .top-actions { display: flex; align-items: center; gap: 7px; flex: 0 0 auto; }
-    .top-github, .search-trigger, .sidebar-toggle { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--border); border-radius: 4px; background: transparent; color: var(--fg); font: 500 12px/1 var(--font-mono); text-decoration: none; }
-    .top-github, .search-trigger { padding: 8px 11px; }
-    .top-github:hover, .search-trigger:hover, .sidebar-toggle:hover { border-color: var(--fg); background: var(--surface); color: var(--fg); }
-    .search { position: relative; }
-    .search-trigger { cursor: pointer; }
-    .search-trigger kbd { color: var(--fg); font: 11px var(--font-mono); }
-    .search-panel { display: none; position: absolute; z-index: 40; top: calc(100% + 10px); right: 0; width: min(430px, calc(100vw - 32px)); padding: 12px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface-raised); box-shadow: 12px 14px 0 color-mix(in oklch, var(--bg) 72%, transparent); }
-    .search.is-open .search-panel { display: block; }
-    .search-form { display: flex; align-items: center; gap: 8px; }
-    .search-input { width: 100%; min-height: 44px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg); color: var(--fg); padding: 9px 11px; font: 14px var(--font-body); }
-    .search-input::placeholder { color: var(--muted); }
-    .search-results { display: grid; gap: 4px; max-height: 330px; overflow-y: auto; margin-top: 9px; }
-    .search-results[hidden] { display: none; }
-    .search-result { display: grid; gap: 2px; padding: 9px 10px; border: 1px solid transparent; border-radius: 4px; color: var(--fg); text-decoration: none; overflow-wrap: anywhere; }
-    .search-result:hover, .search-result.is-active { border-color: var(--border); background: var(--surface); color: var(--fg); box-shadow: inset 3px 0 var(--accent); }
-    .search-result-title { font-weight: 700; }
-    .search-result-meta { color: var(--teal); font: 11px/1.45 var(--font-mono); }
-    .search-empty { margin: 8px 2px 2px; color: var(--fg); font-size: 13px; }
-    .sidebar-toggle { display: none; cursor: pointer; padding: 8px 11px; }
-
-    .doc-hero { padding: 30px 0 24px; background: var(--surface); }
-    .doc-hero::before { inset: 0 0 0 72%; opacity: .55; }
-    .doc-hero-grid { grid-template-columns: minmax(0, 1fr) 240px; gap: clamp(20px, 4vw, 44px); align-items: start; }
-    .eyebrow { padding: 7px 10px; font-size: 10px; }
-    .doc-hero h1 { max-width: 18ch; margin: 13px 0 10px; font-size: clamp(36px, 4.4vw, 56px); }
-    .doc-lead { max-width: 68ch; font-size: clamp(16px, 1.3vw, 17px); }
-    .doc-hero-note { margin-top: 16px; padding-top: 10px; color: var(--fg); }
-    .doc-hero-media { padding: 8px; border-radius: 4px; box-shadow: 7px 8px 0 color-mix(in oklch, var(--bg) 72%, var(--surface-raised) 28%); }
-    .doc-hero-media img { aspect-ratio: 16 / 9; }
-    .doc-hero-caption { color: var(--fg); }
-
-    .doc-shell { padding: 24px 0 56px; }
-    .doc-layout { grid-template-columns: 220px minmax(0, 1fr) 200px; gap: clamp(20px, 3vw, 40px); align-items: start; }
-    .doc-sidebar, .doc-aside { position: sticky; top: 84px; align-self: start; padding: 14px; border: 1px solid var(--border); border-radius: 4px; background: color-mix(in oklch, var(--surface) 86%, var(--bg)); }
-    .doc-sidebar { grid-column: 1; grid-row: 1; }
-    .doc-aside { grid-column: 3; grid-row: 1; }
-    .doc-sidebar-title, .doc-aside-title { margin: 0 0 10px; color: var(--teal); font: 11px/1.4 var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
-    .doc-sidebar-section { margin: 0 -14px 10px; padding: 0 14px 10px; border-bottom: 1px solid var(--border); color: var(--fg); font: 11px/1.4 var(--font-mono); }
-    .doc-sidebar nav, .doc-aside nav { display: grid; gap: 2px; }
-    .doc-sidebar a, .doc-aside a { display: flex; min-height: 44px; align-items: center; padding: 7px 9px; border: 1px solid transparent; border-left-width: 2px; border-radius: 3px; color: var(--fg); font-size: 13px; text-decoration: none; }
-    .doc-sidebar a:hover, .doc-aside a:hover { color: var(--fg); background: var(--surface-raised); border-left-color: var(--border); }
-    .doc-sidebar a[aria-current="page"] { border-left-color: var(--accent); background: var(--surface-raised); color: var(--fg); font-weight: 700; }
-    .doc-aside a { font-size: 12px; }
-    .doc-aside a.outline-subitem { padding-left: 20px; font-size: 11px; }
-    .doc-article { grid-column: 2; grid-row: 1; max-width: 76ch; }
-    .doc-article h2, .doc-article h3 { scroll-margin-top: 92px; }
-    .doc-section { padding-bottom: 42px; scroll-margin-top: 92px; }
-    .doc-section + .doc-section { padding-top: 42px; }
-    .section-kicker { margin-bottom: 12px; color: var(--teal); }
-    h2 { font-size: clamp(28px, 3vw, 42px); }
-    h3 { font-size: clamp(20px, 2.2vw, 27px); }
-    .feature-list li::marker, .step-list li::marker { color: var(--teal); }
-    .callout { border-color: var(--teal); border-left-color: var(--teal); border-radius: 4px; background: color-mix(in oklch, var(--surface-raised) 88%, var(--teal) 12%); }
-    .callout h2 { color: var(--teal); }
-    .callout--warning { border-color: var(--orange); background: color-mix(in oklch, var(--surface-raised) 88%, var(--orange) 12%); }
-    .callout--warning h2 { color: var(--orange); }
-    code { color: var(--cyan); }
-    .doc-link { color: var(--cyan); }
-    .doc-link:hover { color: var(--fg); text-decoration-thickness: 2px; }
-    .table-wrap { max-width: 100%; overflow-x: auto; border-radius: 4px; -webkit-overflow-scrolling: touch; }
-    tbody tr { transition: background-color 180ms ease, box-shadow 180ms ease; }
-    tbody tr:hover { background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--border); }
-    .video-frame, .step-shot, .cta-panel, details { border-radius: 4px; }
-    .video-link a:hover { background: color-mix(in oklch, var(--accent) 86%, var(--fg) 14%); border-color: var(--accent); color: var(--on-accent); }
-    .button--primary:hover { background: color-mix(in oklch, var(--accent) 86%, var(--fg) 14%); color: var(--on-accent); }
-    details summary:hover { background: var(--surface-raised); color: var(--fg); }
-    .doc-footer-nav { grid-column: 2; display: flex; justify-content: space-between; gap: 18px; margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--border); }
-    .doc-footer-link { display: grid; gap: 4px; max-width: 48%; padding: 10px 8px; border: 1px solid transparent; border-radius: 4px; color: var(--fg); text-decoration: none; }
-    .doc-footer-link:last-child { text-align: right; margin-left: auto; }
-    .doc-footer-link:hover { color: var(--fg); background: var(--surface); border-color: var(--border); }
-    .doc-footer-label { color: var(--teal); font: 10px var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
-    .back-top { display: inline-flex; min-height: 44px; align-items: center; margin-top: 18px; padding-inline: 8px; color: var(--fg); font: 11px var(--font-mono); }
-    .back-top:hover { color: var(--fg); background: var(--surface); text-decoration: underline; }
-    .footer-meta { color: var(--fg); }
-    .footer-links a { padding-inline: 8px; border: 1px solid transparent; border-radius: 4px; }
-    .footer-links a[aria-current="page"] { background: var(--surface); border-color: var(--border); font-weight: 700; }
-    .footer-links a:hover { color: var(--fg); background: var(--surface); border-color: var(--border); }
-
-    @media (max-width: 1120px) {
-      .doc-layout { grid-template-columns: 220px minmax(0, 1fr); }
-      .doc-sidebar { grid-column: 1; grid-row: 1; }
-      .doc-article { grid-column: 2; grid-row: 1; }
-      .doc-aside { grid-column: 2; grid-row: 2; position: static; margin-top: 26px; }
-      .doc-footer-nav { grid-column: 2; }
-    }
-    @media (max-width: 760px) {
-      .container { width: min(100% - 28px, 680px); }
-      .nav-wrap { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; min-height: 60px; padding-block: 8px; }
-      .sidebar-toggle { display: inline-flex; grid-column: 1; grid-row: 1; }
-      .brand { grid-column: 2; grid-row: 1; min-width: 0; }
-      .brand-context { display: none; }
-      .top-actions { grid-column: 3; grid-row: 1; }
-      .top-github { display: none; }
-      .search-trigger { padding-inline: 9px; }
-      .search-trigger kbd { display: none; }
-      .top-nav { grid-column: 1 / -1; grid-row: 2; flex-wrap: wrap; overflow: visible; width: 100%; justify-content: center; }
-      .top-nav .nav-link { flex: 1 1 auto; min-height: 36px; padding-inline: 8px; white-space: nowrap; justify-content: center; }
-      .search-panel { position: fixed; top: 58px; right: 14px; left: 14px; width: auto; }
-      .doc-hero { padding: 28px 0 22px; }
-      .doc-hero::before { inset: 62% 0 0; }
-      .doc-hero-grid { display: block; }
-      .doc-hero h1 { max-width: none; font-size: clamp(34px, 10vw, 52px); }
-      .doc-hero-media { width: min(100%, 360px); max-width: none; margin: 20px 0 0 auto; }
-      .doc-layout { display: flex; flex-direction: column; }
-      .doc-sidebar { display: none; position: static; margin-bottom: 24px; }
-      .doc-sidebar.is-open { display: block; }
-      .doc-aside { position: static; margin-top: 26px; }
-      .doc-article { max-width: none; order: 1; }
-      .doc-sidebar { order: 0; }
-      .doc-aside { order: 2; }
-      .doc-footer-nav { order: 3; width: 100%; margin-top: 28px; flex-direction: column; }
-      .doc-footer-link, .doc-footer-link:last-child { max-width: 100%; margin-left: 0; text-align: left; }
-      .table-wrap { max-width: 100%; }
-      table { min-width: 520px; }
-      table { font-size: 13px; }
-      th, td { padding: 11px 9px; }
-      .cta-panel { align-items: stretch; flex-direction: column; }
-      .button { width: 100%; }
-    }
-    @media (max-width: 620px) {
-      .table-wrap:has(table th:nth-child(3)) { scrollbar-color: var(--border) var(--surface-raised); scrollbar-width: thin; }
-      .table-wrap:has(table th:nth-child(3)) table { min-width: 620px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
+  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
 </head>
-<body id="top" data-doc-page="overview">
-  <header class="site-header" data-od-id="site-header">
-    <div class="container nav-wrap">
-      <button class="sidebar-toggle" type="button" data-od-id="mobile-menu-button" aria-controls="docs-sidebar" aria-expanded="false" aria-label="Open documentation menu">Menu</button>
-      <a class="brand" href="../unity-asset-portfolio.html" aria-label="vedaloiv Home" data-od-id="brand-home-link">
-        <span class="brand-name">vedaloiv</span><span class="brand-context">/ docs</span>
+<body data-page="overview" data-group="fp">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Menu</span>
+      </button>
+      <a class="brand" href="index.html" aria-label="vedaloiv documentation home">
+        <span class="brand-name">vedaloiv</span><span class="brand-sub">docs</span>
       </a>
-      <nav class="top-nav" aria-label="Primary navigation" data-od-id="top-navigation">
-        <a class="nav-link" href="../unity-asset-portfolio.html" data-od-id="home-nav-link">Home</a>
-        <a class="nav-link" href="index.html" data-od-id="docs-hub-nav-link">All docs</a>
-        <a class="nav-link" href="overview.html" aria-current="page" data-od-id="controller-nav-link">Easy FP Controller</a>
-        <a class="nav-link" href="dungeon-generator.html" data-od-id="dungeon-generator-nav-link">Dungeon Generator</a>
-        <a class="nav-link" data-od-id="asset-store-nav-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener noreferrer">Asset Store</a>
+      <nav class="topnav" aria-label="Site">
+        <a href="../unity-asset-portfolio.html">Home</a>
+        <a href="index.html">All docs</a>
       </nav>
-      <div class="top-actions" data-od-id="top-actions">
-        <div class="search" data-search-provider="local" data-od-id="search-control">
-          <button class="search-trigger" type="button" aria-controls="search-panel" aria-expanded="false" aria-keyshortcuts="Control+K Meta+K" data-od-id="search-button">Search <kbd>Ctrl K</kbd></button>
-          <div class="search-panel" id="search-panel" data-od-id="search-panel">
-            <form class="search-form" role="search" data-od-id="search-form">
-              <input class="search-input" id="doc-search" type="search" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-activedescendant="" placeholder="Search the docs…" autocomplete="off" spellcheck="false" aria-label="Search documentation" aria-controls="search-results" data-od-id="search-input">
-            </form>
-            <div class="search-results" id="search-results" role="listbox" aria-label="Search results" aria-live="polite" aria-atomic="true" aria-relevant="additions text" hidden data-od-id="search-results"></div>
-          </div>
-        </div>
-        <a class="top-github" href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="github-nav-link">GitHub</a>
+      <div class="topbar-actions">
+        <button class="search-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
+          <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="search-btn-label">Search docs</span>
+          <kbd class="search-btn-kbd" data-shortcut>Ctrl K</kbd>
+        </button>
+        <a class="top-store" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener"><span class="top-store-long">Asset Store</span><span class="sr-only"> page for Easy FP Full Body Controller (opens in a new tab)</span><svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
       </div>
     </div>
   </header>
 
-  <main data-od-id="overview-page">
-    <section class="doc-hero" data-od-id="overview-hero" aria-labelledby="overview-title">
-      <div class="container doc-hero-grid">
-        <div>
-          <span class="eyebrow">Documentation / Overview</span>
-          <h1 id="overview-title" data-od-id="overview-heading">Easy FP Full Body Controller</h1>
-          <p class="doc-lead">A first-person <strong>and</strong> third-person full-body character controller for Unity 6.5 and URP. It renders and animates a full body in first person with procedural IK, and ships with a guided 7-step Setup Wizard, ready-made demo prefabs and three demo scenes, the <strong>FPCutter</strong> mesh-cutting tool, a dynamic item system with holster animation, finger grips, ground-anchored <strong>foot planting</strong>, footsteps, an extensible event API, a configuration transfer tool, and optional <strong>FishNet</strong> and <strong>PurrNet</strong> multiplayer add-ons.</p>
-          <div class="doc-hero-note"><span>vedaloiv / shipped source</span><span>v1.6.0</span><span>namespace Player</span></div>
-        </div>
-        <figure class="doc-hero-media" data-od-id="overview-hero-image">
-          <img src="images/fp-overview.png" alt="Easy FP Full Body Controller product view showing a full body in a Unity scene" fetchpriority="high" decoding="async">
-          <figcaption class="doc-hero-caption"><span>Easy FP Full Body Controller</span><span>Real shot</span></figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="doc-shell" data-od-id="overview-content">
-      <div class="container doc-layout">
-        <aside class="doc-sidebar" id="docs-sidebar" data-od-id="docs-sidebar" aria-label="Documentation">
-          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-hub">vedaloiv</p>
-          <p class="doc-sidebar-section">Documentation hub</p>
-          <nav aria-label="All docs" data-od-id="docs-hub-sidebar-nav">
-            <a href="index.html" data-od-id="sidebar-docs-hub-link">All docs</a>
-          </nav>
-          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title">Easy FP Full Body Controller</p>
-          <p class="doc-sidebar-section">Documentation</p>
-          <nav aria-label="Documentation pages">
-            <a href="overview.html" aria-current="page" data-od-id="sidebar-overview-link">Overview</a>
-            <a href="quick-start.html" data-od-id="sidebar-quick-start-link">Quick Start</a>
-            <a href="interfaces.html" data-od-id="sidebar-interfaces-link">Interfaces</a>
-            <a href="fishnet.html" data-od-id="sidebar-fishnet-link">Multiplayer (FishNet)</a>
-            <a href="purrnet.html" data-od-id="sidebar-purrnet-link">Multiplayer (PurrNet)</a>
-          </nav>
-          <p class="doc-sidebar-title" data-od-id="docs-sidebar-title-dungeon-generator">Easy Dungeon Generator</p>
-          <p class="doc-sidebar-section">Documentation</p>
-          <nav aria-label="Dungeon Generator pages">
-            <a href="dungeon-generator.html" data-od-id="sidebar-dungeon-overview-link">Overview</a>
-            <a href="dungeon-quick-start.html" data-od-id="sidebar-dungeon-quick-start-link">Quick Start</a>
-            <a href="dungeon-api.html" data-od-id="sidebar-dungeon-api-link">API Reference</a>
-          </nav>
-        </aside>
-        <aside class="doc-aside" data-od-id="overview-sidebar" aria-label="Overview sections">
-          <p class="doc-aside-title" data-od-id="overview-outline-title">On this page</p>
-          <nav id="doc-outline-list" aria-label="On this page links" data-od-id="outline-links">
-            <a href="#features">Features</a>
-            <a href="#requirements">Requirements</a>
-            <a href="#listing-facts">Listing facts</a>
-            <a href="#quick-start">Quick start</a>
-            <a href="#next-steps">Next steps</a>
-            <a href="#changelog">Changelog</a>
-            <a href="#get-it">Get it</a>
-          </nav>
-        </aside>
-
-        <article class="doc-article">
-          <aside class="callout" data-od-id="verified-callout">
-            <h2 data-od-id="verified-heading">Verified against v1.6.0</h2>
-            <p>This documentation reflects the shipped <strong>v1.6.0</strong> package source (read directly from <code>Assets/FBSystem/</code>). Signatures below are real, not estimates.</p>
-          </aside>
-
-          <section class="doc-section" id="features" data-od-id="features-section" aria-labelledby="features-heading">
-            <span class="section-kicker">01 / Product surface</span>
-            <h2 id="features-heading" data-od-id="features-heading">Features</h2>
-            <ul class="feature-list" data-od-id="features-list">
-              <li><strong>Full-body first / third person</strong> with procedural hand, head and spine IK, ground-anchored foot planting and finger grips on held items.</li>
-              <li><strong>7-step Setup Wizard</strong>: menu <code>Tools ▸ FBSystem ▸ Setup Wizard</code> walks you from root to validation. A ready-made <code>FBSystem_Player</code> prefab and three demo scenes give a faster start.</li>
-              <li><strong>FPCutter</strong>: segments one or more character meshes and hides body parts (e.g. the head) in first person while still casting shadows.</li>
-              <li><strong>Item system</strong>: smooth equip, holster and unequip; per-item hold data; optional <code>ItemDefinition</code> assets with categories; IK presets; scroll-wheel and number-key switching.</li>
-              <li><strong>Extensible event API</strong>: C# events + <code>UnityEvent</code>s + auto-discovered listener interfaces, each fired once per transition from a single canonical chokepoint.</li>
-              <li><strong>Foot planting and footsteps</strong>: feet stay anchored to the ground with automatic re-steps; footsteps are detected from the animated feet, without animation events.</li>
-              <li><strong>Health and stamina</strong> (optional): <code>PlayerVitals</code> with damage, healing and death events, and heart-rate based sprint stamina.</li>
-              <li><strong>Transfer Configuration</strong>: copies a fully tuned player's configuration onto a new character — no re-tuning of IK, camera or items (<code>Tools ▸ FBSystem ▸ Transfer Configuration</code>).</li>
-              <li><strong>Multiplayer add-ons</strong> (optional): <a class="doc-link" href="fishnet.html">FishNet</a> (FishNet 4.7.2) and <a class="doc-link" href="purrnet.html">PurrNet</a> (PurrNet v1.22.0, host-client co-op for 2–4 players).</li>
-              <li><strong>Cinemachine</strong>-based FPS camera with a stable anchor target.</li>
-              <li><strong>Unity Input System</strong> integration (shipped <code>FBInputActions</code> asset).</li>
-            </ul>
-          </section>
-
-          <section class="doc-section" id="requirements" data-od-id="requirements-section" aria-labelledby="requirements-heading">
-            <span class="section-kicker">02 / Before import</span>
-            <h2 id="requirements-heading" data-od-id="requirements-heading">Requirements</h2>
-            <div class="table-wrap" data-od-id="requirements-table-wrap">
-              <table data-od-id="requirements-table">
-                <thead><tr><th scope="col">Requirement</th><th scope="col">Version</th><th scope="col">Source</th></tr></thead>
-                <tbody>
-                  <tr><td>Unity</td><td>6000.5.0f1 (Unity 6.5) or newer</td><td><code>ProjectSettings/ProjectVersion.txt</code></td></tr>
-                  <tr><td>Render Pipeline</td><td>URP only (17.5.0)</td><td><code>Packages/manifest.json</code></td></tr>
-                  <tr><td>Cinemachine</td><td>3.1.7</td><td><code>Packages/manifest.json</code></td></tr>
-                  <tr><td>Input System</td><td>1.19.0</td><td><code>Packages/manifest.json</code></td></tr>
-                  <tr><td>Character model</td><td>imported as <strong>Humanoid</strong></td><td>Setup Wizard step 2 requires it</td></tr>
-                  <tr><td>FishNet (optional)</td><td>4.7.2 — only for the FishNet addon</td><td>install before importing <code>FBSystemFishNet</code></td></tr>
-                  <tr><td>PurrNet (optional)</td><td>v1.22.0 — only for the PurrNet addon</td><td>install before importing <code>FBSystemPurrNet</code></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section class="doc-section" id="listing-facts" data-od-id="listing-facts-section" aria-labelledby="listing-facts-heading">
-            <span class="section-kicker">03 / Asset Store</span>
-            <h2 id="listing-facts-heading" data-od-id="listing-facts-heading">Listing facts</h2>
-            <div class="table-wrap" data-od-id="listing-facts-table-wrap">
-              <table data-od-id="listing-facts-table">
-                <thead><tr><th scope="col">Field</th><th scope="col">Value</th></tr></thead>
-                <tbody>
-                  <tr><td>Asset</td><td>Easy FP Full Body Controller</td></tr>
-                  <tr><td>Publisher</td><td>vedaloiv</td></tr>
-                  <tr><td>Store page</td><td><a class="doc-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">assetstore.unity.com</a></td></tr>
-                  <tr><td>Price</td><td>€36.79</td></tr>
-                  <tr><td>Version</td><td>1.6.0</td></tr>
-                  <tr><td>Unity</td><td>6000.5.0+</td></tr>
-                  <tr><td>Render pipeline</td><td>URP only</td></tr>
-                  <tr><td>Package size</td><td>194.7 MB</td></tr>
-                  <tr><td>Released</td><td>v1.0.0 (initial release) · v1.1.0 on 2026-07-30 · v1.3.0 on 2026-08-28 · v1.4.0 on 2026-09-08 · v1.6.0 on 2026-10-09</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section class="doc-section" id="quick-start" data-od-id="quick-start-section" aria-labelledby="quick-start-heading">
-            <span class="section-kicker">04 / First run</span>
-            <h2 id="quick-start-heading" data-od-id="quick-start-heading">Quick start</h2>
-            <p>Fastest start: drag <code>Demo/Prefabs/FBSystem_CameraRig</code> and <code>Demo/Prefabs/FBSystem_Player</code> into a scene with a floor and press Play. For your own character, run the <strong>7-step Setup Wizard</strong> (<code>Tools ▸ FBSystem ▸ Setup Wizard</code>), cut your mesh with <strong>FPCutter</strong>, and press Play. Full steps: <a class="doc-link" href="quick-start.html">Quick Start</a>.</p>
-            <div class="video-frame" data-od-id="overview-video">
-              <iframe src="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" title="FBSystem Quick Start Guide walkthrough" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen data-od-id="walkthrough-embed"></iframe>
-            </div>
-            <p class="video-link"><a href="https://www.youtube.com/watch?v=_X0HWXqQ3_k" target="_blank" rel="noopener noreferrer" data-od-id="walkthrough-video-link">Open the walkthrough on YouTube ↗</a></p>
-            <p class="video-credit">Walkthrough by <strong>aloiV</strong>. Covers the 7-step Setup Wizard, FPCutter mesh optimization, and the dynamic Item Usage system.</p>
-          </section>
-
-          <section class="doc-section" id="next-steps" data-od-id="next-steps-section" aria-labelledby="next-steps-heading">
-            <span class="section-kicker">05 / Continue</span>
-            <h2 id="next-steps-heading" data-od-id="next-steps-heading">Next steps</h2>
-            <ul data-od-id="next-steps-list">
-              <li><a class="doc-link" href="quick-start.html">Quick Start</a>: import, demo prefabs or wizard, FPCutter, input, play. Includes <a class="doc-link" href="quick-start.html#upgrading">upgrade notes from 1.3</a>.</li>
-              <li><a class="doc-link" href="interfaces.html">Interfaces</a>: the runtime API: <code>PlayerController</code> hub, item system, foot planting, vitals and the full event catalog.</li>
-              <li><a class="doc-link" href="fishnet.html">Multiplayer (FishNet)</a>: make a scene and player multiplayer-ready with the optional FishNet addon.</li>
-              <li><a class="doc-link" href="purrnet.html">Multiplayer (PurrNet)</a>: host-client co-op for 2 to 4 players with the optional PurrNet addon.</li>
-            </ul>
-          </section>
-
-          <section class="doc-section" id="changelog" data-od-id="changelog-section" aria-labelledby="changelog-heading">
-            <span class="section-kicker">06 / Release history</span>
-            <h2 id="changelog-heading" data-od-id="changelog-heading">Changelog highlights</h2>
-            <ul data-od-id="changelog-list">
-              <li><strong>v1.6.0 (2026-10-09)</strong>: <code>FBSystem_Player</code> and <code>FBSystem_CameraRig</code> prefabs and three guided demo scenes; smooth equip/unequip with holster animation; finger grips (<code>HandPoseController</code>); footsteps (<code>PlayerFootsteps</code>); item definitions and categories; optional health and stamina (<code>PlayerVitals</code>); the PurrNet addon; input and FPCutter fixes. <strong>Breaking:</strong> Foot IK renamed to foot planting (<code>PlayerFootPlanting</code>).</li>
-              <li><strong>v1.4.0 (2026-09-08)</strong>: ground-anchored foot IK (<code>PlayerFootGlue</code>, renamed to <code>PlayerFootPlanting</code> in 1.6); the PurrNet addon; FPCutter support for characters built from several meshes. <strong>Breaking:</strong> the legacy foot IK systems were removed.</li>
-              <li><strong>v1.3.0 (2026-08-28)</strong>: <strong>Character Configuration Transfer</strong> tool: copies tuning and missing items onto a new character.</li>
-              <li><strong>v1.1.0 (2026-07-30)</strong>: Extensible Event API: C# <code>event</code> + <code>UnityEvent</code> + auto-discovered listener interfaces on <code>HandItemSocket</code> and <code>PlayerLocomotion</code>, fired once per transition.</li>
-              <li><strong>v1.0.0</strong>: initial release.</li>
-            </ul>
-            <p>Upgrading from 1.3? Read <a class="doc-link" href="quick-start.html#upgrading">Upgrading from 1.3</a> first: foot settings reset and the add-ons must be re-imported.</p>
-            <p>Full changelog ships in the package at <code>Assets/FBSystem/CHANGELOG.md</code>.</p>
-          </section>
-
-          <section class="doc-section" id="get-it" data-od-id="get-it-section" aria-labelledby="get-it-heading">
-            <span class="section-kicker">07 / Store</span>
-            <h2 id="get-it-heading" data-od-id="get-it-heading">Get it</h2>
-            <div class="cta-panel" data-od-id="get-it-cta-panel">
-              <p>Easy FP Full Body Controller is available on the Unity Asset Store.</p>
-              <a class="button button--primary" data-od-id="get-it-cta" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">View on Asset Store ↗</a>
-            </div>
-          </section>
-          <a class="back-top" href="#top" data-od-id="back-to-top">Back to top ↑</a>
-        </article>
-        <nav class="doc-footer-nav" aria-label="Page navigation" data-od-id="doc-footer-navigation">
-          <a class="doc-footer-link" href="quick-start.html" data-od-id="next-page-link"><span class="doc-footer-label">Next</span><strong>Quick Start &#8594;</strong></a>
-        </nav>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer" data-od-id="site-footer">
-    <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.6.0</p>
-      <nav class="footer-links" aria-label="Footer navigation" data-od-id="footer-navigation">
-        <a href="../unity-asset-portfolio.html" data-od-id="footer-home-link">Home</a>
-        <a href="index.html" data-od-id="footer-docs-hub-link">All docs</a>
-        <a href="overview.html" aria-current="page" data-od-id="footer-overview-link">Overview</a>
-        <a href="quick-start.html" data-od-id="footer-quick-start-link">Quick Start</a>
-        <a href="interfaces.html" data-od-id="footer-interfaces-link">Interfaces</a>
-        <a href="fishnet.html" data-od-id="footer-fishnet-link">Multiplayer (FishNet)</a>
-        <a href="purrnet.html" data-od-id="footer-purrnet-link">Multiplayer (PurrNet)</a>
-        <a href="dungeon-generator.html" data-od-id="footer-dungeon-generator-link">Dungeon Generator</a>
-        <a href="dungeon-quick-start.html" data-od-id="footer-dungeon-quick-start-link">Dungeon Quick Start</a>
-        <a href="dungeon-api.html" data-od-id="footer-dungeon-api-link">Dungeon API</a>
-        <a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener noreferrer" data-od-id="footer-dungeon-store-link">Easy Dungeon Generator ↗</a>
-        <a href="https://github.com/MaansenV" target="_blank" rel="noopener noreferrer" data-od-id="footer-github-link">GitHub</a>
-        <a href="mailto:karakask2004@gmail.com">Email</a>
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation">
+      <nav class="sidebar-nav" aria-label="Documentation pages">
+<a class="nav-home" href="index.html">Docs home</a>
+<section class="nav-group is-current" data-group="fp">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <ul class="nav-list" id="nav-fp">
+    <li><a href="overview.html" class="is-active" aria-current="page">Overview</a></li>
+    <li><a href="quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="fp-setup-wizard.html">Setup Wizard</a></li>
+    <li><a href="fp-items.html">Items</a></li>
+    <li><a href="fp-body-ik.html">Body IK</a></li>
+    <li><a href="fp-fpcutter.html">FPCutter</a></li>
+    <li><a href="fp-vitals.html">Vitals &amp; Stamina</a></li>
+    <li><a href="fp-demos.html">Demos</a></li>
+    <li class="nav-label">Multiplayer</li>
+    <li><a href="fishnet.html">FishNet</a></li>
+    <li><a href="purrnet.html">PurrNet</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="interfaces.html">Interfaces</a></li>
+    <li><a href="fp-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="fp-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+<section class="nav-group" data-group="dungeon">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-dungeon"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy Dungeon Generator</span><span class="nav-version">v1.1.0</span></button>
+  <ul class="nav-list" id="nav-dungeon">
+    <li><a href="dungeon-generator.html">Overview</a></li>
+    <li><a href="dungeon-quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="dungeon-room-designer.html">Room Designer</a></li>
+    <li><a href="dungeon-templates.html">Templates &amp; Generation</a></li>
+    <li><a href="dungeon-decoration.html">Decoration &amp; Themes</a></li>
+    <li><a href="dungeon-streaming.html">Chunk Streaming</a></li>
+    <li><a href="dungeon-culling-navmesh.html">Culling &amp; NavMesh</a></li>
+    <li><a href="dungeon-demos.html">Demo Scenes</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="dungeon-api.html">API Reference</a></li>
+    <li><a href="dungeon-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="dungeon-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
       </nav>
-    </div>
-  </footer>
-  <script type="application/json" id="doc-search-index">
-    [
-      {"title":"All docs","headings":["Assets","Easy FP Full Body Controller","Easy Dungeon Generator","Earshot"],"excerpt":"Documentation hub for the vedaloiv Unity assets: Easy FP Full Body Controller v1.6.0, Easy Dungeon Generator v1.1.0, and Earshot (in development).","url":"index.html"},
-      {"title":"Overview","headings":["Features","Requirements","Listing facts","Quick start","Next steps","Changelog highlights","Get it"],"excerpt":"Easy FP Full Body Controller for Unity (URP): full-body first- and third-person controller, 7-step Setup Wizard, FPCutter, item system with definitions and holster animation, finger grips, foot planting, footsteps, optional health and stamina, demo scenes and ready-made prefabs, and optional FishNet and PurrNet multiplayer add-ons.","url":"overview.html"},
-      {"title":"Quick Start","headings":["Requirements","Fastest start: demo scenes and prefabs","1. Import the asset","2. Prepare a Humanoid model","3. Run the 7-step Setup Wizard","Step 1: Select Player Root","Step 2: Assign Model","Step 3: Find Bones","Step 4: Add Player Scripts","Step 5: Setup Helper Objects","Step 6: Connect Everything","Step 7: Final Health Check","4. Cut the mesh with FPCutter","5. Wire input","6. Press Play","7. Multiplayer (optional)","Upgrading from 1.3","Video walkthrough","Troubleshooting"],"excerpt":"Import the asset, run the 7-step Setup Wizard or start from the ready-made FBSystem_Player and FBSystem_CameraRig prefabs, configure FPCutter and input, then press Play. Includes upgrade notes from 1.3.","url":"quick-start.html"},
-      {"title":"Interfaces","headings":["PlayerController: the hub","Subsystem accessors","State (read-only)","Control methods (menus, cutscenes, pausing)","Configuration: PlayerSettings","Input: PlayerInputHandler","Per-frame state (read-only)","Methods","Player action map (FBInputActions)","Locomotion: PlayerLocomotion","Configurable fields","State","Camera: PlayerCameraController","Configurable","Public API","Items","HandItemSocket: canonical equip event source","ItemContainer: orchestration","ItemHoldData: per-item config and reactions","ItemDefinition: shared item description","ItemAttachmentData: hold and IK config","ItemIKPreset: share IK config","Event API","Event payloads","Item events: HandItemSocket","Locomotion events: PlayerLocomotion","Footstep and foot planting events","Vitals events: PlayerVitals","Listener interfaces","Subscribe in code","FPCutter: FPCutterController","Methods","Config","Animator: PlayerAnimatorController","Feet, hands, head and vitals","PlayerFootPlanting","PlayerFootsteps","HandPoseController and FingerPose","PlayerVitals and PlayerExertion","PlayerHeadIK","PlayerHandIK","PlayerSpineStabilizer","PlayerHandPoseDebugger (debug)","Multiplayer add-on bridges","Demo and editor code"],"excerpt":"Public runtime API in namespace Player: controller hub, settings, input, locomotion, camera, items and item definitions, event API, FPCutter, animation, foot planting, footsteps, finger grips, vitals, and procedural IK.","url":"interfaces.html"},
-      {"title":"Multiplayer (FishNet Addon)","headings":["What the addon does","Requirements","1. Install FishNet and the addon","Video: FishNet quick setup","2. FishNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: FishNet Components","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & remote client","Host test in the editor","Remote-client test","Troubleshooting"],"excerpt":"Optional FBSystemFishNet addon for FishNet 4.7.2: make scenes and players multiplayer-ready with a 5-step Setup Wizard, networked movement, animator and item sync, and networked world items.","url":"fishnet.html"},
-      {"title":"Multiplayer (PurrNet Addon)","headings":["What the addon does","Requirements","1. Install PurrNet and the addon","2. PurrNet Setup Wizard","Step 1: Scene Setup","Step 2: Select Player","Step 3: Network Player","Step 4: World Items","Step 5: Validation","3. Networked world items","What gets synchronized","Not included by design","Testing host & clients","Host test in the editor","Remote client test","Troubleshooting"],"excerpt":"Optional FBSystemPurrNet addon for PurrNet v1.22.0: host-client co-op for 2 to 4 players with a 5-step Setup Wizard, owner-authoritative movement, animator and foot-planting sync, and item sync.","url":"purrnet.html"},
-      {"title":"Easy Dungeon Generator","headings":["Authoring vs. assembly","Components","Editor tools","How generation works","Requirements","Demo scenes","Getting started","Chunk streaming","Extending the toolkit","Status and store facts"],"excerpt":"Easy Dungeon Generator v1.1.0 for Unity 6000.5.0+: authoring with RoomDesign and DungeonTheme, assembly with DungeonTemplate and DungeonManager, components, requirements, four demo scenes, chunk streaming, and store facts (released 2026-10-08, €33.11).","url":"dungeon-generator.html"},
-      {"title":"Dungeon Quick Start","headings":["1. Package & setup","Create a setup object","Create authoring assets","2. Create a theme","3. Paint a room","Multi-floor rooms","Doors and socket types","Save the room","4. Add rooms to the pool","5. Build a template","6. Generate a dungeon","DungeonManager inspector","7. Decorate rooms (optional)","8. Chunk streaming (optional)","Setup","World & streaming","Locks, gizmos & logging","9. Next steps"],"excerpt":"Minimal flow for Easy Dungeon Generator v1.1.0: package setup, Theme Wizard, Room Designer, DungeonTemplate, DungeonManager Generate, and the optional decoration and chunk streaming steps.","url":"dungeon-quick-start.html"},
-      {"title":"Dungeon API Reference","headings":["Namespace overview","DungeonManager","Methods","Key fields","ChunkDungeonStreamer","Methods","Key fields","Supporting chunk architecture","RoomDecorator","Rendering & room geometry","IDungeonRenderer","IRoomGeometry","Post-processing & culling","Post-processing contracts","DungeonNavMeshPostProcessor","DungeonCulling and rules","Authoring ScriptableObjects","Progression contracts","Supporting core types"],"excerpt":"Source-verified public API of Easy Dungeon Generator v1.1.0 in namespace DungeonGen: DungeonManager with Wall Mode, ChunkDungeonStreamer, RoomDecorator, renderer and geometry contracts, post-processing, culling rules, and authoring ScriptableObjects.","url":"dungeon-api.html"}
-    ]
-  </script>
-  <script>
-    (() => {
-      const index = JSON.parse(document.getElementById('doc-search-index').textContent);
-      const search = document.querySelector('[data-od-id="search-control"]');
-      const trigger = document.querySelector('[data-od-id="search-button"]');
-      const input = document.querySelector('[data-od-id="search-input"]');
-      const results = document.querySelector('[data-od-id="search-results"]');
-      const menu = document.querySelector('[data-od-id="mobile-menu-button"]');
-      const sidebar = document.getElementById('docs-sidebar');
-      let active = -1;
-      const setMenuOpen = (isOpen) => {
-        sidebar.classList.toggle('is-open', isOpen);
-        menu.setAttribute('aria-expanded', String(isOpen));
-        menu.setAttribute('aria-label', isOpen ? 'Close documentation menu' : 'Open documentation menu');
-        menu.textContent = isOpen ? 'Close' : 'Menu';
-      };
+    </aside>
+    <div class="scrim" data-close-nav hidden></div>
 
-      const openSearch = () => {
-        search.classList.add('is-open');
-        trigger.setAttribute('aria-expanded', 'true');
-        input.focus();
-        input.setAttribute('aria-expanded', String(Boolean(input.value.trim())));
-        if (input.value) renderResults();
-      };
-      const closeSearch = () => {
-        search.classList.remove('is-open');
-        trigger.setAttribute('aria-expanded', 'false');
-        results.hidden = true;
-        input.setAttribute('aria-expanded', 'false');
-        input.setAttribute('aria-activedescendant', '');
-        active = -1;
-        if (document.activeElement === input) trigger.focus();
-      };
-      const setActive = (next) => {
-        const links = [...results.querySelectorAll('.search-result')];
-        if (!links.length) {
-          input.setAttribute('aria-activedescendant', '');
-          return;
-        }
-        active = (next + links.length) % links.length;
-        links.forEach((link, i) => {
-          link.classList.toggle('is-active', i === active);
-          link.setAttribute('aria-selected', String(i === active));
-        });
-        input.setAttribute('aria-activedescendant', links[active].id);
-      };
-      function renderResults() {
-        const query = input.value.trim().toLowerCase();
-        results.replaceChildren();
-        active = -1;
-        if (!query) {
-          results.hidden = true;
-          input.setAttribute('aria-expanded', 'false');
-          input.setAttribute('aria-activedescendant', '');
-          return;
-        }
-        const terms = query.split(/\s+/);
-        const matches = index.filter((item) => {
-          const text = [item.title, item.excerpt, item.url, ...item.headings].join(' ').toLowerCase();
-          return terms.every((term) => text.includes(term));
-        });
-        if (!matches.length) {
-          const empty = document.createElement('p');
-          empty.className = 'search-empty';
-          empty.textContent = 'No matching pages.';
-          results.append(empty);
-        } else {
-          matches.forEach((item, i) => {
-            const link = document.createElement('a');
-            link.className = 'search-result';
-            link.id = `search-result-${i}`;
-            link.href = item.url;
-            link.setAttribute('role', 'option');
-            const title = document.createElement('span');
-            title.className = 'search-result-title';
-            title.textContent = item.title;
-            const meta = document.createElement('span');
-            meta.className = 'search-result-meta';
-            meta.textContent = `${item.headings.slice(0, 3).join(' · ')} · ${item.url}`;
-            link.append(title, meta);
-            results.append(link);
-          });
-          setActive(0);
-        }
-        results.hidden = false;
-        input.setAttribute('aria-expanded', 'true');
-        results.setAttribute('aria-label', matches.length ? `${matches.length} search result${matches.length === 1 ? '' : 's'}` : 'No matching pages');
-      }
+    <main class="main" id="content" tabindex="-1">
+      <article class="doc">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Docs</a></li><li><span>Easy FP Full Body Controller</span></li><li><span aria-current="page">Overview</span></li></ol></nav>
+        <header class="doc-header">
+  <p class="kicker">Overview</p>
+  <h1>Easy FP Full Body Controller</h1>
+  <p class="doc-meta"><span>Documentation for v1.6.0</span><span>URP</span><span>Unity 6000.5+</span></p>
+</header>
+        <div class="prose">
+<p class="lead">A first- and third-person full-body character controller for Unity 6.5 and URP. The body is animated and driven by procedural IK. You see your own arms, items sit in your hands, and your feet stay planted on stairs and slopes.</p>
+<details class="toc-inline"><summary>On this page</summary><ol class="toc-list">
+<li class="toc-l2"><a href="#features">Features</a></li>
+<li class="toc-l2"><a href="#requirements">Requirements</a></li>
+<li class="toc-l2"><a href="#listing-facts">Listing facts</a></li>
+<li class="toc-l2"><a href="#quick-start">Quick start</a></li>
+<li class="toc-l2"><a href="#next-steps">Next steps</a></li>
+<li class="toc-l2"><a href="#changelog">Latest changes</a></li>
+<li class="toc-l2"><a href="#get-it">Get it</a></li>
+</ol></details>
 
-      trigger.addEventListener('click', () => search.classList.contains('is-open') ? closeSearch() : openSearch());
-      input.addEventListener('input', renderResults);
-      input.addEventListener('keydown', (event) => {
-        if (event.key === 'ArrowDown') { event.preventDefault(); setActive(active + 1); }
-        if (event.key === 'ArrowUp') { event.preventDefault(); setActive(active - 1); }
-        if (event.key === 'Enter' && active >= 0) { event.preventDefault(); results.querySelectorAll('.search-result')[active].click(); }
-        if (event.key === 'Escape') closeSearch();
-      });
-      document.addEventListener('keydown', (event) => {
-        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); openSearch(); }
-        if (event.key === 'Escape' && sidebar.classList.contains('is-open')) setMenuOpen(false);
-      });
-      document.addEventListener('click', (event) => {
-        if (!search.contains(event.target)) closeSearch();
-      });
-      menu.addEventListener('click', () => {
-        setMenuOpen(!sidebar.classList.contains('is-open'));
-      });
+<h2 id="features">Features<a class="anchor" href="#features" aria-label="Link to this section">#</a></h2>
+<div class="cards">
+  <a class="card" href="fp-setup-wizard.html"><strong>Setup Wizard</strong><span>Seven steps from your Humanoid model to a working player, with Transfer Configuration to reuse a tuned setup.</span></a>
+  <a class="card" href="fp-body-ik.html"><strong>Body IK and foot planting</strong><span>Head, spine and hand IK, feet anchored to the ground with re-steps, finger grips and footsteps.</span></a>
+  <a class="card" href="fp-items.html"><strong>Items</strong><span>Equip, holster, use and drop items, with per-item grips, item definitions and IK presets.</span></a>
+  <a class="card" href="fp-fpcutter.html"><strong>FPCutter</strong><span>Hide the head and other body parts in first person while they still cast shadows.</span></a>
+  <a class="card" href="fp-vitals.html"><strong>Vitals and stamina</strong><span>Optional health, damage and revive, plus heart-rate based sprint stamina.</span></a>
+  <a class="card" href="fp-demos.html"><strong>Demos</strong><span>Three guided scenes and two ready-made prefabs for a fast start.</span></a>
+  <a class="card" href="interfaces.html"><strong>Events and API</strong><span>C# events, UnityEvents and listener interfaces, with the public components.</span></a>
+  <a class="card" href="fishnet.html"><strong>Multiplayer add-ons</strong><span>Optional FishNet 4.7.2 and PurrNet v1.22.0 add-ons with their own Setup Wizards.</span></a>
+</div>
 
-      const outline = document.getElementById('doc-outline-list');
-      const article = document.querySelector('.doc-article');
-      if (outline && article) {
-        const usedIds = new Set([...document.querySelectorAll('[id]')].map((node) => node.id));
-        outline.replaceChildren();
-        article.querySelectorAll('h2, h3').forEach((heading) => {
-          if (heading.closest('.callout')) return;
-          if (!heading.id) {
-            const base = (heading.dataset.odId || heading.textContent).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'section';
-            let id = base;
-            let count = 2;
-            while (usedIds.has(id)) id = `${base}-${count++}`;
-            heading.id = id;
-            usedIds.add(id);
-          }
-          const link = document.createElement('a');
-          link.href = `#${heading.id}`;
-          link.textContent = heading.textContent.trim();
-          link.dataset.odId = `outline-${heading.id}`;
-          if (heading.tagName === 'H3') link.classList.add('outline-subitem');
-          outline.append(link);
-        });
-      }
-    })();
-  </script>
+<h2 id="requirements">Requirements<a class="anchor" href="#requirements" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Requirement</th><th scope="col">Version</th></tr></thead>
+  <tbody>
+    <tr><td>Unity</td><td>6000.5.0 (Unity 6.5) or newer</td></tr>
+    <tr><td>Render pipeline</td><td>Universal Render Pipeline (URP) only</td></tr>
+    <tr><td>Cinemachine</td><td>3.x (the package is built with 3.1.7)</td></tr>
+    <tr><td>Input System</td><td>1.19.0 (the package is built with 1.19.0)</td></tr>
+    <tr><td>Character model</td><td>Humanoid avatar. The Setup Wizard requires it.</td></tr>
+    <tr><td>FishNet add-on (optional)</td><td>FishNet 4.7.2, installed before you import the add-on</td></tr>
+    <tr><td>PurrNet add-on (optional)</td><td>PurrNet v1.22.0, installed before you import the add-on</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="listing-facts">Listing facts<a class="anchor" href="#listing-facts" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Field</th><th scope="col">Value</th></tr></thead>
+  <tbody>
+    <tr><td>Asset</td><td>Easy FP Full Body Controller</td></tr>
+    <tr><td>Publisher</td><td>vedaloiv</td></tr>
+    <tr><td>Price</td><td>€36.79</td></tr>
+    <tr><td>Version</td><td>1.6.0, released 2026-10-09</td></tr>
+    <tr><td>Unity</td><td>6000.5.0 or newer</td></tr>
+    <tr><td>Render pipeline</td><td>URP only</td></tr>
+    <tr><td>Package size</td><td>194.7 MB</td></tr>
+    <tr><td>Store page</td><td><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">assetstore.unity.com<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="quick-start">Quick start<a class="anchor" href="#quick-start" aria-label="Link to this section">#</a></h2>
+<p>Drop the demo player and camera rig into a scene with a floor and press Play. For your own character, run the Setup Wizard on a Humanoid model. The <a href="quick-start.html">Quick Start</a> has both paths step by step.</p>
+
+<h2 id="next-steps">Next steps<a class="anchor" href="#next-steps" aria-label="Link to this section">#</a></h2>
+<ul>
+  <li><a href="quick-start.html">Quick Start</a>: the shortest path to a playable character.</li>
+  <li><a href="interfaces.html">Interfaces</a>: the public components, settings and the event API.</li>
+  <li><a href="fp-troubleshooting.html">Troubleshooting</a>: every health check message and common fixes.</li>
+  <li><a href="fp-changelog.html">Changelog</a>: all releases from 1.0.0 to 1.6.0 with upgrade notes.</li>
+</ul>
+
+<h2 id="changelog">Latest changes<a class="anchor" href="#changelog" aria-label="Link to this section">#</a></h2>
+<p><strong>1.6.0 (2026-10-09)</strong> adds the demo prefabs and scenes, the holster animation, finger grips, footsteps, item definitions and optional health and stamina. <span class="badge breaking">Breaking</span> Foot IK is renamed to foot planting, and foot settings reset to their defaults. Read <a href="quick-start.html#upgrading">Upgrading</a> before you update a project from 1.3. The full history is in the <a href="fp-changelog.html">Changelog</a>.</p>
+
+<h2 id="get-it">Get it<a class="anchor" href="#get-it" aria-label="Link to this section">#</a></h2>
+<div class="cards">
+  <a class="card" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener"><strong>View on Asset Store</strong><span>Easy FP Full Body Controller is available on the Unity Asset Store.</span><svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+</div>
+<p>Questions or bug reports: <a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a>.</p>
+        </div>
+        <nav class="pager" aria-label="Previous and next page"><span></span><a class="pager-link pager-next" href="quick-start.html" rel="next"><span class="pager-dir">Next</span><strong>Quick Start</strong></a></nav>
+      </article>
+    </main>
+
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p><ol class="toc-list">
+<li class="toc-l2"><a href="#features">Features</a></li>
+<li class="toc-l2"><a href="#requirements">Requirements</a></li>
+<li class="toc-l2"><a href="#listing-facts">Listing facts</a></li>
+<li class="toc-l2"><a href="#quick-start">Quick start</a></li>
+<li class="toc-l2"><a href="#next-steps">Next steps</a></li>
+<li class="toc-l2"><a href="#changelog">Latest changes</a></li>
+<li class="toc-l2"><a href="#get-it">Get it</a></li>
+</ol>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><a class="brand" href="../unity-asset-portfolio.html"><span class="brand-name">vedaloiv</span></a><p>Unity tools, documented for the people who use them.</p></div>
+    <div class="footer-col"><p class="footer-h">Asset Store</p><ul><li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li><li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li></ul></div>
+    <div class="footer-col"><p class="footer-h">Support</p><ul><li><a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></li><li><a href="../unity-asset-portfolio.html">vedaloiv home</a></li><li><a href="index.html">All docs</a></li></ul></div>
+  </div>
+  <p class="footer-copy">© 2026 vedaloiv</p>
+</footer>
+
+  <dialog class="search-dialog" aria-label="Search the documentation">
+    <form class="search-form" role="search" method="dialog">
+      <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input class="search-input" type="search" placeholder="Search pages and sections" autocomplete="off" spellcheck="false"
+        role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Search the documentation">
+      <button class="search-close" type="button" data-close-search><kbd>Esc</kbd><span class="sr-only">Close search</span></button>
+    </form>
+    <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+    <p class="search-status" aria-live="polite"></p>
+  </dialog>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" data-close-lightbox>Close <kbd>Esc</kbd></button>
+    <img alt="">
+    <p class="lightbox-caption"></p>
+  </dialog>
 </body>
 </html>

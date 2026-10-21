@@ -1,0 +1,134 @@
+<!--meta
+{"title": "Changelog", "navTitle": "Changelog", "description": "Version history of Easy FP Full Body Controller from 1.0.0 to 1.6.0, with breaking changes marked and upgrade notes for updating from 1.3 and 1.4.", "group": "fp", "kicker": "Reference", "chips": ["1.0.0 → 1.6.0"]}
+-->
+<p class="lead">What changed in each release of Easy FP Full Body Controller, newest first. Breaking changes are marked, and the upgrade notes at the end list what to do before you update a project.</p>
+<p>The full changelog ships in the package as <code>CHANGELOG.md</code>.</p>
+
+<h2 id="v1-6-0">1.6.0 <span class="badge">Latest</span></h2>
+<p>Released 2026-10-09.</p>
+
+<h3>Added</h3>
+<ul>
+  <li><strong>Demo scenes and ready-made prefabs.</strong> <code>FBSystem_Player</code> and <code>FBSystem_CameraRig</code>, plus three guided scenes. See <a href="fp-demos.html">Demos</a>.</li>
+  <li><strong>Smooth equip and unequip (holster).</strong> Switching items lowers the current item out of view, then raises the new one. Two-handed grips fade the left hand on and off. See <a href="fp-items.html#equip">Items</a>.</li>
+  <li><strong>Finger grips</strong> with <code>HandPoseController</code>, reusable <code>FingerPose</code> templates and per-item tweaks. The grips calibrate from the avatar's muscle limits. See <a href="fp-body-ik.html#fingers">Finger grips</a>.</li>
+  <li><strong>Footsteps</strong> with <code>PlayerFootsteps</code>, detected from the animated feet. See <a href="fp-body-ik.html#footsteps">Footsteps</a>.</li>
+  <li><strong>Item definitions and categories</strong> (<code>ItemDefinition</code>, <code>ItemCategory</code>). See <a href="fp-items.html#definitions">Definitions and categories</a>.</li>
+  <li><strong>Health and stamina</strong> (optional) with <code>PlayerVitals</code> and <code>PlayerExertion</code>. See <a href="fp-vitals.html">Vitals and Stamina</a>.</li>
+  <li><code>PlayerInputHandler.InteractTriggered</code> and <code>PlayerCameraController.IsLocalCameraActive</code>.</li>
+  <li>The PurrNet and FishNet add-ons were rebuilt for this version, including holster and drop sync and item definitions.</li>
+</ul>
+
+<h3>Changed</h3>
+<ul>
+  <li><span class="badge breaking">Breaking</span> <strong>Foot IK is now foot planting.</strong> The component is <code>PlayerFootPlanting</code>, and the settings have new names. The foot settings of your scenes and prefabs reset to their defaults. Details are in <a href="#upgrade-from-1-3">the upgrade notes</a>.</li>
+  <li><strong>Event timing with smooth transitions.</strong> <code>ItemUnequipped</code> fires while the item is still visible. <code>ItemEquipped</code> can fire for an item that is still waiting to be drawn. <code>OnEquip</code> and <code>OnUnequip</code> only fire for items that are shown. Turn off <em>Smooth Transitions</em> to get the instant behaviour back.</li>
+  <li><code>UseCurrentItem()</code> is ignored until the new item has been drawn.</li>
+  <li>Foot planting runs earlier (execution order −200), so hands no longer drift relative to the camera on stairs and uneven ground.</li>
+  <li>Holding sprint while standing still no longer counts as sprinting.</li>
+  <li>Setup tools find the package folder from their own location, so moving <code>FBSystem</code> no longer breaks generated assets.</li>
+</ul>
+
+<h3>Fixed</h3>
+<ul>
+  <li><code>SetInputEnabled(false)</code> left the player walking with the last input, and kept Jump and Flashlight presses latched.</li>
+  <li>The FPCutter invisible shader works on GLES, WebGL and Android. Hidden parts could render magenta there before. It is SRP Batcher compatible and casts correct spot and point light shadows.</li>
+  <li>FPCutter fallback material uses the invisible shader instead of a visible Lit shader.</li>
+  <li>The Setup Wizard's Create action for Player Settings failed when the settings folder did not exist. The validator's auto-fix could overwrite an existing settings asset.</li>
+  <li>Inspectors no longer throw errors after a domain reload with a stale selection.</li>
+  <li>The flashlight world item showed <em>Item</em> as its display name.</li>
+</ul>
+
+<h2 id="v1-4-0">1.4.0 <span class="badge">2026-09-08</span></h2>
+
+<h3>Added</h3>
+<ul>
+  <li><strong>Ground-anchored foot IK</strong> with automatic re-steps and a direct three-bone leg solver. It was first named <code>PlayerFootGlue</code>; it is <code>PlayerFootPlanting</code> since 1.6.</li>
+  <li><strong>PurrNet multiplayer add-on</strong> for host-client co-op with 2 to 4 players, on PurrNet v1.22.0.</li>
+  <li><strong>FPCutter multi-mesh support.</strong> The wizard lists every <code>SkinnedMeshRenderer</code> of the character and processes the selected ones with a shared skeleton. The generated copy is a complete character.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+  <li>Segmented FPCutter meshes recalculate their bounds, so skinned-mesh culling stays correct.</li>
+</ul>
+<h3>Removed</h3>
+<ul>
+  <li><span class="badge breaking">Breaking</span> The legacy foot IK systems, including the <code>csHomebrewIK</code> integration, were removed. Scenes with the old components must be migrated. See <a href="#upgrade-from-1-3">the upgrade notes</a>.</li>
+</ul>
+
+<h2 id="v1-3-0">1.3.0 <span class="badge">2026-08-28</span></h2>
+<h3>Added</h3>
+<ul>
+  <li><strong>Character Configuration Transfer.</strong> Copies the tuning and missing items of a finished player to a new character. See <a href="fp-setup-wizard.html#transfer">Transfer Configuration</a>.</li>
+</ul>
+
+<h2 id="v1-1-0">1.1.0 <span class="badge">2026-07-30</span></h2>
+<h3>Added</h3>
+<ul>
+  <li><strong>Extensible event API.</strong> Each equip, unequip and locomotion change fires a C# event, a UnityEvent and any listener interface on the player, once per transition. See <a href="interfaces.html#event-api">Event API</a>.</li>
+  <li>The demo <code>PlayerEventLogger</code> logs every event to the Console.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+  <li><code>HandItemSocket</code> is the single source of equip and unequip events. <code>ItemContainer</code> drives the socket and no longer emits its own equip events.</li>
+</ul>
+<h3>Removed</h3>
+<ul>
+  <li><span class="badge breaking">Breaking</span> <code>HandItemSocket.OnItemAttached</code> and <code>OnItemDetached</code> were renamed. The container's own <code>OnItemEquipped</code> and <code>OnItemUnequipped</code> events were removed.</li>
+</ul>
+
+<h2 id="v1-0-0">1.0.0 <span class="badge">Initial release</span></h2>
+<p>First-person and third-person full-body controller with procedural IK, the Setup Wizard, FPCutter mesh cutting for first-person body-part hiding, and a demo scene with item pickup and drop.</p>
+
+<h2 id="upgrades">Upgrade notes</h2>
+<p>Read the notes for every version between your current version and the new one. Re-import the add-on packages you use after you update the base package.</p>
+
+<h3 id="upgrade-from-1-3">Upgrading from 1.3 (includes 1.4 and 1.6)</h3>
+<aside class="callout warn">
+  <strong class="callout-title">Breaking changes</strong>
+  <p>Read these steps before you update a project that uses 1.3. Keep a note of your foot settings first.</p>
+</aside>
+<ol class="steps">
+  <li>
+    <p><strong>Remove the old foot IK components (1.4).</strong> Delete the legacy foot IK components from the player, including any <code>csHomebrewIK</code> integration. Then run <span class="menu">Tools › FBSystem › Setup Wizard</span>, which adds the foot component.</p>
+  </li>
+  <li>
+    <p><strong>Foot IK is now foot planting (1.6).</strong> Renamed types and members: <code>PlayerFootGlue</code> to <code>PlayerFootPlanting</code>, <code>PlayerLegSolver</code> (new name for the solver), <code>GlueMode</code> to <code>PlantMode</code>, <code>StepParams</code> to <code>StepSettings</code>, <code>PlayerController.FootGlue</code> to <code>FootPlanting</code>, <code>ResetGlue()</code> to <code>ResetPlanting()</code>.</p>
+    <details>
+      <summary>Renamed inspector settings in 1.6</summary>
+      <p>The settings have clearer names. Examples: <em>Enable Foot Planting</em>, <em>Anchor Capture Range</em>, <em>Max Leg Extension</em>, <em>Lift Height</em>, <em>Arc Strength</em> and <em>Catch-Up Boost</em>. Existing components stay attached, because script GUIDs did not change.</p>
+    </details>
+  </li>
+  <li>
+    <p><strong>Foot settings reset to their defaults (1.6).</strong> Note your tuned values, then enter them again after the update. Use the defaults if you did not tune them. If an old <code>PlayerFootGlue</code> entry shows as a missing script, remove it and add <code>PlayerFootPlanting</code>. Foot settings do not carry over.</p>
+  </li>
+  <li>
+    <p><strong>Item events changed (1.6).</strong> Items switch with a holster animation. Check any code or Inspector wiring that expects the old timing. See the 1.6.0 list above. To keep the old instant switch, turn off <em>Smooth Transitions</em> on <code>HandItemSocket</code>.</p>
+  </li>
+  <li>
+    <p><strong>Sprint while standing still no longer counts (1.6).</strong> Animator and <code>SprintStarted</code> only fire while the player moves.</p>
+  </li>
+  <li>
+    <p><strong>Re-import the add-on (1.6).</strong> Re-import the FishNet or PurrNet add-on after the update. Older add-on packages do not compile against 1.6. The add-ons do not synchronize health.</p>
+  </li>
+</ol>
+
+<h3 id="upgrade-from-1-1">Upgrading from 1.0 to 1.1</h3>
+<ul>
+  <li>Inspector wiring: re-wire <code>OnItemAttached</code> to <code>OnItemEquipped</code> and <code>OnItemDetached</code> to <code>OnItemUnequipped</code>. The payload is the same, the equipped item's GameObject.</li>
+  <li>Code: rename the subscriptions. For the container's removed events, subscribe to <code>HandItemSocket.ItemEquipped</code> or <code>ItemUnequipped</code>. The slot index is in <code>ItemEquipArgs.SlotIndex</code>.</li>
+  <li><code>ItemHoldData.OnEquip</code>, <code>OnUnequip</code> and <code>OnUse</code> are unchanged.</li>
+</ul>
+
+<details>
+  <summary>All renamed members in 1.6</summary>
+  <ul>
+    <li><code>PlayerFootGlue</code> → <code>PlayerFootPlanting</code></li>
+    <li><code>PlayerFootGlueSolver</code> → <code>PlayerLegSolver</code></li>
+    <li><code>PlayerFootGlueEditor</code> → <code>PlayerFootPlantingEditor</code></li>
+    <li><code>GlueMode</code> → <code>PlantMode</code></li>
+    <li><code>StepParams</code> → <code>StepSettings</code></li>
+    <li><code>PlayerController.FootGlue</code> → <code>PlayerController.FootPlanting</code></li>
+    <li><code>ResetGlue()</code> → <code>ResetPlanting()</code></li>
+  </ul>
+</details>

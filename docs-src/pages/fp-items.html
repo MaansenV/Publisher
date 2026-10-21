@@ -1,0 +1,147 @@
+<!--meta
+{"title": "Items", "navTitle": "Items", "description": "The item system: ItemContainer slots, the hand socket, equip, unequip and holster, use and drop, item definitions and categories, IK presets and item events.", "group": "fp", "kicker": "Guide", "chips": ["Slots 1–9", "Holster animation"]}
+-->
+<p class="lead">Give the player items that can be equipped, held in the right hand, put away and used. In this guide you create an item container, add items to it, and control switching with the keyboard and mouse wheel.</p>
+
+<h2 id="parts">How the parts fit together</h2>
+<dl class="props">
+  <dt><code>ItemContainer</code> <span class="default">on a child of the right hand</span></dt>
+  <dd>The list of items. Its order defines the slots: the first item is slot 1. Items stay inactive until they are equipped.</dd>
+  <dt><code>HandItemSocket</code> <span class="default">on the player root</span></dt>
+  <dd>Holds the equipped item in the hand and owns the equip and unequip events.</dd>
+  <dt><code>ItemSwitcher</code> <span class="default">on the player root</span></dt>
+  <dd>Reads the number keys, <kbd>Q</kbd> and the mouse wheel, and calls the container.</dd>
+  <dt><code>ItemHoldData</code> <span class="default">on each item</span></dt>
+  <dd>The item's id, its grip and IK settings, its world prefab and its item-local events.</dd>
+  <dt><code>ItemDefinition</code> <span class="default">optional asset</span></dt>
+  <dd>A shared description of an item: id, name, categories and prefabs. Covered in <a href="#definitions">Definitions and categories</a>.</dd>
+</dl>
+
+<h2 id="setup-items">Add items</h2>
+<p>Use the Item Container Setup window, or set up each item by hand.</p>
+<ol class="steps">
+  <li>Open <span class="menu">Tools › FBSystem › Item Container Setup</span>.</li>
+  <li>Set <strong>Target Container</strong>, or click <strong>Scan Scene for Container</strong>. The container must be in the scene.</li>
+  <li>Drag an item prefab into <strong>Item Prefab</strong> and click <strong>🚀 ADD ITEM</strong>. The window creates the item as an inactive child of the container. If the prefab has no <code>ItemHoldData</code>, one is added.</li>
+  <li>Optional: open <strong>Advanced IK Offsets</strong> to set the hold layer, grip offsets, hand and elbow offsets, hold style, pitch influence and vertical limits. <strong>Load IK Preset</strong> with <strong>Apply Preset</strong> fills the same fields from an <code>ItemIKPreset</code>.</li>
+  <li>The <strong>Inventory</strong> list shows the items in slot order. <strong>Extract</strong> copies the IK settings of an existing item into the form. <strong>X</strong> removes an item from the container.</li>
+</ol>
+<p>To set up an item by hand, add an <code>ItemHoldData</code> with a unique <strong>itemId</strong> to the item prefab, then add the item to the container's <strong>Items</strong> list.</p>
+
+<h2 id="hold-data">Item hold data</h2>
+<p><code>ItemHoldData</code> is the item's configuration. Its <strong>itemId</strong> defaults to <code>NewItem</code>, so change it for every item. <code>EquipItemById</code> and world item pickups use this id.</p>
+<dl class="props">
+  <dt><code>itemId</code> <span class="type">string</span> <span class="default">default NewItem</span></dt>
+  <dd>Unique id. A pickup matches a <code>WorldItem</code> to the item by this id.</dd>
+  <dt><code>definition</code> <span class="type">ItemDefinition</span></dt>
+  <dd>Optional. When set, the id, categories and world prefab come from the definition.</dd>
+  <dt><code>category</code> <span class="type">ItemCategory</span> <span class="default">default None</span></dt>
+  <dd>Category flags, used when no definition is set.</dd>
+  <dt><code>worldItemPrefab</code> <span class="type">GameObject</span></dt>
+  <dd>The prefab spawned when the item is dropped. It needs a <code>WorldItem</code> component.</dd>
+  <dt><code>attachmentData</code> <span class="type">ItemAttachmentData</span></dt>
+  <dd>Grip, hold style and IK settings. See <a href="#grips-ik">Grips and IK</a>.</dd>
+  <dt><code>OnEquip</code>, <code>OnUnequip</code>, <code>OnUse</code> <span class="type">UnityEvent</span></dt>
+  <dd>The item's own reactions, for example switching a light on. <code>OnEquip</code> and <code>OnUnequip</code> only fire for items that are shown.</dd>
+</dl>
+
+<h2 id="equip">Equip, switch, holster and use</h2>
+<table>
+  <thead><tr><th scope="col">Input</th><th scope="col">Effect</th></tr></thead>
+  <tbody>
+    <tr><td><kbd>1</kbd> to <kbd>9</kbd></td><td>Equips the item in slot 1 to 9. Pressing the number of the item that is already equipped puts it away.</td></tr>
+    <tr><td><kbd>0</kbd> or <kbd>Q</kbd></td><td>Puts the current item away.</td></tr>
+    <tr><td>Mouse wheel</td><td>Scroll up for the previous item, down for the next. Cycling wraps around.</td></tr>
+    <tr><td><kbd>F</kbd></td><td>Uses the held item. This fires its <code>OnUse</code> event (the demo uses <kbd>F</kbd> for the flashlight).</td></tr>
+  </tbody>
+</table>
+<p>Switching plays a holster animation. The current item is lowered out of view, and then the new one is raised. The timings are on <code>PlayerHandIK</code> under <strong>Holster</strong>:</p>
+<dl class="props">
+  <dt><code>holsterDuration</code> <span class="type">float</span> <span class="default">default 0.2</span></dt>
+  <dd>Seconds to lower the hand out of view.</dd>
+  <dt><code>drawDuration</code> <span class="type">float</span> <span class="default">default 0.25</span></dt>
+  <dd>Seconds to raise the hand into view.</dd>
+  <dt><code>drawStartWeight</code> <span class="type">float</span> <span class="default">default 0.6</span></dt>
+  <dd>The hand IK weight that must be reached before the draw starts, so the arm does not swing up from the idle pose.</dd>
+  <dt><code>holsterOffset</code>, <code>holsterTiltAngle</code> <span class="default">default tilt 50</span></dt>
+  <dd>Where the hand goes when lowered, and how far the item tips.</dd>
+</dl>
+<p>To turn the animation off, disable <strong>Smooth Transitions</strong> on <code>HandItemSocket</code> (on by default). <strong>Stow Timeout</strong> (default 1 second) completes a put-away even if the hand never reaches the lowered pose.</p>
+<aside class="callout note">
+  <strong class="callout-title">Switching is instant in code</strong>
+  <p><code>CurrentItem</code> and the events change at once. The visuals follow. <code>StowingItem</code> is the item being lowered and <code>PendingItem</code> the item waiting to be drawn. <code>UseCurrentItem()</code> does nothing until the new item is drawn.</p>
+</aside>
+
+<h2 id="drop">Pick up and drop</h2>
+<p>The demo scripts add pickup and drop. The core package does not include them.</p>
+<ul>
+  <li><kbd>E</kbd> picks up the item you look at (<code>PlayerInteraction</code>). Only colliders on the layers in its <strong>Interactable Layer</strong> count.</li>
+  <li><kbd>G</kbd> drops the held item (<code>PlayerDropSystem</code>). The item's <em>World Item Prefab</em> is spawned in front of the camera and the item leaves the hand at once.</li>
+</ul>
+
+<h2 id="definitions">Definitions and categories</h2>
+<p>An <code>ItemDefinition</code> describes an item in one place. Create one with <span class="menu">Create › Player › Item Definition</span>.</p>
+<ul>
+  <li><strong>Id</strong>: until you press <strong>Lock</strong>, the id follows the asset name. Lock it before you use the id in save data.</li>
+  <li><strong>Display Name</strong>: shown in pickup prompts. It falls back to the asset name.</li>
+  <li><strong>Category</strong>: flags <code>Tool</code>, <code>Electric</code> and <code>Consumable</code>. An item can have several. Check them with <code>Is(ItemCategory)</code>.</li>
+  <li><strong>Held Prefab</strong>, <strong>World Prefab</strong> and <strong>Network Prefab</strong>: the hand item, the dropped item and the networked variant of the dropped item (used by the add-ons).</li>
+</ul>
+<p>Assign the definition to <code>ItemHoldData</code>, to <code>WorldItem</code> or to the starter items of the demo <code>PlayerInventory</code>. Item id fields then show a picker with all definitions, and items without a definition keep working with a plain id.</p>
+
+<h2 id="grips-ik">Grips and IK</h2>
+<p>Each item has its own grip and IK settings in <code>ItemAttachmentData</code>. The most common fields:</p>
+<dl class="props">
+  <dt><code>holdStyle</code> <span class="type">HoldStyle</span> <span class="default">default OneHandedRight</span></dt>
+  <dd><code>OneHandedRight</code> or <code>TwoHanded</code>. Two-handed items use the left-hand offsets.</dd>
+  <dt><code>gripPositionOffset</code>, <code>gripRotationOffset</code> <span class="type">Vector3</span></dt>
+  <dd>Where the item sits in the palm, relative to the hand socket.</dd>
+  <dt><code>overrideHandOffset</code>, <code>handOffset</code> <span class="default">default 0.25, −0.15, 0.4</span></dt>
+  <dd>Turns on a custom hand position while standing. The value is relative to the camera.</dd>
+  <dt><code>overrideElbowOffset</code>, <code>elbowHintOffset</code></dt>
+  <dd>Custom elbow position while standing. Crouch variants exist for the hand and elbow.</dd>
+  <dt><code>pitchInfluence</code>, <code>pitchRotationInfluence</code> <span class="default">default 0.3 and 0.5</span></dt>
+  <dd>How much looking up or down moves and tilts the hand.</dd>
+  <dt><code>fingerPoseRight</code>, <code>fingerPoseLeft</code></dt>
+  <dd>Finger grip templates. See <a href="fp-body-ik.html#fingers">Finger grips</a>.</dd>
+</dl>
+<h3 id="tune">Tune an item in the scene</h3>
+<ol class="steps">
+  <li>On the item's <code>ItemHoldData</code>, enable <strong>Debug Mode</strong> and <strong>Tune Grip Mode</strong>.</li>
+  <li>Enter Play Mode and equip the item.</li>
+  <li>Move the item in the Scene view. Its transform is captured into the grip offsets.</li>
+</ol>
+<p>For the hand and elbow targets, enable <strong>Tune Handles Mode</strong> instead. Handles then move the targets for the current stance (standing or crouching). Handles work only in Play Mode with the item equipped, Debug Mode on and the player standing still. A label shows why the handles are locked.</p>
+
+<h3 id="ik-presets">IK presets</h3>
+<p>An <code>ItemIKPreset</code> stores a complete set of <code>ItemAttachmentData</code> so several items can share it. Create one with <span class="menu">Create › Player › Item IK Preset</span>. In the item's Inspector, the <strong>Preset Management</strong> section works with it:</p>
+<ul>
+  <li><strong>Load Preset</strong>: copies the preset into the item.</li>
+  <li><strong>Update Preset</strong>: copies the item's current settings into the preset.</li>
+  <li><strong>Create New Preset Asset</strong>: saves the item's settings as a new preset.</li>
+</ul>
+
+<h2 id="events">Item events</h2>
+<table>
+  <thead><tr><th scope="col">Source</th><th scope="col">C# event</th><th scope="col">UnityEvent</th></tr></thead>
+  <tbody>
+    <tr><td><code>HandItemSocket</code></td><td><code>ItemEquipped</code>, <code>ItemUnequipped</code></td><td><code>OnItemEquipped</code>, <code>OnItemUnequipped</code></td></tr>
+    <tr><td><code>ItemContainer</code></td><td>none</td><td><code>OnContainerChanged</code>, fired when items are added or removed</td></tr>
+    <tr><td><code>ItemHoldData</code></td><td>none</td><td><code>OnEquip</code>, <code>OnUnequip</code>, <code>OnUse</code></td></tr>
+  </tbody>
+</table>
+<p>With smooth transitions, <code>ItemUnequipped</code> fires while the old item is still visible. <code>ItemEquipped</code> can fire for an item that is still waiting to be drawn. Code and listeners are covered in <a href="interfaces.html#event-api">Event API</a>.</p>
+
+<h2 id="pitfalls">Common pitfalls</h2>
+<aside class="callout warn">
+  <strong class="callout-title">Pickup does nothing</strong>
+  <p>The world item's <code>itemId</code> (or its definition) must match an item in the container. The world item also needs a collider on a layer that the pickup's Interactable Layer includes.</p>
+</aside>
+<aside class="callout warn">
+  <strong class="callout-title">Item will not equip</strong>
+  <p>Check that the item is in the container's <strong>Items</strong> list and has an <code>ItemHoldData</code>. The container needs its hand socket, which the Setup Wizard connects in step 6.</p>
+</aside>
+<aside class="callout note">
+  <strong class="callout-title">Unused input actions</strong>
+  <p><code>FBInputActions</code> defines <em>Previous</em> and <em>Next</em> (bound to <kbd>1</kbd> and <kbd>2</kbd>) and <em>Attack</em>. No shipped script reads them. <code>ItemSwitcher</code> reads the keys directly, so rebinding these actions does not change item switching.</p>
+</aside>

@@ -1,0 +1,236 @@
+<!--meta
+{"title": "Templates and Generation", "navTitle": "Templates & Generation", "description": "Describe a dungeon as a node tree in the Dungeon Template Designer, gate it with progression requirements, and generate exact or seeded random layouts with DungeonManager.", "group": "dungeon", "kicker": "Guide", "chips": ["Unity 6000.5.0+", "namespace DungeonGen"]}
+-->
+<p class="lead">A <strong>DungeonTemplate</strong> describes the shape of a dungeon as a tree of rooms: an entrance, the rooms along the way, and an exit. A <strong>DungeonManager</strong> in your scene turns that tree into a layout made from your room prefabs.</p>
+
+<h2 id="template-basics">How a template works</h2>
+<ul>
+  <li>A template is a tree of <em>nodes</em> (room slots or milestones) and <em>edges</em> (connections between them).</li>
+  <li>The root node is the <strong>Entrance</strong>. A template must have exactly one Entrance node.</li>
+  <li>Each node has one parent. The validator rejects loops and nodes that cannot be reached from the root.</li>
+  <li>An Exit node is normally a leaf. When a template has Exit leaves, the main path ends there.</li>
+  <li>Progression requirements can gate the main path only. Branch edges cannot have one.</li>
+</ul>
+<table>
+  <thead><tr><th scope="col">Node type</th><th scope="col">Use</th></tr></thead>
+  <tbody>
+    <tr><td><code>Entrance</code></td><td>The root. Exactly one per template.</td></tr>
+    <tr><td><code>Normal</code></td><td>A room in the middle of the dungeon.</td></tr>
+    <tr><td><code>Exit</code></td><td>The end of the main path.</td></tr>
+    <tr><td><code>Treasure</code>, <code>Boss</code></td><td>Special rooms, chosen by room type.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="create-template">Create a template</h2>
+<ol class="steps">
+  <li>
+    <p>Open <span class="menu">Tools › DungeonGen › Dungeon Template Designer</span>. Click <strong>New</strong>, or <strong>Load Asset</strong> to edit an existing template. To create an empty asset in the Project window, use <span class="menu">Assets › Create › DungeonGen › Dungeon Template</span>.</p>
+  </li>
+  <li>
+    <p>Add nodes with <strong>Add Node</strong>. Select a node and set its fields in <strong>Node Details</strong>: <strong>Node ID</strong>, <strong>Type</strong> (the room type), <strong>Prefab</strong> (an optional pinned room), and <strong>Debug Color</strong>.</p>
+  </li>
+  <li>
+    <p>Connect nodes by dragging from one node's port to another. Use <strong>Arrange Tree</strong> to lay the graph out, and <strong>Frame All</strong> or <strong>Frame Sel</strong> to find nodes.</p>
+  </li>
+  <li>
+    <p>Click <strong>Validate</strong>. Every problem is listed in the Node Details panel. Fix them and validate again.</p>
+    <figure>
+      <img src="images/dungeon/Unity_vCB8swmKlu.png" alt="Dungeon Template Designer with a single Entrance node. The validation panel reports that the node has no pinned prefab and no pool entries.">
+      <figcaption>A template with an Entrance node and no room for it yet. Validation fails until a room is pinned or added to the pool.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <p>Click <strong>Save Asset</strong>.</p>
+  </li>
+</ol>
+<p><strong>Generate Preview</strong> builds the template in the scene so you can check the result. <strong>Clear Preview</strong> removes it.</p>
+
+<h3 id="validation">What the validator checks</h3>
+<p>The validator runs before generation. It reports:</p>
+<ul>
+  <li>missing, duplicate, or unresolved node and edge IDs, and a root that does not match the Entrance;</li>
+  <li>a tree that is not connected, or a node with more than one parent;</li>
+  <li>a room for each node: a pinned prefab, or a pool prefab with the matching Room Type;</li>
+  <li>enough doors on each room for its connections;</li>
+  <li>progression requirements that cannot be reached, or that have no room to provide them.</li>
+</ul>
+<p>Typical messages are <em>no pinnedPrefab and no pool entries</em> and <em>no eligible prefab with RoomType Boss</em>.</p>
+
+<h2 id="generation-modes">Generation modes</h2>
+<p>Set the mode on the <code>DungeonManager</code> with <strong>Generation Mode</strong>.</p>
+<dl class="props">
+  <dt><code>TemplateExact</code> <span class="default">default</span></dt>
+  <dd>Each template node becomes exactly one room, and each edge becomes one connection. The layout is the authored structure. With <strong>Add Random Branches In Exact</strong> on, the manager also adds random branches to that skeleton.</dd>
+  <dt><code>TemplateSequencedRandom</code></dt>
+  <dd>Template nodes are milestones. The manager inserts seeded filler rooms on each edge, and can add random branches that use spare doorways. Use it when the authored pacing should stay, but the layout should vary between runs.</dd>
+</dl>
+
+<h2 id="manager-settings">DungeonManager settings</h2>
+<p>The Inspector groups the settings into sections. The defaults are listed below.</p>
+<h3 id="settings-mode-template">Mode and template</h3>
+<dl class="props">
+  <dt><code>template</code> <span class="type">DungeonTemplate</span> <span class="default">required</span></dt>
+  <dd>The template to generate. Generation stops with an error when it is empty.</dd>
+  <dt><code>useBurstPlanner</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Uses the Burst-compiled planner. See <a href="dungeon-culling-navmesh.html#burst-planner">Burst planner</a>.</dd>
+  <dt><code>addRandomBranchesInExact</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Adds random branches to a TemplateExact layout.</dd>
+  <dt><code>maxSearchNodes</code> <span class="type">int</span> <span class="default">default 10000, minimum 100</span></dt>
+  <dd>Placement attempts before the planner gives up. Raise it for large templates.</dd>
+  <dt><code>allowRotation</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Lets rooms rotate in 90° steps to match socket directions.</dd>
+</dl>
+
+<h3 id="settings-expansion">Expansion (TemplateSequencedRandom)</h3>
+<dl class="props">
+  <dt><code>mainPathRoomCount</code> <span class="type">int</span> <span class="default">default 10, minimum 1</span></dt>
+  <dd>Rooms along the main path. It must be at least the number of nodes on the longest main path.</dd>
+  <dt><code>minOffshootSequenceFillers</code>, <code>maxOffshootSequenceFillers</code> <span class="type">int</span> <span class="default">default 0 and 2</span></dt>
+  <dd>Range of filler rooms inserted on each edge off the main path.</dd>
+  <dt><code>maxRandomBranchRooms</code> <span class="type">int</span> <span class="default">default 10</span></dt>
+  <dd>Room budget for random branches. 0 turns random branches off.</dd>
+  <dt><code>minRandomBranchStarts</code>, <code>maxRandomBranchStarts</code> <span class="type">int</span> <span class="default">default 1 and 1</span></dt>
+  <dd>How many separate branch roots to start. A seeded value is picked in this range.</dd>
+  <dt><code>allowRandomSubbranches</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Lets branch rooms grow their own branches.</dd>
+  <dt><code>maxRandomBranchDepth</code> <span class="type">int</span> <span class="default">default 4, minimum 1</span></dt>
+  <dd>Longest chain of random branch rooms from a branch root.</dd>
+</dl>
+
+<h3 id="settings-placement">Placement and output</h3>
+<dl class="props">
+  <dt><code>seamPadding</code> <span class="type">float</span> <span class="default">default 0</span></dt>
+  <dd>Space kept between adjacent rooms. Keep it at 0 when walls are shared.</dd>
+  <dt><code>allowedSeamOverlap</code> <span class="type">float</span> <span class="default">default 0, minimum 0</span></dt>
+  <dd>How far connected rooms may overlap at a seam. Used to line up shared walls; see <a href="#wall-mode">Wall mode</a>.</dd>
+  <dt><code>wallMode</code> <span class="type">SeamMode</span> <span class="default">default SingleOnly</span></dt>
+  <dd>How walls are shared at a seam. See <a href="#wall-mode">Wall mode</a>.</dd>
+  <dt><code>root</code> <span class="type">Transform</span> <span class="default">default this transform</span></dt>
+  <dd>Parent for the generated rooms.</dd>
+  <dt><code>sceneEntrance</code> <span class="type">RoomData</span> <span class="default">optional</span></dt>
+  <dd>A room you placed in the scene by hand. The dungeon grows from it.</dd>
+  <dt><code>useEntranceSeamPadding</code>, <code>entranceSeamPadding</code> <span class="type">bool, float</span> <span class="default">default off and 0</span></dt>
+  <dd>Override <code>seamPadding</code> for the rooms attached directly to the scene entrance.</dd>
+</dl>
+
+<h3 id="settings-pool">Room pool</h3>
+<p>The <strong>Room Pool</strong> is the list of candidate rooms for nodes without a pinned prefab. Drag prefabs onto the drop zone; each one is added with weight 1 and all contexts. Each entry has:</p>
+<dl class="props">
+  <dt><code>prefab</code> <span class="type">GameObject</span></dt>
+  <dd>A room prefab with <code>RoomData</code> and <code>DoorSocket</code> children.</dd>
+  <dt><code>weight</code> <span class="type">float</span> <span class="default">minimum 0</span></dt>
+  <dd>Relative chance of being picked. A weight of 0 turns random picking off. A pinned node still uses its prefab.</dd>
+  <dt><code>allowedContexts</code> <span class="type">RoomPlacementContext</span> <span class="default">All when empty</span></dt>
+  <dd>Where the room may be picked: <code>Template</code> (a template node), <code>SequenceFiller</code> (a filler on an edge), or <code>RandomBranch</code>. Set boss and treasure rooms to <code>Template</code> so they only appear at their nodes.</dd>
+</dl>
+
+<h3 id="settings-runtime">Runtime</h3>
+<dl class="props">
+  <dt><code>spawnPrototypePlayer</code>, <code>prototypePlayerPrefab</code> <span class="type">bool, GameObject</span> <span class="default">default on, empty</span></dt>
+  <dd>Spawns a player prefab at the entrance after generation.</dd>
+  <dt><code>generationFrames</code> <span class="type">int</span> <span class="default">default 1, minimum 1</span></dt>
+  <dd>Spreads generation over this many frames in Play Mode. 1 runs in one frame.</dd>
+  <dt><code>generationFrameBudgetMs</code> <span class="type">float</span> <span class="default">default 0</span></dt>
+  <dd>Millisecond budget per frame for placing rooms and decoration in Play Mode. 0 turns the budget off.</dd>
+  <dt><code>roomPoolPrewarm</code>, <code>decorationPoolPrewarm</code> <span class="type">int</span> <span class="default">default 5 and 20</span></dt>
+  <dd>Copies of each room and decoration prefab created in advance. 0 creates them on demand.</dd>
+  <dt><code>prewarmOnAwake</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Measures the prefabs and fills the pool in <code>Awake</code>, so the first generation is faster.</dd>
+</dl>
+
+<h3 id="settings-seed">Seed and retries</h3>
+<dl class="props">
+  <dt><code>useRandomSeed</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Draws a new seed for each run. Turn it off to use <code>seed</code>.</dd>
+  <dt><code>seed</code> <span class="type">int</span> <span class="default">default 0</span></dt>
+  <dd>The seed used when <code>useRandomSeed</code> is off.</dd>
+  <dt><code>maxPlanRetries</code> <span class="type">int</span> <span class="default">default 50</span></dt>
+  <dd>Extra planning attempts with a new seed when rooms do not fit.</dd>
+  <dt><code>planRetryTimeoutMs</code> <span class="type">int</span> <span class="default">default 2000</span></dt>
+  <dd>Time limit for all retries. 0 means no time limit.</dd>
+</dl>
+
+<h3 id="settings-decoration">Decoration and logging</h3>
+<dl class="props">
+  <dt><code>decorateAfterGeneration</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Decorates each room that has a <code>RoomDecorationAuthoring</code> after generation. Turn it off while you debug the layout.</dd>
+  <dt><code>logGeneration</code>, <code>logDecorationDiagnostics</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Extra log output for the generation run and for decoration.</dd>
+</dl>
+
+<h2 id="seeds">Seeds and repeatable layouts</h2>
+<p>With <strong>Use Random Seed</strong> on, each run gets a new seed. Turn it off and set <strong>Seed</strong> to get the same layout every time. Use a fixed seed while you test, and random seeds for play.</p>
+<p>The planner may retry with a derived seed when rooms do not fit. The requested seed still reproduces the same result. The Burst planner is deterministic too, but it is a separate implementation, so the same seed can give a different valid layout than the managed planner.</p>
+
+<h2 id="wall-mode">Wall mode for double-sided kits</h2>
+<p>Each room prefab carries its own walls and one door per doorway. When two rooms connect, two walls meet at the seam. <strong>Wall Mode</strong> decides what happens there.</p>
+<dl class="props">
+  <dt><code>SingleOnly</code> <span class="default">default</span></dt>
+  <dd>Every room keeps its own walls. Use it for one-sided kits, where the back of each wall is open. A doorway then shows the theme's door variant, which plugs the hole in the partner wall.</dd>
+  <dt><code>DoubleOnly</code></dt>
+  <dd>Rooms must be double-sided. Each connection shares one wall and one door. The validator rejects any pinned or pool prefab that is not double-sided.</dd>
+  <dt><code>AllowBoth</code></dt>
+  <dd>Shares walls where both rooms are double-sided and keeps both walls everywhere else.</dd>
+</dl>
+<ol class="steps">
+  <li>In the Dungeon Theme Wizard, Grid card, turn on <strong>Double-Sided Walls</strong> for the theme. Leave the door variant prefab empty, because a double-sided kit does not need a plug.</li>
+  <li>Save the room prefabs again, or rebuild them all with the Room Prefab Manager. The room then gets <code>supportsDoubleWalls</code>.</li>
+  <li>Set <strong>Wall Mode</strong> to <code>DoubleOnly</code> or <code>AllowBoth</code>.</li>
+  <li>Tune <strong>Allowed Seam Overlap</strong>. Start at 0 and increase it until the room's floor meets the wall at the seam. For the Gridness demo kit the value is 0.71.</li>
+</ol>
+<p>At each shared seam, one room (the keeper) keeps its wall and its door. The other room's doorway becomes a bare passage. A positive net gap (<code>seamPadding</code> minus <code>allowedSeamOverlap</code>) leaves the two walls apart, so keep <strong>Seam Padding</strong> at 0 when you share walls.</p>
+<p><strong>Double-Sided Ceilings</strong> is a separate option. The floor slab of the storey above then serves as the ceiling, so the theme's ceiling prefab list must be empty.</p>
+
+<h2 id="status-events">Generation status and events</h2>
+<p>A run is always in one of five states, reported by the read-only <code>Status</code> property:</p>
+<table>
+  <thead><tr><th scope="col">Status</th><th scope="col">Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><code>Idle</code></td><td>No run has started.</td></tr>
+    <tr><td><code>Generating</code></td><td>A run is in progress. <code>IsGenerating</code> is true, and <code>GenerationProgress</code> goes from 0 to 1.</td></tr>
+    <tr><td><code>Ready</code></td><td>The run finished, including decoration and post-processing.</td></tr>
+    <tr><td><code>Failed</code></td><td>The run failed. The dungeon from the last successful run stays in the scene.</td></tr>
+    <tr><td><code>Cancelled</code></td><td>The run was cancelled.</td></tr>
+  </tbody>
+</table>
+<p><code>StatusChanged</code> is raised with the new status each time it changes.</p>
+<pre><code class="lang-csharp">using DungeonGen;
+using UnityEngine;
+
+public class DungeonLoader : MonoBehaviour
+{
+    [SerializeField] private DungeonManager dungeon;
+
+    private void Start()
+    {
+        dungeon.StatusChanged += status => Debug.Log($"Dungeon status: {status}");
+        dungeon.Generate();
+    }
+}</code></pre>
+<p>A call to <code>Generate()</code> made while a run is still in progress is ignored with a warning.</p>
+
+<h2 id="progression">Progression requirements</h2>
+<p>A progression requirement gates a connection on the main path until the player has the item that unlocks it. It is built from three pieces:</p>
+<ul>
+  <li><strong>Progression Requirement</strong> asset (<span class="menu">Assets › Create › DungeonGen › Progression Requirement</span>): a <code>StableId</code> (set it so the ID survives a rename; it falls back to the asset name when empty), a display name, and the default item prefab.</li>
+  <li><strong>Gated edge:</strong> an edge in the template with a requirement. Set it on the <code>DungeonTemplate</code> asset in the Inspector, in its Edges list. The Template Designer window has no requirement field in version 1.1.0.</li>
+  <li><strong>Provider node:</strong> a node that provides the item. Add the requirement to its Provided Requirements list in the template asset.</li>
+</ul>
+<p>Room prefabs need the matching components:</p>
+<ul>
+  <li>the door on the gated connection needs a connection gate, such as <code>BasicConnectionGate</code>;</li>
+  <li>the room that provides the item needs an <code>ItemSpawnPoint</code>, which places the item prefab there.</li>
+</ul>
+<p>The validator checks that a provider exists before each gate and that the Exit can still be reached. A missing provider is reported as <em>has no reachable provider before the gate</em>.</p>
+
+<aside class="callout warn">
+  <strong class="callout-title">Requirements only on the main path</strong>
+  <p>A gated edge must lie on the main path. The validator rejects a requirement on a branch edge.</p>
+</aside>
+
+<h2 id="pitfalls">Common mistakes</h2>
+<ul>
+  <li><strong>Generation does nothing.</strong> Check the template is assigned and the Console for validation errors. See <a href="dungeon-troubleshooting.html#generation">Troubleshooting</a>.</li>
+  <li><strong>A node has no room.</strong> Pin a prefab, or add a pool prefab with the same Room Type.</li>
+  <li><strong>Walls double up at every seam.</strong> The kit is double-sided but Wall Mode is <code>SingleOnly</code>. See <a href="#wall-mode">Wall mode</a>.</li>
+</ul>

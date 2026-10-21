@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Changelog | Easy Dungeon Generator docs</title>
+  <meta name="description" content="Release history of Easy Dungeon Generator: version 1.1.0 (2026-10-08) with double-sided walls, the Room Door brush, the Room Prefab Manager, runtime generation status, and demo scenes, and the initial 1.0 release.">
+  <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/dungeon-changelog.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vedaloiv">
+  <meta property="og:title" content="Changelog | Easy Dungeon Generator docs">
+  <meta property="og:description" content="Release history of Easy Dungeon Generator: version 1.1.0 (2026-10-08) with double-sided walls, the Room Door brush, the Room Prefab Manager, runtime generation status, and demo scenes, and the initial 1.0 release.">
+  <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/dungeon-changelog.html">
+  <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/dungen-main.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f0f0f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M7 9l9 15 9-15' fill='none' stroke='%23ffe343' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='6' width='4' height='4' fill='%232748c9'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
+  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+</head>
+<body data-page="dungeon-changelog" data-group="dungeon">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Menu</span>
+      </button>
+      <a class="brand" href="index.html" aria-label="vedaloiv documentation home">
+        <span class="brand-name">vedaloiv</span><span class="brand-sub">docs</span>
+      </a>
+      <nav class="topnav" aria-label="Site">
+        <a href="../unity-asset-portfolio.html">Home</a>
+        <a href="index.html">All docs</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="search-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
+          <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="search-btn-label">Search docs</span>
+          <kbd class="search-btn-kbd" data-shortcut>Ctrl K</kbd>
+        </button>
+        <a class="top-store" href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener"><span class="top-store-long">Asset Store</span><span class="sr-only"> page for Easy Dungeon Generator (opens in a new tab)</span><svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation">
+      <nav class="sidebar-nav" aria-label="Documentation pages">
+<a class="nav-home" href="index.html">Docs home</a>
+<section class="nav-group" data-group="fp">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <ul class="nav-list" id="nav-fp">
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="fp-setup-wizard.html">Setup Wizard</a></li>
+    <li><a href="fp-items.html">Items</a></li>
+    <li><a href="fp-body-ik.html">Body IK</a></li>
+    <li><a href="fp-fpcutter.html">FPCutter</a></li>
+    <li><a href="fp-vitals.html">Vitals &amp; Stamina</a></li>
+    <li><a href="fp-demos.html">Demos</a></li>
+    <li class="nav-label">Multiplayer</li>
+    <li><a href="fishnet.html">FishNet</a></li>
+    <li><a href="purrnet.html">PurrNet</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="interfaces.html">Interfaces</a></li>
+    <li><a href="fp-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="fp-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+<section class="nav-group is-current" data-group="dungeon">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-dungeon"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy Dungeon Generator</span><span class="nav-version">v1.1.0</span></button>
+  <ul class="nav-list" id="nav-dungeon">
+    <li><a href="dungeon-generator.html">Overview</a></li>
+    <li><a href="dungeon-quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="dungeon-room-designer.html">Room Designer</a></li>
+    <li><a href="dungeon-templates.html">Templates &amp; Generation</a></li>
+    <li><a href="dungeon-decoration.html">Decoration &amp; Themes</a></li>
+    <li><a href="dungeon-streaming.html">Chunk Streaming</a></li>
+    <li><a href="dungeon-culling-navmesh.html">Culling &amp; NavMesh</a></li>
+    <li><a href="dungeon-demos.html">Demo Scenes</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="dungeon-api.html">API Reference</a></li>
+    <li><a href="dungeon-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="dungeon-changelog.html" class="is-active" aria-current="page">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+      </nav>
+    </aside>
+    <div class="scrim" data-close-nav hidden></div>
+
+    <main class="main" id="content" tabindex="-1">
+      <article class="doc">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Docs</a></li><li><a href="dungeon-generator.html">Easy Dungeon Generator</a></li><li><span aria-current="page">Changelog</span></li></ol></nav>
+        <header class="doc-header">
+  <p class="kicker">Changelog</p>
+  <h1>Changelog</h1>
+  <p class="doc-meta"><span>Documentation for v1.1.0</span><span>Latest 1.1.0</span></p>
+</header>
+        <div class="prose">
+<p class="lead">What changed in each release of Easy Dungeon Generator. Version 1.1.0 is the current release.</p>
+<details class="toc-inline"><summary>On this page</summary><ol class="toc-list">
+<li class="toc-l2"><a href="#v1-1-0">1.1.0 Latest</a></li>
+<li class="toc-l3"><a href="#v1-1-0-walls">Walls and doors</a></li>
+<li class="toc-l3"><a href="#v1-1-0-authoring">Room authoring</a></li>
+<li class="toc-l3"><a href="#v1-1-0-runtime">Generation and streaming</a></li>
+<li class="toc-l3"><a href="#v1-1-0-demos">Demo scenes and documentation</a></li>
+<li class="toc-l2"><a href="#v1-0">1.0 Initial release</a></li>
+</ol></details>
+
+<h2 id="v1-1-0">1.1.0 <span class="badge">Latest</span><a class="anchor" href="#v1-1-0" aria-label="Link to this section">#</a></h2>
+<p>Released 2026-10-08.</p>
+
+<h3 id="v1-1-0-walls">Walls and doors<a class="anchor" href="#v1-1-0-walls" aria-label="Link to this section">#</a></h3>
+<ul>
+  <li><strong>Double-sided walls and ceilings.</strong> The <code>DungeonTheme</code> has the new options <code>doubleSidedWalls</code> and <code>doubleSidedCeilings</code>. Saved rooms record whether their walls are double-sided. See <a href="dungeon-templates.html#wall-mode">Wall mode</a>.</li>
+  <li><strong>Wall Mode</strong> on <code>DungeonManager</code>: <code>SingleOnly</code>, <code>DoubleOnly</code>, and <code>AllowBoth</code>. Connected rooms can share one wall at a seam, with <strong>Allowed Seam Overlap</strong> to line them up.</li>
+  <li><strong>Room Door</strong> brush in the Room Designer (<kbd>P</kbd>, with <kbd>I</kbd> to invert). It places a fixed two-sided door with no connector.</li>
+  <li><strong>Entrance seam padding:</strong> <code>useEntranceSeamPadding</code> and <code>entranceSeamPadding</code> override the seam padding for rooms attached to the scene entrance.</li>
+</ul>
+
+<h3 id="v1-1-0-authoring">Room authoring<a class="anchor" href="#v1-1-0-authoring" aria-label="Link to this section">#</a></h3>
+<ul>
+  <li><strong>Room Prefab Manager</strong> (<span class="menu">Tools › DungeonGen › Room Prefab Manager</span>) links Room Design assets to their prefabs and regenerates them, for example after a theme change.</li>
+  <li><strong>Bake Decor</strong> in the Room Designer stores the furniture inside the saved prefab, instead of placing it at runtime.</li>
+</ul>
+
+<h3 id="v1-1-0-runtime">Generation and streaming<a class="anchor" href="#v1-1-0-runtime" aria-label="Link to this section">#</a></h3>
+<ul>
+  <li><strong>Generation status:</strong> <code>DungeonManager.Status</code>, <code>IsGenerating</code>, <code>GenerationProgress</code>, and the <code>StatusChanged</code> event.</li>
+  <li><strong>Frame budget:</strong> <code>generationFrameBudgetMs</code> spreads room placement and decoration over frames in Play Mode. <code>prewarmOnAwake</code> prepares the prefabs in <code>Awake</code>.</li>
+  <li><strong>Chunk streaming:</strong> <code>ChunkDungeonStreamer.WorldChanged</code> event.</li>
+</ul>
+
+<h3 id="v1-1-0-demos">Demo scenes and documentation<a class="anchor" href="#v1-1-0-demos" aria-label="Link to this section">#</a></h3>
+<ul>
+  <li>Four demo scenes: <code>01_TemplateDungeon</code>, <code>02_InfiniteDungeon</code>, <code>03_CullingAndNavMesh</code>, and <code>04_DecorationAndRoomDesigner</code>. They need the free art pack. See <a href="dungeon-demos.html">Demo Scenes</a>.</li>
+  <li>The demo guide <code>Documentation/Demos.md</code> is included.</li>
+</ul>
+
+<aside class="callout note">
+  <strong class="callout-title">Upgrading from 1.0</strong>
+  <p>Rooms saved with 1.0 do not record double-sided walls. To use <code>DoubleOnly</code> or <code>AllowBoth</code>, turn on <strong>Double-Sided Walls</strong> in the theme and save the room prefabs again.</p>
+</aside>
+
+<h2 id="v1-0">1.0 <span class="badge">Initial release</span><a class="anchor" href="#v1-0" aria-label="Link to this section">#</a></h2>
+<p>The package export is dated 2026-08-29.</p>
+<ul>
+  <li><code>DungeonManager</code> with <code>TemplateExact</code> and <code>TemplateSequencedRandom</code> generation.</li>
+  <li>Room Designer with floors, doors, stairs, and holes, and the Dungeon Template Designer.</li>
+  <li>Dungeon Theme Wizard, Dungeon Setup, and Setup Room Prefab.</li>
+  <li>Decoration profiles with runtime decoration.</li>
+  <li>Chunk streaming with <code>ChunkDungeonStreamer</code>.</li>
+  <li>Portal culling (<code>DungeonCulling</code>) and the NavMesh post-processor.</li>
+  <li>Optional Burst planner, progression items, and connection gates.</li>
+</ul>
+        </div>
+        <nav class="pager" aria-label="Previous and next page"><a class="pager-link pager-prev" href="dungeon-troubleshooting.html" rel="prev"><span class="pager-dir">Previous</span><strong>Troubleshooting</strong></a><span></span></nav>
+      </article>
+    </main>
+
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p><ol class="toc-list">
+<li class="toc-l2"><a href="#v1-1-0">1.1.0 Latest</a></li>
+<li class="toc-l3"><a href="#v1-1-0-walls">Walls and doors</a></li>
+<li class="toc-l3"><a href="#v1-1-0-authoring">Room authoring</a></li>
+<li class="toc-l3"><a href="#v1-1-0-runtime">Generation and streaming</a></li>
+<li class="toc-l3"><a href="#v1-1-0-demos">Demo scenes and documentation</a></li>
+<li class="toc-l2"><a href="#v1-0">1.0 Initial release</a></li>
+</ol>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><a class="brand" href="../unity-asset-portfolio.html"><span class="brand-name">vedaloiv</span></a><p>Unity tools, documented for the people who use them.</p></div>
+    <div class="footer-col"><p class="footer-h">Asset Store</p><ul><li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li><li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li></ul></div>
+    <div class="footer-col"><p class="footer-h">Support</p><ul><li><a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></li><li><a href="../unity-asset-portfolio.html">vedaloiv home</a></li><li><a href="index.html">All docs</a></li></ul></div>
+  </div>
+  <p class="footer-copy">© 2026 vedaloiv</p>
+</footer>
+
+  <dialog class="search-dialog" aria-label="Search the documentation">
+    <form class="search-form" role="search" method="dialog">
+      <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input class="search-input" type="search" placeholder="Search pages and sections" autocomplete="off" spellcheck="false"
+        role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Search the documentation">
+      <button class="search-close" type="button" data-close-search><kbd>Esc</kbd><span class="sr-only">Close search</span></button>
+    </form>
+    <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+    <p class="search-status" aria-live="polite"></p>
+  </dialog>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" data-close-lightbox>Close <kbd>Esc</kbd></button>
+    <img alt="">
+    <p class="lightbox-caption"></p>
+  </dialog>
+</body>
+</html>

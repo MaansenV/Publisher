@@ -1,0 +1,113 @@
+<!--meta
+{"title": "Vitals and Stamina", "navTitle": "Vitals & Stamina", "description": "Add health and heart-rate based sprint stamina to the player with PlayerVitals and PlayerExertion, and connect them to a health bar with events.", "group": "fp", "kicker": "Guide", "chips": ["Optional", "Local health"]}
+-->
+<p class="lead">Give the player health that can be damaged, healed and revived, and a sprint stamina based on heart rate. Sprinting raises the pulse, and when it peaks the player is exhausted until the pulse recovers. In this guide you add <code>PlayerVitals</code>, check its settings and connect a health bar.</p>
+
+<h2 id="add">Add the component</h2>
+<ol class="steps">
+  <li>Select the player root, the GameObject with <code>PlayerLocomotion</code>.</li>
+  <li>Add <code>PlayerVitals</code>. The Setup Wizard does not add it.</li>
+  <li>Press Play. Health starts at <strong>Max Health</strong>.</li>
+</ol>
+<aside class="callout warn">
+  <strong class="callout-title">Put it on the root</strong>
+  <p><code>PlayerLocomotion</code> looks for <code>PlayerVitals</code> on its own GameObject. On any other object, the dead state does not stop movement or jumping.</p>
+</aside>
+
+<h2 id="health">Health</h2>
+<dl class="props">
+  <dt><code>maxHealth</code> <span class="type">float</span> <span class="default">default 100, minimum 1</span></dt>
+  <dd>Maximum health, which is also the starting value.</dd>
+</dl>
+<table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Returns</th><th scope="col">Behaviour</th></tr></thead>
+  <tbody>
+    <tr><td><code>ApplyDamage(float amount)</code></td><td><code>bool</code></td><td>Reduces health. Returns <code>false</code> and does nothing when the player is dead, the amount is zero or negative, or the amount is NaN or infinite.</td></tr>
+    <tr><td><code>Heal(float amount)</code></td><td><code>bool</code></td><td>Restores health with the same rules as <code>ApplyDamage</code>.</td></tr>
+    <tr><td><code>Revive()</code></td><td><code>bool</code></td><td>Restores full health to a dead player. Returns <code>false</code> when the player is alive.</td></tr>
+    <tr><td><code>SetHealth(float value)</code></td><td><code>void</code></td><td>Sets the health, clamped between 0 and <code>MaxHealth</code>. Use it to mirror a value from a server.</td></tr>
+    <tr><td><code>Health</code>, <code>MaxHealth</code>, <code>NormalizedHealth</code></td><td><code>float</code></td><td>Current, maximum and health as a 0 to 1 fraction.</td></tr>
+    <tr><td><code>IsDead</code></td><td><code>bool</code></td><td><code>true</code> at zero health.</td></tr>
+  </tbody>
+</table>
+<p>While the player is dead, <code>PlayerLocomotion</code> ignores movement and jump input.</p>
+
+<h2 id="stamina">Heart-rate stamina</h2>
+<p>The stamina is modelled by <code>PlayerExertion</code>, a field of <code>PlayerVitals</code>. Sprinting only raises the pulse while the player is moving. The pulse is shown in beats per minute (<code>Bpm</code>).</p>
+<ol class="steps">
+  <li><strong>Sprint.</strong> The pulse rises by <em>Rise Per Second</em> until it reaches <em>Maximum Bpm</em>.</li>
+  <li><strong>Exhaustion.</strong> At <em>Maximum Bpm</em> the player is exhausted and <code>CanSprint</code> becomes <code>false</code>. The pulse stays at its peak for <em>Peak Hold Seconds</em>.</li>
+  <li><strong>Release.</strong> The hold ends and the pulse must drop to <em>Resume Bpm</em>. The sprint key must also be released once before sprint works again.</li>
+  <li><strong>Recovery.</strong> After you stop sprinting, the pulse waits <em>Recovery Delay Seconds</em>. It then drops toward <em>Walking Bpm</em> while you walk, or toward <em>Resting Bpm</em> while you stand.</li>
+</ol>
+<dl class="props">
+  <dt><code>restingBpm</code> <span class="default">default 72</span></dt>
+  <dd>Pulse while standing still. It is also the starting pulse.</dd>
+  <dt><code>walkingBpm</code> <span class="default">default 90</span></dt>
+  <dd>Pulse the player settles at while walking.</dd>
+  <dt><code>maximumBpm</code> <span class="default">default 176</span></dt>
+  <dd>Pulse at which the player is exhausted and sprint locks.</dd>
+  <dt><code>resumeBpm</code> <span class="default">default 118</span></dt>
+  <dd>Pulse below which an exhausted player may sprint again, after the release.</dd>
+  <dt><code>risePerSecond</code> <span class="default">default 8</span></dt>
+  <dd>Pulse increase per second while sprinting.</dd>
+  <dt><code>walkingRecoveryPerSecond</code> <span class="default">default 5</span>, <code>restingRecoveryPerSecond</code> <span class="default">default 7</span></dt>
+  <dd>Pulse decrease per second while walking and while standing still.</dd>
+  <dt><code>peakHoldSeconds</code> <span class="default">default 3</span></dt>
+  <dd>Seconds the pulse holds at its peak after exhaustion.</dd>
+  <dt><code>recoveryDelaySeconds</code> <span class="default">default 1.5</span></dt>
+  <dd>Seconds after a sprint before the pulse starts to recover.</dd>
+</dl>
+<p>The Inspector keeps these values in a consistent order. For example, <em>Maximum Bpm</em> is always at least 40 above <em>Resting Bpm</em>, and <em>Resume Bpm</em> stays below <em>Maximum Bpm</em>.</p>
+
+<h2 id="events">Events</h2>
+<table>
+  <thead><tr><th scope="col">C# event</th><th scope="col">Payload</th><th scope="col">UnityEvent</th><th scope="col">Fires</th></tr></thead>
+  <tbody>
+    <tr><td><code>HealthChanged</code></td><td><code>float</code> (new health)</td><td><code>OnHealthChanged</code></td><td>When health changes, from damage, healing, revive or <code>SetHealth</code></td></tr>
+    <tr><td><code>Died</code></td><td>none</td><td><code>OnDied</code></td><td>When health reaches zero</td></tr>
+    <tr><td><code>Revived</code></td><td>none</td><td><code>OnRevived</code></td><td>When a dead player gets health again</td></tr>
+  </tbody>
+</table>
+
+<h2 id="ui">Connect a health bar</h2>
+<p>Subscribe to <code>HealthChanged</code> from code, or wire <code>OnHealthChanged</code> to a method in the Inspector. The bar reads <code>NormalizedHealth</code>, which is the value between 0 and 1:</p>
+<pre><code class="lang-csharp">using Player;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class HealthBar : MonoBehaviour
+{
+    [SerializeField] private PlayerVitals vitals;
+    [SerializeField] private Slider slider;
+
+    private void OnEnable()
+    {
+        vitals.HealthChanged += Refresh;
+        Refresh(vitals.Health);
+    }
+
+    private void OnDisable()
+    {
+        vitals.HealthChanged -= Refresh;
+    }
+
+    private void Refresh(float _)
+    {
+        slider.value = vitals.NormalizedHealth;
+    }
+}</code></pre>
+<p>Read <code>vitals.Bpm</code> and <code>vitals.CanSprint</code> in <code>Update</code> to show the pulse or a sprint-locked icon.</p>
+
+<h2 id="multiplayer">Multiplayer</h2>
+<p>Health is local. The FishNet and PurrNet add-ons do not synchronize it. On a networked game, let the server apply damage and mirror the value to clients with <code>SetHealth</code>.</p>
+
+<h2 id="pitfalls">Common pitfalls</h2>
+<aside class="callout warn">
+  <strong class="callout-title">Damage does nothing</strong>
+  <p><code>ApplyDamage</code> returns <code>false</code> for dead players and for amounts of zero or less. Check the return value when you debug, and call <code>Revive()</code> before you damage a dead player again.</p>
+</aside>
+<aside class="callout note">
+  <strong class="callout-title">Sprint is locked</strong>
+  <p>An exhausted player cannot sprint until the pulse drops to <em>Resume Bpm</em> and the sprint key is released. Use <code>vitals.Exertion.NeedsSprintRelease</code> and <code>vitals.Exertion.Exhausted</code> to show why.</p>
+</aside>

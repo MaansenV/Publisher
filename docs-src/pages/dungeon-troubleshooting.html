@@ -1,0 +1,122 @@
+<!--meta
+{"title": "Troubleshooting", "navTitle": "Troubleshooting", "description": "Fixes for common problems with Easy Dungeon Generator: folder layout, packages, Room Designer and prefabs, template generation, seams, decoration, culling, NavMesh, chunk streaming, and the demo scenes.", "group": "dungeon", "kicker": "Reference", "chips": ["Unity 6000.5.0+", "Support: karakask2004@gmail.com"]}
+-->
+<p class="lead">Find your symptom in the tables below. Most problems have a message in the Console that names the cause. Read it first, then use the fix.</p>
+
+<h2 id="setup">Setup and folders</h2>
+<table>
+  <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td>Editor windows have no styles, or look broken.</td><td>Keep the package at <code>Assets/DungeonGenerator/</code>. The <code>.uss</code> style file must sit next to its editor <code>.cs</code> file. Refresh the Asset Database.</td></tr>
+    <tr><td>You renamed or moved the package folder.</td><td>Move it back to <code>Assets/DungeonGenerator/</code>. Several editor windows load their styles from that exact path.</td></tr>
+    <tr><td>References are lost after you moved an asset.</td><td>Restore the matching <code>.meta</code> file beside each moved asset. Unity links assets by GUID.</td></tr>
+    <tr><td>A room prefab does not appear in a list or is rejected.</td><td>Check that the prefab is outside the package folder, has a <code>RoomData</code> root, and has <code>DoorSocket</code> children. Use <strong>Setup Room Prefab</strong> to add them.</td></tr>
+    <tr><td>Asset Store Validator warns about <em>Check Static Variables</em>.</td><td>The package resets its static state automatically when Play Mode starts. No action is needed.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="packages">Packages and compile errors</h2>
+<table>
+  <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td>Compile errors about Burst, Collections, or Mathematics.</td><td>Install <code>Burst 1.8.30</code>, <code>Collections 6.5.0</code>, and <code>Mathematics 1.4.0</code>. They are needed even when the Burst planner is off.</td></tr>
+    <tr><td>Compile errors about <code>Unity.AI.Navigation</code>.</td><td>Install AI Navigation <code>2.0.13</code>. The NavMesh post-processor depends on it.</td></tr>
+    <tr><td>Alchemy errors.</td><td>Alchemy is bundled under <code>ThirdParty/Alchemy/</code>. Do not install a second copy, and do not move the folder out of the package.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="room-designer">Room Designer and prefabs</h2>
+<table>
+  <thead><tr><th scope="col">Message or symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td><em>Door needs a wall next to floor.</em></td><td>A door needs a wall cell with floor beside it. Click a floor cell that touches a wall, or click the wall cell directly.</td></tr>
+    <tr><td><em>Room Door needs two opposite Floor cells.</em></td><td>A room door needs a floor cell with floor on two opposite sides.</td></tr>
+    <tr><td><em>Room Door direction is ambiguous.</em></td><td>The cell has floor on all four sides. Leave only one opposite pair.</td></tr>
+    <tr><td><em>Stair blocked</em>, <em>The stair opening overlaps a door or another stair.</em>, <em>The stair opening extends outside the grid.</em></td><td>Move the stair, or remove the door or stair it overlaps. Enlarge the grid if the opening does not fit.</td></tr>
+    <tr><td><em>Cannot remove floor: a stair references it.</em></td><td>Remove the stair first.</td></tr>
+    <tr><td>Doors do not connect.</td><td>Check the direction of each door, the socket types, and the compatibility between them. An untyped socket is a wildcard. Also check that each room has enough sockets for its connections.</td></tr>
+    <tr><td>Doors float or sit one cell away from the wall.</td><td>Check the door offset in the theme. Re-run the Dungeon Theme Wizard analysis and check the preview.</td></tr>
+    <tr><td>Ceilings are missing.</td><td>Check that the theme has ceiling prefabs and that the cell is walkable. Stair openings remove the ceiling panels on purpose.</td></tr>
+    <tr><td>Room Prefab Manager regenerated a prefab and my hand edits are gone.</td><td>Regeneration replaces the whole prefab. Keep edits in the Room Design, and keep your prefabs in version control.</td></tr>
+    <tr><td><em>Decoration Validation Failed</em> when saving a prefab.</td><td>The decoration profile has errors. Fix them in Objects mode, then save again. See <a href="dungeon-decoration.html#decoration-profiles">Decoration profiles</a>.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="generation">Templates and generation</h2>
+<table>
+  <thead><tr><th scope="col">Message or symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td><em>template is required.</em></td><td>Assign a <code>DungeonTemplate</code> to the <code>DungeonManager</code>.</td></tr>
+    <tr><td><em>Template validation failed for '…'</em></td><td>The Console lists every problem under that message. Open the template in the Template Designer and click <strong>Validate</strong>.</td></tr>
+    <tr><td><em>no pinnedPrefab and no pool entries</em></td><td>Pin a prefab on the node, or add a pool prefab with the matching Room Type.</td></tr>
+    <tr><td><em>no eligible prefab with RoomType …</em></td><td>Add a room with that Room Type to the pool, or pin one.</td></tr>
+    <tr><td><em>needs N sockets, but best eligible prefab has M</em></td><td>The room has too few doors for the node's connections. Add doors to the room in the Room Designer.</td></tr>
+    <tr><td><em>Requirements are only supported on the main path.</em></td><td>Move the requirement to an edge on the main path, or remove it.</td></tr>
+    <tr><td><em>has no reachable provider before the gate.</em></td><td>Add a provider node before the gated edge, with the requirement in its Provided Requirements.</td></tr>
+    <tr><td><em>Generate() ignored: generation already in progress.</em></td><td>Wait for the current run to finish. Check its <code>Status</code> or <code>StatusChanged</code>.</td></tr>
+    <tr><td>Generation stops immediately, with no layout.</td><td>Check the template validation, the root and Exit structure, the socket counts, the room pool, and the Max Search Nodes limit.</td></tr>
+    <tr><td>The planner cannot place all rooms.</td><td>Raise <strong>Max Search Nodes</strong>, or allow more planning retries. Smaller rooms or more doors also help.</td></tr>
+    <tr><td>Each run gives a different layout.</td><td>Turn <strong>Use Random Seed</strong> off and set a <strong>Seed</strong>. See <a href="dungeon-templates.html#seeds">Seeds</a>.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="walls">Walls and seams</h2>
+<table>
+  <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td>Two walls and two door arches stand back to back at every connection.</td><td>The kit is double-sided, but <strong>Wall Mode</strong> is <code>SingleOnly</code>. Turn on <strong>Double-Sided Walls</strong> in the theme, leave the door variant empty, save the prefabs again, and set Wall Mode to <code>DoubleOnly</code> or <code>AllowBoth</code>. See <a href="dungeon-templates.html#wall-mode">Wall mode</a>.</td></tr>
+    <tr><td>A dark slit or a step between two connected rooms in <code>DoubleOnly</code>.</td><td><strong>Allowed Seam Overlap</strong> is too small (slit) or too large (step). Adjust it, and keep <strong>Seam Padding</strong> at 0.</td></tr>
+    <tr><td><em>wallMode is DoubleOnly but … has no double-sided walls</em></td><td>The prefab was saved with a theme that has Double-Sided Walls off. Turn it on, save the prefab again, or use <code>AllowBoth</code>.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="decoration">Decoration</h2>
+<table>
+  <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td>No decoration spawns.</td><td>Check that the room prefab has <code>RoomDecorationAuthoring</code> and that <strong>Decorate After Generation</strong> is on. Check the profile for errors, and check that every pool object has a baked footprint. Click <strong>Rebake All Footprints</strong> if it does not.</td></tr>
+    <tr><td>A category is missing from some rooms.</td><td>Its failure policy is <code>RequireMinimum</code> or <code>RequireExact</code>, and the count was not reached. Use <code>AllowPartial</code>, or lower the minimum.</td></tr>
+    <tr><td>Furniture blocks the doorways.</td><td>Keep <code>preservePaths</code> on and raise <code>minimumPathWidth</code> on the category.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="navmesh">Culling and NavMesh</h2>
+<table>
+  <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td>Culling does nothing.</td><td>The <strong>Mode</strong> is <code>Disabled</code> by default. Set it to <code>DisableRenderers</code> or <code>DeactivateRooms</code>, and assign a <strong>Reference Transform</strong>.</td></tr>
+    <tr><td>Hidden rooms are missing from the NavMesh.</td><td>Culling runs before the bake. Set the culling priority at or below the NavMesh priority. See <a href="dungeon-culling-navmesh.html#post-processing-order">Post-processing order</a>.</td></tr>
+    <tr><td><em>RuntimeNavMeshBuilder: Source mesh … does not allow read access</em>, and the bake fails, mostly in builds.</td><td>The room meshes are imported without Read/Write. Enable <strong>Read/Write</strong> in each model's import settings, or keep a collider proxy processor that replaces the mesh colliders with box colliders, as the demo does.</td></tr>
+    <tr><td>Clicks do nothing in the demo scene.</td><td>Agents move only to points on the NavMesh. Check that the ceiling processor is enabled, so clicks do not hit the roof, and check the Console for a failed bake.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="chunks">Chunk streaming</h2>
+<table>
+  <thead><tr><th scope="col">Message or symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td><em>cellsPerSide=… is below the minimum</em></td><td>Raise <strong>Chunk Size (Cells)</strong> to at least the minimum shown in the inspector. See <a href="dungeon-streaming.html#chunk-size">Chunk size</a>.</td></tr>
+    <tr><td><em>corridor module is missing cardinal DoorSockets</em> or <em>missing … DoorSocket on …</em></td><td>The corridor needs exactly one <code>DoorSocket</code> on each of the four sides. Every room in the pool needs one on each side too.</td></tr>
+    <tr><td>The world does not initialize.</td><td>Check the player or player prefab, the 1 × 1 corridor prefab, the cardinal sockets, the entry and pool setup, the cell size, and the key prefab on locked rooms.</td></tr>
+    <tr><td>Locks appear when you did not expect them.</td><td>Set <strong>Lock Chance %</strong> to 0. Check the <strong>Requires Key</strong> setting on each room prefab.</td></tr>
+    <tr><td>Rooms do not line up at chunk borders.</td><td><strong>Cell Size (m)</strong> must equal the tile size of your rooms.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="demos">Demo scenes</h2>
+<table>
+  <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td>A red <strong>Missing art pack</strong> panel, and an empty scene.</td><td>Import the free <strong>Lite Dungeon Pack - Low Poly 3D Art by Gridness</strong> from the Asset Store, then reopen the scene. See <a href="dungeon-demos.html#art-pack">Import the free art pack</a>.</td></tr>
+    <tr><td>Everything is pink.</td><td>The project does not use URP. Convert the Gridness materials and the demo player materials for your render pipeline.</td></tr>
+    <tr><td><em>InvalidOperationException: You are trying to read Input using the UnityEngine.Input class</em></td><td>A script you added reads the legacy input manager while the project uses the Input System. The demo scripts follow <strong>Active Input Handling</strong> automatically; your scripts must do the same.</td></tr>
+    <tr><td>The scene is very dark.</td><td>Each demo scene sets its own environment lighting. Check <span class="menu">Window › Rendering › Lighting › Environment</span> if you changed it.</td></tr>
+    <tr><td>No panel is visible.</td><td>The panel draws only in the <strong>Game</strong> view, not in the Scene view. Open it with <span class="menu">Window › General › Game</span>, and press <kbd>H</kbd> with the Game view focused.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="german-labels">Labels in German</h2>
+<p>In version 1.1.0, some labels are in German: the Room Prefab Manager window, and the Room Pool drop zone of the <code>DungeonManager</code> (<em>Prefabs hierher ziehen</em>). The buttons work as described in <a href="dungeon-room-designer.html#room-prefab-manager">Room Prefab Manager</a>.</p>
+
+<h2 id="still-stuck">Still stuck?</h2>
+<p>Email <a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a>. Include the Unity version, the Easy Dungeon Generator version (1.1.0), the exact message from the Console, and the steps that lead to the problem. A screenshot of the Inspector helps.</p>

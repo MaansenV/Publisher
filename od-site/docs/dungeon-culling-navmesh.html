@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Culling and NavMesh | Easy Dungeon Generator docs</title>
+  <meta name="description" content="Hide far and blocked rooms with DungeonCulling, bake one runtime NavMesh per dungeon with DungeonNavMeshPostProcessor, and order them with the post-processor priorities.">
+  <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/dungeon-culling-navmesh.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="vedaloiv">
+  <meta property="og:title" content="Culling and NavMesh | Easy Dungeon Generator docs">
+  <meta property="og:description" content="Hide far and blocked rooms with DungeonCulling, bake one runtime NavMesh per dungeon with DungeonNavMeshPostProcessor, and order them with the post-processor priorities.">
+  <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/dungeon-culling-navmesh.html">
+  <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/dungen-main.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f0f0f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M7 9l9 15 9-15' fill='none' stroke='%23ffe343' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='6' width='4' height='4' fill='%232748c9'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
+  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+</head>
+<body data-page="dungeon-culling-navmesh" data-group="dungeon">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false">
+        <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Menu</span>
+      </button>
+      <a class="brand" href="index.html" aria-label="vedaloiv documentation home">
+        <span class="brand-name">vedaloiv</span><span class="brand-sub">docs</span>
+      </a>
+      <nav class="topnav" aria-label="Site">
+        <a href="../unity-asset-portfolio.html">Home</a>
+        <a href="index.html">All docs</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="search-btn" type="button" aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K /">
+          <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="search-btn-label">Search docs</span>
+          <kbd class="search-btn-kbd" data-shortcut>Ctrl K</kbd>
+        </button>
+        <a class="top-store" href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener"><span class="top-store-long">Asset Store</span><span class="sr-only"> page for Easy Dungeon Generator (opens in a new tab)</span><svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation">
+      <nav class="sidebar-nav" aria-label="Documentation pages">
+<a class="nav-home" href="index.html">Docs home</a>
+<section class="nav-group" data-group="fp">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <ul class="nav-list" id="nav-fp">
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="fp-setup-wizard.html">Setup Wizard</a></li>
+    <li><a href="fp-items.html">Items</a></li>
+    <li><a href="fp-body-ik.html">Body IK</a></li>
+    <li><a href="fp-fpcutter.html">FPCutter</a></li>
+    <li><a href="fp-vitals.html">Vitals &amp; Stamina</a></li>
+    <li><a href="fp-demos.html">Demos</a></li>
+    <li class="nav-label">Multiplayer</li>
+    <li><a href="fishnet.html">FishNet</a></li>
+    <li><a href="purrnet.html">PurrNet</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="interfaces.html">Interfaces</a></li>
+    <li><a href="fp-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="fp-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+<section class="nav-group is-current" data-group="dungeon">
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-dungeon"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy Dungeon Generator</span><span class="nav-version">v1.1.0</span></button>
+  <ul class="nav-list" id="nav-dungeon">
+    <li><a href="dungeon-generator.html">Overview</a></li>
+    <li><a href="dungeon-quick-start.html">Quick Start</a></li>
+    <li class="nav-label">Guides</li>
+    <li><a href="dungeon-room-designer.html">Room Designer</a></li>
+    <li><a href="dungeon-templates.html">Templates &amp; Generation</a></li>
+    <li><a href="dungeon-decoration.html">Decoration &amp; Themes</a></li>
+    <li><a href="dungeon-streaming.html">Chunk Streaming</a></li>
+    <li><a href="dungeon-culling-navmesh.html" class="is-active" aria-current="page">Culling &amp; NavMesh</a></li>
+    <li><a href="dungeon-demos.html">Demo Scenes</a></li>
+    <li class="nav-label">Reference</li>
+    <li><a href="dungeon-api.html">API Reference</a></li>
+    <li><a href="dungeon-troubleshooting.html">Troubleshooting</a></li>
+    <li><a href="dungeon-changelog.html">Changelog</a></li>
+    <li class="nav-store"><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Asset Store page<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+  </ul>
+</section>
+      </nav>
+    </aside>
+    <div class="scrim" data-close-nav hidden></div>
+
+    <main class="main" id="content" tabindex="-1">
+      <article class="doc">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Docs</a></li><li><a href="dungeon-generator.html">Easy Dungeon Generator</a></li><li><span aria-current="page">Culling &amp; NavMesh</span></li></ol></nav>
+        <header class="doc-header">
+  <p class="kicker">Guide</p>
+  <h1>Culling and NavMesh</h1>
+  <p class="doc-meta"><span>Documentation for v1.1.0</span><span>AI Navigation 2.0.13</span><span>Unity 6000.5.0+</span></p>
+</header>
+        <div class="prose">
+<p class="lead">After a dungeon is generated, post-processors run on the same GameObject as the <code>DungeonManager</code>. Two of them are optional: <strong>DungeonCulling</strong> hides rooms the player cannot reach or see, and <strong>DungeonNavMeshPostProcessor</strong> bakes one NavMesh over the whole dungeon.</p>
+<details class="toc-inline"><summary>On this page</summary><ol class="toc-list">
+<li class="toc-l2"><a href="#post-processing-order">Post-processing order</a></li>
+<li class="toc-l2"><a href="#culling">Portal culling</a></li>
+<li class="toc-l2"><a href="#navmesh">NavMesh</a></li>
+<li class="toc-l2"><a href="#burst-planner">Burst planner</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common mistakes</a></li>
+</ol></details>
+
+<h2 id="post-processing-order">Post-processing order<a class="anchor" href="#post-processing-order" aria-label="Link to this section">#</a></h2>
+<p>The manager runs every enabled post-processor, highest <strong>Priority</strong> first. Processors with the same priority keep their order on the component list, except that <code>DungeonCulling</code> always runs last among them.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable table"><table>
+  <thead><tr><th scope="col">Component</th><th scope="col">Default priority</th><th scope="col">Role</th></tr></thead>
+  <tbody>
+    <tr><td><code>DungeonNavMeshPostProcessor</code></td><td>0</td><td>Bakes the NavMesh from the generated rooms.</td></tr>
+    <tr><td><code>DungeonCulling</code></td><td>−100</td><td>Hides rooms. Runs after the bake, so the bake still includes every room.</td></tr>
+  </tbody>
+</table></div>
+<aside class="callout warn">
+  <strong class="callout-title">Culling priority must not be higher than the NavMesh priority</strong>
+  <p>If <code>DungeonCulling</code> runs before the bake and hides rooms, the NavMesh misses them. When the culling priority is higher than the NavMesh priority, <code>DungeonCulling</code> logs a warning. Keep the culling priority at or below the NavMesh priority. The demo scene uses −10 for culling and 0 for the NavMesh.</p>
+</aside>
+
+<h2 id="culling">Portal culling<a class="anchor" href="#culling" aria-label="Link to this section">#</a></h2>
+<p>Culling hides rooms that are far away or behind doors that are closed. It does not change the dungeon itself. Removing the component restores the normal behavior.</p>
+<ol class="steps">
+  <li>
+    <p>Select the <code>DungeonManager</code> and click <strong>Add Culling Support</strong>. This adds <code>DungeonCulling</code>.</p>
+  </li>
+  <li>
+    <p>Set <strong>Mode</strong>. It is <strong>Disabled</strong> by default, so nothing is hidden until you change it. Choose <strong>DisableRenderers</strong> for the cheapest option, or <strong>DeactivateRooms</strong> to switch the whole room off.</p>
+  </li>
+  <li>
+    <p>Set <strong>Reference Transform</strong> to the camera or the player. Culling is measured from this object.</p>
+  </li>
+  <li>
+    <p>Generate and play. Turn on <strong>Debug Draw</strong> to see visible rooms in green and hidden rooms in red in the Scene view.</p>
+  </li>
+</ol>
+<dl class="props">
+  <dt><code>mode</code> <span class="type">Disabled, DisableRenderers, or DeactivateRooms</span> <span class="default">default Disabled</span></dt>
+  <dd><code>DisableRenderers</code> stops rendering hidden rooms, and their scripts and physics keep running. <code>DeactivateRooms</code> turns the room GameObject off, which also saves updates and physics. Switching many rooms back on at once can cause a short hitch.</dd>
+  <dt><code>cullLights</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Also turns off the lights of hidden rooms. Used only in <code>DisableRenderers</code> mode.</dd>
+  <dt><code>maxHops</code> <span class="type">int</span> <span class="default">default 4</span></dt>
+  <dd>How many doors away from the reference room a room may be and stay visible. 0 or a negative value means no limit.</dd>
+  <dt><code>occlusionTolerance</code> <span class="type">int</span> <span class="default">default 0</span></dt>
+  <dd>How many closed or locked doors a room may lie behind and stay visible. 0 hides everything behind the first closed door.</dd>
+  <dt><code>viewDistance</code> <span class="type">float</span> <span class="default">default 60</span></dt>
+  <dd>Rooms farther than this from the reference point are hidden, even when reachable. 0 or a negative value means no distance limit.</dd>
+  <dt><code>revealDistance</code> <span class="type">float</span> <span class="default">default 45</span></dt>
+  <dd>Distance at which a hidden room becomes visible again. It is smaller than <code>viewDistance</code>, so rooms at the edge do not flicker.</dd>
+  <dt><code>protectedNeighborHops</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Rooms this many hops from the reference room stay visible, even behind a closed door.</dd>
+  <dt><code>maxVisibleRooms</code> <span class="type">int</span> <span class="default">default 0</span></dt>
+  <dd>Budget of visible rooms, kept by a deterministic score. 0 means no budget.</dd>
+  <dt><code>pollInterval</code> <span class="type">float</span> <span class="default">default 0.25</span></dt>
+  <dd>Seconds between checks of the door states and the reference position. 0 checks every frame.</dd>
+  <dt><code>maxTogglesPerFrame</code> <span class="type">int</span> <span class="default">default 20</span></dt>
+  <dd>Rooms switched per frame, spread over frames to avoid spikes.</dd>
+  <dt><code>referenceTransform</code>, <code>referencePosition</code>, <code>useReferencePosition</code></dt>
+  <dd>The reference is the transform if set, otherwise the fixed position when <code>useReferencePosition</code> is on, otherwise a registered local viewpoint or the main camera. With no viewpoint at all, every room stays visible.</dd>
+  <dt><code>debugDraw</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Draws the rooms and connections in the Scene view.</dd>
+</dl>
+<p>A connection is passable only when both of its doors are open and unlocked. Each mechanism above can be switched off in the <strong>Mechanism Toggles</strong> section, for example <code>useMaxHops</code> or <code>useDistanceCulling</code>.</p>
+<p>To add your own rules, implement <code>ICullConnectionRule</code> (decides whether a connection is passable) or <code>ICullRoomRule</code> (forces a room visible or hidden). <code>AcquireVisibility</code> keeps a room visible while gameplay needs it. See the <a href="dungeon-api.html#post-processing">API Reference</a>.</p>
+
+<h2 id="navmesh">NavMesh<a class="anchor" href="#navmesh" aria-label="Link to this section">#</a></h2>
+<p>The NavMesh post-processor bakes one NavMesh that covers the whole dungeon, on every floor, after each generation. It needs the <strong>AI Navigation</strong> package, version 2.0.13.</p>
+<ol class="steps">
+  <li>
+    <p>Select the <code>DungeonManager</code> and click <strong>Add NavMesh Support</strong>. This adds <code>DungeonNavMeshPostProcessor</code> with its host and a <code>NavMeshSurface</code>.</p>
+  </li>
+  <li>
+    <p>Check <strong>layerMask</strong>. Room floors, walls, and stairs must be on the layers in this mask. The default is the Default layer.</p>
+  </li>
+  <li>
+    <p>Generate. The baked NavMesh is ready when the generation is done. Use <code>logErrors</code> to see why a bake was skipped.</p>
+  </li>
+</ol>
+<dl class="props">
+  <dt><code>agentTypeID</code> <span class="type">int</span> <span class="default">default 0, Humanoid</span></dt>
+  <dd>The agent type to bake for. Agent types are set in Project Settings › Navigation.</dd>
+  <dt><code>boundsPadding</code> <span class="type">float</span> <span class="default">default 1</span></dt>
+  <dd>Extra space in meters on each side of the dungeon bounds.</dd>
+  <dt><code>layerMask</code> <span class="type">LayerMask</span> <span class="default">default Default</span></dt>
+  <dd>Layers whose colliders are baked.</dd>
+  <dt><code>buildOnProcess</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Bakes after each generation. Turn it off to bake yourself.</dd>
+  <dt><code>useDoorLinks</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Adds a <code>NavMeshLink</code> at connections the NavMesh does not already cross, for example two floor areas that are not joined.</dd>
+  <dt><code>linkEndpointInset</code>, <code>linkSearchRadius</code>, <code>linkWidth</code> <span class="type">float</span> <span class="default">default 0.3, 1.5, and 1.5</span></dt>
+  <dd>Where a link starts, how far it may move to reach the NavMesh, and how wide it is.</dd>
+  <dt><code>bakeConnectors</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Bakes temporary bridges across doorways instead of adding links. The NavMesh is then continuous through the doors. Overrides <code>useDoorLinks</code>.</dd>
+  <dt><code>connectorWidth</code> <span class="type">float</span> <span class="default">default 1.6, minimum 0.1</span></dt>
+  <dd>Width of the bridges. Keep it narrow enough to avoid false corner merges, but wide enough to survive the agent's erosion.</dd>
+  <dt><code>logErrors</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Logs why a bake cannot run: a missing host, no rooms, no colliders, or data it does not own.</dd>
+</dl>
+<p>Clear or regenerate the dungeon and the NavMesh is released first, then rebuilt for the new layout. A NavMesh that you bake yourself on the same objects is never touched.</p>
+
+<h2 id="burst-planner">Burst planner<a class="anchor" href="#burst-planner" aria-label="Link to this section">#</a></h2>
+<p>The <strong>Use Burst Planner</strong> option (<code>useBurstPlanner</code> on the <code>DungeonManager</code>, default off) runs the DFS placement search as Burst-compiled code.</p>
+<ul>
+  <li>It is a separate implementation of the planner. The same seed can give a different valid layout than the managed planner. If a seed must keep its layout across builds, keep the same planner setting.</li>
+  <li>Burst, Collections, and Mathematics are needed to compile the package even when the option is off.</li>
+</ul>
+
+<h2 id="pitfalls">Common mistakes<a class="anchor" href="#pitfalls" aria-label="Link to this section">#</a></h2>
+<ul>
+  <li><strong>Culling does nothing.</strong> The mode is <strong>Disabled</strong> by default. Set <strong>Mode</strong>, and check that <strong>Reference Transform</strong> is assigned.</li>
+  <li><strong>Hidden rooms are missing from the NavMesh.</strong> Culling runs before the bake. Lower the culling priority, as described in <a href="#post-processing-order">Post-processing order</a>.</li>
+  <li><strong>The bake fails with a read-access error.</strong> The room meshes do not allow read access. Turn on <strong>Read/Write</strong> in each model's import settings, or replace the mesh colliders with box colliders as the demo does. See <a href="dungeon-troubleshooting.html#navmesh">Troubleshooting</a>.</li>
+  <li><strong>Clicks miss the floor.</strong> Agents move only to points on the NavMesh. Check the bake in the Console, and that any roof or ceiling collider is off.</li>
+</ul>
+        </div>
+        <nav class="pager" aria-label="Previous and next page"><a class="pager-link pager-prev" href="dungeon-streaming.html" rel="prev"><span class="pager-dir">Previous</span><strong>Chunk Streaming</strong></a><a class="pager-link pager-next" href="dungeon-demos.html" rel="next"><span class="pager-dir">Next</span><strong>Demo Scenes</strong></a></nav>
+      </article>
+    </main>
+
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p><ol class="toc-list">
+<li class="toc-l2"><a href="#post-processing-order">Post-processing order</a></li>
+<li class="toc-l2"><a href="#culling">Portal culling</a></li>
+<li class="toc-l2"><a href="#navmesh">NavMesh</a></li>
+<li class="toc-l2"><a href="#burst-planner">Burst planner</a></li>
+<li class="toc-l2"><a href="#pitfalls">Common mistakes</a></li>
+</ol>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><a class="brand" href="../unity-asset-portfolio.html"><span class="brand-name">vedaloiv</span></a><p>Unity tools, documented for the people who use them.</p></div>
+    <div class="footer-col"><p class="footer-h">Asset Store</p><ul><li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li><li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<svg class="i i-ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 5 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li></ul></div>
+    <div class="footer-col"><p class="footer-h">Support</p><ul><li><a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></li><li><a href="../unity-asset-portfolio.html">vedaloiv home</a></li><li><a href="index.html">All docs</a></li></ul></div>
+  </div>
+  <p class="footer-copy">© 2026 vedaloiv</p>
+</footer>
+
+  <dialog class="search-dialog" aria-label="Search the documentation">
+    <form class="search-form" role="search" method="dialog">
+      <svg class="i" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m10.5 10.5 3.5 3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input class="search-input" type="search" placeholder="Search pages and sections" autocomplete="off" spellcheck="false"
+        role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list" aria-label="Search the documentation">
+      <button class="search-close" type="button" data-close-search><kbd>Esc</kbd><span class="sr-only">Close search</span></button>
+    </form>
+    <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+    <p class="search-status" aria-live="polite"></p>
+  </dialog>
+
+  <dialog class="lightbox" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" data-close-lightbox>Close <kbd>Esc</kbd></button>
+    <img alt="">
+    <p class="lightbox-caption"></p>
+  </dialog>
+</body>
+</html>
