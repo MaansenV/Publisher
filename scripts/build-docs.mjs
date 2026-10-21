@@ -378,4 +378,6 @@ for (const f of docsFiles) {
   if (!rendered.has(f.slice(0, -5))) warn(`orphan page od-site/docs/${f} is not generated from docs-src (left untouched)`);
 }
 if (errors.length) process.exit(1);
+// The landing page is also served as od-site/index.html; copy it so the two cannot drift.
+writeFileSync(join(SITE, 'index.html'), readFileSync(join(SITE, 'unity-asset-portfolio.html')));
 console.log(`\nBuilt ${rendered.size} page(s), ${searchIndex.length} search entries, ${warnings.length} warning(s).`);

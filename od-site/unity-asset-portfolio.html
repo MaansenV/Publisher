@@ -3,1308 +3,808 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="vedaloiv — Unity tools: Easy FP Full Body Controller, Dungeon Generator, Earshot. Full-body character control, procedural dungeons and real-time sound occlusion.">
+  <title>vedaloiv — Unity tools: Easy FP Full Body Controller, Dungeon Generator, Earshot</title>
+  <meta name="description" content="vedaloiv makes beginner-friendly Unity tools with guided setup and real documentation: Easy FP Full Body Controller, Easy Dungeon Generator, and Earshot (in development).">
+  <link rel="canonical" href="https://vedaloiv.wasmer.app/unity-asset-portfolio.html">
   <meta property="og:title" content="vedaloiv — Unity tools: Easy FP Full Body Controller, Dungeon Generator, Earshot">
-  <meta property="og:description" content="vedaloiv — Unity tools: Easy FP Full Body Controller, Dungeon Generator, Earshot. Full-body character control, procedural dungeons and real-time sound occlusion.">
+  <meta property="og:description" content="Beginner-friendly Unity tools with guided setup and real documentation: a full-body first-person controller, a procedural dungeon generator, and ray-traced sound occlusion in development.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="vedaloiv">
   <meta property="og:url" content="https://vedaloiv.wasmer.app/unity-asset-portfolio.html">
   <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="900">
+  <meta property="og:image:alt" content="Easy FP Full Body Controller key art: a white mannequin character in a grey and blue Unity test level">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="vedaloiv — Unity tools: Easy FP Full Body Controller, Dungeon Generator, Earshot">
-  <meta name="twitter:description" content="vedaloiv — Unity tools: Easy FP Full Body Controller, Dungeon Generator, Earshot. Full-body character control, procedural dungeons and real-time sound occlusion.">
+  <meta name="twitter:description" content="Beginner-friendly Unity tools with guided setup and real documentation: a full-body first-person controller, a procedural dungeon generator, and ray-traced sound occlusion in development.">
   <meta name="twitter:image" content="https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg">
-  <link rel="canonical" href="https://vedaloiv.wasmer.app/unity-asset-portfolio.html">
+  <meta name="theme-color" content="#121212">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0a'/%3E%3Cpath d='M7 9l9 15 9-15' fill='none' stroke='%23ffe343' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='6' width='4' height='4' fill='%232748c9'/%3E%3C/svg%3E" type="image/svg+xml">
-  <title>vedaloiv — Unity tools: Easy FP Full Body Controller, Dungeon Generator, Earshot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* Tokens mirror od-site/docs/assets/docs.css so landing and docs read as one family. */
     :root {
-      /* Wakeout palette: near-black foundation and elevated panels */
       --bg: oklch(0.145 0 89.88);
-      --surface: oklch(0.218 0 89.88);
+      --bg-sunken: oklch(0.118 0 89.88);
+      --surface: oklch(0.185 0 89.88);
+      --surface-2: oklch(0.218 0 89.88);
       --surface-raised: oklch(0.285 0 89.88);
 
-      /* Text and selection */
       --fg: oklch(0.99 0.01 97.35);
-      --muted: oklch(0.6 0.01 89.88);
+      --fg-body: oklch(0.88 0.008 95);
+      --muted: oklch(0.7 0.01 89.88);
       --on-accent: oklch(0.145 0 89.88);
 
-      /* Borders */
-      --border: oklch(0.99 0.01 97.35 / 0.16);
-      --border-dark: oklch(0.145 0 89.88 / 0.18);
+      --line: oklch(0.99 0.01 97.35 / 0.11);
+      --line-strong: oklch(0.99 0.01 97.35 / 0.2);
 
-      /* Signature yellow and restrained playful accents */
       --accent: oklch(0.913 0.17 98.7);
-      --lime: oklch(0.904 0.21 124.11);
-      --pink: oklch(0.709 0.24 341.96);
-      --purple: oklch(0.597 0.23 285.53);
-      --teal: oklch(0.736 0.13 184.33);
-      --orange: oklch(0.749 0.17 53.84);
-      --cyan: oklch(0.837 0.14 202.63);
-
-      /* Focus stays bright against every dark surface */
+      --teal: oklch(0.79 0.12 184.33);
+      --cyan: oklch(0.86 0.12 202.63);
+      --lime: oklch(0.88 0.19 124.11);
+      --orange: oklch(0.78 0.15 53.84);
       --focus: oklch(0.913 0.17 98.7);
 
-      --font-display: "Rubik", "Avenir Next", system-ui, sans-serif;
-      --font-body: "Rubik", system-ui, -apple-system, sans-serif;
-      --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+      --font-body: "Rubik", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, Consolas, monospace;
+
+      --fs-xs: 0.78rem;
+      --fs-sm: 0.88rem;
+      --fs-base: 1.0625rem;
+      --fs-lg: 1.2rem;
+
+      --radius-sm: 6px;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --header-h: 64px;
+      --gutter: 24px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
     body {
       margin: 0;
-      overflow-x: hidden;
       background: var(--bg);
-      color: var(--fg);
+      color: var(--fg-body);
       font-family: var(--font-body);
-      font-size: 17px;
-      line-height: 1.6;
+      font-size: var(--fs-base);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
     }
-    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-    button { font: inherit; }
-    img { max-width: 100%; }
-    svg { display: block; max-width: 100%; }
-    :focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+    img { max-width: 100%; height: auto; display: block; }
+    svg { display: block; }
+    a { color: var(--teal); text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
+    a:hover { color: var(--cyan); text-decoration-thickness: 2px; }
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
     ::selection { background: var(--accent); color: var(--on-accent); }
     [hidden] { display: none !important; }
+    h1, h2, h3 { color: var(--fg); margin: 0; text-wrap: balance; }
+    p, li, dd { overflow-wrap: break-word; }
 
-    .container {
-      width: min(1280px, calc(100% - 48px));
-      margin-inline: auto;
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
     }
+    .skip-link {
+      position: fixed; left: 12px; top: 10px; z-index: 100;
+      padding: 10px 14px; border-radius: var(--radius-sm);
+      background: var(--accent); color: var(--on-accent); font-weight: 600; text-decoration: none;
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: none; color: var(--on-accent); }
+
+    .container { width: min(1200px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+
+    /* ---------- Header ---------- */
     .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      color: var(--fg);
-      background: color-mix(in oklch, var(--surface-raised) 92%, var(--bg));
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 40;
+      background: color-mix(in oklch, var(--bg) 86%, transparent);
+      backdrop-filter: blur(14px) saturate(1.2);
+      -webkit-backdrop-filter: blur(14px) saturate(1.2);
+      border-bottom: 1px solid var(--line);
     }
-    .nav-wrap {
-      min-height: 64px;
-      display: flex;
-      align-items: center;
-      gap: 28px;
+    .nav-wrap { height: var(--header-h); display: flex; align-items: center; gap: 20px; }
+    .brand { display: inline-flex; align-items: center; min-height: 44px; color: var(--fg); text-decoration: none; }
+    .brand:hover { color: var(--fg); }
+    .brand-name { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.025em; }
+    .nav-toggle { display: none; }
+    .main-nav { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+    .main-nav a {
+      display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
+      border-radius: var(--radius-sm); color: var(--muted); font-size: var(--fs-sm); text-decoration: none;
     }
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      min-height: 44px;
-      color: var(--fg);
-      text-decoration: none;
-      flex: 0 0 auto;
+    .main-nav a:hover { color: var(--fg); background: var(--surface-2); }
+    .main-nav .nav-cta {
+      margin-left: 8px; padding: 0 16px; border: 1px solid var(--line-strong); border-radius: 999px; color: var(--fg); font-weight: 500;
     }
-    .brand-name {
-      font-family: var(--font-display);
-      font-size: 19px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .nav-link,
-    .nav-cta,
-    .mono,
-    .section-kicker,
-    .asset-category,
-    .asset-version,
-    .filter-chip,
-    .footer-meta {
-      font-family: var(--font-mono);
-    }
-    .main-nav {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 22px;
-      flex: 1;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-    .nav-link,
-    .nav-cta {
-      display: inline-flex;
-      align-items: center;
-      min-height: 44px;
-      padding: 8px 10px;
-      font-size: 12px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-decoration: none;
-    }
-    .nav-link { color: var(--fg); }
-    .nav-link:hover,
-    .nav-link:focus-visible {
-      background: var(--surface);
-      color: var(--fg);
-      text-decoration: underline;
-      text-decoration-thickness: 2px;
-    }
-    .nav-cta:hover { text-decoration: underline; }
-    .nav-cta {
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--fg);
-    }
-    .nav-cta:hover {
-      background: var(--surface);
-      border-color: var(--surface);
-      color: var(--fg);
-    }
+    .main-nav .nav-cta:hover { border-color: var(--accent); background: transparent; }
 
-    .hero {
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      padding: clamp(76px, 9vw, 132px) 0 74px;
-      color: var(--fg);
-      background: var(--surface-raised);
-    }
-    .hero::before {
-      content: "";
-      position: absolute;
-      z-index: 0;
-      inset: 0 0 0 58%;
-      background: var(--bg);
-      clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
-      pointer-events: none;
-    }
-    .hero-grid,
-    .section-head,
-    .about-grid,
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 24px;
-    }
-    .hero-grid > *,
-    .section-head > *,
-    .about-grid > *,
-    .contact-grid > *,
-    .featured-grid > *,
-    .asset-grid > * { min-width: 0; }
-    .hero-grid { position: relative; z-index: 1; align-items: start; }
-    .hero-copy { grid-column: 1 / span 7; align-self: start; }
-    .eyebrow,
-    .badge--new {
-      display: inline-flex;
-      width: fit-content;
-      align-items: center;
-      border-radius: 999px;
-      background: var(--accent);
-      color: var(--on-accent);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      line-height: 1.3;
-      text-transform: uppercase;
-    }
-    .eyebrow { padding: 9px 13px; font-family: var(--font-display); font-weight: 500; letter-spacing: 0.09em; }
-    .hero h1 {
-      max-width: 10ch;
-      margin: 26px 0 24px;
-      font-family: var(--font-display);
-      font-size: clamp(48px, 7vw, 92px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.04;
-      text-wrap: balance;
-    }
-    .hero h1 .hero-ink {
-      color: var(--lime);
-      display: inline-flex;
-      align-items: baseline;
-    }
-    .hero h1 .hero-ink .ink-letter {
-      display: inline-block;
-      animation: hero-ink-wave 2.6s ease-in-out infinite;
-      will-change: transform;
-    }
-    @keyframes hero-ink-wave {
-      0%, 100% { transform: translateY(0); color: var(--lime); }
-      50% { transform: translateY(-0.14em); color: var(--cyan); }
-    }
-    .display-ink {
-      color: var(--accent);
-      display: inline-flex;
-      align-items: baseline;
-    }
-    .display-ink .ink-letter-echo {
-      display: inline-block;
-      animation: display-ink-wave 4s ease-in-out infinite;
-      will-change: transform;
-    }
-    @keyframes display-ink-wave {
-      0%, 100% { transform: translateY(0); color: var(--accent); }
-      50% { transform: translateY(-0.07em); color: var(--lime); }
-    }
-    .hero-lead {
-      max-width: 54ch;
-      margin: 0;
-      color: var(--fg);
-      font-size: clamp(17px, 2vw, 20px);
-      line-height: 1.55;
-    }
+    /* ---------- Buttons ---------- */
     .button {
-      display: inline-flex;
-      min-height: 52px;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 12px 18px;
-      border: 1px solid transparent;
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 700;
-      line-height: 1.2;
-      text-decoration: none;
-      transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      min-height: 48px; padding: 10px 20px;
+      border: 1px solid transparent; border-radius: 999px;
+      font: inherit; font-weight: 600; font-size: 0.98rem; line-height: 1.2;
+      text-decoration: none; cursor: pointer;
+      transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
     }
-    .button:hover { transform: translateY(-2px); }
-    .button:active { transform: translateY(0); }
-    .button--primary {
-      background: var(--accent);
-      color: var(--on-accent);
-    }
-    .button--primary:hover {
-      background: color-mix(in oklch, var(--accent) 86%, var(--fg) 14%);
-      color: var(--on-accent);
-    }
-    .button--ghost {
-      border-color: var(--border);
-      color: var(--fg);
-    }
-    .button--ghost:hover { background: color-mix(in oklch, var(--bg) 86%, var(--fg) 14%); border-color: var(--fg); }
-    .button--ghost-dark {
-      border-color: var(--border);
-      color: var(--fg);
-    }
-    .button--ghost-dark:hover { background: color-mix(in oklch, var(--surface-raised) 90%, var(--surface) 10%); border-color: var(--fg); }
-    .button svg { width: 18px; height: 18px; flex: 0 0 auto; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
-    .hero-note {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px 34px;
-      margin-top: 58px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-    }
-    .hero-note p { margin: 0; }
-    .hero-note-label {
-      display: block;
-      color: var(--fg);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .hero-note-value { display: block; margin-top: 3px; font-size: 14px; }
-    .hero-visual {
-      grid-column: 8 / -1;
-      align-self: start;
-      margin: 0;
-    }
-    .hero-art-frame {
-      padding: 14px;
-      border: 1px solid var(--surface);
-      background: var(--surface);
-      box-shadow: 16px 18px 0 color-mix(in oklch, var(--bg) 72%, var(--surface-raised) 28%);
-    }
-    .hero-art-frame img {
-      width: 100%;
-      height: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      display: block;
-      background: var(--surface-raised);
-    }
-    .hero-caption {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 10px;
-      padding-inline: 2px;
-      color: var(--fg);
-      font-size: 12px;
-    }
-    .hero-caption span:last-child { color: var(--cyan); }
+    .button svg { width: 15px; height: 15px; flex: 0 0 auto; }
+    .button--primary { background: var(--accent); color: var(--on-accent); }
+    .button--primary:hover { background: color-mix(in oklch, var(--accent) 85%, white); color: var(--on-accent); }
+    .button--ghost { border-color: var(--line-strong); color: var(--fg); }
+    .button--ghost:hover { border-color: var(--fg); color: var(--fg); background: var(--surface-2); }
+    .button--quiet { color: var(--teal); padding-inline: 6px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; font-weight: 500; }
+    .button--quiet:hover { color: var(--cyan); text-decoration-thickness: 2px; }
 
-    .section { padding: clamp(74px, 9vw, 132px) 0; scroll-margin-top: 80px; }
-    .section--apricot {
-      position: relative;
-      background: var(--bg);
-      border-top: 1px solid var(--border);
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; isolation: isolate;
+      padding: clamp(56px, 8vw, 104px) 0 clamp(64px, 8vw, 112px);
+      border-bottom: 1px solid var(--line);
     }
-    .section--apricot::before {
-      content: "";
-      position: absolute;
-      top: 22px;
-      right: 0;
-      left: 0;
-      height: 1px;
-      background: var(--surface-raised);
-      opacity: 0.14;
+    /* Faint scene-view grid: the Unity editor is where these tools live. */
+    .hero::before {
+      content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 56px 56px;
+      background-position: -1px -1px;
+      -webkit-mask-image: radial-gradient(ellipse 75% 85% at 70% 40%, #000 20%, transparent 75%);
+      mask-image: radial-gradient(ellipse 75% 85% at 70% 40%, #000 20%, transparent 75%);
+      opacity: 0.7;
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+    .hero-kicker { margin: 0 0 22px; color: var(--muted); font-size: var(--fs-sm); }
+    .hero-kicker strong { color: var(--fg); font-weight: 600; }
+    .hero h1 {
+      font-size: clamp(2.5rem, 1.4rem + 4.2vw, 4.4rem);
+      font-weight: 800; line-height: 1.02; letter-spacing: -0.035em;
+      max-width: 13ch;
+    }
+    .hero-lead { margin: 26px 0 0; max-width: 46ch; font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem); line-height: 1.6; color: var(--fg-body); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .hero-facts {
+      display: grid; grid-template-columns: repeat(3, minmax(0, auto)); justify-content: start; gap: 8px 32px;
+      margin: 44px 0 0; padding: 18px 0 0; border-top: 1px solid var(--line);
+    }
+    .hero-facts div { min-width: 0; }
+    .hero-facts dt { color: var(--muted); font-size: var(--fs-xs); }
+    .hero-facts dd { margin: 2px 0 0; color: var(--fg); font-weight: 500; font-size: var(--fs-sm); }
+
+    /* Product mosaic */
+    .mosaic {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+      margin: 0; padding: 0; list-style: none;
+    }
+    .mosaic li { min-width: 0; }
+    .mosaic li:first-child { grid-column: 1 / -1; }
+    .tile {
+      position: relative; display: block; overflow: hidden; aspect-ratio: 16 / 10;
+      border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+      background: var(--surface); color: var(--fg); text-decoration: none;
+    }
+    .tile:hover { color: var(--fg); border-color: var(--accent); }
+    .tile img { width: 100%; height: 100%; object-fit: cover; }
+    .tile--fp { aspect-ratio: 16 / 10; }
+    .tile--fp img { object-position: 50% 40%; }
+    .tile--dungeon img { object-position: 30% 50%; }
+    .tile--earshot { background: var(--bg-sunken); }
+    .tile--earshot svg { width: 100%; height: 100%; }
+    .tile-label {
+      position: absolute; left: 10px; bottom: 10px; right: 10px;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px;
       pointer-events: none;
     }
-    .section--surface { background: var(--bg); }
-    .section--dark { color: var(--fg); background: var(--surface-raised); }
-    .section-head { align-items: start; margin-bottom: 42px; }
-    .section-head-copy { grid-column: 1 / span 7; }
-    .section-head-aside { grid-column: 8 / -1; align-self: start; padding-top: 33px; }
-    .section-kicker {
-      display: block;
-      margin-bottom: 12px;
-      color: var(--fg);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      line-height: 1.4;
-      text-transform: uppercase;
+    .tile-label span {
+      padding: 4px 9px; border-radius: 999px;
+      background: color-mix(in oklch, var(--bg) 82%, transparent);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      font-size: var(--fs-xs); font-weight: 500; line-height: 1.35;
     }
-    .section--dark .section-kicker { color: var(--accent); }
-    h2,
-    h3,
-    p { overflow-wrap: break-word; }
-    h2 {
-      margin: 0;
-      font-family: var(--font-display);
-      font-size: clamp(32px, 3.6vw, 48px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      text-wrap: balance;
-    }
-    .section-intro { max-width: 52ch; margin: 0; }
-    .section--dark .section-intro { color: var(--fg); }
+    .tile-label .tile-status { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); }
 
-    .featured-grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 24px;
-      align-items: stretch;
+    /* Earshot ray motif (also used on the catalog card) */
+    .ray-wall { fill: var(--surface-raised); }
+    .ray-grid { stroke: var(--line); stroke-width: 1; }
+    .ray-blocked { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 6; opacity: 0.55; fill: none; }
+    .ray-path { stroke: var(--accent); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 8 10; }
+    .ray-wave { fill: none; stroke: var(--teal); stroke-width: 1.5; }
+    .ray-source { fill: var(--accent); }
+    .ray-listener { fill: none; stroke: var(--fg); stroke-width: 2; }
+    .ray-listener-dot { fill: var(--fg); }
+    .ray-text { fill: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+    @media (prefers-reduced-motion: no-preference) {
+      .is-live .ray-path { animation: ray-travel 1.6s linear infinite; }
+      .is-live .ray-wave { transform-box: fill-box; transform-origin: center; animation: ray-pulse 3.2s ease-out infinite; }
+      .is-live .ray-wave:nth-of-type(2) { animation-delay: 1.07s; }
+      .is-live .ray-wave:nth-of-type(3) { animation-delay: 2.13s; }
     }
-    .asset-card {
-      display: flex;
-      min-width: 0;
-      flex-direction: column;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--surface);
-      box-shadow: 0 14px 30px -28px var(--surface-raised);
-      transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-    }
-    .asset-card:hover {
-      background: var(--surface-raised);
-      border-color: var(--fg);
-      box-shadow: 0 22px 38px -28px var(--surface-raised);
-      transform: translateY(-4px);
-    }
-    .featured-grid .asset-card--lead {
-      grid-column: 1 / -1;
-      grid-row: auto;
-      display: grid;
-      grid-template-columns: minmax(0, 7fr) minmax(280px, 5fr);
-      border-top: 4px solid var(--surface-raised);
-    }
-    .asset-media {
-      position: relative;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface-raised);
-      aspect-ratio: 4 / 3;
-    }
-    /* Dungeon screenshots are 16:9; keep them fully visible without cropping. */
-    .featured-grid article.asset-dungeon-generator .asset-media { aspect-ratio: 16 / 9; }
-    .featured-grid article.asset-dungeon-generator-collection .asset-media {
-      align-self: start;
-      aspect-ratio: 16 / 9;
-      min-height: 0;
-    }
-    .featured-grid .asset-card--lead .asset-media {
-      min-height: 360px;
-      aspect-ratio: 4 / 3;
-      border-right: 1px solid var(--border);
-      border-bottom: 0;
-    }
-    .asset-media img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 500ms cubic-bezier(.2,.75,.2,1);
-    }
-    /* Keep product screenshots fully legible; the card itself carries the hover feedback. */
-    .asset-card:hover .asset-media img { transform: none; }
-    .badge--new,
-    .badge--version {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 30px;
-      padding: 7px 10px;
-      box-shadow: 0 12px 24px -15px var(--fg);
-    }
-    .badge--new { border: 1px solid var(--accent); }
-    .badge--version {
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--surface);
-      color: var(--fg);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.03em;
-    }
-    .asset-content {
-      display: flex;
-      min-width: 0;
-      flex: 1;
-      flex-direction: column;
-      padding: 28px 30px 30px;
-    }
-    .asset-category {
-      margin: 0;
-      color: var(--fg);
-      font-size: 12px;
-      letter-spacing: 0.02em;
-      line-height: 1.5;
-    }
-    .section--apricot .asset-category { color: var(--teal); }
-    .asset-title {
-      margin: 8px 0 8px;
-      font-family: var(--font-display);
-      font-size: clamp(22px, 2.2vw, 29px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-    }
-    .asset-description { max-width: 48ch; margin: 0; }
-    .asset-foot {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: auto;
-      padding-top: 24px;
-    }
-    .asset-version { font-size: 11px; line-height: 1.5; }
-    .asset-link {
-      display: inline-flex;
-      min-height: 44px;
-      align-items: center;
-      color: var(--fg);
-      font-size: 14px;
-      font-weight: 500;
-    }
-    .asset-link:hover { color: var(--fg); text-decoration-thickness: 2px; }
-    .asset-links { display: flex; flex-wrap: wrap; gap: 4px 22px; }
-    .asset-support {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .asset-support img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      display: block;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      background: var(--surface-raised);
+    @keyframes ray-travel { to { stroke-dashoffset: -36; } }
+    @keyframes ray-pulse {
+      0% { transform: scale(0.25); opacity: 0.9; }
+      100% { transform: scale(1); opacity: 0; }
     }
 
-    .filter-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 18px;
-      margin-bottom: 40px;
-      padding: 14px 16px 14px 18px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--bg);
-    }
-    .filter-list { display: flex; flex-wrap: wrap; gap: 9px; }
-    .filter-chip {
-      min-height: 44px;
-      padding: 8px 14px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--fg);
-      cursor: pointer;
-      font-size: 12px;
-      letter-spacing: 0.03em;
-      line-height: 1.3;
-      text-transform: uppercase;
-      transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
-    }
-    .filter-chip:active { transform: translateY(1px); }
-    .filter-chip:hover {
-      border-color: var(--surface-raised);
-      background: var(--surface-raised);
-      color: var(--fg);
-    }
-    .filter-chip[aria-pressed="true"] {
-      border-color: var(--lime);
-      background: var(--lime);
-      color: var(--on-accent);
-    }
-    .filter-status { margin: 0; font-family: var(--font-mono); font-size: 12px; }
-    .asset-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-    }
-    .asset-grid .asset-card {
-      position: relative;
-      grid-column: auto;
-      border-top: 4px solid var(--surface-raised);
-      border-radius: 4px 4px 12px 12px;
-    }
-    .asset-grid .asset-card::before {
-      content: "";
-      position: absolute;
-      top: -4px;
-      left: 24px;
-      width: 48px;
-      height: 4px;
-      background: var(--purple);
-    }
+    /* ---------- Sections ---------- */
+    .section { padding: clamp(72px, 9vw, 120px) 0; }
+    .section + .section { border-top: 1px solid var(--line); }
+    .section--sunken { background: var(--bg-sunken); }
+    .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 48px; align-items: end; margin-bottom: clamp(36px, 5vw, 56px); }
+    .section-head h2 { font-size: clamp(2rem, 1.4rem + 2.2vw, 3rem); font-weight: 700; line-height: 1.06; letter-spacing: -0.03em; max-width: 16ch; }
+    .section-head p { margin: 0; max-width: 52ch; color: var(--muted); }
 
-    .section-head[aria-labelledby="roadmap-title"] {
-      margin-top: clamp(78px, 8vw, 112px);
-      margin-bottom: 30px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
+    /* ---------- Catalog ---------- */
+    .catalog { display: grid; gap: clamp(28px, 4vw, 40px); }
+    .product {
+      scroll-margin-top: calc(var(--header-h) + 16px);
+      border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+      background: var(--surface); overflow: hidden;
     }
-    .section-head[aria-labelledby="roadmap-title"] .asset-title { margin-top: 0; }
+    .product-main { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+    .product-media { min-width: 0; padding: 14px; display: grid; gap: 10px; align-content: start; }
+    .product-media > img, .product-art {
+      width: 100%; border-radius: var(--radius); border: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+    .product-art { aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-sunken); }
+    .product-art svg { width: 100%; height: 100%; }
+    .shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .shots a { display: block; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); }
+    .shots a:hover { border-color: var(--accent); }
+    .shots img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 62%; }
+    .product-body { min-width: 0; padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; gap: 18px; }
+    .product-status { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: var(--fs-sm); color: var(--muted); }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 26px; padding: 2px 10px; border-radius: 999px;
+      font-family: var(--font-mono); font-size: 0.74rem; font-weight: 500; line-height: 1.3;
+    }
+    .badge--released { background: var(--accent); color: var(--on-accent); }
+    .badge--dev { border: 1px dashed var(--teal); color: var(--teal); }
+    .product h3 { font-size: clamp(1.55rem, 1.2rem + 1.2vw, 2.1rem); font-weight: 700; line-height: 1.12; letter-spacing: -0.025em; }
+    .product-summary { margin: -6px 0 0; color: var(--fg-body); max-width: 52ch; }
+    .tagline { margin: -6px 0 0; color: var(--fg); font-size: 1.15rem; font-weight: 500; line-height: 1.45; }
+    .features { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+    .features li { position: relative; padding-left: 22px; line-height: 1.5; }
+    .features li::before {
+      content: ""; position: absolute; left: 2px; top: 0.6em; width: 8px; height: 8px;
+      border-radius: 2px; background: var(--accent);
+    }
+    .specs {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
+      margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--line);
+    }
+    .specs div { min-width: 0; padding: 10px 12px; background: var(--surface); }
+    .specs dt { color: var(--muted); font-size: var(--fs-xs); }
+    .specs dd { margin: 1px 0 0; color: var(--fg); font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.45; }
+    .product-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: auto; padding-top: 4px; }
 
-    .about-grid { align-items: start; }
-    .about-copy { grid-column: 1 / span 7; align-self: start; }
-    .about-visual { grid-column: 8 / -1; align-self: start; margin: 0; }
-    .about-copy h2 { max-width: 9ch; }
-    .about-copy p { max-width: 52ch; margin: 24px 0 0; }
+    .whats-new {
+      display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 12px 32px; align-items: start;
+      padding: 20px clamp(24px, 3vw, 36px);
+      border-top: 1px solid var(--line); background: var(--surface-2);
+    }
+    .whats-new h4 { margin: 0; color: var(--fg); font-size: 1rem; font-weight: 600; line-height: 1.4; }
+    .whats-new h4 small { display: block; margin-top: 2px; color: var(--muted); font-size: var(--fs-xs); font-weight: 400; }
+    .whats-new ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+    .whats-new li a {
+      display: inline-flex; align-items: center; min-height: 36px; padding: 4px 12px;
+      border: 1px solid var(--line-strong); border-radius: 999px;
+      color: var(--fg); font-size: var(--fs-sm); text-decoration: none; line-height: 1.3;
+    }
+    .whats-new li a:hover { border-color: var(--teal); color: var(--teal); }
+    .whats-new li.changelog a { border-color: transparent; color: var(--teal); text-decoration: underline; text-underline-offset: 0.22em; }
+    .whats-new li.changelog a:hover { color: var(--cyan); }
+
+    /* ---------- Roadmap ---------- */
+    .timeline { margin: 0; padding: 0; list-style: none; border-left: 2px solid var(--line-strong); margin-left: 6px; max-width: 760px; }
+    .timeline li { position: relative; padding: 0 0 30px 30px; }
+    .timeline li:last-child { padding-bottom: 0; }
+    .timeline li::before {
+      content: ""; position: absolute; left: -8px; top: 0.45em; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--bg-sunken); border: 2px solid var(--muted);
+    }
+    .timeline li.is-done::before { background: var(--accent); border-color: var(--accent); }
+    .timeline li.is-next::before { border-color: var(--teal); border-style: dashed; }
+    .timeline-when { display: block; color: var(--muted); font-family: var(--font-mono); font-size: 0.8rem; }
+    .timeline h3 { margin-top: 2px; font-size: 1.2rem; font-weight: 600; line-height: 1.35; }
+    .timeline p { margin: 4px 0 0; max-width: 60ch; }
+
+    /* ---------- About ---------- */
+    .about-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+    .about-copy h2 { font-size: clamp(2rem, 1.4rem + 2.2vw, 3rem); font-weight: 700; line-height: 1.06; letter-spacing: -0.03em; max-width: 14ch; }
+    .about-copy p { margin: 22px 0 0; max-width: 56ch; }
     .about-copy p + p { margin-top: 14px; }
-    .about-principles-plate {
-      padding: 14px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      box-shadow: 14px 16px 0 color-mix(in oklch, var(--surface-raised) 12%, transparent);
-    }
-    .about-principles-slot {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      padding: 24px;
-      background: var(--surface-raised);
-      color: var(--fg);
-      border: 1px solid var(--border);
-    }
-    .about-principles-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--pink);
-    }
-    .about-principles {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .about-principles li {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    .about-principles li:last-child { padding-bottom: 0; border-bottom: 0; }
-    .about-principles strong {
-      font-family: var(--font-display);
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--fg);
-    }
-    .about-principles span {
-      color: var(--fg);
-      font-size: 13px;
-      line-height: 1.5;
-      opacity: 0.85;
-    }
-    .plate-caption {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 12px 2px 0;
-      font-family: var(--font-mono);
-      font-size: 11px;
-    }
-    .plate-caption span:last-child { color: var(--fg); }
+    .principles { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-strong); }
+    .principles li { padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .principles strong { display: block; color: var(--fg); font-weight: 600; }
+    .principles span { display: block; margin-top: 2px; color: var(--muted); font-size: 0.96rem; }
 
-    .contact-grid { align-items: start; }
-    .contact-copy { grid-column: 1 / span 7; }
-    .contact-copy h2 { max-width: 10ch; }
-    .contact-copy p { max-width: 50ch; margin: 24px 0 0; }
-    .site-footer {
-      padding: 30px 0 36px;
-      color: var(--fg);
-      background: var(--surface-raised);
-      border-top: 1px solid var(--border);
+    /* ---------- Contact ---------- */
+    .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+    .contact-copy h2 { font-size: clamp(2rem, 1.4rem + 2.2vw, 3rem); font-weight: 700; line-height: 1.06; letter-spacing: -0.03em; max-width: 12ch; }
+    .contact-copy p { margin: 22px 0 0; max-width: 46ch; }
+    .contact-copy .support-mail { display: inline-block; margin-top: 6px; font-family: var(--font-mono); font-size: 0.95rem; }
+    .contact-links { margin: 26px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+
+    #kontakt .contact-form {
+      display: grid; gap: 16px; padding: clamp(22px, 3vw, 32px);
+      border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: var(--surface);
     }
-    .footer-wrap { display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
-    .footer-meta { margin: 0; color: var(--fg); font-size: 11px; line-height: 1.7; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 6px 22px; }
-    .footer-links a {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      padding-inline: 8px;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      color: var(--fg);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      text-decoration: none;
-      transition: background-color 180ms ease, border-color 180ms ease;
+    #kontakt .contact-form-title { font-size: 1.3rem; font-weight: 600; }
+    #kontakt .contact-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 16px; }
+    #kontakt .form-field { display: grid; min-width: 0; gap: 6px; }
+    #kontakt .form-field--wide { grid-column: 1 / -1; }
+    #kontakt .form-label { color: var(--fg); font-size: var(--fs-sm); font-weight: 500; }
+    #kontakt .form-control {
+      width: 100%; min-height: 48px; padding: 11px 13px;
+      border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+      background: var(--bg-sunken); color: var(--fg); font: inherit; line-height: 1.4;
     }
-    .footer-links a:hover {
-      color: var(--fg);
-      background: var(--surface);
-      border-color: var(--border);
-      text-decoration: underline;
+    #kontakt textarea.form-control { min-height: 140px; resize: vertical; }
+    #kontakt .form-control::placeholder { color: var(--muted); opacity: 1; }
+    #kontakt .form-control:hover { border-color: var(--muted); }
+    #kontakt .form-control:focus-visible { border-color: var(--focus); outline: 2px solid var(--focus); outline-offset: 2px; }
+    #kontakt .form-control[aria-invalid="true"] { border-color: var(--orange); }
+    #kontakt .field-error { min-height: 1.4em; margin: 0; color: var(--orange); font-size: var(--fs-xs); line-height: 1.4; }
+    #kontakt .contact-submit {
+      width: 100%; min-height: 50px; padding: 12px 18px;
+      border: 0; border-radius: 999px; background: var(--accent); color: var(--on-accent);
+      cursor: pointer; font: inherit; font-weight: 600; line-height: 1.2;
+      transition: background-color 160ms ease;
+    }
+    #kontakt .contact-submit:hover { background: color-mix(in oklch, var(--accent) 85%, white); }
+    #kontakt .contact-submit:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+    #kontakt .contact-submit:disabled { cursor: wait; background: var(--surface-raised); color: var(--fg); }
+    #kontakt .contact-status { min-height: 1.5em; margin: 0; color: var(--muted); font-size: var(--fs-sm); line-height: 1.5; }
+    #kontakt .contact-status[data-state="success"] { color: var(--lime); }
+    #kontakt .contact-status[data-state="error"] { color: var(--orange); }
+    #kontakt .field-honeypot {
+      position: absolute; left: -9999px; width: 1px; height: 1px; padding: 0; overflow: hidden;
+      clip-path: inset(50%); white-space: nowrap; border: 0; opacity: 0;
     }
 
-    @media (max-width: 900px) {
-      .hero-grid,
-      .section-head,
-      .about-grid,
-      .contact-grid,
-      .featured-grid,
-      .asset-grid { gap: 20px; }
-      .hero-copy { grid-column: 1 / span 7; }
-      .hero-visual { grid-column: 8 / -1; }
-      .section-head-copy { grid-column: 1 / span 7; }
-      .section-head-aside { grid-column: 8 / -1; }
-      .featured-grid .asset-card--lead {
-        grid-column: 1 / -1;
-        display: flex;
-      }
-      .featured-grid .asset-card--lead .asset-media {
-        min-height: 0;
-        aspect-ratio: 4 / 3;
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
-      }
-      .asset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .asset-grid .asset-card { grid-column: auto; }
-      .about-copy { grid-column: 1 / span 7; }
-      .about-visual { grid-column: 8 / -1; }
-      .contact-copy { grid-column: 1 / span 7; }
-      .contact-form { grid-column: 8 / -1; }
+    /* ---------- Footer ---------- */
+    .site-footer { padding: 48px 0 40px; border-top: 1px solid var(--line); background: var(--bg-sunken); font-size: var(--fs-sm); }
+    .footer-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); gap: 32px; }
+    .footer-grid h2 { font-size: var(--fs-sm); font-weight: 600; color: var(--fg); margin-bottom: 10px; }
+    .footer-grid ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+    .footer-grid a { display: inline-flex; align-items: center; min-height: 32px; }
+    .footer-brand p { margin: 8px 0 0; color: var(--muted); max-width: 36ch; }
+    .footer-brand .brand-name { color: var(--fg); }
+    .footer-copy { margin: 36px 0 0; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: var(--fs-xs); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 960px) {
+      .hero-grid, .about-grid, .contact-grid { grid-template-columns: minmax(0, 1fr); }
+      .hero h1 { max-width: 15ch; }
+      .mosaic { max-width: 640px; }
+      .product-main { grid-template-columns: minmax(0, 1fr); }
+      .product-media { padding-bottom: 0; }
+      .section-head { grid-template-columns: minmax(0, 1fr); align-items: start; }
+      .whats-new { grid-template-columns: minmax(0, 1fr); }
     }
-    @media (max-width: 680px) {
-      .container { width: min(100% - 32px, 560px); }
-      .nav-wrap { min-height: 68px; gap: 4px 8px; padding-block: 10px; display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-      .brand { grid-column: 1; grid-row: 1; }
-      .main-nav { display: contents; }
-      .nav-cta { grid-column: 2; grid-row: 1; }
-      .nav-links { grid-column: 1 / -1; grid-row: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 8px; width: 100%; }
-      .nav-link { padding-inline: 4px; }
-      .nav-link:nth-child(odd) { justify-content: flex-start; }
-      .nav-link:nth-child(even) { justify-content: flex-end; }
-      .hero { padding-top: 68px; }
-      .hero::before {
-        inset: 54% 0 0;
-        clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+    @media (max-width: 760px) {
+      :root { --gutter: 16px; --header-h: 60px; }
+      .nav-toggle {
+        display: inline-flex; align-items: center; gap: 8px; margin-left: auto;
+        min-height: 44px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: 999px;
+        background: transparent; color: var(--fg); cursor: pointer; font-size: var(--fs-sm);
       }
-      .hero-grid,
-      .section-head,
-      .about-grid,
-      .contact-grid { display: block; }
-      .hero-copy,
-      .hero-visual,
-      .section-head-copy,
-      .section-head-aside,
-      .about-copy,
-      .about-visual,
-      .contact-copy,
-      .contact-form { width: 100%; }
-      .hero-copy,
-      .hero-visual,
-      .section-head-copy,
-      .section-head-aside,
-      .about-copy,
-      .about-visual,
-      .contact-copy,
-      .contact-form { min-width: 0; }
-      .hero h1 { max-width: 11ch; font-size: clamp(46px, 14vw, 72px); }
-      .hero-visual { margin-top: 52px; }
-      .hero-art-frame { max-width: calc(100% - 16px); margin-left: auto; margin-right: 16px; }
-      .section-head-aside { margin-top: 20px; padding-top: 0; }
-      .section-head { margin-bottom: 34px; }
-      .section-head[aria-labelledby="roadmap-title"] { margin-top: 64px; padding-top: 20px; }
-      .featured-grid,
-      .asset-grid { display: block; }
-      .featured-grid .asset-card,
-      .asset-grid .asset-card { margin-bottom: 18px; }
-      .asset-card:last-child { margin-bottom: 0; }
-      .featured-grid .asset-card--lead { display: flex; }
-      .featured-grid .asset-card--lead .asset-media {
-        min-height: 0;
-        aspect-ratio: 4 / 3;
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
+      .nav-toggle svg { width: 16px; height: 16px; }
+      .main-nav {
+        display: none; position: absolute; top: var(--header-h); left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 2px;
+        padding: 10px var(--gutter) 16px; background: var(--bg); border-bottom: 1px solid var(--line);
       }
-      .featured-grid .asset-card--lead .asset-content { padding: 24px; }
-      .asset-media { aspect-ratio: 4 / 3; }
-      .filter-row { align-items: start; flex-direction: column; }
-.about-visual { margin-top: 42px; }
+      .main-nav.is-open { display: flex; }
+      .no-js .main-nav { display: flex; position: static; flex-direction: row; flex-wrap: wrap; padding: 0; border: 0; }
+      .main-nav a { min-height: 48px; font-size: 1rem; color: var(--fg); }
+      .main-nav .nav-cta { margin: 8px 0 0; justify-content: center; }
+      .specs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .footer-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+      .footer-brand { grid-column: 1 / -1; }
+      #kontakt .contact-form-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 420px) {
+      .hero-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 14px; }
+      .hero-actions .button { flex: 1 1 auto; }
+      .product-actions .button--primary { flex: 1 1 100%; }
+      .tile-label { left: 6px; bottom: 6px; right: 6px; }
+      .tile-label span { padding: 3px 7px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
-      .button:hover,
-      .asset-card:hover,
-      #kontakt .contact-submit:hover,
-      #kontakt .contact-submit:active { transform: none; }
-      .asset-card:hover .asset-media img { transform: none; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation: none !important; }
     }
   </style>
 </head>
-<body>
+<body class="no-js">
+  <a class="skip-link" href="#start">Skip to content</a>
+
   <header class="site-header">
     <div class="container nav-wrap">
-      <a class="brand" href="#start" aria-label="vedaloiv home">
-        <span class="brand-name">vedaloiv</span>
-      </a>
-      <nav class="main-nav" aria-label="Main navigation">
-        <div class="nav-links">
-          <a class="nav-link" href="#galerie">Gallery</a>
-          <a class="nav-link" href="#assets">Collection</a>
-          <a class="nav-link" href="#ueber-mich">About</a>
-          <a class="nav-link" href="docs/index.html">Docs</a>
-        </div>
+      <a class="brand" href="#top" aria-label="vedaloiv, back to top"><span class="brand-name">vedaloiv</span></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        Menu
+      </button>
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <a href="#assets">Assets</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#ueber-mich">About</a>
+        <a href="docs/index.html">Docs</a>
         <a class="nav-cta" href="#kontakt">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main id="start">
-    <section class="hero" data-od-id="hero" aria-labelledby="hero-title">
+  <main id="start" tabindex="-1">
+    <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <span class="eyebrow">Unity Asset Store Publisher</span>
-          <h1 id="hero-title" data-od-id="hero-heading">More body. Less <span class="hero-ink" aria-label="friction"><span class="ink-letter" style="animation-delay:0s">f</span><span class="ink-letter" style="animation-delay:.11s">r</span><span class="ink-letter" style="animation-delay:.22s">i</span><span class="ink-letter" style="animation-delay:.33s">c</span><span class="ink-letter" style="animation-delay:.44s">t</span><span class="ink-letter" style="animation-delay:.55s">i</span><span class="ink-letter" style="animation-delay:.66s">o</span><span class="ink-letter" style="animation-delay:.77s">n</span></span>.</h1>
-          <p class="hero-lead">I build Unity tools for first-person full-body character control — procedural IK, a guided setup, and a clear path from import to a playable body.</p>
+          <p class="hero-kicker"><strong>vedaloiv</strong>, a solo Unity Asset Store publisher</p>
+          <h1 id="hero-title">Unity tools you can set up on the first try.</h1>
+          <p class="hero-lead">A full-body first-person controller, a procedural dungeon generator and, in development, ray-traced sound occlusion. Each tool comes with a setup wizard or editor, demo scenes, and documentation written against the shipped code.</p>
           <div class="hero-actions">
-            <a class="button button--primary" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">
-              Go to Asset Store
-              <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M9.5 4.5 14 9l-4.5 4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+            <a class="button button--primary" href="#assets">Browse assets</a>
+            <a class="button button--ghost" href="docs/index.html">Read the docs</a>
+          </div>
+          <dl class="hero-facts">
+            <div><dt>On the Asset Store</dt><dd>2 tools</dd></div>
+            <div><dt>In development</dt><dd>Earshot</dd></div>
+            <div><dt>Documentation</dt><dd>24 guides</dd></div>
+          </dl>
+        </div>
+
+        <ul class="mosaic" aria-label="Products">
+          <li>
+            <a class="tile tile--fp" href="#fp">
+              <img src="assets/web/fp-overview.jpg" width="1200" height="900" alt="Easy FP Full Body Controller: a white mannequin character crouching in a grey and blue test level" fetchpriority="high" decoding="async">
+              <span class="tile-label"><span>Easy FP Full Body Controller</span><span class="tile-status">v1.6.0</span></span>
             </a>
-          </div>
-          <div class="hero-note" aria-label="Working approach">
-            <p><span class="hero-note-label mono">Working approach</span><span class="hero-note-value">small, modular, documented</span></p>
-            <p><span class="hero-note-label mono">Focus</span><span class="hero-note-value">Full Body · IK · Unity</span></p>
-          </div>
-        </div>
-        <figure class="hero-visual">
-          <div class="hero-art-frame">
-            <img src="assets/web/fp-overview.jpg" role="img" alt="Easy FP Full Body Controller – product view showing a full body in a Unity scene" fetchpriority="high" decoding="async">
-            <figcaption class="hero-caption mono"><span>Easy FP Full Body Controller</span><span>Real shot</span></figcaption>
-          </div>
-        </figure>
+          </li>
+          <li>
+            <a class="tile tile--dungeon" href="#dungeon">
+              <img src="assets/web/dungen-main.jpg" width="1200" height="675" alt="Easy Dungeon Generator: a node graph from entrance through rooms to treasure and boss, next to dungeon and backrooms scenes" decoding="async">
+              <span class="tile-label"><span>Easy Dungeon Generator</span><span class="tile-status">v1.1.0</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="tile tile--earshot" href="#earshot">
+              <svg class="is-live" viewBox="0 0 320 200" role="img" aria-label="Earshot diagram: sound from a source is blocked by a wall but reaches the listener around its corner">
+                <g class="ray-grid"><path d="M0 50H320M0 100H320M0 150H320M80 0V200M160 0V200M240 0V200"/></g>
+                <rect class="ray-wall" x="150" y="64" width="22" height="136" rx="2"/>
+                <path class="ray-blocked" d="M78 128 L150 134"/>
+                <path class="ray-path" d="M78 128 L161 52 L246 140"/>
+                <circle class="ray-wave" cx="78" cy="128" r="58"/>
+                <circle class="ray-wave" cx="78" cy="128" r="58"/>
+                <circle class="ray-wave" cx="78" cy="128" r="58"/>
+                <circle class="ray-source" cx="78" cy="128" r="7"/>
+                <circle class="ray-listener" cx="246" cy="140" r="11"/>
+                <circle class="ray-listener-dot" cx="246" cy="140" r="3.5"/>
+              </svg>
+              <span class="tile-label"><span>Earshot</span><span class="tile-status">In development</span></span>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <section class="section section--apricot" id="galerie" data-od-id="galerie" aria-labelledby="featured-title">
+    <section class="section" id="assets" aria-labelledby="assets-title">
       <div class="container">
         <div class="section-head">
-          <div class="section-head-copy">
-            <span class="section-kicker">Selection / Gallery</span>
-            <h2 id="featured-title" data-od-id="galerie-heading">Your body, <span class="display-ink" aria-label="on screen"><span class="ink-letter-echo" style="animation-delay:0s">o</span><span class="ink-letter-echo" style="animation-delay:.14s">n</span><span class="ink-letter-echo" style="animation-delay:.28s"> </span><span class="ink-letter-echo" style="animation-delay:.42s">s</span><span class="ink-letter-echo" style="animation-delay:.56s">c</span><span class="ink-letter-echo" style="animation-delay:.70s">r</span><span class="ink-letter-echo" style="animation-delay:.84s">e</span><span class="ink-letter-echo" style="animation-delay:.98s">e</span><span class="ink-letter-echo" style="animation-delay:1.12s">n</span></span>.</h2>
-          </div>
-          <div class="section-head-aside">
-            <p class="section-intro">Easy FP Full Body Controller combines first and third person: the full body stays visible and animated, while procedural IK stabilizes hands, head, and spine.</p>
-          </div>
-        </div>
-        <div class="featured-grid">
-          <article class="asset-card asset-card--lead" data-od-id="asset-easy-fp-full-body-controller">
-            <div class="asset-media">
-              <span class="badge--new">New · v1.6.0</span>
-              <img src="assets/web/fp-overview.jpg" role="img" alt="Easy FP Full Body Controller – product view of the full-body controller in a Unity scene" loading="lazy" decoding="async">
-            </div>
-            <div class="asset-content">
-              <p class="asset-category">Tools / Game Toolkits</p>
-              <h3 class="asset-title" data-od-id="asset-title-easy-fp-full-body-controller">Easy FP Full Body Controller</h3>
-              <p class="asset-description">A first-person and third-person full-body character controller for Unity. Procedural hand, head &amp; foot IK with ground-anchored foot planting, finger grips, spine stabilization, a guided 7-step Setup Wizard, FPCutter for non-destructive mesh slicing with shadow preservation, a dynamic item system, extensible events, optional health &amp; stamina, and guided demo scenes with ready-made prefabs. Optional multiplayer add-ons: FishNet and a <a href="docs/purrnet.html">PurrNet co-op add-on</a> for 2–4 players.</p>
-              <div class="asset-foot"><span class="asset-version">v1.6.0 · 09.10.2026 · Unity 6000.5.0+ (Unity 6.5) · URP<br>Cinemachine 3.1.7 · Input System 1.19.0 · 194.7 MB<br>€36.79</span><a class="asset-link" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">Go to Asset Store</a></div>
-            </div>
-          </article>
-          <article class="asset-card" style="grid-column: 1 / -1" data-od-id="asset-dungeon-generator">
-            <div class="asset-media">
-              <span class="badge--new">New · v1.1.0</span>
-              <img src="assets/web/dungen-main.jpg" role="img" alt="Easy Dungeon Generator – node-based dungeon layout with entrance, rooms, treasure and boss" loading="lazy" decoding="async">
-            </div>
-            <div class="asset-content">
-              <p class="asset-category">Tools / Procedural Generation</p>
-              <h3 class="asset-title" data-od-id="asset-title-dungeon-generator">Easy Dungeon Generator</h3>
-              <p class="asset-description">Build dungeons with nodes and generate endless chunk-based worlds. A visual Room Designer for painting rooms, doors, stairs and holes, with multi-floor support — perfect for roguelikes, RPGs and backrooms.</p>
-              <div class="asset-foot"><span class="asset-version">€33.11 · v1.1.0 · 08.10.2026 · Unity 6000.5+ · Built-in / URP / HDRP<br>1.1 MB · Node-based layouts · Infinite chunks</span><div class="asset-links"><a class="asset-link" href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noreferrer">Go to Asset Store</a><a class="asset-link" href="docs/dungeon-generator.html">View overview</a></div></div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--surface" id="assets" data-od-id="assets" aria-labelledby="assets-title">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-head-copy">
-            <span class="section-kicker">Collection / All Assets</span>
-            <h2 id="assets-title" data-od-id="assets-heading">Three assets, two released.</h2>
-          </div>
-          <div class="section-head-aside">
-            <p class="section-intro">Two released, one in development. Further ideas stay visible as a roadmap — not as finished products.</p>
-          </div>
-        </div>
-        <div class="filter-row">
-          <div class="filter-list" role="group" aria-label="Asset categories">
-            <button class="filter-chip" type="button" data-filter="Alle" data-od-id="filter-alle" aria-pressed="true">All</button>
-            <button class="filter-chip" type="button" data-filter="Tools / Game Toolkits" data-od-id="filter-tools" aria-pressed="false">Tools / Game Toolkits</button>
-            <button class="filter-chip" type="button" data-filter="Tools / Procedural Generation" data-od-id="filter-procedural" aria-pressed="false">Procedural Generation</button>
-            <button class="filter-chip" type="button" data-filter="Audio / Tools" data-od-id="filter-audio" aria-pressed="false">Audio / Tools</button>
-          </div>
-          <p class="filter-status" data-filter-status aria-live="polite">3 assets visible</p>
-        </div>
-        <div class="featured-grid" aria-live="polite">
-          <article class="asset-card asset-card--lead" data-category="Tools / Game Toolkits" data-od-id="asset-easy-fp-full-body-controller-collection">
-            <div class="asset-media">
-              <span class="badge--version">v1.6.0</span>
-              <img src="assets/web/fp-setup.jpg" role="img" alt="Easy FP Full Body Controller – setup wizard with steps 4 to 6 in Unity" loading="lazy" decoding="async">
-            </div>
-            <div class="asset-content"><p class="asset-category">Tools / Game Toolkits</p><h3 class="asset-title" data-od-id="asset-title-easy-fp-full-body-controller-collection">Easy FP Full Body Controller</h3><p class="asset-description">Full body control for first and third person — with a 7-step Setup Wizard, FPCutter, a dynamic item system, extensible events, procedural Foot IK with ground-anchored planting, finger grips, optional health &amp; stamina, guided demo scenes with ready-made prefabs, and optional multiplayer add-ons for FishNet and <a href="docs/purrnet.html">PurrNet</a> (2–4 players).</p><div class="asset-foot"><span class="asset-version">v1.6.0 · Unity 6000.5+ · URP<br>€36.79 · 194.7 MB</span><a class="asset-link" href="docs/overview.html">View overview</a></div></div>
-          </article>
-          <article class="asset-card asset-card--lead" data-category="Tools / Procedural Generation" data-od-id="asset-dungeon-generator-collection">
-            <div class="asset-media">
-              <span class="badge--version">v1.1.0</span>
-              <img src="assets/web/dungen-nodes.jpg" role="img" alt="Easy Dungeon Generator – node graph with entrance, rooms and boss in the editor" loading="lazy" decoding="async">
-            </div>
-            <div class="asset-content"><p class="asset-category">Tools / Procedural Generation</p><h3 class="asset-title" data-od-id="asset-title-dungeon-generator-collection">Easy Dungeon Generator</h3><p class="asset-description">Design dungeons your way — node-based layouts, an intuitive Room Designer for painting rooms, doors, stairs and holes, and multi-floor support with seamless connections.</p><div class="asset-support"><img src="assets/web/dungen-editor.jpg" role="img" alt="Easy Dungeon Generator – Room Designer editor with brush, floor and stair tools" loading="lazy" decoding="async"><img src="assets/web/dungen-features.jpg" role="img" alt="Easy Dungeon Generator – node-based design, room editor and multi-floor support" loading="lazy" decoding="async"></div><div class="asset-foot"><span class="asset-version">€33.11 · v1.1.0 · Unity 6000.5+ · Built-in / URP / HDRP<br>1.1 MB · Node-based · Infinite chunks</span><div class="asset-links"><a class="asset-link" href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noreferrer">Go to Asset Store</a><a class="asset-link" href="docs/dungeon-generator.html">View overview</a></div></div></div>
-          </article>
-          <article class="asset-card asset-card--lead" data-category="Audio / Tools" data-od-id="asset-earshot-collection">
-            <div class="asset-media asset-media--placeholder" role="img" aria-label="Earshot – screenshot coming soon">
-              <span class="badge--version">In development</span>
-              <span class="asset-placeholder-label">Screenshot coming soon</span>
-            </div>
-            <div class="asset-content"><p class="asset-category">Audio / Tools</p><h3 class="asset-title" data-od-id="asset-title-earshot-collection">Earshot – Ray Traced Sound Occlusion, Reverb &amp; Pathing</h3><p class="asset-description">Hear through walls. Hear around corners. No baking. Real-time ray-traced occlusion, reverb and sound pathing through doors and portals for Unity 6.6+. Render-pipeline agnostic, with optional Steam Audio integration and one-click scene setup.</p><div class="asset-foot"><span class="asset-version">In development · Unity 6.6+</span></div></div>
-          </article>
+          <h2 id="assets-title">Two tools released, one on the way.</h2>
+          <p>Every released asset has a quick start, a full manual and a changelog. Prices are the Asset Store list prices at the time of writing.</p>
         </div>
 
-        <div class="section-head" aria-labelledby="roadmap-title">
-          <div class="section-head-copy">
-            <span class="section-kicker">Planned / Roadmap</span>
-            <h3 id="roadmap-title" class="asset-title" data-od-id="roadmap-heading">Next up, not a promise.</h3>
-          </div>
-          <div class="section-head-aside">
-            <p class="section-intro">These items are planned and not yet released.</p>
-          </div>
-        </div>
-        <div class="asset-grid" aria-label="Planned extensions">
-          <article class="asset-card" data-od-id="roadmap-easy-fp-1-7">
-            <div class="asset-content"><p class="asset-category">Upcoming / v1.7</p><h3 class="asset-title" data-od-id="roadmap-title-easy-fp-1-7">Easy FP Full Body Controller 1.7</h3><p class="asset-description">The next update to Easy FP Full Body Controller. Details will be published with the release.</p><div class="asset-foot"><span class="asset-version">Not yet released</span></div></div>
-          </article>
-          <article class="asset-card" data-od-id="roadmap-earshot">
-            <div class="asset-content"><p class="asset-category">In development</p><h3 class="asset-title" data-od-id="roadmap-title-earshot">Earshot</h3><p class="asset-description">Ray-traced sound occlusion, reverb and pathing for Unity. Still in development and not yet released.</p><div class="asset-foot"><span class="asset-version">Not yet released</span></div></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--apricot" id="ueber-mich" data-od-id="ueber-mich" aria-labelledby="about-title">
-      <div class="container about-grid">
-        <div class="about-copy">
-          <span class="section-kicker">About / Working approach</span>
-          <h2 id="about-title" data-od-id="about-heading">Solo built. With an eye for the workflow.</h2>
-          <p>As a solo developer I build Unity tools that lower the barrier to entry and stay out of the way in daily use. I'm interested in the small frictions: a click too many, a body that disappears in first person, or documentation that doesn't help on first open.</p>
-          <p>Less friction, more building — with documentation verified against the shipped source. Easy FP Full Body Controller and Easy Dungeon Generator are released; Earshot is in development.</p>
-        </div>
-        <figure class="about-visual">
-          <div class="about-principles-plate">
-            <div class="about-principles-slot">
-              <span class="about-principles-eyebrow">Working approach</span>
-              <ul class="about-principles">
-                <li><strong>Guided setup</strong><span>Wizards and sensible defaults lower the barrier to entry.</span></li>
-                <li><strong>Docs verified against source</strong><span>Every claim checked against the shipped package code.</span></li>
-                <li><strong>One asset, one doc</strong><span>Per-asset docs instead of a watered-down wiki.</span></li>
-                <li><strong>Real products first</strong><span>No marketing promises, no invented numbers.</span></li>
+        <div class="catalog">
+          <!-- Easy FP Full Body Controller -->
+          <article class="product" id="fp" aria-labelledby="fp-title">
+            <div class="product-main">
+              <div class="product-media">
+                <img src="assets/web/fp-features.jpg" width="1200" height="900" alt="Easy FP key art: the player's own arms and legs visible in first person while walking through a test level" loading="lazy" decoding="async">
+                <ul class="shots" aria-label="More screenshots">
+                  <li><a href="assets/web/fp-integrations.jpg"><img src="assets/web/fp-integrations.jpg" width="1200" height="900" alt="Setup Wizard steps 1 to 3: choose root, assign model, find bones (opens full size)" loading="lazy" decoding="async"></a></li>
+                  <li><a href="assets/web/fp-setup.jpg"><img src="assets/web/fp-setup.jpg" width="1200" height="900" alt="Setup Wizard steps 4 to 6: add scripts, set up helpers, connect systems (opens full size)" loading="lazy" decoding="async"></a></li>
+                </ul>
+              </div>
+              <div class="product-body">
+                <p class="product-status"><span class="badge badge--released">v1.6.0</span><span>Released 9 Oct 2026</span></p>
+                <h3 id="fp-title">Easy FP Full Body Controller</h3>
+                <p class="product-summary">True first person with a visible body. Look down and you see your legs; reach for a door and your hands do.</p>
+                <ul class="features">
+                  <li>Stable anchor camera with procedural hand, head and spine IK</li>
+                  <li>Ground-anchored foot planting and finger grips per item</li>
+                  <li>Item system with holster; FPCutter hides the head in first person but keeps its shadow</li>
+                  <li>7-step Setup Wizard, 3 demo scenes and ready-made prefabs</li>
+                  <li>Optional health and heart-rate stamina; FishNet and PurrNet add-ons for 2–4 player co-op</li>
+                </ul>
+                <dl class="specs">
+                  <div><dt>Price</dt><dd>€36.79</dd></div>
+                  <div><dt>Unity</dt><dd>6000.5+</dd></div>
+                  <div><dt>Pipeline</dt><dd>URP</dd></div>
+                  <div><dt>Download</dt><dd>194.7 MB</dd></div>
+                  <div><dt>Version</dt><dd>1.6.0</dd></div>
+                  <div><dt>Released</dt><dd>2026-10-09</dd></div>
+                </dl>
+                <div class="product-actions">
+                  <a class="button button--primary" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">
+                    View on Asset Store
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="sr-only">(opens in a new tab)</span>
+                  </a>
+                  <a class="button button--ghost" href="docs/overview.html">Docs</a>
+                  <a class="button button--quiet" href="docs/quick-start.html">Quick start</a>
+                </div>
+              </div>
+            </div>
+            <div class="whats-new">
+              <h4>New in 1.6.0 <small>9 Oct 2026</small></h4>
+              <ul>
+                <li><a href="docs/fp-body-ik.html#foot-planting">Foot planting</a></li>
+                <li><a href="docs/fp-body-ik.html#fingers">Finger grips</a></li>
+                <li><a href="docs/fp-demos.html">Demo scenes and prefabs</a></li>
+                <li><a href="docs/purrnet.html">PurrNet co-op add-on</a></li>
+                <li><a href="docs/fp-vitals.html">Health and stamina</a></li>
+                <li class="changelog"><a href="docs/fp-changelog.html#v1-6-0">Full changelog</a></li>
               </ul>
             </div>
-            <figcaption class="plate-caption"><span>vedaloiv / Working approach</span><span>Principles</span></figcaption>
-          </div>
-        </figure>
+          </article>
+
+          <!-- Easy Dungeon Generator -->
+          <article class="product" id="dungeon" aria-labelledby="dungeon-title">
+            <div class="product-main">
+              <div class="product-media">
+                <img src="assets/web/dungen-editor.jpg" width="1200" height="675" alt="Room Designer window: painting floor tiles, doors and a stair opening on a grid" loading="lazy" decoding="async">
+                <ul class="shots" aria-label="More screenshots">
+                  <li><a href="assets/web/dungen-nodes.jpg"><img src="assets/web/dungen-nodes.jpg" width="1200" height="675" alt="Node graph connecting entrance, rooms and boss room (opens full size)" loading="lazy" decoding="async"></a></li>
+                  <li><a href="assets/web/dungen-features.jpg"><img src="assets/web/dungen-features.jpg" width="1200" height="800" alt="Feature overview: node-based design, room editor and multi-floor support (opens full size)" loading="lazy" decoding="async"></a></li>
+                </ul>
+              </div>
+              <div class="product-body">
+                <p class="product-status"><span class="badge badge--released">v1.1.0</span><span>Released 8 Oct 2026</span></p>
+                <h3 id="dungeon-title">Easy Dungeon Generator</h3>
+                <p class="product-summary">Paint the rooms, connect them in a graph, press generate. Works for hand-tuned dungeons and endless backrooms alike.</p>
+                <ul class="features">
+                  <li>Room Designer: paint floors, doors, stairs and holes</li>
+                  <li>Node-based templates and seeded random generation</li>
+                  <li>Multiple floors and infinite chunk streaming</li>
+                  <li>Rule-based decoration, portal culling and runtime NavMesh</li>
+                  <li>4 demo scenes</li>
+                </ul>
+                <dl class="specs">
+                  <div><dt>Price</dt><dd>€33.11</dd></div>
+                  <div><dt>Unity</dt><dd>6000.5+</dd></div>
+                  <div><dt>Pipeline</dt><dd>Built-in, URP, HDRP</dd></div>
+                  <div><dt>Download</dt><dd>1.1 MB</dd></div>
+                  <div><dt>Version</dt><dd>1.1.0</dd></div>
+                  <div><dt>Released</dt><dd>2026-10-08</dd></div>
+                </dl>
+                <div class="product-actions">
+                  <a class="button button--primary" href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">
+                    View on Asset Store
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="sr-only">(opens in a new tab)</span>
+                  </a>
+                  <a class="button button--ghost" href="docs/dungeon-generator.html">Docs</a>
+                  <a class="button button--quiet" href="docs/dungeon-quick-start.html">Quick start</a>
+                </div>
+              </div>
+            </div>
+            <div class="whats-new">
+              <h4>New in 1.1.0 <small>8 Oct 2026</small></h4>
+              <ul>
+                <li><a href="docs/dungeon-changelog.html#v1-1-0-walls">Wall mode and double-sided walls</a></li>
+                <li><a href="docs/dungeon-room-designer.html#room-doors">Room doors</a></li>
+                <li><a href="docs/dungeon-room-designer.html#room-prefab-manager">Room Prefab Manager</a></li>
+                <li><a href="docs/dungeon-demos.html">4 demo scenes</a></li>
+                <li class="changelog"><a href="docs/dungeon-changelog.html#v1-1-0">Full changelog</a></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Earshot -->
+          <article class="product" id="earshot" aria-labelledby="earshot-title">
+            <div class="product-main">
+              <div class="product-media">
+                <div class="product-art">
+                  <svg viewBox="0 0 400 300" role="img" aria-label="Diagram: the direct line from a sound source to the listener is blocked by a wall; the sound reaches the listener along a path around the wall's corner">
+                    <g class="ray-grid"><path d="M0 60H400M0 120H400M0 180H400M0 240H400M80 0V300M160 0V300M240 0V300M320 0V300"/></g>
+                    <rect class="ray-wall" x="186" y="92" width="26" height="208" rx="2"/>
+                    <path class="ray-blocked" d="M92 196 L186 204"/>
+                    <path class="ray-path" d="M92 196 L199 76 L312 214"/>
+                    <circle class="ray-wave" cx="92" cy="196" r="34"/>
+                    <circle class="ray-wave" cx="92" cy="196" r="58"/>
+                    <circle class="ray-wave" cx="92" cy="196" r="82"/>
+                    <circle class="ray-source" cx="92" cy="196" r="8"/>
+                    <circle class="ray-listener" cx="312" cy="214" r="13"/>
+                    <circle class="ray-listener-dot" cx="312" cy="214" r="4"/>
+                    <text class="ray-text" x="70" y="296">source</text>
+                    <text class="ray-text" x="288" y="250">listener</text>
+                    <text class="ray-text" x="218" y="70">around the corner</text>
+                  </svg>
+                </div>
+              </div>
+              <div class="product-body">
+                <p class="product-status"><span class="badge badge--dev">In development</span><span>No release date yet</span></p>
+                <h3 id="earshot-title">Earshot – Ray Traced Sound Occlusion, Reverb &amp; Pathing</h3>
+                <p class="tagline">Hear through walls. Hear around corners. No baking.</p>
+                <ul class="features">
+                  <li>Real-time occlusion: walls muffle sound instead of muting it</li>
+                  <li>Reverb that follows the room you are standing in</li>
+                  <li>Sound pathing through doors and around corners</li>
+                </ul>
+                <dl class="specs">
+                  <div><dt>Status</dt><dd>In development</dd></div>
+                  <div><dt>Unity</dt><dd>6.6+</dd></div>
+                  <div><dt>Pipeline</dt><dd>Any</dd></div>
+                  <div><dt>Optional</dt><dd>Steam Audio</dd></div>
+                  <div><dt>Price</dt><dd>Not set</dd></div>
+                  <div><dt>Store page</dt><dd>Not yet</dd></div>
+                </dl>
+                <div class="product-actions">
+                  <a class="button button--ghost" href="#kontakt">Ask about Earshot</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="section section--dark" id="kontakt" data-od-id="kontakt" aria-labelledby="contact-title">
-      <style>
-        #kontakt .contact-actions {
-          grid-column: 8 / -1;
-          display: flex;
-          flex-direction: column;
-          align-items: stretch;
-          gap: 0;
-          min-width: 0;
-          padding: 32px 24px 24px;
-          border: 1px solid var(--border);
-          background: color-mix(in oklch, var(--surface-raised) 86%, var(--surface) 14%);
-        }
-        #kontakt .contact-asset-cta {
-          padding-bottom: 24px;
-          border-bottom: 1px solid var(--border);
-        }
-        #kontakt .contact-form {
-          display: grid;
-          gap: 16px;
-          margin-top: 26px;
-          width: 100%;
-          padding: 0;
-          border: 0;
-          background: transparent;
-          grid-column: auto;
-        }
-        #kontakt .contact-form-title {
-          margin: 0;
-          color: var(--fg);
-          font-family: var(--font-display);
-          font-size: clamp(24px, 2.5vw, 32px);
-          font-weight: 700;
-          letter-spacing: -0.02em;
-          line-height: 1.1;
-        }
-        #kontakt .contact-form-grid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 16px;
-        }
-        #kontakt .form-field {
-          display: grid;
-          min-width: 0;
-          gap: 7px;
-        }
-        #kontakt .form-field--wide { grid-column: 1 / -1; }
-        #kontakt .form-label {
-          color: var(--fg);
-          font-family: var(--font-mono);
-          font-size: 11px;
-          letter-spacing: 0.08em;
-          line-height: 1.4;
-          text-transform: uppercase;
-        }
-        #kontakt .form-control {
-          width: 100%;
-          min-height: 48px;
-          padding: 11px 13px;
-          border: 1px solid var(--border);
-          border-radius: 4px;
-          background: color-mix(in oklch, var(--surface) 78%, var(--bg) 22%);
-          color: var(--fg);
-          font: inherit;
-          line-height: 1.4;
-        }
-        #kontakt textarea.form-control {
-          min-height: 132px;
-          resize: vertical;
-        }
-        #kontakt .form-control::placeholder {
-          color: var(--fg);
-          opacity: 0.72;
-        }
-        #kontakt .form-control:hover { border-color: var(--fg); }
-        #kontakt .form-control:focus-visible {
-          border-color: var(--focus);
-          outline: 3px solid var(--focus);
-          outline-offset: 3px;
-        }
-        #kontakt .form-control[aria-invalid="true"] { border-color: var(--orange); }
-        #kontakt .field-error {
-          min-height: 1.4em;
-          margin: 0;
-          color: var(--orange);
-          font-family: var(--font-mono);
-          font-size: 11px;
-          line-height: 1.4;
-        }
-        #kontakt .contact-submit {
-          width: 100%;
-          min-height: 52px;
-          padding: 12px 18px;
-          border: 1px solid var(--surface);
-          border-radius: 999px;
-          background: var(--surface);
-          color: var(--fg);
-          cursor: pointer;
-          font: inherit;
-          font-weight: 700;
-          line-height: 1.2;
-          transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
-        }
-        #kontakt .contact-submit:hover {
-          border-color: var(--fg);
-          background: color-mix(in oklch, var(--surface) 86%, var(--fg) 14%);
-          color: var(--fg);
-          transform: translateY(-2px);
-        }
-        #kontakt .contact-submit:active { transform: translateY(0); }
-        #kontakt .contact-submit:focus-visible {
-          outline: 3px solid var(--focus);
-          outline-offset: 4px;
-        }
-        #kontakt .contact-submit:disabled {
-          cursor: wait;
-          border-color: var(--border);
-          background: var(--surface-raised);
-          color: var(--fg);
-          transform: none;
-        }
-        #kontakt .contact-status {
-          min-height: 1.5em;
-          margin: 0;
-          color: var(--fg);
-          font-family: var(--font-mono);
-          font-size: 11px;
-          line-height: 1.5;
-        }
-        #kontakt .contact-status[data-state="success"] { color: var(--lime); }
-        #kontakt .contact-status[data-state="error"] { color: var(--orange); }
-        #kontakt .field-honeypot {
-          position: absolute;
-          left: -9999px;
-          width: 1px;
-          height: 1px;
-          padding: 0;
-          overflow: hidden;
-          clip-path: inset(50%);
-          white-space: nowrap;
-          border: 0;
-          opacity: 0;
-        }
-        @media (max-width: 900px) {
-          #kontakt .contact-actions { grid-column: 8 / -1; }
-          #kontakt .contact-form-grid { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 680px) {
-          #kontakt .contact-actions {
-            grid-column: auto;
-            margin-top: 32px;
-            padding: 24px;
-          }
-        }
-    
-    .asset-media { cursor: zoom-in; }
-    .asset-media img { user-select: none; -webkit-user-select: none; }
-    .asset-media--placeholder {
-      display: grid;
-      place-items: center;
-      cursor: default;
-      background:
-        repeating-linear-gradient(135deg, transparent 0 22px, color-mix(in oklch, var(--cyan) 10%, transparent) 22px 23px),
-        var(--surface-raised);
-    }
-    .asset-placeholder-label {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--fg);
-      opacity: 0.72;
-    }
+    <section class="section section--sunken" id="roadmap" aria-labelledby="roadmap-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="roadmap-title">Releases and what comes next</h2>
+          <p>Only what is shipped or actively being built. Dates appear once something is released.</p>
+        </div>
+        <ol class="timeline">
+          <li class="is-done">
+            <span class="timeline-when">2026-10-08</span>
+            <h3>Easy Dungeon Generator 1.1.0</h3>
+            <p>Wall mode, room doors, Room Prefab Manager and four demo scenes. <a href="docs/dungeon-changelog.html#v1-1-0">Changelog</a></p>
+          </li>
+          <li class="is-done">
+            <span class="timeline-when">2026-10-09</span>
+            <h3>Easy FP Full Body Controller 1.6.0</h3>
+            <p>Foot planting, finger grips, demo scenes, PurrNet co-op and vitals. <a href="docs/fp-changelog.html#v1-6-0">Changelog</a></p>
+          </li>
+          <li class="is-next">
+            <span class="timeline-when">Upcoming</span>
+            <h3>Easy FP Full Body Controller 1.7</h3>
+            <p>The next update. Details are published with the release notes.</p>
+          </li>
+          <li class="is-next">
+            <span class="timeline-when">In development</span>
+            <h3>Earshot</h3>
+            <p>Ray-traced sound occlusion, reverb and pathing. No price or release date yet.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
 
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: color-mix(in oklch, var(--bg) 86%, transparent);
-      padding: clamp(16px, 4vw, 48px);
-    }
-    .lightbox.is-open { display: flex; }
-    .lightbox[hidden] { display: none; }
-    .lightbox figure {
-      margin: 0;
-      max-width: min(1200px, 100%);
-      max-height: 100%;
-      display: grid;
-      gap: 12px;
-    }
-    .lightbox img {
-      max-width: 100%;
-      max-height: 82vh;
-      display: block;
-      margin-inline: auto;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
-      background: var(--surface-raised);
-    }
-    .lightbox figcaption {
-      color: var(--fg);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      text-align: center;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: clamp(12px, 3vw, 28px);
-      right: clamp(12px, 3vw, 28px);
-      min-width: 44px;
-      min-height: 44px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--surface);
-      color: var(--fg);
-      font-size: 18px;
-      line-height: 1;
-      cursor: pointer;
-    }
-    .lightbox-close:hover { background: var(--accent); color: var(--on-accent); }
-    .lightbox-close:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
-  </style>
+    <section class="section" id="ueber-mich" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <div class="about-copy">
+          <h2 id="about-title">One developer, built around the workflow.</h2>
+          <p>I build Unity tools that lower the barrier to entry and stay out of the way in daily use. The interesting problems are the small frictions: a click too many, a body that disappears in first person, documentation that doesn't help the first time you open it.</p>
+          <p>So every tool gets a guided setup, demo scenes to learn from, and docs checked against the shipped source.</p>
+        </div>
+        <ul class="principles" aria-label="Working principles">
+          <li><strong>Guided setup</strong><span>Wizards and sensible defaults get you to a working scene quickly.</span></li>
+          <li><strong>Docs checked against source</strong><span>Every documented option exists in the shipped package.</span></li>
+          <li><strong>One asset, one manual</strong><span>Per-asset docs with quick starts, demos and changelogs.</span></li>
+          <li><strong>Real products only</strong><span>No invented numbers, no promised features.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--sunken" id="kontakt" aria-labelledby="contact-title">
       <div class="container contact-grid">
         <div class="contact-copy">
-          <span class="section-kicker">Contact / Asset Store</span>
-          <h2 id="contact-title" data-od-id="contact-heading">Ready for your first import?</h2>
-          <p>Easy FP Full Body Controller is available as a paid asset in the Asset Store. To get started, Overview, Quick Start and Interfaces / API are ready — for questions you can reach vedaloiv directly.</p>
+          <h2 id="contact-title">Questions before or after buying?</h2>
+          <p>Setup trouble, a bug, a feature request or a question about Earshot: write directly. Messages go straight to the developer.</p>
+          <p>Support email<br><a class="support-mail" href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></p>
+          <ul class="contact-links">
+            <li><a href="docs/fp-troubleshooting.html">FP controller troubleshooting</a></li>
+            <li><a href="docs/dungeon-troubleshooting.html">Dungeon Generator troubleshooting</a></li>
+          </ul>
         </div>
-        <div class="contact-actions">
-          <div class="contact-asset-cta">
-            <a class="button button--primary" data-od-id="contact-cta" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noreferrer">Go to Asset Store <span aria-hidden="true">→</span></a>
-          </div>
-          <form class="contact-form" id="contact-form" data-od-id="contact-form" action="https://formsubmit.co/karakask2004@gmail.com" method="POST" novalidate aria-labelledby="contact-form-title">
-            <h3 class="contact-form-title" id="contact-form-title">Write directly</h3>
-            <input class="field-honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <input type="hidden" name="_subject" value="New message from vedaloiv publisher page">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_next" value="https://vedaloiv.wasmer.app/unity-asset-portfolio.html">
-            <div class="contact-form-grid">
-              <div class="form-field">
-                <label class="form-label" for="contact-name">Name</label>
-                <input class="form-control" id="contact-name" data-od-id="field-name" type="text" name="name" placeholder="Your name" autocomplete="name" required aria-describedby="error-name">
-                <p class="field-error" id="error-name" aria-live="polite" hidden></p>
-              </div>
-              <div class="form-field">
-                <label class="form-label" for="contact-email">Email</label>
-                <input class="form-control" id="contact-email" data-od-id="field-email" type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-describedby="error-email">
-                <p class="field-error" id="error-email" aria-live="polite" hidden></p>
-              </div>
-              <div class="form-field form-field--wide">
-                <label class="form-label" for="contact-subject">Subject</label>
-                <input class="form-control" id="contact-subject" data-od-id="field-subject" type="text" name="subject" placeholder="Message subject" maxlength="140" required aria-describedby="error-subject">
-                <p class="field-error" id="error-subject" aria-live="polite" hidden></p>
-              </div>
-              <div class="form-field form-field--wide">
-                <label class="form-label" for="contact-message">Message</label>
-                <textarea class="form-control" id="contact-message" data-od-id="field-message" name="message" rows="4" placeholder="Your message" maxlength="5000" required aria-describedby="error-message"></textarea>
-                <p class="field-error" id="error-message" aria-live="polite" hidden></p>
-              </div>
+        <form class="contact-form" id="contact-form" action="https://formsubmit.co/karakask2004@gmail.com" method="POST" novalidate aria-labelledby="contact-form-title">
+          <h3 class="contact-form-title" id="contact-form-title">Send a message</h3>
+          <input class="field-honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="_subject" value="New message from vedaloiv publisher page">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://vedaloiv.wasmer.app/unity-asset-portfolio.html">
+          <div class="contact-form-grid">
+            <div class="form-field">
+              <label class="form-label" for="contact-name">Name</label>
+              <input class="form-control" id="contact-name" type="text" name="name" placeholder="Your name" autocomplete="name" required aria-describedby="error-name">
+              <p class="field-error" id="error-name" aria-live="polite" hidden></p>
             </div>
-            <button class="contact-submit" type="submit" data-od-id="contact-submit">Send message</button>
-            <p class="contact-status" data-contact-status data-state="idle" role="status" aria-live="polite">Ready for your message.</p>
-          </form>
-        </div>
+            <div class="form-field">
+              <label class="form-label" for="contact-email">Email</label>
+              <input class="form-control" id="contact-email" type="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-describedby="error-email">
+              <p class="field-error" id="error-email" aria-live="polite" hidden></p>
+            </div>
+            <div class="form-field form-field--wide">
+              <label class="form-label" for="contact-subject">Subject</label>
+              <input class="form-control" id="contact-subject" type="text" name="subject" placeholder="What is it about?" maxlength="140" required aria-describedby="error-subject">
+              <p class="field-error" id="error-subject" aria-live="polite" hidden></p>
+            </div>
+            <div class="form-field form-field--wide">
+              <label class="form-label" for="contact-message">Message</label>
+              <textarea class="form-control" id="contact-message" name="message" rows="5" placeholder="Unity version, asset version and what you tried help a lot." maxlength="5000" required aria-describedby="error-message"></textarea>
+              <p class="field-error" id="error-message" aria-live="polite" hidden></p>
+            </div>
+          </div>
+          <button class="contact-submit" type="submit" data-od-id="contact-submit">Send message</button>
+          <p class="contact-status" data-contact-status data-state="idle" role="status" aria-live="polite">Ready for your message.</p>
+        </form>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer" id="footer">
-    <div class="container footer-wrap">
-      <p class="footer-meta">vedaloiv / UNITY ASSET STORE PUBLISHER<br>Easy FP Full Body Controller · v1.6.0 · Easy Dungeon Generator · Earshot (in development)<br>© 2026 vedaloiv</p>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="#galerie">Gallery</a>
-        <a href="#assets">Collection</a>
-        <a href="#ueber-mich">About</a>
-        <a href="docs/overview.html">Overview</a>
-        <a href="https://github.com/MaansenV" target="_blank" rel="noreferrer">GitHub</a>
-        <a href="mailto:karakask2004@gmail.com">Email</a>
-      </nav>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand-name">vedaloiv</span>
+          <p>Unity tools with guided setup and real documentation.</p>
+          <p>Support: <a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></p>
+        </div>
+        <nav aria-labelledby="footer-docs">
+          <h2 id="footer-docs">Docs</h2>
+          <ul>
+            <li><a href="docs/index.html">All documentation</a></li>
+            <li><a href="docs/quick-start.html">FP quick start</a></li>
+            <li><a href="docs/dungeon-quick-start.html">Dungeon quick start</a></li>
+            <li><a href="docs/fp-changelog.html">FP changelog</a></li>
+            <li><a href="docs/dungeon-changelog.html">Dungeon changelog</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="footer-store">
+          <h2 id="footer-store">Asset Store</h2>
+          <ul>
+            <li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<span class="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<span class="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href="#kontakt">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="footer-copy">© 2026 vedaloiv</p>
     </div>
   </footer>
 
-  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview" hidden id="lightbox" data-od-id="image-lightbox">
-    <button type="button" class="lightbox-close" aria-label="Close image preview" id="lightbox-close" data-od-id="lightbox-close">&times;</button>
-    <figure>
-      <img alt="" id="lightbox-img" data-od-id="lightbox-image">
-      <figcaption id="lightbox-caption" data-od-id="lightbox-caption"></figcaption>
-    </figure>
-  </div>
-
   <script>
+    document.body.classList.remove("no-js");
+
+    // Mobile navigation disclosure.
     (() => {
-      const storageKey = "unity-asset-portfolio-filter";
-      const buttons = [...document.querySelectorAll("[data-filter]")];
-      const cards = [...document.querySelectorAll("[data-category]")];
-      const status = document.querySelector("[data-filter-status]");
-      const validFilters = new Set(buttons.map((button) => button.dataset.filter));
-
-      function readFilter() {
-        try { return localStorage.getItem(storageKey); } catch { return null; }
-      }
-
-      function writeFilter(filter) {
-        try { localStorage.setItem(storageKey, filter); } catch { /* private browsing */ }
-      }
-
-      function applyFilter(requestedFilter) {
-        const filter = validFilters.has(requestedFilter) ? requestedFilter : "Alle";
-        let visible = 0;
-        buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.filter === filter)));
-        cards.forEach((card) => {
-          const matches = filter === "Alle" || card.dataset.category === filter;
-          card.hidden = !matches;
-          if (matches) visible += 1;
-        });
-        status.textContent = `${visible} ${visible === 1 ? "asset" : "assets"} visible`;
-        writeFilter(filter);
-      }
-
-      buttons.forEach((button) => button.addEventListener("click", () => applyFilter(button.dataset.filter)));
-      applyFilter(readFilter() || "Alle");
-      console.assert(buttons.length > 0 && cards.length > 0 && status, "Asset filter is not fully wired.");
+      const toggle = document.querySelector(".nav-toggle");
+      const nav = document.getElementById("main-nav");
+      if (!toggle || !nav) return;
+      const setOpen = (open) => {
+        toggle.setAttribute("aria-expanded", String(open));
+        nav.classList.toggle("is-open", open);
+      };
+      toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+      nav.addEventListener("click", (event) => { if (event.target.closest("a")) setOpen(false); });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") { setOpen(false); toggle.focus(); }
+      });
+      matchMedia("(min-width: 761px)").addEventListener("change", (event) => { if (event.matches) setOpen(false); });
     })();
 
     (() => {
       const form = document.getElementById("contact-form");
       if (!form) return;
       const status = form.querySelector("[data-contact-status]");
-      const submit = form.querySelector('[data-od-id="contact-submit"]');
-      const honeypot = form.querySelector(".field-honeypot");
       const fields = [
         { input: form.querySelector('[name="name"]'), error: form.querySelector("#error-name") },
         { input: form.querySelector('[name="email"]'), error: form.querySelector("#error-email"), email: true },
@@ -1315,7 +815,6 @@
       function setStatus(message, state) {
         status.textContent = message;
         status.dataset.state = state;
-
       }
 
       function setFieldError(field, message) {
@@ -1351,42 +850,6 @@
           return;
         }
         setStatus("Sending message...", "idle");
-      });
-    })();
-
-    // Image lightbox: zoom any product image into a fullscreen preview.
-    (function () {
-      var lightbox = document.getElementById("lightbox");
-      var lightboxImg = document.getElementById("lightbox-img");
-      var lightboxCaption = document.getElementById("lightbox-caption");
-      var lightboxClose = document.getElementById("lightbox-close");
-      if (!lightbox || !lightboxImg || !lightboxClose) return;
-      function openLightbox(img) {
-        lightboxImg.src = img.currentSrc || img.src;
-        lightboxImg.alt = img.alt || "";
-        lightboxCaption.textContent = img.alt || "";
-        lightbox.hidden = false;
-        lightboxClose.focus();
-        document.body.style.overflow = "hidden";
-      }
-      function closeLightbox() {
-        lightbox.hidden = true;
-        document.body.style.overflow = "";
-        lightboxImg.removeAttribute("src");
-      }
-      document.querySelectorAll(".asset-media img").forEach(function (img) {
-        img.addEventListener("click", function (e) {
-          e.stopPropagation();
-          e.preventDefault();
-          openLightbox(img);
-        });
-      });
-      lightboxClose.addEventListener("click", closeLightbox);
-      lightbox.addEventListener("click", function (e) {
-        if (e.target === lightbox) closeLightbox();
-      });
-      document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") closeLightbox();
       });
     })();
   </script>
