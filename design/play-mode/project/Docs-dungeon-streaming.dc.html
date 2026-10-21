@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chunk Streaming — Easy Dungeon Generator docs</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Rubik:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0A0B0D}
+a{color:#F2F1EC}a:hover{color:#F4E04D}
+:focus-visible{outline:3px solid #F4E04D;outline-offset:3px}
+.menu-btn{display:none}
+@media (max-width: 1100px){.toc{display:none}}
+@media (max-width: 860px){.sidebar{display:none !important}.menu-btn{display:inline-flex !important}.hide-sm{display:none !important}main{padding:24px 16px 72px !important}}
+.nav a{transition:background .15s,color .15s}
+.nav a:hover{background:#16181C;color:#F2F1EC}
+.nav a.on:hover{background:#3A1520}
+.btn{transition:transform .18s ease,box-shadow .18s ease}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 #F2F1EC}
+.pn,.prose .card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s}
+.pn:hover,.prose .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 #FF4F7B;border-color:#FF4F7B;color:#F2F1EC}
+.line{display:block;overflow:hidden;padding-bottom:0.04em}
+.rise{display:block;animation:rise .9s cubic-bezier(.16,1,.3,1) both}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.read{position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:#FF4F7B;transform-origin:left;transform:scaleX(.2)}
+@supports (animation-timeline: scroll()){.read{transform:scaleX(0);animation:grow linear both;animation-timeline:scroll(root)}}
+@keyframes grow{to{transform:scaleX(1)}}
+.prose{display:flex;flex-direction:column;gap:18px;font-size:17px;line-height:1.7;color:#C9CCD1}
+.prose>*{margin:0}
+.prose h2{margin-top:22px;font-size:26px;font-weight:700;line-height:1.25;color:#F2F1EC;scroll-margin-top:90px}
+.prose h3{margin:6px 0 0;font-size:19px;font-weight:700;line-height:1.3;color:#F2F1EC;scroll-margin-top:90px}
+.prose p{margin:0}
+.prose p.lead{font-size:19px;color:#D9DBDF}
+.prose strong{color:#F2F1EC;font-weight:600}
+.prose a{color:#FF7A9A}
+.prose a:hover{color:#F4E04D}
+.prose code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:#1A1D22;color:#F4E04D;padding:1px 6px}
+.prose pre{margin:0;background:#050607;border:1px solid #2E3137;padding:14px 18px;overflow-x:auto;font-size:14px;line-height:1.6}
+.prose pre code{background:none;padding:0;color:#E5E6E2;font-size:14px}
+.prose :not(pre)>code{overflow-wrap:anywhere}
+.prose td,.prose dd,.prose li,.prose p,.prose h2,.prose h3,.prose summary{overflow-wrap:anywhere}
+.prose kbd{font-family:'JetBrains Mono',monospace;font-size:.8em;border:1px solid #3A3E46;border-bottom-width:2px;padding:0 6px;color:#F2F1EC;background:#121418}
+.prose .menu{font-weight:600;color:#F2F1EC}
+.prose ul,.prose ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.prose li>ul,.prose li>ol{margin-top:6px}
+.prose ol.steps{list-style:none;padding:0;gap:0;border:1px solid #2E3137;counter-reset:s}
+.prose ol.steps>li{counter-increment:s;position:relative;padding:14px 18px 14px 62px;border-bottom:1px solid #24272D}
+.prose ol.steps>li:last-child{border-bottom:0}
+.prose ol.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:20px;top:16px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#FF7A9A}
+.prose dl{margin:0}
+.prose dl.props{border-top:1px solid #2E3137}
+.prose dl.props dt{padding-top:14px;color:#F2F1EC;line-height:1.9}
+.prose dt .type,.prose dt .default{margin-left:6px}
+.prose dl.props dd{margin:4px 0 0;padding-bottom:14px;border-bottom:1px solid #24272D;font-size:15px;line-height:1.6}
+.prose dt code{font-size:14px;font-weight:600;background:none;color:#F2F1EC;padding:0}
+.prose .type{font-family:'JetBrains Mono',monospace;font-size:12px;color:#4FF0D2}
+.prose .default{font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid #3A3E46;color:#9BA0A8;padding:0 6px}
+.prose .callout{padding:14px 18px;color:#E5E6E2;display:flex;flex-direction:column;gap:6px}
+.prose .callout>*{margin:0}
+.prose .callout-title{display:block;font-weight:700}
+.prose .callout.warn{background:#F4E04D;color:#0A0B0D}
+.prose .callout.warn strong,.prose .callout.warn a{color:#0A0B0D}
+.prose .callout.warn a{font-weight:700}
+.prose .callout.warn code{background:#0A0B0D;color:#F4E04D}
+.prose .callout.note{border:1px solid #FF4F7B;background:#24101A}
+.prose .callout.note .callout-title{color:#FF7A9A}
+.prose .callout.tip{border:1px solid #3DDC97;background:#0D2219}
+.prose .callout.tip .callout-title{color:#3DDC97}
+.prose .badge{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#FF4F7B;color:#0A0B0D;padding:1px 7px;vertical-align:middle}
+.prose .badge.breaking{background:#FF4F7B;color:#0A0B0D}
+.prose .tbl{border:1px solid #2E3137;overflow-x:auto}
+.prose table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.55}
+.prose th{background:#121418;text-align:left;vertical-align:bottom;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#9BA0A8;padding:10px 14px;border-bottom:1px solid #3A3E46}
+.prose td{padding:10px 14px;border-bottom:1px solid #24272D;vertical-align:top}
+.prose tbody tr:last-child td{border-bottom:0}
+.prose tbody tr{transition:background .15s}
+.prose tbody tr:hover{background:#121418}
+.prose figure{margin:0;border:1px solid #2E3137;background:#050607}
+.prose figure img{display:block;max-width:100%;height:auto;margin:0 auto}
+.prose figcaption{padding:10px 14px;border-top:1px solid #2E3137;font-size:14px;color:#9BA0A8}
+.prose .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.prose .card{border:1px solid #2E3137;background:#121418;padding:14px 16px;text-decoration:none;display:flex;flex-direction:column;gap:2px;color:#F2F1EC}
+.prose .card span{font-size:14px;color:#B9BDC4;line-height:1.5}
+.prose details{border-top:1px solid #2E3137;border-bottom:1px solid #2E3137}
+.prose summary{cursor:pointer;padding:14px 4px;font-weight:600;color:#F2F1EC}
+.prose summary:hover{color:#F4E04D}
+.prose .vid{position:relative;display:block;aspect-ratio:16/9;border:1px solid #2E3137;background:#050607;overflow:hidden}
+.prose .vid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.75}
+.prose .vid-play{position:absolute;left:50%;top:50%;width:80px;height:80px;margin:-40px 0 0 -40px;background:#F4E04D;display:flex;align-items:center;justify-content:center;box-shadow:6px 6px 0 #000;transition:transform .18s}
+.prose .vid:hover .vid-play{transform:scale(1.08)}
+.prose .key{border:1px solid #2E3137}
+.prose .key img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:left center}
+.prose .vid-note{position:absolute;left:12px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#F2F1EC;background:rgba(5,6,7,.8);padding:2px 8px}
+.prose.changelog{gap:0}
+.prose.changelog>*:not(section){margin-bottom:18px}
+.prose .rel{position:relative;margin-left:7px;padding:0 0 36px 34px;border-left:2px solid #2E3137;display:flex;flex-direction:column;gap:14px}
+.prose .rel>*{margin:0}
+.prose .rel h2{margin:0;font-family:'Anton','Impact',sans-serif;font-weight:400;font-size:38px;line-height:1;position:relative}
+.prose .rel h2::before{content:"";position:absolute;left:-42px;top:10px;width:14px;height:14px;box-sizing:border-box;border:2px solid #FF4F7B;background:#0A0B0D}
+.prose .rel-latest h2::before{background:#FF4F7B;animation:pulse 2s ease-out infinite}
+.prose .rel h2 .badge{font-family:'JetBrains Mono',monospace;font-size:12px;margin-left:10px;position:relative;top:-6px}
+.prose .rel>p:first-of-type{font-family:'JetBrains Mono',monospace;font-size:13px;color:#9BA0A8;margin-top:-6px}
+.prose h3.chg{align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid;padding:0 8px;line-height:1.7;margin-top:6px}
+.prose h3.chg-added{color:#3DDC97}.prose h3.chg-changed{color:#FF7A9A}.prose h3.chg-fixed{color:#4FF0D2}.prose h3.chg-removed{color:#FF7A9A}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #FF4F7Baa}100%{box-shadow:0 0 0 10px #FF4F7B00}}
+.prose .lvl{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;padding:1px 7px;white-space:nowrap}
+.prose .lvl-error{background:#FF4F7B;color:#0A0B0D}
+.prose .lvl-warning{border:1px solid #F4E04D;color:#F4E04D}
+.prose .lvl-info{border:1px solid #8DA2FF;color:#8DA2FF}
+.prose .lvl-filter{display:flex;flex-wrap:wrap;gap:8px}
+.prose .lvl-filter input{position:absolute;opacity:0;width:1px;height:1px}
+.prose .lvl-filter label{min-height:40px;display:inline-flex;align-items:center;padding:0 14px;font-size:14px;font-weight:600;border:1px solid #3A3E46;cursor:pointer;color:#F2F1EC}
+.prose .lvl-filter label:hover{border-color:#F2F1EC}
+.prose .lvl-filter input:checked+label{background:#F4E04D;border-color:#F4E04D;color:#0A0B0D}
+.prose .lvl-filter input:focus-visible+label{outline:3px solid #F4E04D;outline-offset:3px}
+.prose:has(#lvl-error:checked) tr[data-level]:not([data-level="error"]),.prose:has(#lvl-warning:checked) tr[data-level]:not([data-level="warning"]),.prose:has(#lvl-info:checked) tr[data-level]:not([data-level="info"]){display:none}
+.still *{animation:none !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="background: #0A0B0D; color: #F2F1EC; font-family: 'Rubik', system-ui, sans-serif; font-size: 17px; line-height: 1.7; min-width: 0">
+
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(10, 11, 13, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #24272D">
+<div style="height: 64px; padding: 0 20px; display: flex; align-items: center; gap: 20px; position: relative">
+<a href="DocsMobileMenu.dc.html" class="menu-btn" aria-label="Open documentation menu" style="align-items: center; gap: 8px; height: 44px; padding: 0 12px; border: 1px solid #3A3E46; color: #F2F1EC; font-size: 15px; text-decoration: none">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>Menu
+</a>
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<span aria-hidden="true" style="width: 22px; height: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px">
+<span style="background: #3A5BFF"></span><span style="background: #FF4F7B"></span><span style="background: #2DE2C0"></span><span style="background: #F4E04D"></span>
+</span>
+<span style="font-weight: 700; font-size: 19px">vedaloiv</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F4E04D">docs</span>
+</a>
+<nav aria-label="Site" class="hide-sm" style="display: flex; gap: 2px">
+<a href="Main.dc.html" style="text-decoration: none; padding: 8px 12px; font-size: 15px; color: #C9CCD1">Home</a>
+<a href="DocsHub.dc.html" style="text-decoration: none; padding: 8px 12px; font-size: 15px; color: #C9CCD1">All docs</a>
+</nav>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 10px">
+<a href="DocsSearch.dc.html" aria-label="Search the documentation" style="display: flex; align-items: center; gap: 10px; height: 42px; min-width: 44px; box-sizing: border-box; padding: 0 12px; background: #121418; border: 1px solid #2E3137; color: #9BA0A8; font-size: 15px; text-decoration: none">
+<svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<span class="hide-sm" style="min-width: 160px">Search docs</span>
+<span class="hide-sm" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; border: 1px solid #3A3E46; padding: 0 6px">Ctrl K</span>
+</a>
+<a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" class="btn hide-sm" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px; background: #F4E04D; color: #0A0B0D; text-decoration: none; font-weight: 700; font-size: 14px">Asset Store
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</a>
+</div>
+<span aria-hidden="true" class="read"></span>
+</div>
+</header>
+
+<div style="display: flex; align-items: flex-start">
+
+<aside class="sidebar" aria-label="Documentation" style="flex: 0 0 280px; box-sizing: border-box; position: sticky; top: 64px; max-height: calc(100vh - 64px); overflow-y: auto; padding: 20px 14px 40px 20px; border-right: 1px solid #24272D; font-size: 15px; line-height: 1.4">
+<nav class="nav" aria-label="Documentation pages" style="display: flex; flex-direction: column; gap: 22px">
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 10px; text-decoration: none; color: #C9CCD1; border: 1px solid #2E3137">
+<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 11l8-7 8 7v9H4z"></path></svg>Docs home</a>
+<section style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; border-bottom: 2px solid #3A5BFF; margin-bottom: 6px">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #3A5BFF; flex: 0 0 10px"></span>
+<span style="font-weight: 700; font-size: 15px; flex: 1 1 auto">Easy FP Full Body Controller</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8DA2FF">v1.6.0</span>
+</div>
+<a href="DocsOverview.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="Docs.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Quick Start</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-fp-setup-wizard.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Setup Wizard</a>
+<a href="Docs-fp-items.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Items</a>
+<a href="Docs-fp-body-ik.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Body IK</a>
+<a href="Docs-fp-fpcutter.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">FPCutter</a>
+<a href="Docs-fp-vitals.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Vitals &amp; Stamina</a>
+<a href="Docs-fp-demos.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Demos</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Multiplayer</span>
+<a href="Docs-fishnet.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">FishNet</a>
+<a href="Docs-purrnet.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">PurrNet</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="Docs-interfaces.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Interfaces</a>
+<a href="DocsTroubleshooting.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Troubleshooting</a>
+<a href="DocsChangelog.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Changelog</a>
+<a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" style="padding: 7px 10px; text-decoration: none; color: #8DA2FF; font-size: 14px">Asset Store page ↗</a>
+</section>
+<section style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; border-bottom: 2px solid #FF4F7B; margin-bottom: 6px">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #FF4F7B; flex: 0 0 10px"></span>
+<span style="font-weight: 700; font-size: 15px; flex: 1 1 auto">Easy Dungeon Generator</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FF7A9A">v1.1.0</span>
+</div>
+<a href="Docs-dungeon-generator.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="Docs-dungeon-quick-start.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Quick Start</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-dungeon-room-designer.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Room Designer</a>
+<a href="Docs-dungeon-templates.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Templates &amp; Generation</a>
+<a href="Docs-dungeon-decoration.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Decoration &amp; Themes</a>
+<a href="Docs-dungeon-streaming.dc.html" class="on" aria-current="page" style="padding: 7px 10px; text-decoration: none; color: #FFFFFF; font-weight: 600; background: #3A1520; box-shadow: inset 3px 0 0 #FF4F7B">Chunk Streaming</a>
+<a href="Docs-dungeon-culling-navmesh.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Culling &amp; NavMesh</a>
+<a href="Docs-dungeon-demos.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Demo Scenes</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="DocsApi.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">API Reference</a>
+<a href="Docs-dungeon-troubleshooting.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Troubleshooting</a>
+<a href="Docs-dungeon-changelog.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Changelog</a>
+<a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" style="padding: 7px 10px; text-decoration: none; color: #FF7A9A; font-size: 14px">Asset Store page ↗</a>
+</section>
+</nav>
+</aside>
+
+<main id="content" style="flex: 1 1 auto; min-width: 0; padding: 36px 40px 96px; display: flex; gap: 56px; justify-content: center">
+<article style="flex: 0 1 840px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<nav aria-label="Breadcrumb" style="font-size: 14px; color: #9BA0A8">
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px">
+<li><a href="DocsHub.dc.html" style="color: #B9BDC4">Docs</a></li><li aria-hidden="true">›</li><li><a href="Docs-dungeon-generator.dc.html" style="color: #B9BDC4">Easy Dungeon Generator</a></li><li aria-hidden="true">›</li><li><span aria-current="page" style="color: #F2F1EC">Chunk Streaming</span></li>
+</ol>
+</nav>
+<header style="display: flex; flex-direction: column; gap: 14px; padding-bottom: 24px; border-bottom: 1px solid #2E3137">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #FF7A9A">Guide</span>
+<h1 style="margin: 0; font-family: 'Anton', 'Impact', sans-serif; font-weight: 400; font-size: clamp(2.8rem, 5vw, 4.4rem); line-height: 0.95; text-transform: uppercase"><span class="line"><span class="rise">Chunk Streaming</span></span></h1>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C9CCD1">
+<span style="border: 1px solid #FF4F7B; color: #FF7A9A; padding: 2px 8px">Documentation for v1.1.0</span>
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">Unity 6000.5.0+</span>
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">namespace DungeonGen</span>
+</div>
+</header>
+
+<div class="prose ">
+
+
+<p class="lead"><strong>ChunkDungeonStreamer</strong> builds an endless dungeon in chunks. It plans the chunks around the player, builds the nearby ones, and removes or reuses the ones the player leaves behind. Use it for open-ended worlds; use <code>DungeonManager</code> when you want a fixed, authored structure.</p>
+
+<h2 id="set-up">Set up a streamed world</h2>
+<ol class="steps">
+  <li>
+    <p>Open <span class="menu">Tools › DungeonGen › Dungeon Setup</span> and click <strong>Create Infinite Dungeon</strong>. This adds a <code>ChunkDungeonStreamer</code> to the scene.</p>
+  </li>
+  <li>
+    <p>Assign the player. Set <strong>Player</strong> to the player's transform, or set <strong>Player Prefab</strong> so the streamer spawns the player in the entry room of the start chunk. Use one of the two.</p>
+  </li>
+  <li>
+    <p>Assign the <strong>Corridor Prefab</strong>. It must be a 1 × 1 corridor module from the Room Designer with exactly one <code>DoorSocket</code> on each of the four sides. There is no built-in fallback corridor.</p>
+  </li>
+  <li>
+    <p>Set the entry rooms. Either add prefabs to <strong>Entry Prefabs</strong>, or turn <strong>Use Dedicated Entry</strong> off to use pool-only mode, where the first room of each chunk comes from the room pool.</p>
+  </li>
+  <li>
+    <p>Add rooms to <strong>Room Pool Prefabs</strong>. Each room must have a <code>DoorSocket</code> on every cardinal side. Different room sizes are allowed.</p>
+  </li>
+  <li>
+    <p>Set <strong>Cell Size (m)</strong> to the tile size of the rooms. It must match the Room Designer grid.</p>
+  </li>
+  <li>
+    <p>Set <strong>Chunk Size (Cells)</strong> to at least the measured minimum. Once rooms are assigned, the inspector shows the minimum and the recommended value. See <a href="#chunk-size">Chunk size</a>.</p>
+    <figure>
+      <img src="/_blob/42bfe4ed1862c42573bd3a289b7aa634" alt="Chunk Dungeon Streamer Inspector in Setup mode, with empty Player and Player Prefab fields, Use Dedicated Entry on, empty Entry Prefabs and Corridor Prefab fields, Min. Rooms and Max. Rooms set to 4, and Chunk Size set to 24.">
+      <figcaption>Setup mode: player, rooms, and corridor, with the chunk size below.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <p>Click <strong>Generate</strong> in the inspector. The world builds around the player. Use <strong>Recenter</strong> to move the streamed area to the player's current chunk, <strong>Rebuild</strong> to build it again, and <strong>Clear World</strong> to remove it.</p>
+  </li>
+</ol>
+
+<aside class="callout warn">
+  <strong class="callout-title">The corridor is required</strong>
+  <p>Without a valid corridor prefab, initialization fails. The Console names the missing sides of its <code>DoorSocket</code>s.</p>
+</aside>
+
+<h2 id="chunk-size">Chunk size</h2>
+<p>The chunk size must be big enough for the largest room to fit with its corridors:</p>
+<dl class="props">
+  <dt><code>ChunkSizeMinimum</code> <span class="type">cells</span></dt>
+  <dd>Three times the largest room side, plus twice the safety margin. Below this value the streamer refuses to start.</dd>
+  <dt><code>ChunkSizeRecommended</code> <span class="type">cells</span></dt>
+  <dd>The minimum plus 2. The extra cells keep corridors away from the chunk border.</dd>
+</dl>
+<p>Below the minimum, initialization fails with an error. Between the minimum and the recommended size, it logs a warning and continues, and corridors may feel cramped at the chunk border.</p>
+<p>Both values are available from code as <code>ChunkDungeonStreamer.ChunkSizeMinimum(width, height, safetyMarginCells)</code> and <code>ChunkSizeRecommended(...)</code>.</p>
+
+<h2 id="settings">Settings</h2>
+<h3 id="settings-rooms">Rooms</h3>
+<dl class="props">
+  <dt><code>useDedicatedEntry</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Uses the entry prefabs as the first room of every chunk. Off = pool-only mode.</dd>
+  <dt><code>entryPrefabs</code> <span class="type">list</span></dt>
+  <dd>Entry rooms. Each chunk picks one with its chunk seed.</dd>
+  <dt><code>corridorPrefab</code> <span class="type">GameObject</span> <span class="default">required</span></dt>
+  <dd>The 1 × 1 corridor module that joins rooms.</dd>
+  <dt><code>roomPrefabs</code> <span class="type">list</span></dt>
+  <dd>Additional rooms for the pool. Duplicate references are rejected.</dd>
+  <dt><code>minRooms</code>, <code>maxRooms</code> <span class="type">int</span> <span class="default">default 4 and 4</span></dt>
+  <dd>Rooms per chunk, Entry included. <code>minRooms</code> must be at least 1 and at most <code>maxRooms</code>.</dd>
+</dl>
+
+<h3 id="settings-world">World and seed</h3>
+<dl class="props">
+  <dt><code>useRandomSeed</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Draws a new world seed on every generation. Turn it off to use <code>worldSeed</code>.</dd>
+  <dt><code>worldSeed</code> <span class="type">int</span> <span class="default">default 42</span></dt>
+  <dd>The seed for a repeatable world. The same seed gives the same layout.</dd>
+  <dt><code>cellsPerSide</code> <span class="type">int</span> <span class="default">default 24</span></dt>
+  <dd>Chunk size in cells. It must be at least the minimum in <a href="#chunk-size">Chunk size</a>.</dd>
+  <dt><code>cellSize</code> <span class="type">float</span> <span class="default">default 3</span></dt>
+  <dd>Size of one cell in meters. It must match the tile size of your room prefabs.</dd>
+  <dt><code>safetyMarginCells</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Cells kept free at the chunk edges so corridors stay clear of the border.</dd>
+  <dt><code>openSubsetRetrySlots</code> <span class="type">int</span> <span class="default">default 2, range 0 to 2</span></dt>
+  <dd>Extra attempts with derived seeds when a chunk's seams do not fit.</dd>
+  <dt><code>openSubsetExitCount</code> <span class="type">int</span> <span class="default">default 2, range 1 to 4</span></dt>
+  <dd>Minimum number of open seams on the start chunk.</dd>
+  <dt><code>portalSocketTypes</code> <span class="type">list of DoorSocketType</span></dt>
+  <dd>Socket types for the seams between chunks. The list order decides the type, so do not sort it. An empty list means untyped seams.</dd>
+</dl>
+
+<h3 id="settings-streaming">Streaming and performance</h3>
+<dl class="props">
+  <dt><code>plannedRadius</code> <span class="type">int</span> <span class="default">default 2</span></dt>
+  <dd>Chunks within this radius around the player are planned and cached, but not built. The planned area is (2r + 1)² chunks.</dd>
+  <dt><code>loadedRadius</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Chunks within this radius are built and active. Must not exceed <code>plannedRadius</code>.</dd>
+  <dt><code>diamondLoadedNeighborhood</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Builds only the chunks that connect by a side, in a diamond shape. This skips the diagonal corners, which never connect.</dd>
+  <dt><code>materializePerFrame</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Build work per frame (Inspector: <em>Builds per Frame</em>). One work item is a chunk container, one room or corridor instantiate, or one step of corridor planning.</dd>
+  <dt><code>materializeFrameBudgetMs</code> <span class="type">float</span> <span class="default">default 0</span></dt>
+  <dd>Optional time budget per frame (Inspector: <em>Frame Budget (ms)</em>). 0 turns it off. When it is set, the builds per frame still run first.</dd>
+  <dt><code>prewarmRoomCopies</code>, <code>prewarmCorridorCopies</code> <span class="type">int</span> <span class="default">default 4 and 24</span></dt>
+  <dd>Inactive copies created in advance for each room prefab and for the corridor tiles. The first build then reuses them.</dd>
+</dl>
+
+<h3 id="settings-locks">Locks and key</h3>
+<dl class="props">
+  <dt><code>lockChance</code> <span class="type">float 0–1</span> <span class="default">default 0</span></dt>
+  <dd>Fraction of seams that start locked. 0 turns random locks off.</dd>
+  <dt><code>spawnProtectionRadius</code> <span class="type">int</span> <span class="default">default 1</span></dt>
+  <dd>Chunks around the start that never get locks. The 3 × 3 start area is always protected.</dd>
+  <dt><code>keyPrefab</code> <span class="type">GameObject</span></dt>
+  <dd>The key the player picks up to open locks. It needs a <code>ChunkKeyPickup</code> component and an enabled trigger collider on its root. Locked worlds need one.</dd>
+</dl>
+<p>Door locks follow the world seed. Room locks come from the <strong>Requires Key</strong> setting on each room prefab, which adds a <code>ChunkRoomRequiresKey</code> component.</p>
+
+<h3 id="settings-debug">Debug and logging</h3>
+<dl class="props">
+  <dt><code>showChunkGizmos</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Master switch for the Scene view overlays. The four overlay toggles below (<strong>Show Areas</strong>, <strong>Show Footprints</strong>, <strong>Show Corridors</strong>, <strong>Show Portal Seams</strong>) are each on by default.</dd>
+  <dt><code>showLockedEdgeLabels</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>Labels locked seams with red text.</dd>
+  <dt><code>logDetails</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Informational logs. Errors and warnings are always logged.</dd>
+</dl>
+
+<figure>
+  <img src="/_blob/a080877c9b1059a86adea7e9174cca82" alt="Chunk Dungeon Streamer World and Streaming settings: Use Random Seed on, Chunk Size 24, Cell Size 3, Safety Margin 1, Retry-Slots 2, Exit-Seams 2, Planned Radius 2, Loaded Radius 1, Diamond Neighborhood off, Builds per Frame 1, Prewarm Rooms 4, and Prewarm Corridors 24.">
+  <figcaption>World and streaming settings. Match Cell Size to the room grid, then balance the radii against build cost.</figcaption>
+</figure>
+
+<h2 id="performance">Performance</h2>
+<ul>
+  <li><strong>Radii:</strong> the loaded area is what costs time and memory. Keep <code>loadedRadius</code> as small as the gameplay allows. The planned radius is cheaper, because it is computed but not built.</li>
+  <li><strong>Pacing:</strong> <code>materializePerFrame</code> limits how many items are built per frame. Increase it for faster loading, or set a <code>materializeFrameBudgetMs</code> to cap the time spent per frame.</li>
+  <li><strong>Pooling:</strong> chunks you leave are deactivated and reused when the player comes back, so revisiting an area costs little.</li>
+  <li><strong>Prewarming:</strong> raise <code>prewarmRoomCopies</code> and <code>prewarmCorridorCopies</code> if the first builds of a chunk stutter. Each copy costs memory.</li>
+  <li><strong>Chunk size:</strong> a smaller chunk puts rooms and corridors closer together. Below the minimum, planning fails; use the recommended size when you can.</li>
+</ul>
+
+<h2 id="events">Events and API</h2>
+<p><code>ChunkDungeonStreamer</code> exposes <code>Initialize()</code>, <code>UpdateCenterFromPlayer()</code>, <code>Dispose()</code>, and <code>Rebuild()</code>, plus the <code>WorldChanged</code> event. The event passes the transform of the world root. Full signatures are in the <a href="DocsApi.dc.html#chunk-streamer">API Reference</a>.</p>
+<pre><code class="lang-csharp">using DungeonGen;
+using UnityEngine;
+
+public class StreamedWorldLogger : MonoBehaviour
+&#123;
+    [SerializeField] private ChunkDungeonStreamer streamer;
+
+    private void OnEnable()  =&gt; streamer.WorldChanged += OnWorldChanged;
+    private void OnDisable() =&gt; streamer.WorldChanged -= OnWorldChanged;
+
+    private void OnWorldChanged(Transform worldRoot)
+    &#123;
+        Debug.Log($"World root: &#123;worldRoot.name&#125;, loaded chunks: &#123;streamer.LoadedCount&#125;");
+    &#125;
+&#125;</code></pre>
+
+<h2 id="pitfalls">Common mistakes</h2>
+<ul>
+  <li><strong>The world does not start.</strong> Check the Console. The usual causes are a missing corridor socket, a chunk size below the minimum, or a cell size that does not match the rooms.</li>
+  <li><strong>Rooms do not line up.</strong> The cell size must equal the room grid. Check it on every room kit.</li>
+  <li><strong>Locks appear unexpectedly.</strong> Set <code>lockChance</code> to 0 while you test, or assign a key prefab first.</li>
+</ul>
+<p>See also <a href="Docs-dungeon-troubleshooting.dc.html#chunks">Troubleshooting: chunk streaming</a>.</p>
+
+</div>
+
+<nav aria-label="Previous and next page" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; padding-top: 28px; border-top: 1px solid #2E3137">
+<a href="Docs-dungeon-decoration.dc.html" rel="prev" class="pn" style="display: flex; flex-direction: column; gap: 2px; padding: 16px 18px; border: 1px solid #3A3E46; text-decoration: none"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">← Previous</span><strong style="font-size: 19px">Decoration &amp; Themes</strong></a>
+<a href="Docs-dungeon-culling-navmesh.dc.html" rel="next" class="pn" style="display: flex; flex-direction: column; gap: 2px; padding: 16px 18px; border: 1px solid #3A3E46; text-decoration: none; text-align: right"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">Next →</span><strong style="font-size: 19px">Culling &amp; NavMesh</strong></a>
+</nav>
+</article>
+
+<aside class="toc" aria-labelledby="toc-h" style="flex: 0 0 220px; position: sticky; top: 100px; font-size: 14px; line-height: 1.4">
+<p id="toc-h" style="margin: 0 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">On this page</p>
+<ol style="margin: 0; padding: 0; list-style: none; border-left: 1px solid #2E3137">
+<li><a href="#set-up" style="display: block; padding: 5px 12px; text-decoration: none; color: #F2F1EC; font-weight: 600; box-shadow: inset 2px 0 0 #FF4F7B; margin-left: -1px">Set up a streamed world</a></li>
+<li><a href="#chunk-size" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Chunk size</a></li>
+<li><a href="#settings" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Settings</a></li>
+<li><a href="#performance" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Performance</a></li>
+<li><a href="#events" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Events and API</a></li>
+<li><a href="#pitfalls" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Common mistakes</a></li>
+</ol>
+</aside>
+</main>
+</div>
+<footer style="border-top: 1px solid #24272D">
+<div style="padding: 22px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: #9BA0A8">
+<span>© 2026 vedaloiv · <a href="Main.dc.html" style="color: #B9BDC4">Home</a> · <a href="DocsHub.dc.html" style="color: #B9BDC4">All docs</a></span>
+<a href="mailto:karakask2004@gmail.com" style="color: #B9BDC4">karakask2004@gmail.com</a>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":9028}}'>
+class Component extends DCLogic {
+renderVals() {
+return { rootClass: this.props.motion === false ? 'still' : '' };
+}
+}
+</script>
+</body>
+</html>

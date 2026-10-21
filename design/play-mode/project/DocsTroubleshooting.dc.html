@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Troubleshooting — Easy FP Full Body Controller docs</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Rubik:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0A0B0D}
+a{color:#F2F1EC}a:hover{color:#F4E04D}
+:focus-visible{outline:3px solid #F4E04D;outline-offset:3px}
+.menu-btn{display:none}
+@media (max-width: 1100px){.toc{display:none}}
+@media (max-width: 860px){.sidebar{display:none !important}.menu-btn{display:inline-flex !important}.hide-sm{display:none !important}main{padding:24px 16px 72px !important}}
+.nav a{transition:background .15s,color .15s}
+.nav a:hover{background:#16181C;color:#F2F1EC}
+.nav a.on:hover{background:#17204A}
+.btn{transition:transform .18s ease,box-shadow .18s ease}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 #F2F1EC}
+.pn,.prose .card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s}
+.pn:hover,.prose .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 #3A5BFF;border-color:#3A5BFF;color:#F2F1EC}
+.line{display:block;overflow:hidden;padding-bottom:0.04em}
+.rise{display:block;animation:rise .9s cubic-bezier(.16,1,.3,1) both}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.read{position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:#3A5BFF;transform-origin:left;transform:scaleX(.2)}
+@supports (animation-timeline: scroll()){.read{transform:scaleX(0);animation:grow linear both;animation-timeline:scroll(root)}}
+@keyframes grow{to{transform:scaleX(1)}}
+.prose{display:flex;flex-direction:column;gap:18px;font-size:17px;line-height:1.7;color:#C9CCD1}
+.prose>*{margin:0}
+.prose h2{margin-top:22px;font-size:26px;font-weight:700;line-height:1.25;color:#F2F1EC;scroll-margin-top:90px}
+.prose h3{margin:6px 0 0;font-size:19px;font-weight:700;line-height:1.3;color:#F2F1EC;scroll-margin-top:90px}
+.prose p{margin:0}
+.prose p.lead{font-size:19px;color:#D9DBDF}
+.prose strong{color:#F2F1EC;font-weight:600}
+.prose a{color:#8DA2FF}
+.prose a:hover{color:#F4E04D}
+.prose code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:#1A1D22;color:#F4E04D;padding:1px 6px}
+.prose pre{margin:0;background:#050607;border:1px solid #2E3137;padding:14px 18px;overflow-x:auto;font-size:14px;line-height:1.6}
+.prose pre code{background:none;padding:0;color:#E5E6E2;font-size:14px}
+.prose :not(pre)>code{overflow-wrap:anywhere}
+.prose td,.prose dd,.prose li,.prose p,.prose h2,.prose h3,.prose summary{overflow-wrap:anywhere}
+.prose kbd{font-family:'JetBrains Mono',monospace;font-size:.8em;border:1px solid #3A3E46;border-bottom-width:2px;padding:0 6px;color:#F2F1EC;background:#121418}
+.prose .menu{font-weight:600;color:#F2F1EC}
+.prose ul,.prose ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.prose li>ul,.prose li>ol{margin-top:6px}
+.prose ol.steps{list-style:none;padding:0;gap:0;border:1px solid #2E3137;counter-reset:s}
+.prose ol.steps>li{counter-increment:s;position:relative;padding:14px 18px 14px 62px;border-bottom:1px solid #24272D}
+.prose ol.steps>li:last-child{border-bottom:0}
+.prose ol.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:20px;top:16px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#8DA2FF}
+.prose dl{margin:0}
+.prose dl.props{border-top:1px solid #2E3137}
+.prose dl.props dt{padding-top:14px;color:#F2F1EC;line-height:1.9}
+.prose dt .type,.prose dt .default{margin-left:6px}
+.prose dl.props dd{margin:4px 0 0;padding-bottom:14px;border-bottom:1px solid #24272D;font-size:15px;line-height:1.6}
+.prose dt code{font-size:14px;font-weight:600;background:none;color:#F2F1EC;padding:0}
+.prose .type{font-family:'JetBrains Mono',monospace;font-size:12px;color:#4FF0D2}
+.prose .default{font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid #3A3E46;color:#9BA0A8;padding:0 6px}
+.prose .callout{padding:14px 18px;color:#E5E6E2;display:flex;flex-direction:column;gap:6px}
+.prose .callout>*{margin:0}
+.prose .callout-title{display:block;font-weight:700}
+.prose .callout.warn{background:#F4E04D;color:#0A0B0D}
+.prose .callout.warn strong,.prose .callout.warn a{color:#0A0B0D}
+.prose .callout.warn a{font-weight:700}
+.prose .callout.warn code{background:#0A0B0D;color:#F4E04D}
+.prose .callout.note{border:1px solid #3A5BFF;background:#10162E}
+.prose .callout.note .callout-title{color:#8DA2FF}
+.prose .callout.tip{border:1px solid #3DDC97;background:#0D2219}
+.prose .callout.tip .callout-title{color:#3DDC97}
+.prose .badge{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#3A5BFF;color:#FFFFFF;padding:1px 7px;vertical-align:middle}
+.prose .badge.breaking{background:#FF4F7B;color:#0A0B0D}
+.prose .tbl{border:1px solid #2E3137;overflow-x:auto}
+.prose table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.55}
+.prose th{background:#121418;text-align:left;vertical-align:bottom;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#9BA0A8;padding:10px 14px;border-bottom:1px solid #3A3E46}
+.prose td{padding:10px 14px;border-bottom:1px solid #24272D;vertical-align:top}
+.prose tbody tr:last-child td{border-bottom:0}
+.prose tbody tr{transition:background .15s}
+.prose tbody tr:hover{background:#121418}
+.prose figure{margin:0;border:1px solid #2E3137;background:#050607}
+.prose figure img{display:block;max-width:100%;height:auto;margin:0 auto}
+.prose figcaption{padding:10px 14px;border-top:1px solid #2E3137;font-size:14px;color:#9BA0A8}
+.prose .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.prose .card{border:1px solid #2E3137;background:#121418;padding:14px 16px;text-decoration:none;display:flex;flex-direction:column;gap:2px;color:#F2F1EC}
+.prose .card span{font-size:14px;color:#B9BDC4;line-height:1.5}
+.prose details{border-top:1px solid #2E3137;border-bottom:1px solid #2E3137}
+.prose summary{cursor:pointer;padding:14px 4px;font-weight:600;color:#F2F1EC}
+.prose summary:hover{color:#F4E04D}
+.prose .vid{position:relative;display:block;aspect-ratio:16/9;border:1px solid #2E3137;background:#050607;overflow:hidden}
+.prose .vid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.75}
+.prose .vid-play{position:absolute;left:50%;top:50%;width:80px;height:80px;margin:-40px 0 0 -40px;background:#F4E04D;display:flex;align-items:center;justify-content:center;box-shadow:6px 6px 0 #000;transition:transform .18s}
+.prose .vid:hover .vid-play{transform:scale(1.08)}
+.prose .key{border:1px solid #2E3137}
+.prose .key img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:left center}
+.prose .vid-note{position:absolute;left:12px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#F2F1EC;background:rgba(5,6,7,.8);padding:2px 8px}
+.prose.changelog{gap:0}
+.prose.changelog>*:not(section){margin-bottom:18px}
+.prose .rel{position:relative;margin-left:7px;padding:0 0 36px 34px;border-left:2px solid #2E3137;display:flex;flex-direction:column;gap:14px}
+.prose .rel>*{margin:0}
+.prose .rel h2{margin:0;font-family:'Anton','Impact',sans-serif;font-weight:400;font-size:38px;line-height:1;position:relative}
+.prose .rel h2::before{content:"";position:absolute;left:-42px;top:10px;width:14px;height:14px;box-sizing:border-box;border:2px solid #3A5BFF;background:#0A0B0D}
+.prose .rel-latest h2::before{background:#3A5BFF;animation:pulse 2s ease-out infinite}
+.prose .rel h2 .badge{font-family:'JetBrains Mono',monospace;font-size:12px;margin-left:10px;position:relative;top:-6px}
+.prose .rel>p:first-of-type{font-family:'JetBrains Mono',monospace;font-size:13px;color:#9BA0A8;margin-top:-6px}
+.prose h3.chg{align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid;padding:0 8px;line-height:1.7;margin-top:6px}
+.prose h3.chg-added{color:#3DDC97}.prose h3.chg-changed{color:#8DA2FF}.prose h3.chg-fixed{color:#4FF0D2}.prose h3.chg-removed{color:#FF7A9A}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #3A5BFFaa}100%{box-shadow:0 0 0 10px #3A5BFF00}}
+.prose .lvl{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;padding:1px 7px;white-space:nowrap}
+.prose .lvl-error{background:#FF4F7B;color:#0A0B0D}
+.prose .lvl-warning{border:1px solid #F4E04D;color:#F4E04D}
+.prose .lvl-info{border:1px solid #8DA2FF;color:#8DA2FF}
+.prose .lvl-filter{display:flex;flex-wrap:wrap;gap:8px}
+.prose .lvl-filter input{position:absolute;opacity:0;width:1px;height:1px}
+.prose .lvl-filter label{min-height:40px;display:inline-flex;align-items:center;padding:0 14px;font-size:14px;font-weight:600;border:1px solid #3A3E46;cursor:pointer;color:#F2F1EC}
+.prose .lvl-filter label:hover{border-color:#F2F1EC}
+.prose .lvl-filter input:checked+label{background:#F4E04D;border-color:#F4E04D;color:#0A0B0D}
+.prose .lvl-filter input:focus-visible+label{outline:3px solid #F4E04D;outline-offset:3px}
+.prose:has(#lvl-error:checked) tr[data-level]:not([data-level="error"]),.prose:has(#lvl-warning:checked) tr[data-level]:not([data-level="warning"]),.prose:has(#lvl-info:checked) tr[data-level]:not([data-level="info"]){display:none}
+.still *{animation:none !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="background: #0A0B0D; color: #F2F1EC; font-family: 'Rubik', system-ui, sans-serif; font-size: 17px; line-height: 1.7; min-width: 0">
+
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(10, 11, 13, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #24272D">
+<div style="height: 64px; padding: 0 20px; display: flex; align-items: center; gap: 20px; position: relative">
+<a href="DocsMobileMenu.dc.html" class="menu-btn" aria-label="Open documentation menu" style="align-items: center; gap: 8px; height: 44px; padding: 0 12px; border: 1px solid #3A3E46; color: #F2F1EC; font-size: 15px; text-decoration: none">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>Menu
+</a>
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<span aria-hidden="true" style="width: 22px; height: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px">
+<span style="background: #3A5BFF"></span><span style="background: #FF4F7B"></span><span style="background: #2DE2C0"></span><span style="background: #F4E04D"></span>
+</span>
+<span style="font-weight: 700; font-size: 19px">vedaloiv</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F4E04D">docs</span>
+</a>
+<nav aria-label="Site" class="hide-sm" style="display: flex; gap: 2px">
+<a href="Main.dc.html" style="text-decoration: none; padding: 8px 12px; font-size: 15px; color: #C9CCD1">Home</a>
+<a href="DocsHub.dc.html" style="text-decoration: none; padding: 8px 12px; font-size: 15px; color: #C9CCD1">All docs</a>
+</nav>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 10px">
+<a href="DocsSearch.dc.html" aria-label="Search the documentation" style="display: flex; align-items: center; gap: 10px; height: 42px; min-width: 44px; box-sizing: border-box; padding: 0 12px; background: #121418; border: 1px solid #2E3137; color: #9BA0A8; font-size: 15px; text-decoration: none">
+<svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<span class="hide-sm" style="min-width: 160px">Search docs</span>
+<span class="hide-sm" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; border: 1px solid #3A3E46; padding: 0 6px">Ctrl K</span>
+</a>
+<a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" class="btn hide-sm" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px; background: #F4E04D; color: #0A0B0D; text-decoration: none; font-weight: 700; font-size: 14px">Asset Store
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</a>
+</div>
+<span aria-hidden="true" class="read"></span>
+</div>
+</header>
+
+<div style="display: flex; align-items: flex-start">
+
+<aside class="sidebar" aria-label="Documentation" style="flex: 0 0 280px; box-sizing: border-box; position: sticky; top: 64px; max-height: calc(100vh - 64px); overflow-y: auto; padding: 20px 14px 40px 20px; border-right: 1px solid #24272D; font-size: 15px; line-height: 1.4">
+<nav class="nav" aria-label="Documentation pages" style="display: flex; flex-direction: column; gap: 22px">
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 10px; text-decoration: none; color: #C9CCD1; border: 1px solid #2E3137">
+<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 11l8-7 8 7v9H4z"></path></svg>Docs home</a>
+<section style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; border-bottom: 2px solid #3A5BFF; margin-bottom: 6px">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #3A5BFF; flex: 0 0 10px"></span>
+<span style="font-weight: 700; font-size: 15px; flex: 1 1 auto">Easy FP Full Body Controller</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8DA2FF">v1.6.0</span>
+</div>
+<a href="DocsOverview.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="Docs.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Quick Start</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-fp-setup-wizard.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Setup Wizard</a>
+<a href="Docs-fp-items.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Items</a>
+<a href="Docs-fp-body-ik.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Body IK</a>
+<a href="Docs-fp-fpcutter.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">FPCutter</a>
+<a href="Docs-fp-vitals.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Vitals &amp; Stamina</a>
+<a href="Docs-fp-demos.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Demos</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Multiplayer</span>
+<a href="Docs-fishnet.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">FishNet</a>
+<a href="Docs-purrnet.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">PurrNet</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="Docs-interfaces.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Interfaces</a>
+<a href="DocsTroubleshooting.dc.html" class="on" aria-current="page" style="padding: 7px 10px; text-decoration: none; color: #FFFFFF; font-weight: 600; background: #17204A; box-shadow: inset 3px 0 0 #3A5BFF">Troubleshooting</a>
+<a href="DocsChangelog.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Changelog</a>
+<a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" style="padding: 7px 10px; text-decoration: none; color: #8DA2FF; font-size: 14px">Asset Store page ↗</a>
+</section>
+<section style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; border-bottom: 2px solid #FF4F7B; margin-bottom: 6px">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #FF4F7B; flex: 0 0 10px"></span>
+<span style="font-weight: 700; font-size: 15px; flex: 1 1 auto">Easy Dungeon Generator</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FF7A9A">v1.1.0</span>
+</div>
+<a href="Docs-dungeon-generator.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="Docs-dungeon-quick-start.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Quick Start</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-dungeon-room-designer.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Room Designer</a>
+<a href="Docs-dungeon-templates.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Templates &amp; Generation</a>
+<a href="Docs-dungeon-decoration.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Decoration &amp; Themes</a>
+<a href="Docs-dungeon-streaming.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Chunk Streaming</a>
+<a href="Docs-dungeon-culling-navmesh.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Culling &amp; NavMesh</a>
+<a href="Docs-dungeon-demos.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Demo Scenes</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="DocsApi.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">API Reference</a>
+<a href="Docs-dungeon-troubleshooting.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Troubleshooting</a>
+<a href="Docs-dungeon-changelog.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Changelog</a>
+<a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" style="padding: 7px 10px; text-decoration: none; color: #FF7A9A; font-size: 14px">Asset Store page ↗</a>
+</section>
+</nav>
+</aside>
+
+<main id="content" style="flex: 1 1 auto; min-width: 0; padding: 36px 40px 96px; display: flex; gap: 56px; justify-content: center">
+<article style="flex: 0 1 840px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<nav aria-label="Breadcrumb" style="font-size: 14px; color: #9BA0A8">
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px">
+<li><a href="DocsHub.dc.html" style="color: #B9BDC4">Docs</a></li><li aria-hidden="true">›</li><li><a href="DocsOverview.dc.html" style="color: #B9BDC4">Easy FP Full Body Controller</a></li><li aria-hidden="true">›</li><li><span aria-current="page" style="color: #F2F1EC">Troubleshooting</span></li>
+</ol>
+</nav>
+<header style="display: flex; flex-direction: column; gap: 14px; padding-bottom: 24px; border-bottom: 1px solid #2E3137">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8DA2FF">Reference</span>
+<h1 style="margin: 0; font-family: 'Anton', 'Impact', sans-serif; font-weight: 400; font-size: clamp(2.8rem, 5vw, 4.4rem); line-height: 0.95; text-transform: uppercase"><span class="line"><span class="rise">Troubleshooting</span></span></h1>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C9CCD1">
+<span style="border: 1px solid #3A5BFF; color: #8DA2FF; padding: 2px 8px">Documentation for v1.6.0</span>
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">v1.6.0</span>
+</div>
+</header>
+
+<div class="prose ">
+
+
+<p class="lead">Find your symptom or health check message and follow the fix. Most problems come from a missing reference, a non-humanoid model, or an input setup that does not match the package.</p>
+
+<h2 id="health-check">Health check messages</h2>
+<p>The Setup Wizard's final step and the <code>PlayerController</code> Inspector both report these messages. <strong>Error</strong> blocks the wizard. <strong>Warning</strong> and <strong>Info</strong> do not.</p>
+<div class="lvl-filter" role="radiogroup" aria-label="Filter by level">
+<input type="radio" name="lvl" id="lvl-all" checked=""><label for="lvl-all">All · 14</label>
+<input type="radio" name="lvl" id="lvl-error"><label for="lvl-error">Error · 7</label>
+<input type="radio" name="lvl" id="lvl-warning"><label for="lvl-warning">Warning · 6</label>
+<input type="radio" name="lvl" id="lvl-info"><label for="lvl-info">Info · 1</label>
+</div>
+<div class="tbl"><table class="lvl-table"><thead><tr><th scope="col">Message</th><th scope="col">Level</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr data-level="error"><td><code>Player root is null</code></td><td><span class="lvl lvl-error">Error</span></td><td>Set the player root in Step 1.</td></tr>
+    <tr data-level="warning"><td><code>Player Settings asset is missing.</code></td><td><span class="lvl lvl-warning">Warning</span></td><td>Create or assign a <code>PlayerSettings</code> asset in Step 2.</td></tr>
+    <tr data-level="warning"><td><code>Input Actions asset is missing.</code></td><td><span class="lvl lvl-warning">Warning</span></td><td>Assign <code>FBInputActions</code> in Step 2 (Search button).</td></tr>
+    <tr data-level="error"><td><code>CharacterController is missing (required by PlayerLocomotion)</code></td><td><span class="lvl lvl-error">Error</span></td><td>Add it to the root, or run Step 4.</td></tr>
+    <tr data-level="error"><td><code>Main Logic Hub (PlayerController) is missing</code>, <code>Input Reader (PlayerInputHandler) is missing</code>, <code>Walking Logic (PlayerLocomotion) is missing</code>, <code>Camera &amp; Look Logic (PlayerCameraController) is missing</code>, <code>Animation Manager (PlayerAnimatorController) is missing</code>, <code>Hand Item Socket is missing</code>, <code>Item Switcher (Inventory) is missing</code></td><td><span class="lvl lvl-error">Error</span></td><td>Run Step 4 to add the component on the root.</td></tr>
+    <tr data-level="error"><td><code>No Character Model (Animator) found</code></td><td><span class="lvl lvl-error">Error</span></td><td>Assign the model in Step 2.</td></tr>
+    <tr data-level="error"><td><code>Character Model is not set to 'Humanoid'</code></td><td><span class="lvl lvl-error">Error</span></td><td>Set the model's Animation Type to Humanoid and click Apply.</td></tr>
+    <tr data-level="warning"><td><code>Animator Controller is missing. Assign Player.controller or another compatible controller.</code></td><td><span class="lvl lvl-warning">Warning</span></td><td>Assign <code>Player.controller</code> from <code>Assets/FBSystem/Project/Animations/</code> to the Animator.</td></tr>
+    <tr data-level="error"><td><code>Head Look IK is missing from model</code>, <code>Hand Placement IK is missing from model</code>, <code>Body Stabilizer is missing from model</code></td><td><span class="lvl lvl-error">Error</span></td><td>Run Step 4 to add the components on the model.</td></tr>
+    <tr data-level="warning"><td><code>Foot IK is missing from model (optional, recommended)</code>, <code>Finger grips (HandPoseController) are missing from model (optional, recommended)</code></td><td><span class="lvl lvl-warning">Warning</span></td><td>Add <code>PlayerFootPlanting</code> and <code>HandPoseController</code> to the model, or ignore the warning.</td></tr>
+    <tr data-level="info"><td><code>Check: 'IK Pass' must be enabled on your Animator Layer</code></td><td><span class="lvl lvl-info">Info</span></td><td>In the Animator window, open the layer settings and enable <em>IK Pass</em>.</td></tr>
+    <tr data-level="warning"><td><code>Camera Target (Eye Level) helper not found</code></td><td><span class="lvl lvl-warning">Warning</span></td><td>Run Step 5.</td></tr>
+    <tr data-level="warning"><td><code>Item Container not found in hand hierarchy</code>, <code>ItemSwitcher: No ItemContainer found in children.</code></td><td><span class="lvl lvl-warning">Warning</span></td><td>Run Step 5 to create the item container under the right hand.</td></tr>
+    <tr data-level="error"><td><code>PlayerCameraController: CameraTarget is not assigned.</code></td><td><span class="lvl lvl-error">Error</span></td><td>Run Step 6 (Connect All Systems).</td></tr>
+  </tbody>
+</table></div>
+<p>Use <strong>Fix</strong> next to an issue or <strong>FIX ALL ISSUES</strong> in the <code>PlayerController</code> Inspector to apply automatic fixes where the validator offers one.</p>
+
+<h2 id="problems">Problems and fixes</h2>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Symptom</th><th scope="col">Fix</th></tr></thead>
+  <tbody>
+    <tr><td>The player does not move</td><td>Check that <code>PlayerInputHandler</code> has the <code>FBInputActions</code> asset and the action map is named <em>Player</em>. Check that <em>Active Input Handling</em> in Player Settings includes the Input System Package (or Both). Check that a <code>CharacterController</code> is on the root. If your code calls <code>SetInputEnabled(false)</code> or <code>DisableAllControls()</code>, call <code>SetInputEnabled(true)</code> or <code>EnableAllControls()</code> again.</td></tr>
+    <tr><td>The camera is inside the head, or the head is visible</td><td>Use the FPCutter variant of the character, and call <code>SetFirstPerson()</code> on its <code>FPCutterController</code>. Check that <em>Head</em> is in <em>Hide In First Person</em>. See <a href="Docs-fp-fpcutter.dc.html">FPCutter</a>.</td></tr>
+    <tr><td>There is no camera view</td><td><code>PlayerCameraController</code> looks for a Cinemachine camera in the scene when none is assigned. Add <code>FBSystem_CameraRig</code>, or a Cinemachine camera and a Cinemachine Brain on the Main Camera.</td></tr>
+    <tr><td>Look feels too fast or too slow</td><td>Change <code>lookSensitivity</code> (default 0.1) on <code>PlayerCameraController</code>. <code>verticalLookLimit</code> comes from the <code>PlayerSettings</code> asset when one is assigned, otherwise from the component.</td></tr>
+    <tr><td>Movement speeds do not match the Inspector</td><td>When a <code>PlayerSettings</code> asset is assigned, its values override the fields on the components, for example walk speed. Change the value in the asset.</td></tr>
+    <tr><td>An item does not equip</td><td>The item must be in the <strong>Items</strong> list of the container, and it needs an <code>ItemHoldData</code>. The container needs its hand socket. Step 6 connects it.</td></tr>
+    <tr><td>The item sits in the wrong place</td><td>Tune it with <em>Tune Grip Mode</em> or the Scene view handles, then save the result as an IK preset. See <a href="Docs-fp-items.dc.html#tune">Tune an item in the scene</a>.</td></tr>
+    <tr><td>Pickup does nothing</td><td>The world item's id must match an item in the container. The pickup's <em>Interactable Layer</em> must include the layer of the world item, which needs a collider.</td></tr>
+    <tr><td>Fingers bend the wrong way or not at all</td><td>The model must be Humanoid, with finger bones mapped in the avatar. Press <strong>Calibrate</strong> on <code>HandPoseController</code>, and check the finger muscle limits in the avatar configuration.</td></tr>
+    <tr><td>Feet slide or float</td><td>Check <em>Ground Layers</em> on <code>PlayerFootPlanting</code>. Make sure no other foot IK runs on the character.</td></tr>
+    <tr><td>The holster feels too slow or too fast</td><td>Adjust <em>Holster Duration</em> and <em>Draw Duration</em> on <code>PlayerHandIK</code>, or turn off <em>Smooth Transitions</em> on <code>HandItemSocket</code>.</td></tr>
+    <tr><td>Hands or the body look wrong after a model change</td><td>Run the Setup Wizard again from Step 3 so the bones are detected on the new rig. Use Transfer Configuration to keep your tuning. See <a href="Docs-fp-setup-wizard.dc.html#transfer">Transfer Configuration</a>.</td></tr>
+    <tr><td>Health or stamina does not change</td><td><code>PlayerVitals</code> must be on the player root, next to <code>PlayerLocomotion</code>. <code>ApplyDamage</code> returns <code>false</code> for dead players and for amounts of zero or less.</td></tr>
+    <tr><td>Footstep sounds are missing</td><td>Add <code>PlayerFootsteps</code> to the root and assign <em>Step Clips</em>. It is not added by the wizard.</td></tr>
+    <tr><td>Foot settings reset after an update</td><td>Version 1.6 renamed the foot component. Note your values before you update, then re-enter them. See <a href="DocsChangelog.dc.html#v1-6-0">1.6.0</a>.</td></tr>
+    <tr><td>Compile errors after updating an add-on</td><td>Add-on packages from older versions do not compile against 1.6. Re-import the FishNet or PurrNet add-on after you update the base package.</td></tr>
+    <tr><td>Hidden parts are visible or magenta</td><td>The invisible material is missing or uses a different shader. Assign a material that uses <code>FPCutter/InvisibleShadowCaster</code> to <em>Invisible Material</em>. On GLES, WebGL or Android, update to 1.6.</td></tr>
+    <tr><td>Binding <code>Previous</code> or <code>Next</code> does not switch items</td><td>No shipped script reads these actions. Item switching uses the keys directly in <code>ItemSwitcher</code>.</td></tr>
+    <tr><td>Multiplayer spawn errors such as <code>PrefabId 65535</code></td><td>The player spawner must reference a prefab asset, not a scene object. See <a href="Docs-fishnet.dc.html#troubleshooting">FishNet troubleshooting</a>.</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="pink">Pink or magenta materials</h2>
+<p>The project must use the Universal Render Pipeline. Set the pipeline asset in Project Settings › Graphics. Then re-import or convert the materials to a URP shader.</p>
+
+<h2 id="report">Still stuck?</h2>
+<p>Email <a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a>. Include:</p>
+<ul>
+  <li>Unity version and render pipeline.</li>
+  <li>FBSystem version (1.6.0, as shown in <code>CHANGELOG.md</code>) and the add-on version, if you use one.</li>
+  <li>The health check messages, and the Console errors with the full stack trace.</li>
+  <li>What you tried and what happened.</li>
+</ul>
+
+</div>
+
+<nav aria-label="Previous and next page" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; padding-top: 28px; border-top: 1px solid #2E3137">
+<a href="Docs-interfaces.dc.html" rel="prev" class="pn" style="display: flex; flex-direction: column; gap: 2px; padding: 16px 18px; border: 1px solid #3A3E46; text-decoration: none"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">← Previous</span><strong style="font-size: 19px">Interfaces</strong></a>
+<a href="DocsChangelog.dc.html" rel="next" class="pn" style="display: flex; flex-direction: column; gap: 2px; padding: 16px 18px; border: 1px solid #3A3E46; text-decoration: none; text-align: right"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">Next →</span><strong style="font-size: 19px">Changelog</strong></a>
+</nav>
+</article>
+
+<aside class="toc" aria-labelledby="toc-h" style="flex: 0 0 220px; position: sticky; top: 100px; font-size: 14px; line-height: 1.4">
+<p id="toc-h" style="margin: 0 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">On this page</p>
+<ol style="margin: 0; padding: 0; list-style: none; border-left: 1px solid #2E3137">
+<li><a href="#health-check" style="display: block; padding: 5px 12px; text-decoration: none; color: #F2F1EC; font-weight: 600; box-shadow: inset 2px 0 0 #3A5BFF; margin-left: -1px">Health check messages</a></li>
+<li><a href="#problems" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Problems and fixes</a></li>
+<li><a href="#pink" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Pink or magenta materials</a></li>
+<li><a href="#report" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Still stuck?</a></li>
+</ol>
+</aside>
+</main>
+</div>
+<footer style="border-top: 1px solid #24272D">
+<div style="padding: 22px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: #9BA0A8">
+<span>© 2026 vedaloiv · <a href="Main.dc.html" style="color: #B9BDC4">Home</a> · <a href="DocsHub.dc.html" style="color: #B9BDC4">All docs</a></span>
+<a href="mailto:karakask2004@gmail.com" style="color: #B9BDC4">karakask2004@gmail.com</a>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":4847}}'>
+class Component extends DCLogic {
+renderVals() {
+return { rootClass: this.props.motion === false ? 'still' : '' };
+}
+}
+</script>
+</body>
+</html>

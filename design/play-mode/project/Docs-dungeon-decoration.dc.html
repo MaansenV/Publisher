@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decoration and Themes — Easy Dungeon Generator docs</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Rubik:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0A0B0D}
+a{color:#F2F1EC}a:hover{color:#F4E04D}
+:focus-visible{outline:3px solid #F4E04D;outline-offset:3px}
+.menu-btn{display:none}
+@media (max-width: 1100px){.toc{display:none}}
+@media (max-width: 860px){.sidebar{display:none !important}.menu-btn{display:inline-flex !important}.hide-sm{display:none !important}main{padding:24px 16px 72px !important}}
+.nav a{transition:background .15s,color .15s}
+.nav a:hover{background:#16181C;color:#F2F1EC}
+.nav a.on:hover{background:#3A1520}
+.btn{transition:transform .18s ease,box-shadow .18s ease}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 #F2F1EC}
+.pn,.prose .card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s}
+.pn:hover,.prose .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 #FF4F7B;border-color:#FF4F7B;color:#F2F1EC}
+.line{display:block;overflow:hidden;padding-bottom:0.04em}
+.rise{display:block;animation:rise .9s cubic-bezier(.16,1,.3,1) both}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.read{position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:#FF4F7B;transform-origin:left;transform:scaleX(.2)}
+@supports (animation-timeline: scroll()){.read{transform:scaleX(0);animation:grow linear both;animation-timeline:scroll(root)}}
+@keyframes grow{to{transform:scaleX(1)}}
+.prose{display:flex;flex-direction:column;gap:18px;font-size:17px;line-height:1.7;color:#C9CCD1}
+.prose>*{margin:0}
+.prose h2{margin-top:22px;font-size:26px;font-weight:700;line-height:1.25;color:#F2F1EC;scroll-margin-top:90px}
+.prose h3{margin:6px 0 0;font-size:19px;font-weight:700;line-height:1.3;color:#F2F1EC;scroll-margin-top:90px}
+.prose p{margin:0}
+.prose p.lead{font-size:19px;color:#D9DBDF}
+.prose strong{color:#F2F1EC;font-weight:600}
+.prose a{color:#FF7A9A}
+.prose a:hover{color:#F4E04D}
+.prose code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:#1A1D22;color:#F4E04D;padding:1px 6px}
+.prose pre{margin:0;background:#050607;border:1px solid #2E3137;padding:14px 18px;overflow-x:auto;font-size:14px;line-height:1.6}
+.prose pre code{background:none;padding:0;color:#E5E6E2;font-size:14px}
+.prose :not(pre)>code{overflow-wrap:anywhere}
+.prose td,.prose dd,.prose li,.prose p,.prose h2,.prose h3,.prose summary{overflow-wrap:anywhere}
+.prose kbd{font-family:'JetBrains Mono',monospace;font-size:.8em;border:1px solid #3A3E46;border-bottom-width:2px;padding:0 6px;color:#F2F1EC;background:#121418}
+.prose .menu{font-weight:600;color:#F2F1EC}
+.prose ul,.prose ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.prose li>ul,.prose li>ol{margin-top:6px}
+.prose ol.steps{list-style:none;padding:0;gap:0;border:1px solid #2E3137;counter-reset:s}
+.prose ol.steps>li{counter-increment:s;position:relative;padding:14px 18px 14px 62px;border-bottom:1px solid #24272D}
+.prose ol.steps>li:last-child{border-bottom:0}
+.prose ol.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:20px;top:16px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#FF7A9A}
+.prose dl{margin:0}
+.prose dl.props{border-top:1px solid #2E3137}
+.prose dl.props dt{padding-top:14px;color:#F2F1EC;line-height:1.9}
+.prose dt .type,.prose dt .default{margin-left:6px}
+.prose dl.props dd{margin:4px 0 0;padding-bottom:14px;border-bottom:1px solid #24272D;font-size:15px;line-height:1.6}
+.prose dt code{font-size:14px;font-weight:600;background:none;color:#F2F1EC;padding:0}
+.prose .type{font-family:'JetBrains Mono',monospace;font-size:12px;color:#4FF0D2}
+.prose .default{font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid #3A3E46;color:#9BA0A8;padding:0 6px}
+.prose .callout{padding:14px 18px;color:#E5E6E2;display:flex;flex-direction:column;gap:6px}
+.prose .callout>*{margin:0}
+.prose .callout-title{display:block;font-weight:700}
+.prose .callout.warn{background:#F4E04D;color:#0A0B0D}
+.prose .callout.warn strong,.prose .callout.warn a{color:#0A0B0D}
+.prose .callout.warn a{font-weight:700}
+.prose .callout.warn code{background:#0A0B0D;color:#F4E04D}
+.prose .callout.note{border:1px solid #FF4F7B;background:#24101A}
+.prose .callout.note .callout-title{color:#FF7A9A}
+.prose .callout.tip{border:1px solid #3DDC97;background:#0D2219}
+.prose .callout.tip .callout-title{color:#3DDC97}
+.prose .badge{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#FF4F7B;color:#0A0B0D;padding:1px 7px;vertical-align:middle}
+.prose .badge.breaking{background:#FF4F7B;color:#0A0B0D}
+.prose .tbl{border:1px solid #2E3137;overflow-x:auto}
+.prose table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.55}
+.prose th{background:#121418;text-align:left;vertical-align:bottom;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#9BA0A8;padding:10px 14px;border-bottom:1px solid #3A3E46}
+.prose td{padding:10px 14px;border-bottom:1px solid #24272D;vertical-align:top}
+.prose tbody tr:last-child td{border-bottom:0}
+.prose tbody tr{transition:background .15s}
+.prose tbody tr:hover{background:#121418}
+.prose figure{margin:0;border:1px solid #2E3137;background:#050607}
+.prose figure img{display:block;max-width:100%;height:auto;margin:0 auto}
+.prose figcaption{padding:10px 14px;border-top:1px solid #2E3137;font-size:14px;color:#9BA0A8}
+.prose .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.prose .card{border:1px solid #2E3137;background:#121418;padding:14px 16px;text-decoration:none;display:flex;flex-direction:column;gap:2px;color:#F2F1EC}
+.prose .card span{font-size:14px;color:#B9BDC4;line-height:1.5}
+.prose details{border-top:1px solid #2E3137;border-bottom:1px solid #2E3137}
+.prose summary{cursor:pointer;padding:14px 4px;font-weight:600;color:#F2F1EC}
+.prose summary:hover{color:#F4E04D}
+.prose .vid{position:relative;display:block;aspect-ratio:16/9;border:1px solid #2E3137;background:#050607;overflow:hidden}
+.prose .vid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.75}
+.prose .vid-play{position:absolute;left:50%;top:50%;width:80px;height:80px;margin:-40px 0 0 -40px;background:#F4E04D;display:flex;align-items:center;justify-content:center;box-shadow:6px 6px 0 #000;transition:transform .18s}
+.prose .vid:hover .vid-play{transform:scale(1.08)}
+.prose .key{border:1px solid #2E3137}
+.prose .key img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:left center}
+.prose .vid-note{position:absolute;left:12px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#F2F1EC;background:rgba(5,6,7,.8);padding:2px 8px}
+.prose.changelog{gap:0}
+.prose.changelog>*:not(section){margin-bottom:18px}
+.prose .rel{position:relative;margin-left:7px;padding:0 0 36px 34px;border-left:2px solid #2E3137;display:flex;flex-direction:column;gap:14px}
+.prose .rel>*{margin:0}
+.prose .rel h2{margin:0;font-family:'Anton','Impact',sans-serif;font-weight:400;font-size:38px;line-height:1;position:relative}
+.prose .rel h2::before{content:"";position:absolute;left:-42px;top:10px;width:14px;height:14px;box-sizing:border-box;border:2px solid #FF4F7B;background:#0A0B0D}
+.prose .rel-latest h2::before{background:#FF4F7B;animation:pulse 2s ease-out infinite}
+.prose .rel h2 .badge{font-family:'JetBrains Mono',monospace;font-size:12px;margin-left:10px;position:relative;top:-6px}
+.prose .rel>p:first-of-type{font-family:'JetBrains Mono',monospace;font-size:13px;color:#9BA0A8;margin-top:-6px}
+.prose h3.chg{align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid;padding:0 8px;line-height:1.7;margin-top:6px}
+.prose h3.chg-added{color:#3DDC97}.prose h3.chg-changed{color:#FF7A9A}.prose h3.chg-fixed{color:#4FF0D2}.prose h3.chg-removed{color:#FF7A9A}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #FF4F7Baa}100%{box-shadow:0 0 0 10px #FF4F7B00}}
+.prose .lvl{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;padding:1px 7px;white-space:nowrap}
+.prose .lvl-error{background:#FF4F7B;color:#0A0B0D}
+.prose .lvl-warning{border:1px solid #F4E04D;color:#F4E04D}
+.prose .lvl-info{border:1px solid #8DA2FF;color:#8DA2FF}
+.prose .lvl-filter{display:flex;flex-wrap:wrap;gap:8px}
+.prose .lvl-filter input{position:absolute;opacity:0;width:1px;height:1px}
+.prose .lvl-filter label{min-height:40px;display:inline-flex;align-items:center;padding:0 14px;font-size:14px;font-weight:600;border:1px solid #3A3E46;cursor:pointer;color:#F2F1EC}
+.prose .lvl-filter label:hover{border-color:#F2F1EC}
+.prose .lvl-filter input:checked+label{background:#F4E04D;border-color:#F4E04D;color:#0A0B0D}
+.prose .lvl-filter input:focus-visible+label{outline:3px solid #F4E04D;outline-offset:3px}
+.prose:has(#lvl-error:checked) tr[data-level]:not([data-level="error"]),.prose:has(#lvl-warning:checked) tr[data-level]:not([data-level="warning"]),.prose:has(#lvl-info:checked) tr[data-level]:not([data-level="info"]){display:none}
+.still *{animation:none !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="background: #0A0B0D; color: #F2F1EC; font-family: 'Rubik', system-ui, sans-serif; font-size: 17px; line-height: 1.7; min-width: 0">
+
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(10, 11, 13, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #24272D">
+<div style="height: 64px; padding: 0 20px; display: flex; align-items: center; gap: 20px; position: relative">
+<a href="DocsMobileMenu.dc.html" class="menu-btn" aria-label="Open documentation menu" style="align-items: center; gap: 8px; height: 44px; padding: 0 12px; border: 1px solid #3A3E46; color: #F2F1EC; font-size: 15px; text-decoration: none">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>Menu
+</a>
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<span aria-hidden="true" style="width: 22px; height: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px">
+<span style="background: #3A5BFF"></span><span style="background: #FF4F7B"></span><span style="background: #2DE2C0"></span><span style="background: #F4E04D"></span>
+</span>
+<span style="font-weight: 700; font-size: 19px">vedaloiv</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F4E04D">docs</span>
+</a>
+<nav aria-label="Site" class="hide-sm" style="display: flex; gap: 2px">
+<a href="Main.dc.html" style="text-decoration: none; padding: 8px 12px; font-size: 15px; color: #C9CCD1">Home</a>
+<a href="DocsHub.dc.html" style="text-decoration: none; padding: 8px 12px; font-size: 15px; color: #C9CCD1">All docs</a>
+</nav>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 10px">
+<a href="DocsSearch.dc.html" aria-label="Search the documentation" style="display: flex; align-items: center; gap: 10px; height: 42px; min-width: 44px; box-sizing: border-box; padding: 0 12px; background: #121418; border: 1px solid #2E3137; color: #9BA0A8; font-size: 15px; text-decoration: none">
+<svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<span class="hide-sm" style="min-width: 160px">Search docs</span>
+<span class="hide-sm" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; border: 1px solid #3A3E46; padding: 0 6px">Ctrl K</span>
+</a>
+<a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" class="btn hide-sm" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px; background: #F4E04D; color: #0A0B0D; text-decoration: none; font-weight: 700; font-size: 14px">Asset Store
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</a>
+</div>
+<span aria-hidden="true" class="read"></span>
+</div>
+</header>
+
+<div style="display: flex; align-items: flex-start">
+
+<aside class="sidebar" aria-label="Documentation" style="flex: 0 0 280px; box-sizing: border-box; position: sticky; top: 64px; max-height: calc(100vh - 64px); overflow-y: auto; padding: 20px 14px 40px 20px; border-right: 1px solid #24272D; font-size: 15px; line-height: 1.4">
+<nav class="nav" aria-label="Documentation pages" style="display: flex; flex-direction: column; gap: 22px">
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 10px; text-decoration: none; color: #C9CCD1; border: 1px solid #2E3137">
+<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 11l8-7 8 7v9H4z"></path></svg>Docs home</a>
+<section style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; border-bottom: 2px solid #3A5BFF; margin-bottom: 6px">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #3A5BFF; flex: 0 0 10px"></span>
+<span style="font-weight: 700; font-size: 15px; flex: 1 1 auto">Easy FP Full Body Controller</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8DA2FF">v1.6.0</span>
+</div>
+<a href="DocsOverview.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="Docs.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Quick Start</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-fp-setup-wizard.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Setup Wizard</a>
+<a href="Docs-fp-items.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Items</a>
+<a href="Docs-fp-body-ik.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Body IK</a>
+<a href="Docs-fp-fpcutter.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">FPCutter</a>
+<a href="Docs-fp-vitals.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Vitals &amp; Stamina</a>
+<a href="Docs-fp-demos.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Demos</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Multiplayer</span>
+<a href="Docs-fishnet.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">FishNet</a>
+<a href="Docs-purrnet.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">PurrNet</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="Docs-interfaces.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Interfaces</a>
+<a href="DocsTroubleshooting.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Troubleshooting</a>
+<a href="DocsChangelog.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Changelog</a>
+<a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" style="padding: 7px 10px; text-decoration: none; color: #8DA2FF; font-size: 14px">Asset Store page ↗</a>
+</section>
+<section style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; border-bottom: 2px solid #FF4F7B; margin-bottom: 6px">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #FF4F7B; flex: 0 0 10px"></span>
+<span style="font-weight: 700; font-size: 15px; flex: 1 1 auto">Easy Dungeon Generator</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FF7A9A">v1.1.0</span>
+</div>
+<a href="Docs-dungeon-generator.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="Docs-dungeon-quick-start.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Quick Start</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-dungeon-room-designer.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Room Designer</a>
+<a href="Docs-dungeon-templates.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Templates &amp; Generation</a>
+<a href="Docs-dungeon-decoration.dc.html" class="on" aria-current="page" style="padding: 7px 10px; text-decoration: none; color: #FFFFFF; font-weight: 600; background: #3A1520; box-shadow: inset 3px 0 0 #FF4F7B">Decoration &amp; Themes</a>
+<a href="Docs-dungeon-streaming.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Chunk Streaming</a>
+<a href="Docs-dungeon-culling-navmesh.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Culling &amp; NavMesh</a>
+<a href="Docs-dungeon-demos.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Demo Scenes</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="DocsApi.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">API Reference</a>
+<a href="Docs-dungeon-troubleshooting.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Troubleshooting</a>
+<a href="Docs-dungeon-changelog.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Changelog</a>
+<a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" style="padding: 7px 10px; text-decoration: none; color: #FF7A9A; font-size: 14px">Asset Store page ↗</a>
+</section>
+</nav>
+</aside>
+
+<main id="content" style="flex: 1 1 auto; min-width: 0; padding: 36px 40px 96px; display: flex; gap: 56px; justify-content: center">
+<article style="flex: 0 1 840px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<nav aria-label="Breadcrumb" style="font-size: 14px; color: #9BA0A8">
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px">
+<li><a href="DocsHub.dc.html" style="color: #B9BDC4">Docs</a></li><li aria-hidden="true">›</li><li><a href="Docs-dungeon-generator.dc.html" style="color: #B9BDC4">Easy Dungeon Generator</a></li><li aria-hidden="true">›</li><li><span aria-current="page" style="color: #F2F1EC">Decoration &amp; Themes</span></li>
+</ol>
+</nav>
+<header style="display: flex; flex-direction: column; gap: 14px; padding-bottom: 24px; border-bottom: 1px solid #2E3137">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #FF7A9A">Guide</span>
+<h1 style="margin: 0; font-family: 'Anton', 'Impact', sans-serif; font-weight: 400; font-size: clamp(2.8rem, 5vw, 4.4rem); line-height: 0.95; text-transform: uppercase"><span class="line"><span class="rise">Decoration and Themes</span></span></h1>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C9CCD1">
+<span style="border: 1px solid #FF4F7B; color: #FF7A9A; padding: 2px 8px">Documentation for v1.1.0</span>
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">Unity 6000.5.0+</span>
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">Built-in · URP · HDRP</span>
+</div>
+</header>
+
+<div class="prose ">
+
+
+<p class="lead">A <strong>theme</strong> tells the generator which prefab to use for each part of a room: floors, walls, doors, ceilings, and stairs. A <strong>decoration profile</strong> fills the room with furniture, props, and clutter by rule, not by hand.</p>
+
+<h2 id="themes">Themes</h2>
+<p>Create a theme with <span class="menu">Assets › Create › DungeonGen › DungeonTheme</span> in your content folder. The theme maps each tile type to a prefab family. A family can be empty: if no ceiling prefabs are set, the renderer creates no ceilings.</p>
+<dl class="props">
+  <dt><code>tileSize</code> <span class="type">float</span> <span class="default">default 1</span></dt>
+  <dd>Size of one grid cell in meters. Match it to your modules. Rooms saved from the theme copy this value.</dd>
+  <dt><code>floorHeight</code> <span class="type">float</span> <span class="default">default 3</span></dt>
+  <dd>Height of one floor in meters.</dd>
+  <dt><code>wallThickness</code> <span class="type">float</span> <span class="default">default 0.25</span></dt>
+  <dd>Wall thickness in meters.</dd>
+  <dt><code>doubleSidedWalls</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>The wall kit looks right from both sides. Rooms saved from the theme can then share walls at seams. See <a href="Docs-dungeon-templates.dc.html#wall-mode">Wall mode</a>.</dd>
+  <dt><code>doubleSidedCeilings</code> <span class="type">bool</span> <span class="default">default off</span></dt>
+  <dd>The floor slab above is also the ceiling. Keep the ceiling prefab list empty when you turn this on.</dd>
+  <dt><code>pivot</code> <span class="type">Corner or Center</span> <span class="default">default Center</span></dt>
+  <dd>Where the pivot of each module sits in its cell.</dd>
+  <dt>Prefab families</dt>
+  <dd><code>floorPrefabs</code>, <code>wallPrefabs</code>, <code>doorPrefabs</code>, <code>corridorFloorPrefabs</code>, <code>corridorWallPrefabs</code>, <code>holePrefabs</code>, <code>ceilingPrefabs</code>, and <code>stairPrefabs</code>. Each entry sets the prefab, its size in cells, an offset, a rotation, and whether it may rotate.</dd>
+  <dt><code>stairProfile</code> <span class="type">StairProfile</span></dt>
+  <dd>The stair shape: its assembly mode, its length, back length, and width, and the pieces that make up the stair.</dd>
+</dl>
+
+<h3 id="theme-wizard">Dungeon Theme Wizard</h3>
+<p>The wizard measures your prefabs and proposes sizes and offsets. Open <span class="menu">Tools › DungeonGen › Dungeon Theme Wizard</span>.</p>
+<ol class="steps">
+  <li>
+    <p>Pick a theme in <strong>Source</strong>, or click <strong>Create New Theme</strong>. Click <strong>Reload</strong> to reread the theme from disk.</p>
+  </li>
+  <li>
+    <p>In <strong>Grid</strong>, click <strong>Detect Tile Size From Floors</strong> and, if the stairs need it, <strong>Detect Floor Height From Walls</strong>. Turn on <strong>Double-Sided Walls</strong> if your kit needs it.</p>
+  </li>
+  <li>
+    <p>Click <strong>Analyze All</strong>. Each row then shows a proposal. Apply only the proposals that match your kit with <strong>Use Proposal</strong>.</p>
+  </li>
+  <li>
+    <p>Check the Floors, Walls &amp; Doors, Corridors, Ceilings, and Stairs cards for each family.</p>
+    <figure>
+      <img src="/_blob/8b8e89f1d2665c02ca77e4d46fbf4f56" alt="Dungeon Theme Wizard with no theme selected. The Source section offers Create New Theme and Reload, and the steps Grid, Floors, Walls and Doors, Corridors, Ceilings, Stairs, and Preview and Apply are listed below it.">
+      <figcaption>Select or create a theme first. Every later step works on that theme.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <p>Open <strong>Preview &amp; Apply</strong> and check the seams in the preview. Click <strong>Apply</strong> to save the changes to the theme, or <strong>Cancel</strong> to discard them. Until you apply, the wizard only edits a temporary copy.</p>
+  </li>
+</ol>
+<aside class="callout tip">
+  <strong class="callout-title">Check seams in the preview</strong>
+  <p>A wall or door offset that looks small can leave a visible gap between two rooms. Always check the preview after you change an offset.</p>
+</aside>
+
+<h2 id="decoration-profiles">Decoration profiles</h2>
+<p>A <strong>DecorationProfile</strong> is an ordered list of categories. Create one with <span class="menu">Assets › Create › DungeonGen › Decoration Profile</span>. Each category places one kind of object:</p>
+<dl class="props">
+  <dt><code>priority</code> <span class="type">0–100</span> <span class="default">default 50</span></dt>
+  <dd>Higher priority is placed first. Relations between categories can change the order.</dd>
+  <dt><code>pool</code> <span class="type">list</span></dt>
+  <dd>The prefabs to pick from. Each entry has a <code>weight</code> (default 1), an optional <code>maxUses</code> (0 means unlimited), and optional overrides for position, rotation, scale, footprint, padding, and orientation.</dd>
+  <dt><code>amountMode</code> <span class="type">Fixed, Range, or Density</span> <span class="default">default Range</span></dt>
+  <dd>How many objects to place: exactly <code>minCount</code>, a random count between <code>minCount</code> and <code>maxCount</code> (default 1 to 3), or a density per square meter.</dd>
+  <dt><code>surface</code> <span class="type">Floor, Wall, or Ceiling</span> <span class="default">default Floor</span></dt>
+  <dd>Where objects go. Wall and ceiling objects are mounted automatically.</dd>
+  <dt><code>region</code> <span class="type">Anywhere, Edge, Interior, Corner, or Center</span> <span class="default">default Anywhere</span></dt>
+  <dd>Which part of the room to use. <code>Interior</code> keeps <code>interiorWallCells</code> (default 2) cells away from walls.</dd>
+  <dt><code>wallRegion</code> <span class="type">AnyWall, StraightWall, NearCorner, AwayFromCorner, NearDoor, or AwayFromDoor</span> <span class="default">default AnyWall</span></dt>
+  <dd>For wall objects: which part of the wall to use.</dd>
+  <dt><code>occupancy</code> <span class="type">Solid, GroundOverlay, WallMounted, CeilingMounted, or NonBlocking</span> <span class="default">default Solid</span></dt>
+  <dd>Solid objects block paths and collide with other decoration. Non-blocking objects, such as rugs, can overlap.</dd>
+  <dt><code>orientation</code> <span class="type">OrientationMode</span> <span class="default">default Random</span></dt>
+  <dd>How objects turn: random, cardinal (0, 90, 180, 270 degrees), fixed, aligned to the surface, or facing the nearest wall, the room center, or another category.</dd>
+  <dt><code>distribution</code> <span class="type">Natural, Even, or Clustered</span> <span class="default">default Natural</span></dt>
+  <dd>How objects spread across the candidate cells.</dd>
+  <dt><code>floorScope</code> <span class="type">All, Specific, Range, Bottom, or Top</span> <span class="default">default All</span></dt>
+  <dd>Which floors of a multi-floor room receive the category.</dd>
+  <dt><code>preservePaths</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Keeps paths between doors open. <code>minimumPathWidth</code> (default 1 m) sets the width that must stay clear.</dd>
+  <dt><code>fitMode</code> <span class="type">Fixed or AutoFit</span> <span class="default">default Fixed</span></dt>
+  <dd><code>AutoFit</code> moves the object so its back touches the wall, ceiling, or nearest wall, leaving <code>fitMargin</code> (default 0.02 m), and corrects by at most <code>fitMaxCorrection</code> (default 1 m).</dd>
+  <dt><code>relations</code> <span class="type">list</span></dt>
+  <dd>Rules between categories: <code>Avoid</code>, <code>PreferNear</code>, or <code>RequireNear</code>, with a distance in meters (default 1).</dd>
+  <dt><code>sameCategoryCellGap</code>, <code>doorDistanceCells</code>, <code>stairDistanceCells</code> <span class="type">int</span> <span class="default">default 1 each</span></dt>
+  <dd>Minimum gap in cells between objects of this category, and between objects and doors or stairs.</dd>
+  <dt><code>footprintPadding</code> <span class="type">float</span> <span class="default">default 0.1</span></dt>
+  <dd>Extra space in meters kept around each object's footprint.</dd>
+  <dt><code>failurePolicy</code> <span class="type">AllowPartial, RequireMinimum, or RequireExact</span> <span class="default">default AllowPartial</span></dt>
+  <dd>What happens when the target count cannot be reached. <code>AllowPartial</code> keeps the objects that fit. <code>RequireMinimum</code> removes the whole category from the room when fewer than <code>minCount</code> fit. <code>RequireExact</code> removes it unless exactly the target count fits.</dd>
+  <dt><code>enabled</code> <span class="type">bool</span> <span class="default">default on</span></dt>
+  <dd>Turns the category off without deleting it.</dd>
+</dl>
+<p>Decoration is deterministic. The same seed gives the same result. Each category has its own seed offset, so you can reroll one category without changing the others.</p>
+
+<h3 id="objects-mode">Objects mode</h3>
+<p>Switch the Room Designer to <strong>Objects</strong> to edit the profile for the current room.</p>
+<ul>
+  <li><strong>Profile</strong> selects the profile. <strong>Seed &amp; Randomness</strong> sets the seed (default 12345); tick <strong>Random</strong> for a new seed each time.</li>
+  <li><strong>Rebake All Footprints</strong> measures each object's footprint again. Save Prefab does this for you, but it helps when you change an object.</li>
+  <li><strong>Spawn All</strong>, <strong>Respawn All</strong>, and <strong>Despawn All</strong> place, redo, and remove the decoration in the scene view. The canvas toolbar has the same actions as <strong>Spawn</strong>, <strong>Respawn</strong>, and <strong>Despawn</strong>.</li>
+  <li><strong>+ Add</strong>, <strong>Duplicate</strong>, and <strong>Delete</strong> manage categories.</li>
+  <li>Left-click a cell to add a <strong>manual pin</strong>, which places an object on that cell first. Right-click a pin to remove it. Pins are stored in the profile, so every room that uses the profile gets them.</li>
+  <li><strong>Bake Decor</strong> decides how Save Prefab handles the furniture. See <a href="Docs-dungeon-room-designer.dc.html#save-prefab">Save a room prefab</a>.</li>
+</ul>
+
+<h2 id="runtime-decoration">Decoration at runtime</h2>
+<p>A room prefab with a <code>RoomDecorationAuthoring</code> component can be decorated at runtime. Save Prefab adds this component. It stores the room geometry, the profile, and the seed.</p>
+<p>When <code>DungeonManager.decorateAfterGeneration</code> is on (the default), the manager decorates each generated room that has the component. The same solver runs in the editor preview and at runtime, so the result you see while editing is the result in play mode.</p>
+<ul>
+  <li>To rebuild the decoration of one category at runtime, call <code>RerollCategory</code> on the room's <code>RoomDecorationAuthoring</code>. Each call picks a new result for that category.</li>
+  <li>If <strong>Bake Decor</strong> was on when the prefab was saved, the furniture is already in the prefab, and the runtime skips the room.</li>
+</ul>
+
+<aside class="callout warn">
+  <strong class="callout-title">Profile errors block the save</strong>
+  <p>A profile with errors stops Save Prefab and shows the list. Typical errors are an empty pool, a pool entry with weight 0, a relation to a category that no longer exists, a minimum above the maximum count, and an object whose footprint is not baked. For footprints, click <strong>Rebake All Footprints</strong>, then save again.</p>
+</aside>
+
+<h2 id="pitfalls">Common mistakes</h2>
+<ul>
+  <li><strong>Decoration does not appear.</strong> Check that the room prefab has <code>RoomDecorationAuthoring</code> and that <code>decorateAfterGeneration</code> is on. Then check the category's failure policy, because <code>RequireMinimum</code> and <code>RequireExact</code> drop the category when its count is not reached.</li>
+  <li><strong>Pins appear in every room.</strong> Pins belong to the profile. Use a separate profile for rooms that need different pins.</li>
+  <li><strong>Doors blocked by furniture.</strong> Keep <code>preservePaths</code> on, and raise <code>minimumPathWidth</code> if the paths are still too narrow.</li>
+</ul>
+
+</div>
+
+<nav aria-label="Previous and next page" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; padding-top: 28px; border-top: 1px solid #2E3137">
+<a href="Docs-dungeon-templates.dc.html" rel="prev" class="pn" style="display: flex; flex-direction: column; gap: 2px; padding: 16px 18px; border: 1px solid #3A3E46; text-decoration: none"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">← Previous</span><strong style="font-size: 19px">Templates &amp; Generation</strong></a>
+<a href="Docs-dungeon-streaming.dc.html" rel="next" class="pn" style="display: flex; flex-direction: column; gap: 2px; padding: 16px 18px; border: 1px solid #3A3E46; text-decoration: none; text-align: right"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">Next →</span><strong style="font-size: 19px">Chunk Streaming</strong></a>
+</nav>
+</article>
+
+<aside class="toc" aria-labelledby="toc-h" style="flex: 0 0 220px; position: sticky; top: 100px; font-size: 14px; line-height: 1.4">
+<p id="toc-h" style="margin: 0 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">On this page</p>
+<ol style="margin: 0; padding: 0; list-style: none; border-left: 1px solid #2E3137">
+<li><a href="#themes" style="display: block; padding: 5px 12px; text-decoration: none; color: #F2F1EC; font-weight: 600; box-shadow: inset 2px 0 0 #FF4F7B; margin-left: -1px">Themes</a></li>
+<li><a href="#decoration-profiles" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Decoration profiles</a></li>
+<li><a href="#runtime-decoration" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Decoration at runtime</a></li>
+<li><a href="#pitfalls" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Common mistakes</a></li>
+</ol>
+</aside>
+</main>
+</div>
+<footer style="border-top: 1px solid #24272D">
+<div style="padding: 22px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: #9BA0A8">
+<span>© 2026 vedaloiv · <a href="Main.dc.html" style="color: #B9BDC4">Home</a> · <a href="DocsHub.dc.html" style="color: #B9BDC4">All docs</a></span>
+<a href="mailto:karakask2004@gmail.com" style="color: #B9BDC4">karakask2004@gmail.com</a>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":6420}}'>
+class Component extends DCLogic {
+renderVals() {
+return { rootClass: this.props.motion === false ? 'still' : '' };
+}
+}
+</script>
+</body>
+</html>

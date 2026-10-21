@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Docs components</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Rubik:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#F2F1EC}
+.lbl{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8A8F97}
+.cell{border:1px solid #24272D;background:#0E0F12;padding:22px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.mono{font-family:'JetBrains Mono',monospace}
+.bdg{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;padding:0 7px}
+.pulse{animation:pulse 2s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #3A5BFFaa}100%{box-shadow:0 0 0 10px #3A5BFF00}}
+.still *{animation:none !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="width: 1440px; background: #0A0B0D; color: #F2F1EC; font-family: 'Rubik', system-ui, sans-serif; font-size: 16px; line-height: 1.5; padding: 56px 64px 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 36px">
+
+<header style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; border-bottom: 1px solid #2E3137; padding-bottom: 24px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="lbl" style="color: #F4E04D">Play Mode · docs</span>
+<h1 style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: 72px; line-height: 0.95; text-transform: uppercase">Docs components</h1>
+</div>
+<p style="margin: 0; max-width: 460px; color: #B9BDC4">The parts the docs generator puts on every page. The asset decides the accent: cobalt for Easy FP, pink for Dungeon Generator, teal for Earshot. Yellow stays the brand signal for actions and warnings.</p>
+</header>
+
+<section style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div class="cell" style="border-top: 4px solid #3A5BFF">
+<span class="lbl">Accent · Easy FP</span>
+<div style="display: flex; gap: 8px"><span style="flex: 1; height: 44px; background: #3A5BFF"></span><span style="flex: 1; height: 44px; background: #17204A"></span><span style="flex: 1; height: 44px; background: #8DA2FF"></span></div>
+<div class="mono" style="font-size: 12px; color: #B9BDC4">#3A5BFF line, bar, node · #17204A active row · #8DA2FF links, kicker</div>
+</div>
+<div class="cell" style="border-top: 4px solid #FF4F7B">
+<span class="lbl">Accent · Dungeon Generator</span>
+<div style="display: flex; gap: 8px"><span style="flex: 1; height: 44px; background: #FF4F7B"></span><span style="flex: 1; height: 44px; background: #3A1520"></span><span style="flex: 1; height: 44px; background: #FF7A9A"></span></div>
+<div class="mono" style="font-size: 12px; color: #B9BDC4">#FF4F7B line, bar, node · #3A1520 active row · #FF7A9A links, kicker</div>
+</div>
+<div class="cell" style="border-top: 4px solid #2DE2C0">
+<span class="lbl">Accent · Earshot (when its docs ship)</span>
+<div style="display: flex; gap: 8px"><span style="flex: 1; height: 44px; background: #2DE2C0"></span><span style="flex: 1; height: 44px; background: #0F2E29"></span><span style="flex: 1; height: 44px; background: #4FF0D2"></span></div>
+<div class="mono" style="font-size: 12px; color: #B9BDC4">#2DE2C0 line, bar, node · #0F2E29 active row · #4FF0D2 links, kicker</div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: 300px minmax(0, 1fr) 260px; gap: 16px">
+<div class="cell">
+<span class="lbl">Sidebar</span>
+<div style="display: flex; flex-direction: column; font-size: 15px; line-height: 1.4">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; border-bottom: 2px solid #3A5BFF; margin-bottom: 6px"><span style="width: 10px; height: 10px; background: #3A5BFF"></span><span style="font-weight: 700; flex: 1">Easy FP Full Body Controller</span><span class="mono" style="font-size: 12px; color: #8DA2FF">v1.6.0</span></div>
+<span style="padding: 7px 10px; color: #C9CCD1">Default item</span>
+<span style="padding: 7px 10px; color: #F2F1EC; background: #16181C">Hover</span>
+<span style="padding: 7px 10px; color: #FFFFFF; font-weight: 600; background: #17204A; box-shadow: inset 3px 0 0 #3A5BFF">Current page</span>
+<span class="lbl" style="padding: 12px 10px 4px">Group label</span>
+<span style="padding: 7px 10px; color: #FFFFFF; font-weight: 600; background: #3A1520; box-shadow: inset 3px 0 0 #FF4F7B">Current page, Dungeon</span>
+<span style="padding: 7px 10px; color: #8DA2FF; font-size: 14px">Asset Store page ↗</span>
+</div>
+</div>
+
+<div class="cell">
+<span class="lbl">Page head</span>
+<div class="mono" style="font-size: 14px; color: #9BA0A8">Docs <span>›</span> Easy FP Full Body Controller <span>›</span> <span style="color: #F2F1EC">Quick Start</span></div>
+<span class="lbl" style="color: #8DA2FF">Getting started · kicker</span>
+<div style="font-family: 'Anton', sans-serif; font-size: 64px; line-height: 0.95; text-transform: uppercase">Page title</div>
+<div class="mono" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: #C9CCD1">
+<span style="border: 1px solid #3A5BFF; color: #8DA2FF; padding: 2px 8px">Documentation for v1.6.0</span>
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">Unity 6000.5+ · URP</span></div>
+<div style="font-size: 26px; font-weight: 700; line-height: 1.25; margin-top: 6px">Section heading (h2, Rubik 700 26px)</div>
+<div style="font-size: 19px; font-weight: 700">Sub heading (h3, Rubik 700 19px)</div>
+<p style="margin: 0; color: #C9CCD1; font-size: 17px; line-height: 1.7">Body text in Rubik 17/1.7, measure 760–880px. Inline code looks like <code class="mono" style="font-size: 14px; background: #1A1D22; color: #F4E04D; padding: 1px 6px">PlayerFootPlanting</code> and links like <a href="#" style="color: #8DA2FF">Interfaces</a>.</p>
+</div>
+
+<div class="cell">
+<span class="lbl">On this page</span>
+<div style="border-left: 1px solid #2E3137; font-size: 14px; line-height: 1.4">
+<div style="padding: 5px 12px; color: #F2F1EC; font-weight: 600; box-shadow: inset 2px 0 0 #3A5BFF; margin-left: -1px">Current section</div>
+<div style="padding: 5px 12px; color: #B9BDC4">Requirements</div>
+<div style="padding: 4px 12px 4px 26px; color: #B9BDC4">Nested h3</div>
+<div style="padding: 5px 12px; color: #B9BDC4">Troubleshooting</div>
+</div>
+<span class="lbl" style="margin-top: 10px">Reading bar</span>
+<div style="height: 3px; background: #24272D"><div style="height: 3px; width: 45%; background: #3A5BFF"></div></div>
+<div style="font-size: 13px; color: #9BA0A8">Under the top bar, tied to scroll, in the asset accent.</div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div class="cell">
+<span class="lbl">Callouts</span>
+<div style="background: #F4E04D; color: #0A0B0D; padding: 14px 18px"><b>Warning</b> — solid yellow. Breaking changes, steps that lose data.</div>
+<div style="border: 1px solid #3A5BFF; background: #10162E; padding: 14px 18px; color: #E5E6E2"><b style="color: #8DA2FF">Note</b> — asset outline. Tips and context.</div>
+<div style="border: 1px solid #3DDC97; background: #0D2219; padding: 14px 18px; color: #E5E6E2"><b style="color: #3DDC97">Tip</b> — green outline. Shortcuts and optional extras.</div>
+</div>
+
+<div class="cell">
+<span class="lbl">Code block</span>
+<pre class="mono" style="margin: 0; padding: 14px 18px; background: #050607; border: 1px solid #2E3137; font-size: 14px; line-height: 1.6; overflow: hidden"><span style="color: #FF7A9A">public class</span> DungeonManager : <span style="color: #4FF0D2">MonoBehaviour</span>
+<span style="color: #8A8F97">// keyword pink · type teal · comment grey</span>
+manager.<span style="color: #F4E04D">Generate</span>();</pre>
+<span class="lbl">Member row</span>
+<div style="border-top: 1px solid #2E3137; padding-top: 12px; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px"><code class="mono" style="font-size: 15px; font-weight: 600">GenerationProgress</code><span class="mono" style="font-size: 12px; color: #4FF0D2">float</span><span class="bdg" style="border: 1px solid #3A3E46; color: #9BA0A8; font-weight: 400">read-only, 0 to 1</span></div>
+<div style="font-size: 15px; color: #C9CCD1">Name in mono, type in teal, flags as tags, one-line description.</div>
+</div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 16px">
+<div class="cell">
+<span class="lbl">Badges</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<span class="bdg" style="background: #3A5BFF; color: #FFFFFF">LATEST</span>
+<span class="bdg" style="background: #FF4F7B; color: #0A0B0D">BREAKING</span>
+<span class="bdg" style="border: 1px solid #3DDC97; color: #3DDC97">ADDED</span>
+<span class="bdg" style="border: 1px solid #8DA2FF; color: #8DA2FF">CHANGED</span>
+<span class="bdg" style="border: 1px solid #4FF0D2; color: #4FF0D2">FIXED</span>
+<span class="bdg" style="border: 1px solid #FF7A9A; color: #FF7A9A">REMOVED</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<span class="bdg" style="background: #FF4F7B; color: #0A0B0D; letter-spacing: 0">Error</span>
+<span class="bdg" style="border: 1px solid #F4E04D; color: #F4E04D; letter-spacing: 0">Warning</span>
+<span class="bdg" style="border: 1px solid #8DA2FF; color: #8DA2FF; letter-spacing: 0">Info</span>
+<span class="bdg" style="border: 1px solid #3A3E46; color: #9BA0A8; letter-spacing: 0; font-weight: 400">optional</span>
+</div>
+<div style="font-size: 13px; color: #9BA0A8">Filled = needs action. Outline = information.</div>
+</div>
+
+<div class="cell">
+<span class="lbl">Changelog node</span>
+<div style="display: flex; flex-direction: column; gap: 14px; position: relative; padding-left: 28px">
+<span style="position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: #2E3137"></span>
+<div style="position: relative"><span class="pulse" style="position: absolute; left: -28px; top: 8px; width: 14px; height: 14px; background: #3A5BFF"></span><span style="font-family: 'Anton', sans-serif; font-size: 30px; line-height: 1">1.6.0</span> <span class="mono" style="font-size: 12px; color: #9BA0A8">latest, pulsing</span></div>
+<div style="position: relative"><span style="position: absolute; left: -28px; top: 8px; width: 14px; height: 14px; border: 2px solid #3A5BFF; background: #0A0B0D; box-sizing: border-box"></span><span style="font-family: 'Anton', sans-serif; font-size: 30px; line-height: 1">1.4.0</span> <span class="mono" style="font-size: 12px; color: #9BA0A8">older</span></div>
+</div>
+</div>
+
+<div class="cell">
+<span class="lbl">Filter chips</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 14px; font-size: 14px; font-weight: 600; border: 1px solid #F4E04D; background: #F4E04D; color: #0A0B0D">All · 14</span>
+<span style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 14px; font-size: 14px; font-weight: 600; border: 1px solid #3A3E46">Error · 7</span>
+</div>
+<span class="lbl">Disclosure</span>
+<div style="border-top: 1px solid #2E3137; border-bottom: 1px solid #2E3137; padding: 12px 4px; display: flex; justify-content: space-between; font-weight: 600">Problem as a question <span>+</span></div>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); gap: 16px">
+<div class="cell">
+<span class="lbl">Pager</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="padding: 14px 16px; border: 1px solid #3A3E46; display: flex; flex-direction: column"><span class="mono" style="font-size: 12px; color: #9BA0A8">← Previous</span><strong>Overview</strong></div>
+<div style="padding: 14px 16px; border: 1px solid #3A5BFF; box-shadow: 5px 5px 0 #3A5BFF; transform: translate(-3px, -3px); display: flex; flex-direction: column; text-align: right"><span class="mono" style="font-size: 12px; color: #9BA0A8">Next → (hover)</span><strong>Setup Wizard</strong></div>
+</div>
+</div>
+<div class="cell">
+<span class="lbl">Search result</span>
+<div style="background: #17204A; box-shadow: inset 3px 0 0 #3A5BFF; padding: 10px 14px">
+<div style="font-weight: 600">Demos <span style="color: #8DA2FF">›</span> Ready-made <mark style="background: #F4E04D; color: #0A0B0D; padding: 0 2px">prefab</mark>s</div>
+<div style="font-size: 14px; color: #B9BDC4">Both prefabs are in Assets/FBSystem/…</div>
+</div>
+<div style="font-size: 13px; color: #9BA0A8">Grouped by asset. The selected row takes the asset accent.</div>
+</div>
+<div class="cell">
+<span class="lbl">Video</span>
+<div style="position: relative; aspect-ratio: 16 / 9; background: #121418; border: 1px solid #2E3137">
+<span style="position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; background: #F4E04D; box-shadow: 5px 5px 0 #000000; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="#0A0B0D"><path d="M7 4l13 8-13 8z"></path></svg></span>
+</div>
+<div style="font-size: 13px; color: #9BA0A8">Poster first. YouTube (no-cookie) loads only on click.</div>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":1832}}'>
+class Component extends DCLogic {
+renderVals() {
+return { rootClass: this.props.motion === false ? 'still' : '' };
+}
+}
+</script>
+</body>
+</html>

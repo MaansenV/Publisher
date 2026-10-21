@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Docs menu on a phone</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Rubik:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#F2F1EC}a:hover{color:#F4E04D}
+:focus-visible{outline:3px solid #F4E04D;outline-offset:3px}
+.sheet{animation:slide .4s cubic-bezier(.16,1,.3,1) both}
+@keyframes slide{from{transform:translateX(-100%)}to{transform:none}}
+.grp summary{cursor:pointer;list-style:none}
+.grp summary::-webkit-details-marker{display:none}
+.grp[open] .chev{transform:rotate(90deg)}
+.chev{transition:transform .2s}
+.still *{animation:none !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #0A0B0D; color: #F2F1EC; font-family: 'Rubik', system-ui, sans-serif; font-size: 16px; line-height: 1.45">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(5, 6, 7, 0.7)"></div>
+
+<nav aria-label="Documentation" class="sheet" style="position: absolute; top: 0; left: 0; bottom: 0; width: 340px; background: #0E0F12; border-right: 1px solid #3A3E46; display: flex; flex-direction: column">
+<div style="flex: 0 0 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px 0 16px; border-bottom: 1px solid #24272D">
+<span style="display: flex; align-items: center; gap: 8px"><span style="font-weight: 700; font-size: 18px">vedaloiv</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F4E04D">docs</span></span>
+<a href="DocsMobile.dc.html" aria-label="Close menu" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: #F4E04D; color: #0A0B0D">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</a>
+</div>
+
+<div style="flex: 1 1 auto; overflow-y: auto; padding: 14px 12px; display: flex; flex-direction: column; gap: 14px; font-size: 15px">
+<a href="DocsSearch.dc.html" style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 12px; background: #121418; border: 1px solid #2E3137; color: #9BA0A8; text-decoration: none">
+<svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>Search docs</a>
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid #2E3137; text-decoration: none; color: #C9CCD1">
+<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 11l8-7 8 7v9H4z"></path></svg>Docs home</a>
+
+<details class="grp" open>
+<summary style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border-bottom: 2px solid #3A5BFF">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #3A5BFF; flex: 0 0 10px"></span>
+<span style="font-weight: 700; flex: 1 1 auto">Easy FP Full Body Controller</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8DA2FF">v1.6.0</span>
+<svg aria-hidden="true" class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"></path></svg>
+</summary>
+<div style="display: flex; flex-direction: column; padding-top: 4px">
+<a href="DocsOverview.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="DocsMobile.dc.html" aria-current="page" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #FFFFFF; font-weight: 600; background: #17204A; box-shadow: inset 3px 0 0 #3A5BFF">Quick Start</a>
+<span style="padding: 10px 12px 2px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-fp-setup-wizard.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Setup Wizard</a>
+<a href="Docs-fp-items.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Items</a>
+<a href="Docs-fp-body-ik.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Body IK</a>
+<a href="Docs-fp-fpcutter.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">FPCutter</a>
+<a href="Docs-fp-vitals.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Vitals &amp; Stamina</a>
+<a href="Docs-fp-demos.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Demos</a>
+<span style="padding: 10px 12px 2px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Multiplayer</span>
+<a href="Docs-fishnet.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">FishNet</a>
+<a href="Docs-purrnet.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">PurrNet</a>
+<span style="padding: 10px 12px 2px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="Docs-interfaces.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Interfaces</a>
+<a href="DocsTroubleshooting.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Troubleshooting</a>
+<a href="DocsChangelog.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Changelog</a>
+</div>
+</details>
+
+<details class="grp">
+<summary style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border-bottom: 2px solid #FF4F7B">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #FF4F7B; flex: 0 0 10px"></span>
+<span style="font-weight: 700; flex: 1 1 auto">Easy Dungeon Generator</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FF7A9A">v1.1.0</span>
+<svg aria-hidden="true" class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"></path></svg>
+</summary>
+<div style="display: flex; flex-direction: column; padding-top: 4px">
+<a href="Docs-dungeon-generator.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="Docs-dungeon-quick-start.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Quick Start</a>
+<span style="padding: 10px 12px 2px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-dungeon-room-designer.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Room Designer</a>
+<a href="Docs-dungeon-templates.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Templates &amp; Generation</a>
+<a href="Docs-dungeon-decoration.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Decoration &amp; Themes</a>
+<a href="Docs-dungeon-streaming.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Chunk Streaming</a>
+<a href="Docs-dungeon-culling-navmesh.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Culling &amp; NavMesh</a>
+<a href="Docs-dungeon-demos.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Demo Scenes</a>
+<span style="padding: 10px 12px 2px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="DocsApi.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">API Reference</a>
+<a href="Docs-dungeon-troubleshooting.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Troubleshooting</a>
+<a href="Docs-dungeon-changelog.dc.html" style="display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 12px; text-decoration: none; color: #C9CCD1">Changelog</a>
+</div>
+</details>
+</div>
+
+<div style="flex: 0 0 auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid #24272D">
+<a href="Main.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 52px; text-decoration: none; font-weight: 600; border-right: 1px solid #24272D">← Home</a>
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 52px; text-decoration: none; font-weight: 600">All docs</a>
+</div>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return { rootClass: this.props.motion === false ? 'still' : '' };
+}
+}
+</script>
+</body>
+</html>

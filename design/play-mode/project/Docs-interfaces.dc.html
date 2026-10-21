@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Interfaces — Easy FP Full Body Controller docs</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Rubik:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0A0B0D}
+a{color:#F2F1EC}a:hover{color:#F4E04D}
+:focus-visible{outline:3px solid #F4E04D;outline-offset:3px}
+.menu-btn{display:none}
+@media (max-width: 1100px){.toc{display:none}}
+@media (max-width: 860px){.sidebar{display:none !important}.menu-btn{display:inline-flex !important}.hide-sm{display:none !important}main{padding:24px 16px 72px !important}}
+.nav a{transition:background .15s,color .15s}
+.nav a:hover{background:#16181C;color:#F2F1EC}
+.nav a.on:hover{background:#17204A}
+.btn{transition:transform .18s ease,box-shadow .18s ease}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 #F2F1EC}
+.pn,.prose .card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s}
+.pn:hover,.prose .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 #3A5BFF;border-color:#3A5BFF;color:#F2F1EC}
+.line{display:block;overflow:hidden;padding-bottom:0.04em}
+.rise{display:block;animation:rise .9s cubic-bezier(.16,1,.3,1) both}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.read{position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:#3A5BFF;transform-origin:left;transform:scaleX(.2)}
+@supports (animation-timeline: scroll()){.read{transform:scaleX(0);animation:grow linear both;animation-timeline:scroll(root)}}
+@keyframes grow{to{transform:scaleX(1)}}
+.prose{display:flex;flex-direction:column;gap:18px;font-size:17px;line-height:1.7;color:#C9CCD1}
+.prose>*{margin:0}
+.prose h2{margin-top:22px;font-size:26px;font-weight:700;line-height:1.25;color:#F2F1EC;scroll-margin-top:90px}
+.prose h3{margin:6px 0 0;font-size:19px;font-weight:700;line-height:1.3;color:#F2F1EC;scroll-margin-top:90px}
+.prose p{margin:0}
+.prose p.lead{font-size:19px;color:#D9DBDF}
+.prose strong{color:#F2F1EC;font-weight:600}
+.prose a{color:#8DA2FF}
+.prose a:hover{color:#F4E04D}
+.prose code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:#1A1D22;color:#F4E04D;padding:1px 6px}
+.prose pre{margin:0;background:#050607;border:1px solid #2E3137;padding:14px 18px;overflow-x:auto;font-size:14px;line-height:1.6}
+.prose pre code{background:none;padding:0;color:#E5E6E2;font-size:14px}
+.prose :not(pre)>code{overflow-wrap:anywhere}
+.prose td,.prose dd,.prose li,.prose p,.prose h2,.prose h3,.prose summary{overflow-wrap:anywhere}
+.prose kbd{font-family:'JetBrains Mono',monospace;font-size:.8em;border:1px solid #3A3E46;border-bottom-width:2px;padding:0 6px;color:#F2F1EC;background:#121418}
+.prose .menu{font-weight:600;color:#F2F1EC}
+.prose ul,.prose ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.prose li>ul,.prose li>ol{margin-top:6px}
+.prose ol.steps{list-style:none;padding:0;gap:0;border:1px solid #2E3137;counter-reset:s}
+.prose ol.steps>li{counter-increment:s;position:relative;padding:14px 18px 14px 62px;border-bottom:1px solid #24272D}
+.prose ol.steps>li:last-child{border-bottom:0}
+.prose ol.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:20px;top:16px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#8DA2FF}
+.prose dl{margin:0}
+.prose dl.props{border-top:1px solid #2E3137}
+.prose dl.props dt{padding-top:14px;color:#F2F1EC;line-height:1.9}
+.prose dt .type,.prose dt .default{margin-left:6px}
+.prose dl.props dd{margin:4px 0 0;padding-bottom:14px;border-bottom:1px solid #24272D;font-size:15px;line-height:1.6}
+.prose dt code{font-size:14px;font-weight:600;background:none;color:#F2F1EC;padding:0}
+.prose .type{font-family:'JetBrains Mono',monospace;font-size:12px;color:#4FF0D2}
+.prose .default{font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid #3A3E46;color:#9BA0A8;padding:0 6px}
+.prose .callout{padding:14px 18px;color:#E5E6E2;display:flex;flex-direction:column;gap:6px}
+.prose .callout>*{margin:0}
+.prose .callout-title{display:block;font-weight:700}
+.prose .callout.warn{background:#F4E04D;color:#0A0B0D}
+.prose .callout.warn strong,.prose .callout.warn a{color:#0A0B0D}
+.prose .callout.warn a{font-weight:700}
+.prose .callout.warn code{background:#0A0B0D;color:#F4E04D}
+.prose .callout.note{border:1px solid #3A5BFF;background:#10162E}
+.prose .callout.note .callout-title{color:#8DA2FF}
+.prose .callout.tip{border:1px solid #3DDC97;background:#0D2219}
+.prose .callout.tip .callout-title{color:#3DDC97}
+.prose .badge{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:#3A5BFF;color:#FFFFFF;padding:1px 7px;vertical-align:middle}
+.prose .badge.breaking{background:#FF4F7B;color:#0A0B0D}
+.prose .tbl{border:1px solid #2E3137;overflow-x:auto}
+.prose table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.55}
+.prose th{background:#121418;text-align:left;vertical-align:bottom;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#9BA0A8;padding:10px 14px;border-bottom:1px solid #3A3E46}
+.prose td{padding:10px 14px;border-bottom:1px solid #24272D;vertical-align:top}
+.prose tbody tr:last-child td{border-bottom:0}
+.prose tbody tr{transition:background .15s}
+.prose tbody tr:hover{background:#121418}
+.prose figure{margin:0;border:1px solid #2E3137;background:#050607}
+.prose figure img{display:block;max-width:100%;height:auto;margin:0 auto}
+.prose figcaption{padding:10px 14px;border-top:1px solid #2E3137;font-size:14px;color:#9BA0A8}
+.prose .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.prose .card{border:1px solid #2E3137;background:#121418;padding:14px 16px;text-decoration:none;display:flex;flex-direction:column;gap:2px;color:#F2F1EC}
+.prose .card span{font-size:14px;color:#B9BDC4;line-height:1.5}
+.prose details{border-top:1px solid #2E3137;border-bottom:1px solid #2E3137}
+.prose summary{cursor:pointer;padding:14px 4px;font-weight:600;color:#F2F1EC}
+.prose summary:hover{color:#F4E04D}
+.prose .vid{position:relative;display:block;aspect-ratio:16/9;border:1px solid #2E3137;background:#050607;overflow:hidden}
+.prose .vid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.75}
+.prose .vid-play{position:absolute;left:50%;top:50%;width:80px;height:80px;margin:-40px 0 0 -40px;background:#F4E04D;display:flex;align-items:center;justify-content:center;box-shadow:6px 6px 0 #000;transition:transform .18s}
+.prose .vid:hover .vid-play{transform:scale(1.08)}
+.prose .key{border:1px solid #2E3137}
+.prose .key img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:left center}
+.prose .vid-note{position:absolute;left:12px;bottom:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#F2F1EC;background:rgba(5,6,7,.8);padding:2px 8px}
+.prose.changelog{gap:0}
+.prose.changelog>*:not(section){margin-bottom:18px}
+.prose .rel{position:relative;margin-left:7px;padding:0 0 36px 34px;border-left:2px solid #2E3137;display:flex;flex-direction:column;gap:14px}
+.prose .rel>*{margin:0}
+.prose .rel h2{margin:0;font-family:'Anton','Impact',sans-serif;font-weight:400;font-size:38px;line-height:1;position:relative}
+.prose .rel h2::before{content:"";position:absolute;left:-42px;top:10px;width:14px;height:14px;box-sizing:border-box;border:2px solid #3A5BFF;background:#0A0B0D}
+.prose .rel-latest h2::before{background:#3A5BFF;animation:pulse 2s ease-out infinite}
+.prose .rel h2 .badge{font-family:'JetBrains Mono',monospace;font-size:12px;margin-left:10px;position:relative;top:-6px}
+.prose .rel>p:first-of-type{font-family:'JetBrains Mono',monospace;font-size:13px;color:#9BA0A8;margin-top:-6px}
+.prose h3.chg{align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid;padding:0 8px;line-height:1.7;margin-top:6px}
+.prose h3.chg-added{color:#3DDC97}.prose h3.chg-changed{color:#8DA2FF}.prose h3.chg-fixed{color:#4FF0D2}.prose h3.chg-removed{color:#FF7A9A}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #3A5BFFaa}100%{box-shadow:0 0 0 10px #3A5BFF00}}
+.prose .lvl{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;padding:1px 7px;white-space:nowrap}
+.prose .lvl-error{background:#FF4F7B;color:#0A0B0D}
+.prose .lvl-warning{border:1px solid #F4E04D;color:#F4E04D}
+.prose .lvl-info{border:1px solid #8DA2FF;color:#8DA2FF}
+.prose .lvl-filter{display:flex;flex-wrap:wrap;gap:8px}
+.prose .lvl-filter input{position:absolute;opacity:0;width:1px;height:1px}
+.prose .lvl-filter label{min-height:40px;display:inline-flex;align-items:center;padding:0 14px;font-size:14px;font-weight:600;border:1px solid #3A3E46;cursor:pointer;color:#F2F1EC}
+.prose .lvl-filter label:hover{border-color:#F2F1EC}
+.prose .lvl-filter input:checked+label{background:#F4E04D;border-color:#F4E04D;color:#0A0B0D}
+.prose .lvl-filter input:focus-visible+label{outline:3px solid #F4E04D;outline-offset:3px}
+.prose:has(#lvl-error:checked) tr[data-level]:not([data-level="error"]),.prose:has(#lvl-warning:checked) tr[data-level]:not([data-level="warning"]),.prose:has(#lvl-info:checked) tr[data-level]:not([data-level="info"]){display:none}
+.still *{animation:none !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="background: #0A0B0D; color: #F2F1EC; font-family: 'Rubik', system-ui, sans-serif; font-size: 17px; line-height: 1.7; min-width: 0">
+
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(10, 11, 13, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #24272D">
+<div style="height: 64px; padding: 0 20px; display: flex; align-items: center; gap: 20px; position: relative">
+<a href="DocsMobileMenu.dc.html" class="menu-btn" aria-label="Open documentation menu" style="align-items: center; gap: 8px; height: 44px; padding: 0 12px; border: 1px solid #3A3E46; color: #F2F1EC; font-size: 15px; text-decoration: none">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>Menu
+</a>
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<span aria-hidden="true" style="width: 22px; height: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px">
+<span style="background: #3A5BFF"></span><span style="background: #FF4F7B"></span><span style="background: #2DE2C0"></span><span style="background: #F4E04D"></span>
+</span>
+<span style="font-weight: 700; font-size: 19px">vedaloiv</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F4E04D">docs</span>
+</a>
+<nav aria-label="Site" class="hide-sm" style="display: flex; gap: 2px">
+<a href="Main.dc.html" style="text-decoration: none; padding: 8px 12px; font-size: 15px; color: #C9CCD1">Home</a>
+<a href="DocsHub.dc.html" style="text-decoration: none; padding: 8px 12px; font-size: 15px; color: #C9CCD1">All docs</a>
+</nav>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 10px">
+<a href="DocsSearch.dc.html" aria-label="Search the documentation" style="display: flex; align-items: center; gap: 10px; height: 42px; min-width: 44px; box-sizing: border-box; padding: 0 12px; background: #121418; border: 1px solid #2E3137; color: #9BA0A8; font-size: 15px; text-decoration: none">
+<svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<span class="hide-sm" style="min-width: 160px">Search docs</span>
+<span class="hide-sm" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; border: 1px solid #3A3E46; padding: 0 6px">Ctrl K</span>
+</a>
+<a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" class="btn hide-sm" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px; background: #F4E04D; color: #0A0B0D; text-decoration: none; font-weight: 700; font-size: 14px">Asset Store
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M7 17L17 7M9 7h8v8"></path></svg>
+</a>
+</div>
+<span aria-hidden="true" class="read"></span>
+</div>
+</header>
+
+<div style="display: flex; align-items: flex-start">
+
+<aside class="sidebar" aria-label="Documentation" style="flex: 0 0 280px; box-sizing: border-box; position: sticky; top: 64px; max-height: calc(100vh - 64px); overflow-y: auto; padding: 20px 14px 40px 20px; border-right: 1px solid #24272D; font-size: 15px; line-height: 1.4">
+<nav class="nav" aria-label="Documentation pages" style="display: flex; flex-direction: column; gap: 22px">
+<a href="DocsHub.dc.html" style="display: flex; align-items: center; gap: 8px; padding: 8px 10px; text-decoration: none; color: #C9CCD1; border: 1px solid #2E3137">
+<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 11l8-7 8 7v9H4z"></path></svg>Docs home</a>
+<section style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; border-bottom: 2px solid #3A5BFF; margin-bottom: 6px">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #3A5BFF; flex: 0 0 10px"></span>
+<span style="font-weight: 700; font-size: 15px; flex: 1 1 auto">Easy FP Full Body Controller</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8DA2FF">v1.6.0</span>
+</div>
+<a href="DocsOverview.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="Docs.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Quick Start</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-fp-setup-wizard.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Setup Wizard</a>
+<a href="Docs-fp-items.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Items</a>
+<a href="Docs-fp-body-ik.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Body IK</a>
+<a href="Docs-fp-fpcutter.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">FPCutter</a>
+<a href="Docs-fp-vitals.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Vitals &amp; Stamina</a>
+<a href="Docs-fp-demos.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Demos</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Multiplayer</span>
+<a href="Docs-fishnet.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">FishNet</a>
+<a href="Docs-purrnet.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">PurrNet</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="Docs-interfaces.dc.html" class="on" aria-current="page" style="padding: 7px 10px; text-decoration: none; color: #FFFFFF; font-weight: 600; background: #17204A; box-shadow: inset 3px 0 0 #3A5BFF">Interfaces</a>
+<a href="DocsTroubleshooting.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Troubleshooting</a>
+<a href="DocsChangelog.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Changelog</a>
+<a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" style="padding: 7px 10px; text-decoration: none; color: #8DA2FF; font-size: 14px">Asset Store page ↗</a>
+</section>
+<section style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 10px 8px; border-bottom: 2px solid #FF4F7B; margin-bottom: 6px">
+<span aria-hidden="true" style="width: 10px; height: 10px; background: #FF4F7B; flex: 0 0 10px"></span>
+<span style="font-weight: 700; font-size: 15px; flex: 1 1 auto">Easy Dungeon Generator</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FF7A9A">v1.1.0</span>
+</div>
+<a href="Docs-dungeon-generator.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Overview</a>
+<a href="Docs-dungeon-quick-start.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Quick Start</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Guides</span>
+<a href="Docs-dungeon-room-designer.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Room Designer</a>
+<a href="Docs-dungeon-templates.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Templates &amp; Generation</a>
+<a href="Docs-dungeon-decoration.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Decoration &amp; Themes</a>
+<a href="Docs-dungeon-streaming.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Chunk Streaming</a>
+<a href="Docs-dungeon-culling-navmesh.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Culling &amp; NavMesh</a>
+<a href="Docs-dungeon-demos.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Demo Scenes</a>
+<span style="padding: 12px 10px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">Reference</span>
+<a href="DocsApi.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">API Reference</a>
+<a href="Docs-dungeon-troubleshooting.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Troubleshooting</a>
+<a href="Docs-dungeon-changelog.dc.html" style="padding: 7px 10px; text-decoration: none; color: #C9CCD1">Changelog</a>
+<a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" style="padding: 7px 10px; text-decoration: none; color: #FF7A9A; font-size: 14px">Asset Store page ↗</a>
+</section>
+</nav>
+</aside>
+
+<main id="content" style="flex: 1 1 auto; min-width: 0; padding: 36px 40px 96px; display: flex; gap: 56px; justify-content: center">
+<article style="flex: 0 1 840px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<nav aria-label="Breadcrumb" style="font-size: 14px; color: #9BA0A8">
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px">
+<li><a href="DocsHub.dc.html" style="color: #B9BDC4">Docs</a></li><li aria-hidden="true">›</li><li><a href="DocsOverview.dc.html" style="color: #B9BDC4">Easy FP Full Body Controller</a></li><li aria-hidden="true">›</li><li><span aria-current="page" style="color: #F2F1EC">Interfaces</span></li>
+</ol>
+</nav>
+<header style="display: flex; flex-direction: column; gap: 14px; padding-bottom: 24px; border-bottom: 1px solid #2E3137">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8DA2FF">Reference</span>
+<h1 style="margin: 0; font-family: 'Anton', 'Impact', sans-serif; font-weight: 400; font-size: clamp(2.8rem, 5vw, 4.4rem); line-height: 0.95; text-transform: uppercase"><span class="line"><span class="rise">Interfaces</span></span></h1>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C9CCD1">
+<span style="border: 1px solid #3A5BFF; color: #8DA2FF; padding: 2px 8px">Documentation for v1.6.0</span>
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">namespace Player</span>
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">C# and UnityEvent</span>
+</div>
+</header>
+
+<div class="prose ">
+
+
+<p class="lead">The public runtime API of Easy FP Full Body Controller. Most code only needs <code>PlayerController</code>, which links to every subsystem. Everything is in the namespace <code>Player</code> unless noted.</p>
+
+<aside class="callout note">
+  <p>Names are the C# names. Inspector labels are shown where they differ.</p>
+</aside>
+
+<h2 id="player-controller">PlayerController</h2>
+<p>The hub on the player root. In <code>Awake</code> it fills in any subsystem reference you left empty, so external code needs one reference.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Property</th><th scope="col">Type</th><th scope="col">Subsystem</th></tr></thead>
+  <tbody>
+    <tr><td><code>Settings</code></td><td><code>PlayerSettings</code></td><td>tuning asset</td></tr>
+    <tr><td><code>Input</code></td><td><code>PlayerInputHandler</code></td><td>input state</td></tr>
+    <tr><td><code>Locomotion</code></td><td><code>PlayerLocomotion</code></td><td>movement and physics</td></tr>
+    <tr><td><code>CameraController</code></td><td><code>PlayerCameraController</code></td><td>first-person camera</td></tr>
+    <tr><td><code>AnimatorController</code></td><td><code>PlayerAnimatorController</code></td><td>animator parameters and item layers</td></tr>
+    <tr><td><code>HeadIK</code>, <code>HandIK</code>, <code>SpineStabilizer</code></td><td><code>PlayerHeadIK</code>, <code>PlayerHandIK</code>, <code>PlayerSpineStabilizer</code></td><td>head, hand and spine IK</td></tr>
+    <tr><td><code>FootPlanting</code></td><td><code>PlayerFootPlanting</code></td><td>ground-anchored feet</td></tr>
+    <tr><td><code>HandItemSocket</code></td><td><code>HandItemSocket</code></td><td>item equip and unequip</td></tr>
+  </tbody>
+</table></div>
+<h3>State (read-only)</h3>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>IsGrounded</code>, <code>IsSprinting</code></td><td><code>bool</code></td><td>from <code>PlayerLocomotion</code></td></tr>
+    <tr><td><code>MoveInput</code>, <code>LookInput</code></td><td><code>Vector2</code></td><td>from <code>PlayerInputHandler</code></td></tr>
+    <tr><td><code>FlashlightTriggered</code></td><td><code>bool</code></td><td><code>true</code> for the frame the flashlight key is pressed</td></tr>
+    <tr><td><code>CurrentSpeed</code>, <code>MaxSpeed</code></td><td><code>float</code></td><td>horizontal speed, and the maximum for the current state</td></tr>
+  </tbody>
+</table></div>
+<h3>Control methods</h3>
+<p>Use these for menus, cutscenes and pausing.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Method</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>SetInputEnabled(bool)</code></td><td>Disabling also clears held input.</td></tr>
+    <tr><td><code>SetMovementEnabled(bool)</code>, <code>SetCameraEnabled(bool)</code></td><td>Toggle locomotion and the camera.</td></tr>
+    <tr><td><code>SetHeadIKEnabled(bool)</code>, <code>SetHandIKEnabled(bool)</code>, <code>SetSpineStabilizationEnabled(bool)</code></td><td>Toggle one IK subsystem.</td></tr>
+    <tr><td><code>SetFootIKEnabled(bool)</code></td><td>Toggles <code>PlayerFootPlanting</code>.</td></tr>
+    <tr><td><code>SetExternalControlEnabled(bool)</code></td><td>For external drivers that move the player instead of local input.</td></tr>
+    <tr><td><code>SetCursorLocked(bool)</code></td><td>Locks or frees the cursor.</td></tr>
+    <tr><td><code>DisableAllControls()</code>, <code>EnableAllControls()</code></td><td>Stop or resume all gameplay controls.</td></tr>
+  </tbody>
+</table></div>
+<pre><code class="lang-csharp">var player = GetComponent&lt;PlayerController&gt;();
+player.DisableAllControls();   // enter cutscene or menu
+// ...
+player.EnableAllControls();    // resume gameplay</code></pre>
+
+<h2 id="playersettings">PlayerSettings</h2>
+<p>A <code>ScriptableObject</code>, created with <span class="menu">Create › Player › Settings</span>. Most components read their values from it, so it is the single place to tune the feel. When an asset is assigned, its values override the fields on the components. <code>beginnerMode</code> switches the Inspector to a simplified view.</p>
+<dl class="props">
+  <dt><code>walkSpeed</code> <span class="type">float</span> <span class="default">default 3</span></dt>
+  <dd>Walking speed in units per second.</dd>
+  <dt><code>sprintSpeed</code> <span class="type">float</span> <span class="default">default 6</span></dt>
+  <dd>Sprinting speed in units per second.</dd>
+  <dt><code>crouchSpeed</code> <span class="type">float</span> <span class="default">default 1.5</span></dt>
+  <dd>Speed while crouching.</dd>
+  <dt><code>crouchHeight</code>, <code>standHeight</code> <span class="type">float</span> <span class="default">default 1 and 2</span></dt>
+  <dd>Height of the <code>CharacterController</code> while crouching and standing.</dd>
+  <dt><code>crouchTransitionSpeed</code> <span class="type">float</span> <span class="default">default 8</span></dt>
+  <dd>Speed of the crouch and stand transition.</dd>
+  <dt><code>jumpHeight</code> <span class="type">float</span> <span class="default">default 1.2</span></dt>
+  <dd>Jump height in units.</dd>
+  <dt><code>gravity</code> <span class="type">float</span> <span class="default">default −15</span></dt>
+  <dd>Gravity. Keep it negative.</dd>
+  <dt><code>groundCheckDistance</code> <span class="type">float</span> <span class="default">default 0.2</span></dt>
+  <dd>Distance below the player that counts as ground.</dd>
+  <dt><code>groundedVelocityReset</code> <span class="type">float</span> <span class="default">default −2</span></dt>
+  <dd>Vertical velocity applied while grounded, to keep the player on slopes and stairs.</dd>
+  <dt><code>inputDeadzone</code> <span class="type">float</span> <span class="default">default 0.01</span></dt>
+  <dd>Smallest input magnitude that counts as movement.</dd>
+  <dt><code>animationSmoothTime</code> <span class="type">float</span> <span class="default">default 0.1</span></dt>
+  <dd>Smoothing of the animator's float parameters.</dd>
+  <dt><code>sprintAnimMultiplier</code> <span class="type">float</span> <span class="default">default 1.5</span></dt>
+  <dd>Animation speed multiplier while sprinting.</dd>
+  <dt><code>defaultHeadHeight</code> <span class="type">float</span> <span class="default">default 1.6</span></dt>
+  <dd>Head height when no head bone is assigned.</dd>
+  <dt><code>lookTargetDistance</code> <span class="type">float</span> <span class="default">default 2</span></dt>
+  <dd>Distance of the look target in front of the player.</dd>
+  <dt><code>cameraFallbackHeadHeight</code> <span class="type">float</span> <span class="default">default 1.7</span></dt>
+  <dd>Camera height when the head bone is not assigned.</dd>
+  <dt><code>verticalLookLimit</code> <span class="type">float</span> <span class="default">default 80</span></dt>
+  <dd>Maximum vertical look angle in degrees.</dd>
+  <dt><code>handVerticalLimitUpper</code>, <code>handVerticalLimitLower</code> <span class="type">float</span> <span class="default">default 45</span></dt>
+  <dd>Look angle, up and down, beyond which the hand IK stops following the view.</dd>
+  <dt><code>enableSpineStabilization</code> <span class="type">bool</span> <span class="default">default true</span></dt>
+  <dd>Turns spine stabilization on or off.</dd>
+  <dt><code>spineStiffness</code>, <code>spineDamping</code> <span class="type">float</span> <span class="default">default 1 and 10</span></dt>
+  <dd>Strength and smoothing of the spine correction.</dd>
+  <dt><code>lowerSpineWeight</code>, <code>middleSpineWeight</code>, <code>upperSpineWeight</code> <span class="type">float</span> <span class="default">default 0.3, 0.3, 0.4</span></dt>
+  <dd>Share of each spine segment in the correction.</dd>
+</dl>
+
+<h2 id="playerinputhandler">PlayerInputHandler</h2>
+<p>Reads the <code>FBInputActions</code> asset, using the action map named by <code>actionMapName</code> (default <code>Player</code>).</p>
+<h3>Per-frame state</h3>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>MoveInput</code></td><td><code>Vector2</code></td><td>X is strafe, Y is forward, from −1 to 1</td></tr>
+    <tr><td><code>LookInput</code></td><td><code>Vector2</code></td><td>X is horizontal, Y is vertical</td></tr>
+    <tr><td><code>IsSprinting</code></td><td><code>bool</code></td><td>sprint is held</td></tr>
+    <tr><td><code>IsCrouching</code></td><td><code>bool</code></td><td>toggled on each press of Crouch</td></tr>
+    <tr><td><code>JumpTriggered</code></td><td><code>bool</code></td><td><code>true</code> for the single frame of the press</td></tr>
+    <tr><td><code>FlashlightTriggered</code></td><td><code>bool</code></td><td><code>true</code> for the single frame of the press (uses the held item)</td></tr>
+    <tr><td><code>InteractTriggered</code></td><td><code>bool</code></td><td><code>true</code> for the single frame the <em>Interact</em> action is pressed</td></tr>
+  </tbody>
+</table></div>
+<h3>Methods</h3>
+<p><code>LockCursor()</code> hides and locks the cursor for gameplay. <code>UnlockCursor()</code> frees it for UI.</p>
+<p>The shipped <em>Player</em> map defines Move, Look, Sprint, Jump, Crouch, Flashlight, Interact, Attack, Previous and Next. Previous, Next and Attack are not read by the shipped code.</p>
+
+<h2 id="playerlocomotion">PlayerLocomotion</h2>
+<p>Requires a <code>CharacterController</code>. It fires the locomotion events listed under <a href="#event-api">Event API</a>.</p>
+<h3>Configurable fields</h3>
+<p>Speeds, heights and gravity mirror the values in <code>PlayerSettings</code>. When a settings asset is assigned, the asset wins. Other fields:</p>
+<dl class="props">
+  <dt><code>groundLayers</code> <span class="type">LayerMask</span> <span class="default">default all layers</span></dt>
+  <dd>Layers that count as ground.</dd>
+</dl>
+<h3>State</h3>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>IsGrounded</code></td><td><code>bool</code></td><td><code>true</code> while touching the ground</td></tr>
+    <tr><td><code>IsCrouching</code></td><td><code>bool</code></td><td><code>true</code> in the crouch state</td></tr>
+    <tr><td><code>IsSprinting</code></td><td><code>bool</code></td><td><code>true</code> only while grounded and sprinting</td></tr>
+    <tr><td><code>CurrentSpeed</code>, <code>MaxSpeed</code></td><td><code>float</code></td><td>current horizontal speed, and the maximum for the current state (crouch, walk or sprint)</td></tr>
+    <tr><td><code>CrouchFactor</code></td><td><code>float</code></td><td>crouch progress</td></tr>
+    <tr><td><code>RegisterListener</code>, <code>UnregisterListener</code></td><td><code>ILocomotionEventListener</code></td><td>add or remove a listener at runtime</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="playercameracontroller">PlayerCameraController</h2>
+<p>Drives a Cinemachine camera. The camera target follows the head bone and does not inherit the head's animation sway.</p>
+<h3>Configurable fields</h3>
+<dl class="props">
+  <dt><code>eyeOffset</code> <span class="type">Vector3</span> <span class="default">default (0, 0.05, 0.1)</span></dt>
+  <dd>Offset from the head bone while standing.</dd>
+  <dt><code>crouchEyeOffset</code> <span class="type">Vector3</span> <span class="default">default (0, 0.05, 0.05)</span></dt>
+  <dd>Offset from the head bone while crouching.</dd>
+  <dt><code>lookSensitivity</code> <span class="type">float</span> <span class="default">default 0.1</span></dt>
+  <dd>Look sensitivity multiplier.</dd>
+  <dt><code>verticalLookLimit</code> <span class="type">float</span> <span class="default">default 80</span></dt>
+  <dd>Maximum vertical look angle in degrees, used when no settings asset is assigned.</dd>
+</dl>
+<h3>Public API</h3>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>CameraTarget</code></td><td><code>Transform</code></td><td>the transform the Cinemachine camera follows</td></tr>
+    <tr><td><code>Pitch</code>, <code>Yaw</code></td><td><code>float</code></td><td>current look angles in degrees</td></tr>
+    <tr><td><code>GetLookAngles</code></td><td><code>Vector2 GetLookAngles()</code></td><td>X is yaw, Y is pitch</td></tr>
+    <tr><td><code>SetLookDirection</code></td><td><code>SetLookDirection(float yaw, float pitch)</code></td><td>sets the look direction, for example after a respawn</td></tr>
+    <tr><td><code>SyncCameraTargetToHead</code></td><td><code>SyncCameraTargetToHead()</code></td><td>runs in <code>LateUpdate</code>; call it yourself after you change the head pose</td></tr>
+    <tr><td><code>SetVerticalLimitOverride</code>, <code>ResetVerticalLimitOverride</code></td><td><code>SetVerticalLimitOverride(float upper, float lower)</code></td><td>asymmetric look limits, used by item IK data</td></tr>
+    <tr><td><code>SetBodyYawOverride</code>, <code>ClearBodyYawOverride</code></td><td><code>SetBodyYawOverride(float targetYaw)</code></td><td>overrides the body yaw</td></tr>
+    <tr><td><code>EnsureCameraTarget</code></td><td><code>EnsureCameraTarget()</code></td><td>creates or reassigns the camera target if it is missing</td></tr>
+    <tr><td><code>SetLocalCameraActive</code>, <code>IsLocalCameraActive</code></td><td><code>SetLocalCameraActive(bool)</code>, <code>bool</code></td><td>enables the local camera. The FishNet add-on disables it on remote players.</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="items">Items</h2>
+<p>How items are set up and used is explained in <a href="Docs-fp-items.dc.html">Items</a>. This section lists the API.</p>
+<h3>HandItemSocket: the event source</h3>
+<p>The single owner of equip and unequip events. A switch plays the holster animation: the current item is lowered out of view, then the new one is raised.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>CurrentItem</code>, <code>HasItem</code></td><td><code>GameObject</code>, <code>bool</code></td><td>the logical current item, which changes at once when a switch starts</td></tr>
+    <tr><td><code>StowingItem</code></td><td><code>GameObject</code></td><td>the old item still being lowered during a switch</td></tr>
+    <tr><td><code>PendingItem</code></td><td><code>GameObject</code></td><td>the new item waiting to be drawn</td></tr>
+    <tr><td><code>IsTransitioning</code></td><td><code>bool</code></td><td><code>true</code> while a switch is in progress</td></tr>
+    <tr><td><code>Socket</code>, <code>Locomotion</code></td><td><code>Transform</code>, <code>PlayerLocomotion</code></td><td>the socket transform, and the locomotion used for crouch offsets</td></tr>
+  </tbody>
+</table></div>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Method</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>AttachItem</code></td><td><code>AttachItem(GameObject, Vector3? positionOffset = null, Vector3? rotationOffset = null)</code> or <code>AttachItem(GameObject, ItemAttachmentData)</code></td><td>attaches an item to the socket</td></tr>
+    <tr><td><code>DetachItem</code></td><td><code>GameObject DetachItem(bool destroy = false)</code></td><td>detaches the current item</td></tr>
+    <tr><td><code>EquipFromContainer</code></td><td><code>EquipFromContainer(GameObject item, int slotIndex = -1)</code></td><td>equips an item from a container and applies its <code>ItemHoldData</code></td></tr>
+    <tr><td><code>UnequipToContainer</code></td><td><code>UnequipToContainer()</code> or <code>UnequipToContainer(bool hideImmediately)</code></td><td>returns the item to its container. The parameterless overload is kept for existing UnityEvent wiring.</td></tr>
+    <tr><td><code>HideStowingItem</code>, <code>CompleteTransitionImmediately</code></td><td><code>void</code></td><td>hide the item being lowered, or finish a running switch at once</td></tr>
+    <tr><td><code>UseCurrentItem</code></td><td><code>void</code></td><td>fires <code>OnUse</code> on the equipped item. It is ignored until the new item is drawn.</td></tr>
+    <tr><td><code>RegisterListener</code>, <code>UnregisterListener</code></td><td><code>IItemEventListener</code></td><td>add or remove an item listener at runtime</td></tr>
+  </tbody>
+</table></div>
+<p>Inspector fields on <code>HandItemSocket</code>: <strong>Smooth Transitions</strong> (<code>smoothTransitions</code>, default on; off gives the previous instant switch) and <strong>Stow Timeout</strong> (<code>stowTimeout</code>, default 1 second).</p>
+
+<h3>ItemContainer: the item list</h3>
+<p>Holds the items and equips them through the socket. It does not emit equip events itself.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>CurrentItem</code>, <code>HasEquippedItem</code>, <code>CurrentIndex</code></td><td>property</td><td>the equipped item, whether one is equipped, and its index (−1 for none)</td></tr>
+    <tr><td><code>ItemCount</code>, <code>HandSocket</code></td><td>property</td><td>number of items, and the socket the items are equipped through</td></tr>
+    <tr><td><code>EquipItem</code></td><td><code>EquipItem(int index)</code>, <code>EquipItem(GameObject item)</code></td><td>equips by list index, or by a listed item</td></tr>
+    <tr><td><code>EquipItemById</code></td><td><code>EquipItemById(string id)</code></td><td>equips by the item's id</td></tr>
+    <tr><td><code>EquipNext</code>, <code>EquipPrevious</code></td><td><code>void EquipNext()</code>, <code>void EquipPrevious()</code></td><td>cycle through the items and wrap around</td></tr>
+    <tr><td><code>UnequipCurrent</code></td><td><code>UnequipCurrent()</code> or <code>UnequipCurrent(bool hideImmediately)</code></td><td>puts the current item away</td></tr>
+    <tr><td><code>GetItem</code>, <code>GetItemById</code></td><td><code>GetItem(int index)</code>, <code>GetItem(ItemDefinition definition)</code>, <code>GetItemById(string id)</code></td><td>gets an item without equipping it</td></tr>
+    <tr><td><code>AddItem</code></td><td><code>AddItem(GameObject item)</code></td><td>adds an item, inactive until equipped, and fires <code>OnContainerChanged</code></td></tr>
+    <tr><td><code>RemoveItem</code></td><td><code>bool RemoveItem(GameObject item)</code></td><td>unequips the item first if it is equipped, and fires <code>OnContainerChanged</code></td></tr>
+  </tbody>
+</table></div>
+<p>Event: <code>OnContainerChanged</code> (<code>UnityEvent</code>), fired when the item list changes.</p>
+
+<h3>ItemHoldData: per-item configuration</h3>
+<p>Attached to the item GameObject. With an <code>ItemDefinition</code> assigned, the id, category and world prefab come from the definition.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>ItemId</code></td><td><code>string</code></td><td>the effective id: the definition's id, or <code>itemId</code> (default <code>NewItem</code>)</td></tr>
+    <tr><td><code>Definition</code></td><td><code>ItemDefinition</code></td><td>the assigned definition, or <code>null</code></td></tr>
+    <tr><td><code>Category</code></td><td><code>ItemCategory</code></td><td>the effective category</td></tr>
+    <tr><td><code>Is(ItemCategory flags)</code></td><td><code>bool</code></td><td><code>true</code> when all given flags are set</td></tr>
+    <tr><td><code>AttachmentData</code></td><td><code>ItemAttachmentData</code></td><td>the hold and IK configuration</td></tr>
+    <tr><td><code>WorldItemPrefab</code></td><td><code>GameObject</code></td><td>the prefab spawned when the item is dropped</td></tr>
+    <tr><td><code>OnEquip</code>, <code>OnUnequip</code>, <code>OnUse</code></td><td><code>UnityEvent</code></td><td>item-local reactions. <code>OnEquip</code> and <code>OnUnequip</code> only fire for items that are shown.</td></tr>
+  </tbody>
+</table></div>
+
+<h3>ItemDefinition</h3>
+<p>A <code>ScriptableObject</code>, created with <span class="menu">Create › Player › Item Definition</span>. It describes an item in one place.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Type</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>Id</code></td><td><code>string</code></td><td>the locked id, or the id derived from the asset name</td></tr>
+    <tr><td><code>IsIdLocked</code></td><td><code>bool</code></td><td><code>true</code> once the id is locked</td></tr>
+    <tr><td><code>DisplayName</code></td><td><code>string</code></td><td>name shown in UI. Falls back to the asset name.</td></tr>
+    <tr><td><code>Category</code></td><td><code>ItemCategory</code></td><td>category flags</td></tr>
+    <tr><td><code>HeldPrefab</code>, <code>WorldPrefab</code>, <code>NetworkPrefab</code></td><td><code>GameObject</code></td><td>prefabs for the hand, the world and the network</td></tr>
+    <tr><td><code>Is(ItemCategory flags)</code></td><td><code>bool</code></td><td><code>true</code> when all given flags are set</td></tr>
+    <tr><td><code>ItemDefinition.ToId(string assetName)</code></td><td><code>static string</code></td><td>derives an id from an asset name</td></tr>
+  </tbody>
+</table></div>
+<p><code>ItemCategory</code> is a flags enum: <code>None</code>, <code>Tool</code>, <code>Electric</code>, <code>Consumable</code>. An item can have several categories.</p>
+
+<h3>ItemAttachmentData</h3>
+<p>The hold, grip and IK data of an item. Its fields are listed in <a href="Docs-fp-items.dc.html#grips-ik">Items: Grips and IK</a>. The key members are <code>holdStyle</code> (<code>OneHandedRight</code> or <code>TwoHanded</code>), <code>gripPositionOffset</code>, <code>gripRotationOffset</code>, the <code>override…</code> switches with their hand and elbow offsets, <code>fingerPoseRight</code> and <code>fingerPoseLeft</code>, and the vertical limits.</p>
+
+<h3>ItemIKPreset</h3>
+<p>A <code>ScriptableObject</code>, created with <span class="menu">Create › Player › Item IK Preset</span>. It stores an <code>ItemAttachmentData</code> in its <code>data</code> field.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>ApplyTo</code></td><td><code>ApplyTo(ItemAttachmentData target)</code></td><td>copies the preset into an item's data</td></tr>
+    <tr><td><code>CaptureFrom</code></td><td><code>CaptureFrom(ItemAttachmentData source)</code></td><td>copies an item's data into the preset</td></tr>
+    <tr><td><code>CaptureFromScene</code>, <code>ApplyToScene</code></td><td>context menu</td><td>capture or apply the data of a scene object that the preset references</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="event-api">Event API</h2>
+<p>Every equip, unequip, locomotion change, footstep and vitals change is announced once, in three ways:</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Mechanism</th><th scope="col">For</th></tr></thead>
+  <tbody>
+    <tr><td>C# <code>event</code></td><td>code subscribers. Struct payloads avoid allocations per call.</td></tr>
+    <tr><td><code>UnityEvent</code></td><td>Inspector wiring without code</td></tr>
+    <tr><td>Listener interfaces</td><td>structured extension. Any component in the player hierarchy that implements one is found at startup.</td></tr>
+  </tbody>
+</table></div>
+
+<h3>Payloads</h3>
+<dl class="props">
+  <dt><code>ItemEquipArgs</code></dt>
+  <dd><code>Item</code> (GameObject), <code>SlotIndex</code> (int, −1 if the item did not come from a container), <code>HoldData</code> (ItemHoldData), <code>FromContainer</code> (bool).</dd>
+  <dt><code>LandArgs</code></dt>
+  <dd><code>ImpactVelocity</code> (float, negative when falling), <code>FallDistance</code> (float).</dd>
+  <dt><code>FootStepArgs</code></dt>
+  <dd><code>IsLeft</code> (bool), <code>Point</code> (Vector3, world position), <code>IsReStep</code> (bool, <code>true</code> for a procedural re-step).</dd>
+</dl>
+
+<h3>Item events: HandItemSocket</h3>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">C# event</th><th scope="col">Type</th><th scope="col">UnityEvent</th></tr></thead>
+  <tbody>
+    <tr><td><code>ItemEquipped</code></td><td><code>Action&lt;ItemEquipArgs&gt;</code></td><td><code>OnItemEquipped</code> (<code>ItemEvent</code>)</td></tr>
+    <tr><td><code>ItemUnequipped</code></td><td><code>Action&lt;ItemEquipArgs&gt;</code></td><td><code>OnItemUnequipped</code> (<code>ItemEvent</code>)</td></tr>
+  </tbody>
+</table></div>
+<p>With smooth transitions, <code>ItemUnequipped</code> fires while the old item is still visible. <code>ItemEquipped</code> can fire for an item that is still waiting to be drawn.</p>
+
+<h3>Locomotion events: PlayerLocomotion</h3>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">C# event</th><th scope="col">Type</th><th scope="col">UnityEvent</th></tr></thead>
+  <tbody>
+    <tr><td><code>Jumped</code></td><td><code>Action</code></td><td><code>OnJumped</code></td></tr>
+    <tr><td><code>Landed</code></td><td><code>Action&lt;LandArgs&gt;</code></td><td><code>OnLanded</code></td></tr>
+    <tr><td><code>CrouchStarted</code>, <code>CrouchEnded</code></td><td><code>Action</code></td><td><code>OnCrouchStarted</code>, <code>OnCrouchEnded</code></td></tr>
+    <tr><td><code>SprintStarted</code>, <code>SprintEnded</code></td><td><code>Action</code></td><td><code>OnSprintStarted</code>, <code>OnSprintEnded</code></td></tr>
+    <tr><td><code>GroundedChanged</code></td><td><code>Action&lt;bool&gt;</code></td><td><code>OnGroundedChanged</code></td></tr>
+  </tbody>
+</table></div>
+
+<h3>Footstep and vitals events</h3>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Source</th><th scope="col">C# event</th><th scope="col">UnityEvent</th></tr></thead>
+  <tbody>
+    <tr><td><code>PlayerFootsteps</code></td><td><code>FootPlanted</code> (<code>Action&lt;FootStepArgs&gt;</code>)</td><td><code>OnFootPlanted</code></td></tr>
+    <tr><td><code>PlayerFootPlanting</code></td><td><code>ReStepLanded</code> (<code>Action&lt;FootStepArgs&gt;</code>)</td><td>none</td></tr>
+    <tr><td><code>PlayerVitals</code></td><td><code>HealthChanged</code> (<code>Action&lt;float&gt;</code>), <code>Died</code>, <code>Revived</code></td><td><code>OnHealthChanged</code>, <code>OnDied</code>, <code>OnRevived</code></td></tr>
+  </tbody>
+</table></div>
+
+<h3>Listener interfaces</h3>
+<p>Implement only the methods you need. The others are no-ops. Use <code>RegisterListener</code> for objects that are added at runtime.</p>
+<ul>
+  <li><code>IItemEventListener</code>: <code>OnItemEquipped(ItemEquipArgs)</code>, <code>OnItemUnequipped(ItemEquipArgs)</code></li>
+  <li><code>ILocomotionEventListener</code>: <code>OnJumped()</code>, <code>OnLanded(LandArgs)</code>, <code>OnCrouchStarted()</code>, <code>OnCrouchEnded()</code>, <code>OnSprintStarted()</code>, <code>OnSprintEnded()</code>, <code>OnGroundedChanged(bool)</code></li>
+</ul>
+<pre><code class="lang-csharp">using Player;
+using UnityEngine;
+
+public class MyListener : MonoBehaviour, IItemEventListener, ILocomotionEventListener
+&#123;
+    public void OnItemEquipped(ItemEquipArgs args) =&gt; Debug.Log($"equipped &#123;args.Item.name&#125;");
+    public void OnLanded(LandArgs args) =&gt; Debug.Log($"landed at &#123;args.ImpactVelocity&#125; m/s");
+&#125;</code></pre>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Method</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>locomotion.RegisterListener(ILocomotionEventListener)</code></td><td>adds a locomotion listener at runtime</td></tr>
+    <tr><td><code>socket.RegisterListener(IItemEventListener)</code></td><td>adds an item listener at runtime</td></tr>
+    <tr><td><code>UnregisterListener(...)</code></td><td>removes a listener from either source</td></tr>
+  </tbody>
+</table></div>
+
+<h3>Subscribe in code</h3>
+<pre><code class="lang-csharp">player.Locomotion.Jumped += () =&gt; Debug.Log("jumped");
+player.HandItemSocket.ItemEquipped += args =&gt;
+    Debug.Log($"equipped &#123;args.Item.name&#125; from slot &#123;args.SlotIndex&#125;");</code></pre>
+<aside class="callout note">
+  <strong class="callout-title">Delivery</strong>
+  <p>Each transition fires its C# event, its UnityEvent and each listener once, from one place in the code. A listener that throws stops the remaining handlers for that transition, so keep handlers free of exceptions.</p>
+</aside>
+
+<h2 id="fpcutter">FPCutter: FPCutterController</h2>
+<p>Namespace <code>FPCutter</code>. Hides body parts in first person and keeps their shadows. The FPCutter Wizard generates the controller on a complete copy of the character. See <a href="Docs-fp-fpcutter.dc.html">FPCutter</a>.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>SetFirstPerson</code></td><td><code>SetFirstPerson()</code></td><td>hides the parts in <em>Hide In First Person</em></td></tr>
+    <tr><td><code>SetThirdPerson</code></td><td><code>SetThirdPerson()</code></td><td>shows all parts</td></tr>
+    <tr><td><code>HidePart</code>, <code>ShowPart</code></td><td><code>HidePart(BodyPart part)</code>, <code>ShowPart(BodyPart part)</code></td><td>control one part</td></tr>
+  </tbody>
+</table></div>
+<dl class="props">
+  <dt><code>Hide In First Person</code> <span class="type">List&lt;BodyPart&gt;</span> <span class="default">default Head</span></dt>
+  <dd>The parts that are hidden in first person.</dd>
+  <dt><code>Invisible Material</code> <span class="type">Material</span></dt>
+  <dd>The material for hidden parts. It uses the <code>FPCutter/InvisibleShadowCaster</code> shader.</dd>
+</dl>
+<p><code>BodyPart</code> (in the <code>FPCutter</code> namespace) has the values <code>Body</code>, <code>Head</code>, <code>LeftArm</code>, <code>RightArm</code>, <code>LeftLeg</code> and <code>RightLeg</code>.</p>
+
+<h2 id="animator">PlayerAnimatorController</h2>
+<p>Drives the animator parameters and the item animation layers.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>SetItemLayer</code></td><td><code>SetItemLayer(int layerIndex)</code></td><td>activates an item animation layer</td></tr>
+    <tr><td><code>ToggleFlashlight</code>, <code>SetFlashlightActive</code></td><td><code>ToggleFlashlight()</code>, <code>SetFlashlightActive(bool)</code></td><td>the flashlight state</td></tr>
+    <tr><td><code>IsFlashlightActive</code></td><td><code>bool</code> (property)</td><td><code>true</code> while the flashlight layer is active</td></tr>
+    <tr><td><code>TriggerAnimation</code></td><td><code>TriggerAnimation(string triggerName)</code></td><td>sets an Animator trigger</td></tr>
+    <tr><td><code>GetAnimator</code></td><td><code>Animator GetAnimator()</code></td><td>returns the Animator</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="procedural-ik">Feet, hands, head and vitals</h2>
+<p>The Setup Wizard configures these components. Change them directly only for custom behaviour. The tuning of each is in its guide: <a href="Docs-fp-body-ik.dc.html">Body IK</a> and <a href="Docs-fp-vitals.dc.html">Vitals</a>.</p>
+
+<h3>PlayerFootPlanting</h3>
+<p>On the model. Runs at execution order <code>-200</code>, before the camera syncs to the head.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature or type</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td>turns planting on or off at runtime</td></tr>
+    <tr><td><code>ResetPlanting</code></td><td><code>ResetPlanting()</code></td><td>resets the anchors. Call it after a teleport.</td></tr>
+    <tr><td><code>SetExternalDriveState</code>, <code>ClearExternalDriveState</code></td><td><code>SetExternalDriveState(bool grounded, Vector2 moveDirection)</code></td><td>drives a remote player from a network add-on. The PurrNet bridge uses it.</td></tr>
+    <tr><td><code>ReStepLanded</code></td><td><code>event Action&lt;FootStepArgs&gt;</code></td><td>fires when a re-step lands</td></tr>
+    <tr><td><code>PlantMode</code></td><td><code>enum</code></td><td><code>Idle</code>, <code>Moving</code>, <code>Automatic</code></td></tr>
+    <tr><td><code>StepSettings</code></td><td>nested class</td><td>re-step duration, path, arc, lift, rotation and catch-up curves</td></tr>
+  </tbody>
+</table></div>
+
+<h3>PlayerFootsteps</h3>
+<p>On the root. Detects steps from the animated feet, without animation events. It raises <code>FootPlanted</code> and <code>OnFootPlanted</code>, listed under <a href="#event-api">Event API</a>.</p>
+
+<h3>HandPoseController and FingerPose</h3>
+<p><code>HandPoseController</code> sits on the model and poses the fingers around the held item. It calibrates from the Humanoid muscle limits.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>CalibrateFromAvatar</code></td><td><code>bool CalibrateFromAvatar()</code></td><td>re-reads the finger limits from the avatar.</td></tr>
+    <tr><td><code>Rebind</code></td><td><code>Rebind()</code></td><td>rebinds the finger bones</td></tr>
+    <tr><td><code>RecaptureReference</code></td><td><code>RecaptureReference()</code></td><td>captures the reference pose</td></tr>
+    <tr><td><code>Snap</code></td><td><code>Snap()</code></td><td>applies the current target at once, for example when an item is equipped at start</td></tr>
+    <tr><td><code>ResolvedBoneCount</code></td><td><code>int</code> (property)</td><td>number of finger bones found</td></tr>
+  </tbody>
+</table></div>
+<p><code>FingerPose</code> is a <code>ScriptableObject</code> created with <span class="menu">Create › Player › Finger Grip Pose</span>. Its fields are the five curls (<code>thumbCurl</code>, <code>indexCurl</code>, <code>middleCurl</code>, <code>ringCurl</code>, <code>littleCurl</code>), <code>thumbOpposition</code> and <code>spread</code>. <code>ToValues()</code> and <code>FromValues(...)</code> convert to and from <code>FingerPoseValues</code>.</p>
+
+<h3>PlayerVitals and PlayerExertion</h3>
+<p><code>PlayerVitals</code> is optional and sits on the root. Its health and stamina are described in <a href="Docs-fp-vitals.dc.html">Vitals and Stamina</a>.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature or type</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>Health</code>, <code>MaxHealth</code>, <code>NormalizedHealth</code></td><td><code>float</code> (properties)</td><td>current and maximum health, and the 0 to 1 fraction</td></tr>
+    <tr><td><code>IsDead</code></td><td><code>bool</code></td><td><code>true</code> at zero health</td></tr>
+    <tr><td><code>ApplyDamage</code>, <code>Heal</code></td><td><code>bool ApplyDamage(float amount)</code>, <code>bool Heal(float amount)</code></td><td><code>false</code> when ignored (dead player, or an amount that is zero, negative, NaN or infinite)</td></tr>
+    <tr><td><code>Revive</code></td><td><code>bool Revive()</code></td><td>restores a dead player to full health. Returns <code>false</code> for a living player.</td></tr>
+    <tr><td><code>SetHealth</code></td><td><code>void SetHealth(float value)</code></td><td>sets the value, clamped to 0 and <code>MaxHealth</code>. Use it to mirror a server value.</td></tr>
+    <tr><td><code>Bpm</code>, <code>CanSprint</code></td><td><code>float</code>, <code>bool</code> (properties)</td><td>heart rate, and whether sprinting is allowed</td></tr>
+    <tr><td><code>Exertion</code></td><td><code>PlayerExertion</code> (property)</td><td>the stamina model, with <code>Bpm</code>, <code>Exhausted</code>, <code>NeedsSprintRelease</code> and <code>CanSprint</code></td></tr>
+  </tbody>
+</table></div>
+
+<h3>PlayerHeadIK</h3>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>Weight</code></td><td><code>float</code> (property)</td><td>current IK weight</td></tr>
+    <tr><td><code>SetWeight</code>, <code>SetWeightSmooth</code></td><td><code>SetWeight(float)</code>, <code>SetWeightSmooth(float)</code></td><td>immediate or smoothed weight</td></tr>
+    <tr><td><code>SetWeights</code></td><td><code>SetWeights(float body, float head, float eyes, float clamp)</code></td><td>body, head and eye weights, and the clamp</td></tr>
+    <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td>turns head look-at on or off</td></tr>
+  </tbody>
+</table></div>
+
+<h3>PlayerHandIK</h3>
+<p>Hand and elbow IK for held items, including the holster animation. Runs at execution order <code>20</code>, after head (10) and spine (15).</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Member</th><th scope="col">Signature</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>HolsterProgress</code></td><td><code>float</code> (property)</td><td>0 is raised at the item pose, 1 is lowered out of view</td></tr>
+    <tr><td><code>SetHolstered</code></td><td><code>SetHolstered(bool)</code></td><td>lowers or raises the hand</td></tr>
+    <tr><td><code>BeginDraw</code></td><td><code>BeginDraw()</code></td><td>starts raising the hand</td></tr>
+    <tr><td><code>SetIKWeight</code>, <code>SetIKWeightSmooth</code></td><td><code>SetIKWeight(float position, float rotation, float hint = 1)</code></td><td>right-hand weights. Partial weights stay as set.</td></tr>
+    <tr><td><code>SetLeftIKWeight</code></td><td><code>SetLeftIKWeight(float position, float rotation, float hint = 1)</code></td><td>left-hand weights for two-handed items</td></tr>
+    <tr><td><code>SetTwoHanded</code></td><td><code>SetTwoHanded(bool)</code></td><td>fades the left hand on or off</td></tr>
+    <tr><td><code>SetEnabled</code></td><td><code>SetEnabled(bool)</code></td><td>turns hand IK on or off</td></tr>
+    <tr><td><code>IKPositionWeight</code>, <code>IKRotationWeight</code></td><td><code>float</code> (properties)</td><td>right-hand IK weights</td></tr>
+  </tbody>
+</table></div>
+<p>The holster timings are Inspector fields under <strong>Holster</strong>: <code>holsterOffset</code>, <code>holsterTiltAngle</code>, <code>holsterDuration</code>, <code>drawDuration</code>, <code>drawStartWeight</code>, <code>leftHolsterOffset</code> and <code>twoHandedBlendDuration</code>. They are described in <a href="Docs-fp-items.dc.html#equip">Items</a>.</p>
+
+<h3>PlayerSpineStabilizer</h3>
+<p>Requires an <code>Animator</code>. Keeps the upper body steady while the head looks around. Runs at execution order <code>15</code>. It is tuned through the spine fields of <code>PlayerSettings</code>.</p>
+
+<h2 id="addons">Multiplayer add-on bridges</h2>
+<p>Each optional add-on has one bridge per networking library. Both bridges expose the same item-state method and keep a list of networked world item prefabs.</p>
+<div class="tbl"><table>
+  <thead><tr><th scope="col">Class</th><th scope="col">Namespace</th><th scope="col">Public API</th></tr></thead>
+  <tbody>
+    <tr><td><code>FishNetPlayerBridge</code></td><td><code>FBSystem.FishNet</code></td><td><code>NotifyLocalItemStateChanged(ItemEquipArgs)</code>. Serialized list: <code>networkWorldItemPrefabs</code>.</td></tr>
+    <tr><td><code>PurrNetPlayerBridge</code></td><td><code>FBSystem.PurrNet</code></td><td><code>NotifyLocalItemStateChanged(ItemEquipArgs)</code>. Serialized list: <code>networkWorldItemPrefabs</code>.</td></tr>
+  </tbody>
+</table></div>
+<p>The bridges are configured by their Setup Wizards. See <a href="Docs-fishnet.dc.html">Multiplayer (FishNet)</a> and <a href="Docs-purrnet.dc.html">Multiplayer (PurrNet)</a>.</p>
+
+<h2 id="demo-editor">Demo classes</h2>
+<p>These classes are demo code, not part of the core API. They are in the namespace <code>Player.Demo</code>.</p>
+<ul>
+  <li><code>PlayerEventLogger</code>: implements both listener interfaces and logs every event. Use it as a template.</li>
+  <li><code>PlayerInventory</code>: the owned item ids and starter items.</li>
+  <li><code>PlayerInteraction</code> (<kbd>E</kbd>) and <code>PlayerDropSystem</code> (<kbd>G</kbd>): pickup and drop.</li>
+  <li><code>WorldItem</code>: the dropped item. Its <code>itemId</code> must match the item in the container.</li>
+  <li><code>DemoGuidePanel</code> (<kbd>F1</kbd>) and <code>DemoGripToggle</code> (<kbd>H</kbd>).</li>
+</ul>
+
+</div>
+
+<nav aria-label="Previous and next page" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; padding-top: 28px; border-top: 1px solid #2E3137">
+<a href="Docs-purrnet.dc.html" rel="prev" class="pn" style="display: flex; flex-direction: column; gap: 2px; padding: 16px 18px; border: 1px solid #3A3E46; text-decoration: none"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">← Previous</span><strong style="font-size: 19px">PurrNet</strong></a>
+<a href="DocsTroubleshooting.dc.html" rel="next" class="pn" style="display: flex; flex-direction: column; gap: 2px; padding: 16px 18px; border: 1px solid #3A3E46; text-decoration: none; text-align: right"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">Next →</span><strong style="font-size: 19px">Troubleshooting</strong></a>
+</nav>
+</article>
+
+<aside class="toc" aria-labelledby="toc-h" style="flex: 0 0 220px; position: sticky; top: 100px; font-size: 14px; line-height: 1.4">
+<p id="toc-h" style="margin: 0 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8F97">On this page</p>
+<ol style="margin: 0; padding: 0; list-style: none; border-left: 1px solid #2E3137">
+<li><a href="#player-controller" style="display: block; padding: 5px 12px; text-decoration: none; color: #F2F1EC; font-weight: 600; box-shadow: inset 2px 0 0 #3A5BFF; margin-left: -1px">PlayerController</a></li>
+<li><a href="#playersettings" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">PlayerSettings</a></li>
+<li><a href="#playerinputhandler" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">PlayerInputHandler</a></li>
+<li><a href="#playerlocomotion" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">PlayerLocomotion</a></li>
+<li><a href="#playercameracontroller" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">PlayerCameraController</a></li>
+<li><a href="#items" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Items</a></li>
+<li><a href="#event-api" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Event API</a></li>
+<li><a href="#fpcutter" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">FPCutter: FPCutterController</a></li>
+<li><a href="#animator" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">PlayerAnimatorController</a></li>
+<li><a href="#procedural-ik" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Feet, hands, head and vitals</a></li>
+<li><a href="#addons" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Multiplayer add-on bridges</a></li>
+<li><a href="#demo-editor" style="display: block; padding: 5px 12px; text-decoration: none; color: #B9BDC4">Demo classes</a></li>
+</ol>
+</aside>
+</main>
+</div>
+<footer style="border-top: 1px solid #24272D">
+<div style="padding: 22px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: #9BA0A8">
+<span>© 2026 vedaloiv · <a href="Main.dc.html" style="color: #B9BDC4">Home</a> · <a href="DocsHub.dc.html" style="color: #B9BDC4">All docs</a></span>
+<a href="mailto:karakask2004@gmail.com" style="color: #B9BDC4">karakask2004@gmail.com</a>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":18747}}'>
+class Component extends DCLogic {
+renderVals() {
+return { rootClass: this.props.motion === false ? 'still' : '' };
+}
+}
+</script>
+</body>
+</html>

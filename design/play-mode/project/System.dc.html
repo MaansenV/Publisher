@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>vedaloiv — design system sheet</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Rubik:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#F2F1EC}a:hover{color:#F4E04D}
+.btn{transition:transform .18s ease,box-shadow .18s ease}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 #F2F1EC}
+.ring{transform-box:fill-box;transform-origin:center;animation:ring 3.6s cubic-bezier(.2,.6,.3,1) infinite}
+.r2{animation-delay:1.2s}.r3{animation-delay:2.4s}
+@keyframes ring{from{transform:scale(.12);opacity:.95}to{transform:scale(1);opacity:0}}
+.prog{transform-origin:left;animation:prog 4s linear infinite}
+@keyframes prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.blink{animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{50%{opacity:.2}}
+.line{display:block;overflow:hidden}
+.rise{display:block;animation:rise 2.4s cubic-bezier(.16,1,.3,1) infinite}
+@keyframes rise{0%{transform:translateY(105%)}40%,100%{transform:none}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1240px; box-sizing: border-box; background: #0A0B0D; color: #F2F1EC; font-family: 'Rubik', system-ui, sans-serif; font-size: 16px; line-height: 1.5; padding: 56px 64px; display: flex; flex-direction: column; gap: 40px">
+
+<div style="display: flex; justify-content: space-between; align-items: end; border-bottom: 1px solid #2E3137; padding-bottom: 20px">
+<h1 style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: 72px; line-height: 0.95; text-transform: uppercase">Play <span style="color: #F4E04D">Mode</span></h1>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #9BA0A8">vedaloiv · system sheet · landing + docs</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 56px">
+
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #F4E04D">01 / Color</h2>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+<div style="border: 1px solid #2E3137"><div style="height: 70px; background: #F4E04D"></div><div style="padding: 8px 10px"><div style="font-weight: 600; font-size: 14px">Signal</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">#F4E04D · brand, CTA</div></div></div>
+<div style="border: 1px solid #2E3137"><div style="height: 70px; background: #3A5BFF"></div><div style="padding: 8px 10px"><div style="font-weight: 600; font-size: 14px">FP · Cobalt</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">#3A5BFF · text #8DA2FF</div></div></div>
+<div style="border: 1px solid #2E3137"><div style="height: 70px; background: #FF4F7B"></div><div style="padding: 8px 10px"><div style="font-weight: 600; font-size: 14px">DG · Hot pink</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">#FF4F7B · text #FF7A9A</div></div></div>
+<div style="border: 1px solid #2E3137"><div style="height: 70px; background: #2DE2C0"></div><div style="padding: 8px 10px"><div style="font-weight: 600; font-size: 14px">ES · Teal</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">#2DE2C0 · text #4FF0D2</div></div></div>
+<div style="border: 1px solid #2E3137"><div style="height: 44px; background: #0A0B0D"></div><div style="padding: 8px 10px"><div style="font-weight: 600; font-size: 14px">Ground</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">#0A0B0D</div></div></div>
+<div style="border: 1px solid #2E3137"><div style="height: 44px; background: #121418"></div><div style="padding: 8px 10px"><div style="font-weight: 600; font-size: 14px">Panel</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">#121418 · line #2E3137</div></div></div>
+<div style="border: 1px solid #2E3137"><div style="height: 44px; background: #F2F1EC"></div><div style="padding: 8px 10px"><div style="font-weight: 600; font-size: 14px">Text</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">#F2F1EC · body #C9CCD1</div></div></div>
+<div style="border: 1px solid #2E3137"><div style="height: 44px; background: #3DDC97"></div><div style="padding: 8px 10px"><div style="font-weight: 600; font-size: 14px">Released</div><div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">#3DDC97 · status only</div></div></div>
+</div>
+<p style="margin: 0; font-size: 14px; color: #B9BDC4">Each asset owns the color of its key art. The color follows it everywhere: hero tab, catalog card, buttons, docs switcher, sidebar, steps. Yellow belongs to vedaloiv itself.</p>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #F4E04D">02 / Type</h2>
+<div style="display: flex; flex-direction: column; border-top: 1px solid #2E3137">
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #24272D; align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">DISPLAY<br>Anton · uppercase</span>
+<span style="font-family: 'Anton', sans-serif; font-size: 64px; line-height: 0.95; text-transform: uppercase"><span class="line"><span class="rise">The <span style="color: #F4E04D">first try.</span></span></span></span>
+</div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #24272D; align-items: baseline">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">UI + BODY<br>Rubik 400–700</span>
+<span style="font-size: 17px; color: #C9CCD1"><b style="color: #F2F1EC">Paint the rooms, connect them, press generate.</b> Body text stays calm so the headlines can be loud.</span>
+</div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #24272D; align-items: baseline">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">META<br>JetBrains Mono 12+</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase">v1.6.0 · Unity 6000.5+ · URP · 01 / Catalog</span>
+</div>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #F4E04D">03 / Components</h2>
+<div style="border-top: 1px solid #2E3137; padding-top: 18px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<a href="Main.dc.html" class="btn" style="display: inline-flex; align-items: center; min-height: 50px; padding: 0 22px; background: #F4E04D; color: #0A0B0D; text-decoration: none; font-weight: 700">Primary</a>
+<a href="Main.dc.html" class="btn" style="display: inline-flex; align-items: center; min-height: 50px; padding: 0 22px; background: #3A5BFF; color: #FFFFFF; text-decoration: none; font-weight: 700">Asset Store · FP</a>
+<a href="Main.dc.html" class="btn" style="display: inline-flex; align-items: center; min-height: 50px; padding: 0 22px; border: 1.5px solid #F2F1EC; text-decoration: none; font-weight: 700">Secondary</a>
+<span style="font-size: 14px; color: #9BA0A8">Hover: hard 4px offset, no blur</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px">
+<span style="font-weight: 600; background: #3A5BFF; color: #FFFFFF; padding: 2px 6px">FP</span>
+<span style="font-weight: 600; background: #FF4F7B; color: #0A0B0D; padding: 2px 6px">DG</span>
+<span style="font-weight: 600; background: #2DE2C0; color: #0A0B0D; padding: 2px 6px">ES</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; color: #3DDC97; font-weight: 600"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #3DDC97"></span>RELEASED</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; color: #4FF0D2; font-weight: 600"><span aria-hidden="true" class="blink" style="width: 8px; height: 8px; border-radius: 50%; background: #2DE2C0"></span>IN DEVELOPMENT</span>
+<span style="border: 1px solid #3A3E46; padding: 3px 8px">URP</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid #2E3137; background: #121418">
+<div style="position: relative; padding: 12px 14px; font-weight: 600; font-size: 14px">Easy FP<span aria-hidden="true" class="prog" style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #3A5BFF"></span></div>
+<div style="padding: 12px 14px; font-weight: 600; font-size: 14px; color: #8A8F97; border-left: 1px solid #2E3137">Dungeon</div>
+<div style="padding: 12px 14px; font-weight: 600; font-size: 14px; color: #8A8F97; border-left: 1px solid #2E3137">Earshot</div>
+</div>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #F4E04D">04 / Motion</h2>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 20px; border-top: 1px solid #2E3137; padding-top: 18px">
+<div style="aspect-ratio: 1 / 1; border: 1px solid #2E3137; background: #0E1112; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" viewBox="0 0 120 120" width="120" height="120" fill="none">
+<circle class="ring" cx="60" cy="60" r="56" stroke="#2DE2C0" stroke-width="1.5"></circle>
+<circle class="ring r2" cx="60" cy="60" r="56" stroke="#2DE2C0" stroke-width="1.5"></circle>
+<circle class="ring r3" cx="60" cy="60" r="56" stroke="#2DE2C0" stroke-width="1.5"></circle>
+<circle cx="60" cy="60" r="6" fill="#2DE2C0"></circle>
+</svg>
+</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; font-size: 15px; color: #C9CCD1">
+<li><b style="color: #F2F1EC">Entrance:</b> headline lines slide up out of a mask, staggered 100 ms; copy fades in after.</li>
+<li><b style="color: #F2F1EC">Hero viewport:</b> cycles FP → DG → ES every 4 s with a slow zoom; the tab shows a progress bar.</li>
+<li><b style="color: #F2F1EC">Ticker:</b> feature band scrolls endlessly, pauses on hover.</li>
+<li><b style="color: #F2F1EC">Hover:</b> buttons jump with a hard shadow, rows fill with the asset color, key art zooms 5 %.</li>
+<li><b style="color: #F2F1EC">Earshot:</b> sound rings and travelling rays, live.</li>
+<li><b style="color: #F2F1EC">Docs:</b> reading-progress bar in the asset color, blinking cursor on the title.</li>
+<li><b style="color: #F2F1EC">Reduced motion:</b> everything stops; first slide stays visible.</li>
+</ul>
+</div>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1240}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

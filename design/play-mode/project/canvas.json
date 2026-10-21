@@ -1,0 +1,359 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-21T12:00:00Z"
+ },
+ "title": "Publisher Site Redesign",
+ "launch": {
+  "view": "canvas"
+ },
+ "pages": [],
+ "boards": {
+  "Main.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 6532,
+   "title": "Landing — desktop",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "DocsHub.dc.html": {
+   "x": 1520,
+   "y": 0,
+   "w": 1440,
+   "h": 2176,
+   "title": "Docs home — all documentation",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs.dc.html": {
+   "x": 3040,
+   "y": 0,
+   "w": 1440,
+   "h": 4500,
+   "title": "Docs guide — Easy FP quick start",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "DocsMobile.dc.html": {
+   "x": 4560,
+   "y": 0,
+   "w": 390,
+   "h": 844,
+   "title": "Phone — docs guide (scrolls inside)",
+   "is_interactive": true
+  },
+  "DocsMobileMenu.dc.html": {
+   "x": 5030,
+   "y": 0,
+   "w": 390,
+   "h": 844,
+   "title": "Phone — docs menu open",
+   "is_interactive": true
+  },
+  "Mobile.dc.html": {
+   "x": 5500,
+   "y": 0,
+   "w": 390,
+   "h": 844,
+   "title": "Phone — site menu open"
+  },
+  "DocsSearch.dc.html": {
+   "x": 5970,
+   "y": 0,
+   "w": 1440,
+   "h": 900,
+   "title": "Docs search — open (type to search)",
+   "is_interactive": true
+  },
+  "System.dc.html": {
+   "x": 1520,
+   "y": 2296,
+   "w": 1440,
+   "h": 1240,
+   "title": "Design system sheet"
+  },
+  "DocsOverview.dc.html": {
+   "x": 1520,
+   "y": 4820,
+   "w": 1440,
+   "h": 3583,
+   "title": "Docs type — asset overview",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "DocsChangelog.dc.html": {
+   "x": 3040,
+   "y": 4820,
+   "w": 1440,
+   "h": 4971,
+   "title": "Docs type — changelog",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "DocsTroubleshooting.dc.html": {
+   "x": 4560,
+   "y": 4820,
+   "w": 1440,
+   "h": 4847,
+   "title": "Docs type — troubleshooting (filter works)",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "DocsApi.dc.html": {
+   "x": 6080,
+   "y": 4820,
+   "w": 1440,
+   "h": 14704,
+   "title": "Docs type — API reference (Dungeon)",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "DocsSystem.dc.html": {
+   "x": 7600,
+   "y": 4820,
+   "w": 1440,
+   "h": 1832,
+   "title": "Docs components sheet"
+  },
+  "Docs-fp-setup-wizard.dc.html": {
+   "x": 0,
+   "y": 19844,
+   "w": 1440,
+   "h": 7040,
+   "title": "Easy FP — Setup Wizard",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-fp-items.dc.html": {
+   "x": 1520,
+   "y": 19844,
+   "w": 1440,
+   "h": 6627,
+   "title": "Easy FP — Items",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-fp-body-ik.dc.html": {
+   "x": 3040,
+   "y": 19844,
+   "w": 1440,
+   "h": 6236,
+   "title": "Easy FP — Body IK",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-fp-fpcutter.dc.html": {
+   "x": 4560,
+   "y": 19844,
+   "w": 1440,
+   "h": 4361,
+   "title": "Easy FP — FPCutter",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-fp-vitals.dc.html": {
+   "x": 6080,
+   "y": 19844,
+   "w": 1440,
+   "h": 4793,
+   "title": "Easy FP — Vitals & Stamina",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-fp-demos.dc.html": {
+   "x": 7600,
+   "y": 19844,
+   "w": 1440,
+   "h": 3369,
+   "title": "Easy FP — Demos",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-fishnet.dc.html": {
+   "x": 9120,
+   "y": 19844,
+   "w": 1440,
+   "h": 11435,
+   "title": "Easy FP — FishNet",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-purrnet.dc.html": {
+   "x": 10640,
+   "y": 19844,
+   "w": 1440,
+   "h": 5800,
+   "title": "Easy FP — PurrNet",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-interfaces.dc.html": {
+   "x": 12160,
+   "y": 19844,
+   "w": 1440,
+   "h": 18747,
+   "title": "Easy FP — Interfaces",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-generator.dc.html": {
+   "x": 0,
+   "y": 38991,
+   "w": 1440,
+   "h": 5181,
+   "title": "Dungeon — Overview",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-quick-start.dc.html": {
+   "x": 1520,
+   "y": 38991,
+   "w": 1440,
+   "h": 2613,
+   "title": "Dungeon — Quick Start",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-room-designer.dc.html": {
+   "x": 3040,
+   "y": 38991,
+   "w": 1440,
+   "h": 5946,
+   "title": "Dungeon — Room Designer",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-templates.dc.html": {
+   "x": 4560,
+   "y": 38991,
+   "w": 1440,
+   "h": 9585,
+   "title": "Dungeon — Templates & Generation",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-decoration.dc.html": {
+   "x": 6080,
+   "y": 38991,
+   "w": 1440,
+   "h": 6420,
+   "title": "Dungeon — Decoration & Themes",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-streaming.dc.html": {
+   "x": 7600,
+   "y": 38991,
+   "w": 1440,
+   "h": 9028,
+   "title": "Dungeon — Chunk Streaming",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-culling-navmesh.dc.html": {
+   "x": 9120,
+   "y": 38991,
+   "w": 1440,
+   "h": 5400,
+   "title": "Dungeon — Culling & NavMesh",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-demos.dc.html": {
+   "x": 10640,
+   "y": 38991,
+   "w": 1440,
+   "h": 7018,
+   "title": "Dungeon — Demo Scenes",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-troubleshooting.dc.html": {
+   "x": 12160,
+   "y": 38991,
+   "w": 1440,
+   "h": 5839,
+   "title": "Dungeon — Troubleshooting",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "Docs-dungeon-changelog.dc.html": {
+   "x": 13680,
+   "y": 38991,
+   "w": 1440,
+   "h": 2216,
+   "title": "Dungeon — Changelog",
+   "expand": "fill",
+   "is_interactive": true
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "DocsHub.dc.html",
+  "Docs.dc.html",
+  "DocsMobile.dc.html",
+  "DocsMobileMenu.dc.html",
+  "Mobile.dc.html",
+  "DocsSearch.dc.html",
+  "System.dc.html",
+  "DocsOverview.dc.html",
+  "DocsChangelog.dc.html",
+  "DocsTroubleshooting.dc.html",
+  "DocsApi.dc.html",
+  "DocsSystem.dc.html",
+  "Docs-fp-setup-wizard.dc.html",
+  "Docs-fp-items.dc.html",
+  "Docs-fp-body-ik.dc.html",
+  "Docs-fp-fpcutter.dc.html",
+  "Docs-fp-vitals.dc.html",
+  "Docs-fp-demos.dc.html",
+  "Docs-fishnet.dc.html",
+  "Docs-purrnet.dc.html",
+  "Docs-interfaces.dc.html",
+  "Docs-dungeon-generator.dc.html",
+  "Docs-dungeon-quick-start.dc.html",
+  "Docs-dungeon-room-designer.dc.html",
+  "Docs-dungeon-templates.dc.html",
+  "Docs-dungeon-decoration.dc.html",
+  "Docs-dungeon-streaming.dc.html",
+  "Docs-dungeon-culling-navmesh.dc.html",
+  "Docs-dungeon-demos.dc.html",
+  "Docs-dungeon-troubleshooting.dc.html",
+  "Docs-dungeon-changelog.dc.html"
+ ],
+ "notes": {
+  "heading": {
+   "x": 0,
+   "y": -300,
+   "text": "vedaloiv — Play Mode",
+   "kind": "title1",
+   "maxW": 9040
+  },
+  "types": {
+   "x": 1520,
+   "y": 4520,
+   "text": "Docs page types — one template per kind of page",
+   "kind": "title1",
+   "maxW": 7520
+  },
+  "inventory": {
+   "x": 5970,
+   "y": 1000,
+   "w": 560,
+   "fill": "yellow",
+   "size": "s",
+   "text": "Page coverage (25 live docs pages)\n\nDocs home → Docs home\n\nOverview template → overview, dungeon-generator\n\nGuide template → quick-start, dungeon-quick-start, fp-setup-wizard, fp-items, fp-body-ik, fp-fpcutter, fp-vitals, fp-demos, fishnet, purrnet, dungeon-room-designer, dungeon-templates, dungeon-decoration, dungeon-streaming, dungeon-culling-navmesh, dungeon-demos\n\nAPI template → interfaces, dungeon-api\n\nTroubleshooting template → fp-troubleshooting, dungeon-troubleshooting\n\nChangelog template → fp-changelog, dungeon-changelog\n\nShared states: search dialog, phone menu, phone page.\nLanding: index / unity-asset-portfolio (identical).\n\nAll 24 pages exist as their own artboard and are generated from docs-src/pages with the real content, ids and screenshots: the five template boards above (quick start, overview, FP troubleshooting, FP changelog, Dungeon API) plus the 19 rows below. Prev/next stays inside one asset, labels match the live sidebar.\n\nSearch uses the live index (297 entries), opens the exact section and supports arrow keys, Enter and Esc."
+  },
+  "pages": {
+   "x": 0,
+   "y": 19544,
+   "text": "Every docs page — generated from docs-src with the same shell (click through the sidebar)",
+   "kind": "title1",
+   "maxW": 13600
+  }
+ },
+ "designSystems": []
+}

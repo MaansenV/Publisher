@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Docs search — open</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Rubik:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#F2F1EC}a:hover{color:#F2F1EC}
+:focus-visible{outline:3px solid #F4E04D;outline-offset:3px}
+#q:focus-visible{outline:none}
+#q::placeholder{color:#8A8F97}
+.res{display:block;padding:10px 18px;text-decoration:none;transition:background .12s}
+.res:hover{background:#1A1D22}
+.res.on{background:#17204A;box-shadow:inset 3px 0 0 #3A5BFF}
+.res.on.dg{background:#3A1520;box-shadow:inset 3px 0 0 #FF4F7B}
+.res.on.doc{background:#2A2708;box-shadow:inset 3px 0 0 #F4E04D}
+.res mark{background:transparent;color:#F4E04D;padding:0}
+.res.on .t mark{background:#F4E04D;color:#0A0B0D;padding:0 2px}
+.res .enter{display:none}
+.res.on .enter{display:inline}
+.sep{color:#8DA2FF}.dg .sep{color:#FF7A9A}.doc .sep{color:#F4E04D}
+.gh{display:flex;align-items:center;gap:8px;padding:14px 18px 6px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.gh i{width:8px;height:8px;display:block}
+.gh.fp{color:#8DA2FF}.gh.fp i{background:#3A5BFF}
+.gh.dg{color:#FF7A9A}.gh.dg i{background:#FF4F7B}
+.gh.doc{color:#F4E04D}.gh.doc i{background:#F4E04D}
+.pop{animation:pop .35s cubic-bezier(.16,1,.3,1) both}
+@keyframes pop{from{opacity:0;transform:translateY(-12px) scale(.98)}to{opacity:1;transform:none}}
+.still *{animation:none !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="width: 1440px; height: 900px; position: relative; overflow: hidden; background: #0A0B0D; color: #F2F1EC; font-family: 'Rubik', system-ui, sans-serif; font-size: 16px; line-height: 1.5">
+
+<div aria-hidden="true" style="position: absolute; inset: 0">
+<div style="height: 64px; border-bottom: 1px solid #24272D; display: flex; align-items: center; gap: 12px; padding: 0 20px">
+<span style="width: 22px; height: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px"><span style="background: #3A5BFF"></span><span style="background: #FF4F7B"></span><span style="background: #2DE2C0"></span><span style="background: #F4E04D"></span></span>
+<span style="font-weight: 700; font-size: 19px">vedaloiv</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F4E04D">docs</span>
+</div>
+<div style="display: flex">
+<div style="width: 280px; height: 836px; border-right: 1px solid #24272D; padding: 24px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="height: 12px; width: 70%; background: #1A1D22"></div><div style="height: 10px; width: 50%; background: #16181C"></div><div style="height: 10px; width: 60%; background: #16181C"></div><div style="height: 10px; width: 45%; background: #16181C"></div><div style="height: 10px; width: 55%; background: #16181C"></div>
+</div>
+<div style="padding: 48px 80px; display: flex; flex-direction: column; gap: 18px; width: 760px">
+<div style="font-family: 'Anton', sans-serif; font-size: 64px; line-height: 1; text-transform: uppercase; color: #24272D">Quick Start</div>
+<div style="height: 12px; width: 90%; background: #16181C"></div><div style="height: 12px; width: 80%; background: #16181C"></div><div style="height: 12px; width: 85%; background: #16181C"></div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(5, 6, 7, 0.78); backdrop-filter: blur(3px)"></div>
+
+<div role="dialog" aria-modal="true" aria-label="Search the documentation" class="pop" style="position: absolute; left: 50%; top: 80px; width: 720px; margin-left: -360px; background: #121418; border: 1px solid #3A3E46; box-shadow: 14px 14px 0 #000000; display: flex; flex-direction: column">
+<div role="search" style="display: flex; align-items: center; gap: 14px; height: 68px; padding: 0 18px; border-bottom: 2px solid #F4E04D">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F4E04D" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<label for="q" style="position: absolute; left: -9999px">Search pages and sections</label>
+<input id="q" type="search" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-activedescendant="{{activeId}}" autocomplete="off" placeholder="Search both manuals, e.g. foot planting" value="{{query}}" onInput="{{onQuery}}" onKeyDown="{{onKey}}" aria-controls="results" style="flex: 1 1 auto; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 21px; color: #F2F1EC; outline: none; padding: 0; caret-color: #F4E04D">
+<span aria-live="polite" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8; white-space: nowrap">{{countLabel}}</span>
+<a href="Docs.dc.html" id="search-close" aria-label="Close search" style="height: 32px; display: flex; align-items: center; padding: 0 8px; border: 1px solid #3A3E46; color: #C9CCD1; font-family: 'JetBrains Mono', monospace; font-size: 12px; text-decoration: none">Esc</a>
+</div>
+
+<div style="height: 560px; overflow-y: auto; padding: 4px 0 10px">
+<div id="results" role="listbox" aria-label="Results">
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+<sc-if value="{{r.head}}" hint-placeholder-val="{{false}}">
+<div aria-hidden="true" class="{{r.ghCls}}"><i></i>{{r.label}}</div>
+</sc-if>
+<sc-if value="{{r.item}}" hint-placeholder-val="{{true}}">
+<a href="{{r.href}}" id="{{r.id}}" role="option" aria-selected="{{r.selected}}" class="{{r.cls}}" onMouseEnter="{{r.hover}}">
+<span class="t" style="display: flex; justify-content: space-between; gap: 16px; font-weight: 600">
+<span>{{r.page}}<sc-if value="{{r.hasSection}}" hint-placeholder-val="{{true}}"> <span class="sep">›</span> {{r.tPre}}<mark>{{r.tHit}}</mark>{{r.tPost}}</sc-if></span>
+<span class="enter" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 400; color: #C9CCD1; white-space: nowrap">Enter ↵</span>
+</span>
+<span style="display: block; font-size: 14px; color: #9BA0A8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.xPre}}<mark>{{r.xHit}}</mark>{{r.xPost}}</span>
+</a>
+</sc-if>
+</sc-for>
+</div>
+<sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+<div style="padding: 48px 24px; text-align: center; display: flex; flex-direction: column; gap: 8px; align-items: center">
+<div style="font-family: 'Anton', sans-serif; font-size: 34px; text-transform: uppercase; line-height: 1">No match</div>
+<div style="color: #B9BDC4; font-size: 15px">Try a component name like PlayerFootPlanting or DungeonManager, or <a href="mailto:karakask2004@gmail.com" style="color: #F4E04D">ask support</a>.</div>
+</div>
+</sc-if>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 18px; padding: 12px 18px; border-top: 1px solid #2E3137; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">
+<span><kbd style="border: 1px solid #3A3E46; padding: 0 5px; color: #F2F1EC">↑</kbd> <kbd style="border: 1px solid #3A3E46; padding: 0 5px; color: #F2F1EC">↓</kbd> move</span>
+<span><kbd style="border: 1px solid #3A3E46; padding: 0 5px; color: #F2F1EC">Enter</kbd> open</span>
+<span><kbd style="border: 1px solid #3A3E46; padding: 0 5px; color: #F2F1EC">Esc</kbd> close</span>
+<span style="margin-left: auto">Searches every page and section of both manuals</span>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":900}}'>
+var INDEX = __DATA__;
+var GROUPS = { 'Docs': 'doc', 'Easy FP Controller': 'fp', 'Dungeon Generator': 'dg' };
+var ORDER = ['Docs', 'Easy FP Controller', 'Dungeon Generator'];
+var START = ['Quick Start', 'Troubleshooting'];
+var LIMIT = 14;
+function split(text, word) {
+  var i = word ? text.toLowerCase().indexOf(word) : -1;
+  if (i < 0) return { pre: text, hit: '', post: '' };
+  return { pre: text.slice(0, i), hit: text.slice(i, i + word.length), post: text.slice(i + word.length) };
+}
+function snippet(text, word) {
+  var i = word ? text.toLowerCase().indexOf(word) : -1;
+  if (i < 0) return split(text.slice(0, 120) + (text.length > 120 ? '…' : ''), '');
+  var start = Math.max(0, i - 40);
+  var cut = (start > 0 ? '…' : '') + text.slice(start, start + 130) + (start + 130 < text.length ? '…' : '');
+  return split(cut, word);
+}
+function search(query) {
+  var words = (query || '').trim().toLowerCase().split(/\s+/).filter(Boolean);
+  var hits = [];
+  if (!words.length) {
+    INDEX.forEach(function (e) { if (!e[2] && START.indexOf(e[1]) >= 0) hits.push({ e: e, score: 0 }); });
+  } else {
+    INDEX.forEach(function (e) {
+      var title = (e[1] + ' ' + e[2]).toLowerCase();
+      var all = title + ' ' + e[3].toLowerCase();
+      if (!words.every(function (w) { return all.indexOf(w) >= 0; })) return;
+      var score = words.reduce(function (s, w) { return s + (title.indexOf(w) >= 0 ? 3 : 1); }, 0);
+      hits.push({ e: e, score: score });
+    });
+    hits.sort(function (a, b) { return b.score - a.score; });
+  }
+  return {
+    total: hits.length,
+    word: words[0] || '',
+    hits: hits.slice(0, LIMIT).sort(function (a, b) { return ORDER.indexOf(a.e[0]) - ORDER.indexOf(b.e[0]); })
+  };
+}
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var st = this.state || {};
+    var query = st.query === undefined ? 'prefab' : st.query;
+    var found = search(query);
+    var hits = found.hits;
+    var active = Math.min(st.active || 0, Math.max(hits.length - 1, 0));
+    var rows = [];
+    var last = null;
+    hits.forEach(function (h, n) {
+      var e = h.e, g = GROUPS[e[0]] || 'fp';
+      if (e[0] !== last) {
+        rows.push({ head: true, item: false, label: e[0], ghCls: 'gh ' + g });
+        last = e[0];
+      }
+      var t = split(e[2], found.word), x = snippet(e[3], found.word);
+      rows.push({
+        head: false, item: true, id: 'res-' + n, href: e[4] + (e[5] ? '#' + e[5] : ''), page: e[1], hasSection: !!e[2],
+        tPre: t.pre, tHit: t.hit, tPost: t.post, xPre: x.pre, xHit: x.hit, xPost: x.post,
+        selected: n === active ? 'true' : 'false',
+        cls: 'res ' + g + (n === active ? ' on' : ''),
+        hover: function () { if (active !== n) self.setState({ active: n }); }
+      });
+    });
+    var typed = query.trim().length > 0;
+    return {
+      rootClass: this.props.motion === false ? 'still' : '',
+      query: query,
+      rows: rows,
+      empty: hits.length === 0,
+      countLabel: typed ? (found.total > LIMIT ? LIMIT + ' of ' + found.total + ' results' : found.total + (found.total === 1 ? ' result' : ' results')) : 'Start here',
+      activeId: hits.length ? 'res-' + active : '',
+      onQuery: function (ev) { self.setState({ query: ev.target.value, active: 0 }); },
+      onKey: function (ev) {
+        if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+          ev.preventDefault();
+          var next = active + (ev.key === 'ArrowDown' ? 1 : -1);
+          self.setState({ active: Math.max(0, Math.min(hits.length - 1, next)) });
+        } else if (ev.key === 'Escape') {
+          ev.preventDefault();
+          var close = document.getElementById('search-close');
+          if (close) close.click();
+        } else if (ev.key === 'Enter') {
+          ev.preventDefault();
+          var el = document.getElementById('res-' + active);
+          if (el) el.click();
+        }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

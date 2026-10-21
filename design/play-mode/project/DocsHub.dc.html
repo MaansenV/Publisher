@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>vedaloiv documentation</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Rubik:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0A0B0D}
+a{color:#F2F1EC}a:hover{color:#F4E04D}
+:focus-visible{outline:3px solid #F4E04D;outline-offset:3px}
+@media (max-width: 760px){.hide-sm{display:none}}
+.grid-bg{background-image:linear-gradient(#ffffff0c 1px,transparent 1px),linear-gradient(90deg,#ffffff0c 1px,transparent 1px);background-size:56px 56px;background-position:-1px -1px}
+.line{display:block;overflow:hidden;padding-bottom:0.04em}
+.rise{display:block;animation:rise 1s cubic-bezier(.16,1,.3,1) both}
+.fade{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) both}
+.d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.3s}.d4{animation-delay:.42s}.d5{animation-delay:.54s}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.caret{display:inline-block;width:2px;height:22px;background:#F4E04D;animation:blink 1s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+.row{background-image:linear-gradient(var(--c),var(--c));background-repeat:no-repeat;background-size:0% 100%;transition:background-size .45s cubic-bezier(.16,1,.3,1),color .2s,padding-left .3s}
+.row:hover{background-size:100% 100%;color:var(--t);padding-left:22px}
+.row:hover .row-sub{color:var(--t)}
+.btn{transition:transform .18s ease,box-shadow .18s ease}
+.btn:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 #F2F1EC}
+.chip{transition:background .2s,color .2s,border-color .2s}
+.chip:hover{background:#F4E04D;color:#0A0B0D;border-color:#F4E04D}
+.card .media img{transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.card:hover .media img{transform:scale(1.05)}
+.ring{transform-box:fill-box;transform-origin:center;animation:ring 3.6s cubic-bezier(.2,.6,.3,1) infinite}
+.r2{animation-delay:1.2s}.r3{animation-delay:2.4s}
+@keyframes ring{from{transform:scale(.12);opacity:.95}to{transform:scale(1);opacity:0}}
+.still *{animation:none !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="background: #0A0B0D; color: #F2F1EC; font-family: 'Rubik', system-ui, sans-serif; font-size: 17px; line-height: 1.6; min-width: 0; overflow-x: clip">
+
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(10, 11, 13, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid #24272D">
+<div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; height: 68px; display: flex; align-items: center; gap: 24px">
+<a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<span aria-hidden="true" style="width: 24px; height: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px">
+<span style="background: #3A5BFF"></span><span style="background: #FF4F7B"></span><span style="background: #2DE2C0"></span><span style="background: #F4E04D"></span>
+</span>
+<span style="font-weight: 700; font-size: 20px">vedaloiv</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F4E04D">docs</span>
+</a>
+<nav aria-label="Docs sections" class="hide-sm" style="display: flex; gap: 2px; flex: 1 1 auto">
+<a href="#fp" style="text-decoration: none; padding: 10px 14px; font-weight: 500; font-size: 15px">Easy FP</a>
+<a href="#dg" style="text-decoration: none; padding: 10px 14px; font-weight: 500; font-size: 15px">Dungeon Generator</a>
+<a href="#help" style="text-decoration: none; padding: 10px 14px; font-weight: 500; font-size: 15px">Help</a>
+</nav>
+<a href="Main.dc.html" style="margin-left: auto; display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border: 1.5px solid #3A3E46; text-decoration: none; font-weight: 600; font-size: 15px">← Back to site</a>
+</div>
+</header>
+
+<main>
+<section class="grid-bg" style="border-bottom: 1px solid #24272D">
+<div style="max-width: 1360px; margin: 0 auto; padding: 80px 24px 72px; display: flex; flex-direction: column; gap: 30px">
+<div class="fade d1" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #F4E04D">Documentation</div>
+<h1 style="margin: 0; font-family: 'Anton', 'Impact', sans-serif; font-weight: 400; font-size: clamp(3.2rem, 7vw, 7rem); line-height: 0.93; text-transform: uppercase">
+<span class="line"><span class="rise d1">Docs checked</span></span>
+<span class="line"><span class="rise d2">against the <span style="color: #F4E04D">shipped code.</span></span></span>
+</h1>
+<p class="fade d3" style="margin: 0; max-width: 40em; font-size: 19px; color: #C9CCD1">Every asset has its own manual: a quick start first, guides for each feature, then reference, troubleshooting and the changelog.</p>
+
+<div class="fade d4" style="max-width: 860px; display: flex; flex-direction: column; gap: 14px">
+<a href="DocsSearch.dc.html" aria-label="Search all documentation" style="display: flex; align-items: center; gap: 14px; height: 68px; padding: 0 20px; background: #121418; border: 1.5px solid #F4E04D; box-shadow: 10px 10px 0 #000000; text-decoration: none">
+<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F4E04D" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<span aria-hidden="true" class="caret"></span>
+<span style="flex: 1 1 auto; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 19px; color: #F2F1EC; outline: none; color: #9BA0A8">Search 24 pages — e.g. foot planting, chunk streaming</span>
+<span class="hide-sm" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; border: 1px solid #3A3E46; padding: 2px 8px; color: #9BA0A8">Ctrl K</span>
+</a>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #9BA0A8; margin-right: 4px">Jump to</span>
+<a href="Docs-fp-setup-wizard.dc.html" class="chip" style="font-size: 14px; border: 1px solid #3A3E46; padding: 5px 12px; text-decoration: none">Setup Wizard</a>
+<a href="Docs-dungeon-room-designer.dc.html" class="chip" style="font-size: 14px; border: 1px solid #3A3E46; padding: 5px 12px; text-decoration: none">Room Designer</a>
+<a href="Docs-fishnet.dc.html" class="chip" style="font-size: 14px; border: 1px solid #3A3E46; padding: 5px 12px; text-decoration: none">FishNet</a>
+<a href="Docs-dungeon-streaming.dc.html" class="chip" style="font-size: 14px; border: 1px solid #3A3E46; padding: 5px 12px; text-decoration: none">Chunk Streaming</a>
+<a href="DocsTroubleshooting.dc.html" class="chip" style="font-size: 14px; border: 1px solid #3A3E46; padding: 5px 12px; text-decoration: none">Troubleshooting</a>
+</div>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1360px; margin: 0 auto; padding: 72px 24px 40px; display: flex; flex-wrap: wrap; gap: 24px">
+
+<article id="fp" class="card fade d4" style="flex: 1 1 520px; min-width: 0; border: 1px solid #2E3137; border-top: 4px solid #3A5BFF; background: #121418; display: flex; flex-direction: column">
+<div class="media" style="position: relative; aspect-ratio: 16 / 7; overflow: hidden; background: #050607">
+<img src="/_blob/ff56cddc411ca4973d16f2e80ebf7355" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: 70% 40%; display: block">
+<span style="position: absolute; top: 0; left: 0; font-family: 'Anton', sans-serif; font-size: 26px; line-height: 1; background: #3A5BFF; color: #FFFFFF; padding: 12px 14px">FP</span>
+<span style="position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #0A0B0D; color: #3DDC97; padding: 4px 8px; border: 1px solid #2E3137">Documentation for v1.6.0</span>
+</div>
+<div style="padding: 28px; display: flex; flex-direction: column; gap: 20px; flex: 1 1 auto">
+<div>
+<h2 style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: 40px; line-height: 1; text-transform: uppercase">Easy FP Full Body <span style="color: #8DA2FF">Controller</span></h2>
+<div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C9CCD1">
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">13 pages</span><span style="border: 1px solid #3A3E46; padding: 2px 8px">Unity 6000.5+</span><span style="border: 1px solid #3A3E46; padding: 2px 8px">URP</span>
+</div>
+</div>
+<a href="Docs.dc.html" class="btn" style="display: flex; justify-content: space-between; align-items: center; min-height: 58px; padding: 0 22px; background: #3A5BFF; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 18px">
+<span style="display: flex; flex-direction: column; line-height: 1.2"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: #FFFFFF">START HERE</span>Quick start</span>
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px 24px">
+<nav aria-label="Easy FP guides" style="display: flex; flex-direction: column">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #8DA2FF; padding-bottom: 6px; border-bottom: 1px solid #2E3137">Guides</span>
+<a href="Docs-fp-setup-wizard.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Setup Wizard</a>
+<a href="Docs-fp-items.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Items</a>
+<a href="Docs-fp-body-ik.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Body IK</a>
+<a href="Docs-fp-fpcutter.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">FPCutter</a>
+<a href="Docs-fp-vitals.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Vitals &amp; Stamina</a>
+<a href="Docs-fp-demos.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Demos</a>
+</nav>
+<div style="display: flex; flex-direction: column; gap: 20px">
+<nav aria-label="Easy FP multiplayer" style="display: flex; flex-direction: column">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #8DA2FF; padding-bottom: 6px; border-bottom: 1px solid #2E3137">Multiplayer</span>
+<a href="Docs-fishnet.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">FishNet</a>
+<a href="Docs-purrnet.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">PurrNet</a>
+</nav>
+<nav aria-label="Easy FP reference" style="display: flex; flex-direction: column">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #8DA2FF; padding-bottom: 6px; border-bottom: 1px solid #2E3137">Reference</span>
+<a href="Docs-interfaces.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Interfaces</a>
+<a href="DocsTroubleshooting.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Troubleshooting</a>
+<a href="DocsChangelog.dc.html" class="row" style="--c: #3A5BFF; --t: #FFFFFF; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Changelog</a>
+</nav>
+</div>
+</div>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 16px; padding-top: 14px; border-top: 1px solid #2E3137; font-size: 15px">
+<a href="DocsOverview.dc.html" style="font-weight: 600">Overview</a>
+<a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" style="font-weight: 600">Asset Store ↗</a>
+</div>
+</div>
+</article>
+
+<article id="dg" class="card fade d5" style="flex: 1 1 520px; min-width: 0; border: 1px solid #2E3137; border-top: 4px solid #FF4F7B; background: #121418; display: flex; flex-direction: column">
+<div class="media" style="position: relative; aspect-ratio: 16 / 7; overflow: hidden; background: #050607">
+<img src="/_blob/c65c15a8775a829ea5aa16823e61a61b" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; display: block">
+<span style="position: absolute; top: 0; left: 0; font-family: 'Anton', sans-serif; font-size: 26px; line-height: 1; background: #FF4F7B; color: #0A0B0D; padding: 12px 14px">DG</span>
+<span style="position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #0A0B0D; color: #3DDC97; padding: 4px 8px; border: 1px solid #2E3137">Documentation for v1.1.0</span>
+</div>
+<div style="padding: 28px; display: flex; flex-direction: column; gap: 20px; flex: 1 1 auto">
+<div>
+<h2 style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: 40px; line-height: 1; text-transform: uppercase">Easy Dungeon <span style="color: #FF7A9A">Generator</span></h2>
+<div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C9CCD1">
+<span style="border: 1px solid #3A3E46; padding: 2px 8px">11 pages</span><span style="border: 1px solid #3A3E46; padding: 2px 8px">Unity 6000.5.0+</span><span style="border: 1px solid #3A3E46; padding: 2px 8px">Built-in · URP · HDRP</span>
+</div>
+</div>
+<a href="Docs-dungeon-quick-start.dc.html" class="btn" style="display: flex; justify-content: space-between; align-items: center; min-height: 58px; padding: 0 22px; background: #FF4F7B; color: #0A0B0D; text-decoration: none; font-weight: 700; font-size: 18px">
+<span style="display: flex; flex-direction: column; line-height: 1.2"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.06em">START HERE</span>Quick start</span>
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px 24px">
+<nav aria-label="Dungeon Generator guides" style="display: flex; flex-direction: column">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #FF7A9A; padding-bottom: 6px; border-bottom: 1px solid #2E3137">Guides</span>
+<a href="Docs-dungeon-room-designer.dc.html" class="row" style="--c: #FF4F7B; --t: #0A0B0D; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Room Designer</a>
+<a href="Docs-dungeon-templates.dc.html" class="row" style="--c: #FF4F7B; --t: #0A0B0D; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Templates &amp; Generation</a>
+<a href="Docs-dungeon-decoration.dc.html" class="row" style="--c: #FF4F7B; --t: #0A0B0D; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Decoration &amp; Themes</a>
+<a href="Docs-dungeon-streaming.dc.html" class="row" style="--c: #FF4F7B; --t: #0A0B0D; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Chunk Streaming</a>
+<a href="Docs-dungeon-culling-navmesh.dc.html" class="row" style="--c: #FF4F7B; --t: #0A0B0D; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Culling &amp; NavMesh</a>
+<a href="Docs-dungeon-demos.dc.html" class="row" style="--c: #FF4F7B; --t: #0A0B0D; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Demo Scenes</a>
+</nav>
+<nav aria-label="Dungeon Generator reference" style="display: flex; flex-direction: column; align-self: start">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #FF7A9A; padding-bottom: 6px; border-bottom: 1px solid #2E3137">Reference</span>
+<a href="DocsApi.dc.html" class="row" style="--c: #FF4F7B; --t: #0A0B0D; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">API Reference</a>
+<a href="Docs-dungeon-troubleshooting.dc.html" class="row" style="--c: #FF4F7B; --t: #0A0B0D; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Troubleshooting</a>
+<a href="Docs-dungeon-changelog.dc.html" class="row" style="--c: #FF4F7B; --t: #0A0B0D; padding: 9px 10px; border-bottom: 1px solid #24272D; text-decoration: none; font-size: 15px">Changelog</a>
+</nav>
+</div>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 16px; padding-top: 14px; border-top: 1px solid #2E3137; font-size: 15px">
+<a href="Docs-dungeon-generator.dc.html" style="font-weight: 600">Overview</a>
+<a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" style="font-weight: 600">Asset Store ↗</a>
+</div>
+</div>
+</article>
+</section>
+
+<section style="max-width: 1360px; margin: 0 auto; padding: 0 24px 72px">
+<div style="border: 1px dashed #2DE2C0; background: #0E1112; display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; padding: 22px 28px">
+<svg aria-hidden="true" viewBox="0 0 80 80" width="64" height="64" fill="none">
+<circle class="ring" cx="40" cy="40" r="36" stroke="#2DE2C0" stroke-width="1.5"></circle>
+<circle class="ring r2" cx="40" cy="40" r="36" stroke="#2DE2C0" stroke-width="1.5"></circle>
+<circle class="ring r3" cx="40" cy="40" r="36" stroke="#2DE2C0" stroke-width="1.5"></circle>
+<circle cx="40" cy="40" r="5" fill="#2DE2C0"></circle>
+</svg>
+<div style="flex: 1 1 320px">
+<div style="font-family: 'Anton', sans-serif; font-size: 28px; line-height: 1.05; text-transform: uppercase">Earshot <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4FF0D2; vertical-align: middle; margin-left: 8px">IN DEVELOPMENT</span></div>
+<div style="color: #B9BDC4; font-size: 16px">Real-time sound occlusion for Unity. Documentation is published with the release.</div>
+</div>
+<a href="Main.dc.html#earshot" style="font-weight: 600">See it on the site →</a>
+</div>
+</section>
+
+<section id="help" style="background: #F4E04D; color: #0A0B0D">
+<div style="max-width: 1360px; margin: 0 auto; padding: 56px 24px; display: flex; flex-wrap: wrap; gap: 28px 56px; align-items: center">
+<h2 style="flex: 1 1 340px; margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(2.4rem, 4.4vw, 4rem); line-height: 0.95; text-transform: uppercase">Stuck on a step?</h2>
+<div style="flex: 2 1 600px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 10px; max-width: 760px">
+<a href="DocsTroubleshooting.dc.html" class="btn" style="display: flex; justify-content: space-between; align-items: center; min-height: 58px; padding: 0 18px; background: #0A0B0D; color: #F2F1EC; text-decoration: none; font-weight: 600">FP troubleshooting<span aria-hidden="true">→</span></a>
+<a href="Docs-dungeon-troubleshooting.dc.html" class="btn" style="display: flex; justify-content: space-between; align-items: center; min-height: 58px; padding: 0 18px; background: #0A0B0D; color: #F2F1EC; text-decoration: none; font-weight: 600">Dungeon troubleshooting<span aria-hidden="true">→</span></a>
+<a href="mailto:karakask2004@gmail.com" style="grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; min-height: 52px; padding: 0 18px; border: 1.5px solid #0A0B0D; color: #0A0B0D; text-decoration: none; font-weight: 600">Still stuck? Email karakask2004@gmail.com<span aria-hidden="true">→</span></a>
+</div>
+</div>
+</section>
+</main>
+
+<footer style="border-top: 1px solid #24272D">
+<div style="max-width: 1360px; margin: 0 auto; padding: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA0A8">
+<span>© 2026 vedaloiv</span>
+<a href="Main.dc.html" style="text-decoration: none">vedaloiv.wasmer.app</a>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":2176}}'>
+class Component extends DCLogic {
+renderVals() {
+return { rootClass: this.props.motion === false ? 'still' : '' };
+}
+}
+</script>
+</body>
+</html>
