@@ -1,75 +1,292 @@
-# vedaloiv Design System
+---
+name: vedaloiv
+description: Publisher page and per-asset docs for vedaloiv's Unity tools, in a dark editor-like world with one yellow highlight.
+colors:
+  selection-yellow: "oklch(0.913 0.17 98.7)"
+  gizmo-teal: "oklch(0.79 0.12 184.33)"
+  gizmo-cyan: "oklch(0.86 0.12 202.63)"
+  console-lime: "oklch(0.88 0.19 124.11)"
+  warning-orange: "oklch(0.78 0.15 53.84)"
+  tag-pink: "oklch(0.74 0.2 341.96)"
+  viewport-black: "oklch(0.145 0 89.88)"
+  viewport-sunken: "oklch(0.118 0 89.88)"
+  panel: "oklch(0.185 0 89.88)"
+  panel-2: "oklch(0.218 0 89.88)"
+  panel-raised: "oklch(0.285 0 89.88)"
+  ink-bright: "oklch(0.99 0.01 97.35)"
+  ink-body: "oklch(0.88 0.008 95)"
+  ink-muted: "oklch(0.7 0.01 89.88)"
+  ink-faint: "oklch(0.62 0.01 89.88)"
+  on-accent: "oklch(0.145 0 89.88)"
+  grid-line: "oklch(0.99 0.01 97.35 / 0.11)"
+  grid-line-strong: "oklch(0.99 0.01 97.35 / 0.2)"
+typography:
+  display:
+    fontFamily: "Rubik, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "clamp(2.5rem, 1.4rem + 4.2vw, 4.4rem)"
+    fontWeight: 800
+    lineHeight: 1.02
+    letterSpacing: "-0.035em"
+  headline:
+    fontFamily: "Rubik, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "clamp(2rem, 1.4rem + 2.2vw, 3rem)"
+    fontWeight: 700
+    lineHeight: 1.06
+    letterSpacing: "-0.03em"
+  doc-title:
+    fontFamily: "Rubik, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "clamp(2.1rem, 1.5rem + 2.4vw, 3.15rem)"
+    fontWeight: 800
+    lineHeight: 1.06
+    letterSpacing: "-0.032em"
+  title:
+    fontFamily: "Rubik, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "clamp(1.55rem, 1.2rem + 1.2vw, 2.1rem)"
+    fontWeight: 700
+    lineHeight: 1.12
+    letterSpacing: "-0.025em"
+  doc-h2:
+    fontFamily: "Rubik, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "1.72rem"
+    fontWeight: 700
+    lineHeight: 1.2
+    letterSpacing: "-0.022em"
+  body:
+    fontFamily: "Rubik, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 400
+    lineHeight: 1.65
+  label:
+    fontFamily: "JetBrains Mono, SFMono-Regular, ui-monospace, Consolas, monospace"
+    fontSize: "0.78rem"
+    fontWeight: 500
+    lineHeight: 1.4
+rounded:
+  sm: "6px"
+  md: "10px"
+  lg: "14px"
+  pill: "999px"
+spacing:
+  gutter-mobile: "16px"
+  gutter: "24px"
+  header: "64px"
+  section: "clamp(72px, 9vw, 120px)"
+  container: "1200px"
+  docs-shell: "1480px"
+  measure: "72ch"
+components:
+  button-primary:
+    backgroundColor: "{colors.selection-yellow}"
+    textColor: "{colors.on-accent}"
+    rounded: "{rounded.pill}"
+    padding: "10px 20px"
+    height: "48px"
+  button-ghost:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink-bright}"
+    rounded: "{rounded.pill}"
+    padding: "10px 20px"
+    height: "48px"
+  button-ghost-hover:
+    backgroundColor: "{colors.panel-2}"
+    textColor: "{colors.ink-bright}"
+  button-quiet:
+    backgroundColor: "transparent"
+    textColor: "{colors.gizmo-teal}"
+    padding: "10px 6px"
+  badge-released:
+    backgroundColor: "{colors.selection-yellow}"
+    textColor: "{colors.on-accent}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: "2px 10px"
+    height: "26px"
+  badge-dev:
+    backgroundColor: "transparent"
+    textColor: "{colors.gizmo-teal}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: "2px 10px"
+    height: "26px"
+  product-card:
+    backgroundColor: "{colors.panel}"
+    rounded: "{rounded.lg}"
+  input:
+    backgroundColor: "{colors.viewport-sunken}"
+    textColor: "{colors.ink-bright}"
+    rounded: "{rounded.sm}"
+    padding: "11px 13px"
+    height: "48px"
+  nav-link:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink-muted}"
+    rounded: "{rounded.sm}"
+    padding: "0 12px"
+    height: "44px"
+  nav-link-hover:
+    backgroundColor: "{colors.panel-2}"
+    textColor: "{colors.ink-bright}"
+  kicker:
+    backgroundColor: "{colors.selection-yellow}"
+    textColor: "{colors.on-accent}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: "4px 12px"
+---
 
-## Direction
+# Design System: vedaloiv
 
-**Character Select / Loadout Dossier**: an editorial asset index for a Unity publisher. The landing page treats the current package as an active selected record rather than a generic marketing hero. It borrows the supplied Ink Byte reference's white paper, heavy black headline, cobalt primary, vermilion state, acid-yellow marker, crisp rules, and compact product dossier.
+## Overview
 
-The world is intentionally restrained in structure and direct in copy. No testimonials, invented catalog items, fake benchmarks, gameplay claims, mascot, game HUD, or decorative hero illustration are used. The catalog holds three entries: Easy FP Full Body Controller v1.6.0 and Easy Dungeon Generator v1.1.0 (both released), and Earshot (in development). The publisher name is `vedaloiv` on the site and on both Asset Store listings; the GitHub organization `MaansenV` is the only remaining "Maansen" string on the site.
+**Creative North Star: "The Scene View"**
 
-A dark variant inverts the same grammar (ink-black ground, paper type, identical accent fills) rather than importing a generic dark SaaS look; it is specified for user selection through a theme toggle.
+The site reads like the Unity editor at work: a dark viewport, a faint grid, and one highlight on whatever is selected. Visitors are Unity developers who spend their day in that window, so the publisher page and the docs feel like an extension of it rather than a marketing site laid over it. The landing page and the docs share one token family (the landing's inline `:root` mirrors `docs-src/assets/docs.css`), so a visitor crossing from catalog to setup guide never changes worlds.
 
-**Implementation status (2026-10-21).** This file describes the approved target, not the shipped CSS. `od-site/unity-asset-portfolio.html` (identical to `index.html`) and the pages in `od-site/docs/` each define an inline `:root` palette of near-black OKLCH surfaces with a yellow `--accent`, Rubik for display and body text, and JetBrains Mono for metadata. The Character Select tokens, fonts, and toggles below are not in od-site yet: no Bowlby One SC, Figtree, or DM Mono; no `html.dark` variant; no appearance toggle; no skip link; no dossier tablist (the catalog uses filter chips). Shipped breakpoints are 900px and 680px. Until od-site is re-themed to this spec, read the token and anatomy sections as target values.
+Density is calm. Surfaces are near-black neutrals stepped by lightness, separated by hairline rules rather than shadows (only the docs search dialog casts one). Type is one family, Rubik, set heavy and tight for headings and open for reading; JetBrains Mono carries versions, statuses, menu paths and other machine facts. Selection yellow is the only loud colour and it always means "act here" or "you are here". The supporting gizmo hues (teal, cyan, lime, orange) behave like editor signals: links, code, success, warning.
 
-## Tokens
+Real product proof carries the page: Unity editor screenshots, an authored ray diagram for the in-development asset, and the scene-view grid behind the hero. Rejected worlds stay out: the espresso/coral poster look, the violet/Geist look, and the one-bit desktop gimmick.
 
-Target values from the approved direction. They are not yet defined in od-site (see Implementation status).
+**Key Characteristics:**
+- Near-black neutral surfaces stepped by lightness, hairline rules, shadows only on modals.
+- One selection-yellow accent reserved for action and state.
+- Rubik for everything readable, JetBrains Mono for machine facts.
+- Pill-shaped actions, gently rounded containers.
+- Landing and docs share one token set.
 
-- Paper: `#f4efe5`; soft paper: `#e6ddcc`; white panel: `#fffdf8`
-- Ink: `#111318`; secondary ink: `#394252`; muted text: `#526071`
-- Cobalt: `#1454e8`; deep cobalt: `#0b369f`
-- Vermilion: `#ef402f`; acid yellow: `#f4d33f`; success green: `#087443`
-- Borders are normally 2px ink and flip to paper in dark via the same token. Small radius is 4px; larger dossier corners use 10px only where the panel needs grouping.
-- Hard offsets replace soft elevation: solid 4–12px offsets with no blur. Light theme offsets use ink/cobalt; dark theme offsets collapse to near-black `#05070a` (no colored glow blocks).
-- Text on saturated fills is explicit, never token-driven: `#111318` on vermilion and yellow in both themes; `#fff` on cobalt in both themes.
-- Dark variant (`html.dark`): paper `#15171d`, soft paper `#20242e`, ink `#f0ece1`, secondary ink `#c9cfdb`, muted `#9aa4b4`, cobalt text `#7ea0f8`, deep cobalt (labels) `#8fb0ff`, vermilion text `#ef402f`, success `#3ecf8e`, preview frame `#0a0c10`, docs code ground `#0a0c10`. Accent fills (cobalt `#1454e8`, vermilion `#ef402f`, yellow `#f4d33f`) are identical across themes.
-- Text-level accent colors meet WCAG AA on their ground: vermilion text `#c93220` on paper (4.6:1), `#ef402f` on dark ground (4.6:1); cobalt text `#1454e8` on paper (5.3:1), `#7ea0f8` on dark ground (7.1:1).
+## Colors
 
-Shipped tokens (today): the inline `:root` in `od-site/unity-asset-portfolio.html`, repeated in the docs pages.
+A neutral dark viewport with one warm highlight and a small set of editor signal hues.
 
-- Surfaces: `--bg` `oklch(0.145 0 89.88)`, `--surface` `oklch(0.218 0 89.88)`, `--surface-raised` `oklch(0.285 0 89.88)`
-- Text: `--fg` `oklch(0.99 0.01 97.35)`, `--muted` `oklch(0.6 0.01 89.88)`, `--on-accent` `oklch(0.145 0 89.88)`
-- Borders: `--border` `oklch(0.99 0.01 97.35 / 0.16)`, `--border-dark` `oklch(0.145 0 89.88 / 0.18)`
-- Accents: `--accent` `oklch(0.913 0.17 98.7)` (also `--focus`), plus `--lime`, `--pink`, `--purple`, `--teal`, `--orange`, `--cyan`
-- Fonts: `--font-display` and `--font-body` in Rubik; `--font-mono` in JetBrains Mono
+### Primary
+- **Selection Yellow** (`selection-yellow`): primary buttons, the contact submit, released badges, the docs kicker and version pill on the current asset, the active TOC link, active sidebar and nav markers, text selection, focus rings, the hero ray path and source dot. Text on it is always `on-accent`.
+
+### Secondary
+- **Gizmo Teal** (`gizmo-teal`): every inline link, quiet buttons, the in-development badge (dashed outline), the next roadmap step, the ray diagram's sound waves.
+- **Gizmo Cyan** (`gizmo-cyan`): link hover, inline code in docs, the default (info) callout.
+
+### Tertiary
+- **Console Lime** (`console-lime`): tip callouts, the copied state of code-block copy buttons, contact success text.
+- **Warning Orange** (`warning-orange`): warning callouts, invalid form fields and their error text, contact error text.
+- **Tag Pink** (`tag-pink`, docs only): breaking-change badges in changelogs.
+
+### Neutral
+- **Viewport Black** (`viewport-black`): page ground for landing and docs.
+- **Viewport Sunken** (`viewport-sunken`): alternating landing sections (roadmap, contact), footer, code blocks, form inputs, the Earshot diagram ground.
+- **Panel** (`panel`), **Panel 2** (`panel-2`), **Panel Raised** (`panel-raised`): product cards and tables; hover fills and "what's new" strip; keyboard keys, disabled submit and the diagram wall. Each step is lighter, never shadowed.
+- **Ink Bright** (`ink-bright`): headings, strong text, active nav text.
+- **Ink Body** (`ink-body`): running copy.
+- **Ink Muted** (`ink-muted`): secondary copy, metadata labels, idle nav links.
+- **Ink Faint** (`ink-faint`, docs only): breadcrumbs, sidebar section labels, level-3 TOC links, code-language tags, page meta, footer copy. It clears 4.5:1 on sunken, ground, panel and panel 2 (4.78:1 at worst) but not on panel raised (3.94:1), so on raised surfaces such as a selected search result it switches to ink muted (5.37:1).
+- **Grid Line** / **Grid Line Strong** (`grid-line`, `grid-line-strong`): hairline dividers and the hero grid; strong lines outline cards, ghost buttons and inputs.
+
+### Named Rules
+**The Selection Rule.** Selection yellow fills only three things: a primary action, a released state, or the visitor's current location. Never use it as decoration, illustration fill or section background.
+
+**The Signal Rule.** Teal, cyan, lime and orange keep their editor meanings (link, code/info, success, warning). Never swap them for variety.
 
 ## Typography
 
-- Display: Bowlby One SC, with Impact fallback. Used for the hero and section headlines.
-- Body: Figtree, with system fallback. Used for explanatory and interface copy.
-- Metadata: DM Mono, with a monospace fallback. Used for versions, labels, proof notes, and release state.
-- The display face is reserved for short, high-signal headings; body copy remains readable at normal proportions.
-- Metadata floor is 12px: mono labels and proof notes sit at 0.78–0.8rem; nothing functional renders below 0.75rem.
-- Shipped: Rubik (display and body, with system fallback) and JetBrains Mono (metadata), loaded from Google Fonts in each page's `<head>`.
+**Display Font:** Rubik (with system-ui, -apple-system, Segoe UI, sans-serif)
+**Body Font:** Rubik (same stack)
+**Label/Mono Font:** JetBrains Mono (with SFMono-Regular, ui-monospace, Consolas, monospace)
 
-## Landing anatomy (target)
+**Character:** One sturdy, rounded grotesque does all the talking, heavy and tightly tracked at the top, relaxed in paragraphs; the monospace is the editor's voice for anything a developer would copy or compare.
 
-1. **Skip link and sticky navigation** — keyboard skip-to-content, vedaloiv mark, Assets, Contact, Docs, an appearance toggle (sun/moon), and a persistent Asset Store action that compacts but remains available on mobile. At ≤620px the Assets anchor hides to keep the bar single-row.
-2. **Hero** — product-specific `Full-body / control / for Unity.` headline top-aligned with the dossier, concise description, canonical store/docs actions, and a publisher note (`On-site publisher: vedaloiv · v1.6.0`).
-3. **Selected-asset catalog record** — `ACTIVE` release state, Easy FP Full Body Controller identity, one metadata line (`vedaloiv · v1.6.0 · URP`), the full contained Unity setup-wizard screenshot, capability tabs, compatibility tags, and canonical store/docs actions. The Asset Store action is cobalt everywhere on the page. Shipped: the former `ASSET CATALOG / 1 OF 1` label is gone; the catalog section reads "Three assets, two released." with a card per entry (Easy FP v1.6.0, Easy Dungeon Generator v1.1.0, and Earshot as an "In development" placeholder without links).
-4. **Feature strip** — four factual cells for guided setup, procedural IK, FPCutter, and source-verified docs. Color blocks are structural markers: cobalt, vermilion, yellow, cobalt.
-5. **Contact** — blue support section with labeled required fields, honeypot, loading/success/error feedback, and in-page AJAX submission with FormSubmit fallback action.
-6. **Footer** — an ink end-cap (inverted to paper in dark) carrying the brand block (`vedaloiv`), footer navigation (Assets/Docs/Contact/Back to top), and a final Asset Store call to action.
+### Hierarchy
+- **Display** (800, `clamp(2.5rem, 1.4rem + 4.2vw, 4.4rem)`, 1.02, −0.035em): landing hero headline only, max 13–15ch.
+- **Doc title** (800, `clamp(2.1rem, 1.5rem + 2.4vw, 3.15rem)`, 1.06): docs page H1.
+- **Headline** (700, `clamp(2rem, 1.4rem + 2.2vw, 3rem)`, 1.06, −0.03em): landing section headings, 12–16ch.
+- **Title** (700, `clamp(1.55rem, 1.2rem + 1.2vw, 2.1rem)`, 1.12): product names on catalog cards.
+- **Doc H2 / H3** (700 at 1.72rem / 600 at 1.32rem): docs sections; H2 carries a hairline rule above it.
+- **Body** (400, 1.0625rem, 1.65 landing / 1.7 docs): running copy; docs measure is 72ch, landing paragraphs 46–60ch.
+- **Label** (JetBrains Mono 500, 0.72–0.82rem): versions, badges, spec values, timeline dates, menu paths, keyboard keys.
 
-## Responsive behavior
+### Named Rules
+**The Machine Fact Rule.** Anything a developer would type, copy or compare (versions, menu paths, code, keys, spec values) is set in JetBrains Mono. Prose is never set in mono.
 
-- Desktop uses a two-column hero and four-column feature strip.
-- At 1060px the hero stacks while retaining a readable dossier width.
-- At 800px the feature strip becomes two columns and the contact record stacks.
-- At 620px navigation compacts while retaining the Asset Store action, actions become full-width, the dossier panel stacks, the feature strip becomes one column, and the contact CTA fills the available width.
-- The portrait source image uses true `450x751` dimensions and `object-fit: contain` inside a bounded dark preview; its alt text identifies it as the Unity editor setup wizard.
+**The Tight Top Rule.** Headings tighten tracking as they grow (−0.012em at H3 up to −0.035em at display) and always use `text-wrap: balance`.
 
-## Interaction and accessibility
+## Layout
 
-- The first focusable control is a visible-on-focus skip link to `#main-content`; all links and controls retain visible keyboard focus with a vermilion outline.
-- Dossier controls use `role="tablist"`, `role="tab"`, roving `tabindex`, Arrow/Home/End keyboard navigation, `aria-selected`, `aria-controls`, `role="tabpanel"`, and `aria-live="polite"`.
-- Decorative marks and arrows are hidden from assistive technology.
-- External Asset Store links use `target="_blank"` with `rel="noopener"`.
-- `prefers-reduced-motion: reduce` removes entrance animation, disables smooth scrolling, and collapses transition/animation duration.
-- The theme toggle is a target requirement: a sun/moon control in the landing nav and the docs nav, persisted across routes and reloads. Both themes must be verified at 320–1440px. No toggle ships in od-site yet.
-- Contact inputs have explicit labels, native types, maximum lengths, honeypot protection, and loading/success/error feedback.
+Landing: a centred container of `min(1200px, 100% − 2 × gutter)` with a 24px gutter (16px at ≤760px) and a 64px sticky header (60px on mobile). Sections breathe with `clamp(72px, 9vw, 120px)` vertical padding and alternate between viewport black and sunken grounds, separated by hairlines. Most sections use a two-column grid with `clamp(32px, 5vw, 72px)` gaps: hero copy beside a product mosaic, section head beside its intro, about copy beside a principle list, contact copy beside the form. Catalog cards split media and body (1.1fr / 1fr).
 
-## Content boundaries
+Docs: a 1480px shell with a 280px sticky sidebar, a content column at 72ch measure, and a 232px sticky "On this page" rail. At ≤1240px the rail folds into an inline disclosure; at ≤920px the sidebar becomes an off-canvas menu behind a menu button.
 
-The catalog states its real count ("Three assets, two released" as of 2026-10-21) and never implies more. Add a new asset only when its real source, version, compatibility, and documentation are available.
+Breakpoints: landing 960px (everything stacks), 760px (mobile nav, 16px gutter), 420px (full-width actions). Docs 1240px, 920px, 640px, 400px.
 
-Do not reintroduce the rejected Espresso Warm Dark / Wünder brown-coral world, violet/Geist styling, one-bit desktop gimmicks, soft-glow gradients, generic SaaS hero copy, or floating sticker-card composition.
+**The Scene Grid Rule.** The 56px hero grid is the only background texture, masked to fade out. Do not add other patterns, gradients or noise.
+
+## Elevation & Depth
+
+The system is flat. Depth comes from tonal steps (sunken, ground, panel, panel 2, raised) and hairline borders. The only translucency is the sticky header and topbar: 86% ground with a 14px backdrop blur, plus the 82% blurred labels over mosaic tiles. Active states use an inset 3px yellow bar or a 2px yellow left border, not lift.
+
+### Shadow Vocabulary
+- **Modal** (`box-shadow: 0 30px 80px -20px oklch(0 0 0 / 0.7)`): the docs search dialog only, over a 72% near-black backdrop with a 3px blur.
+
+**The Flat Viewport Rule.** Drop shadows belong to modal overlays only. Anything else that needs to stand forward steps its surface one tone lighter and gets a strong hairline.
+
+## Shapes
+
+Gentle, consistent rounding. Containers use 14px (`lg`: product cards, mosaic tiles, the contact form), inner panels and code blocks 10px (`md`), and small controls 6px (`sm`: nav links, inputs, search button, copy button). Every action and status is a full pill (999px): buttons, badges, nav CTA, kicker, version pills, "what's new" links. Borders are always 1px hairlines; the only heavier strokes are the 3px callout edge, the 2px roadmap spine and the 2px bottom edge of keyboard keys. Feature bullets are 8px yellow squares with a 2px radius; roadmap nodes are 14px circles.
+
+## Components
+
+### Buttons
+Pill-shaped, confident, and few per view.
+- **Shape:** full pill (999px), 48px minimum height, 600 weight.
+- **Primary:** selection yellow with `on-accent` text, `10px 20px` padding. Hover mixes in 15% white. One per product action group (Asset Store).
+- **Ghost:** transparent with a strong hairline and bright ink; hover fills panel 2 and the border turns bright. Used for docs links beside the primary.
+- **Quiet:** an underlined teal text link with button height; hover turns cyan and thickens the underline.
+- **Focus:** 2px yellow outline, 3px offset (contact submit uses a bright-ink outline because its fill is already yellow).
+- **Motion:** 160ms ease on background, border and colour only.
+
+### Badges and chips
+- **Released:** yellow pill, mono 0.74rem, 26px tall.
+- **In development:** transparent pill with a dashed teal border and teal text.
+- **"What's new" links:** 36px outlined pills; hover turns border and text teal. The changelog link drops the border and reads as an underlined link.
+
+### Cards / Containers
+- **Product card:** panel ground, strong hairline, 14px radius, clipped. Media column holds a screenshot or the ray diagram in a 10px-radius frame plus a two-up thumbnail strip; the body column holds status, name, tagline, yellow-square feature list, a 3-column mono spec grid, and actions pinned to the bottom. A panel-2 "what's new" strip closes the card.
+- **Mosaic tile:** 16:10 image tile, strong hairline, 14px radius, blurred pill labels at the bottom; hover turns the border yellow.
+- **Docs callout:** panel ground tinted 7% with its signal hue, 3px left edge, 30% hue border. Variants: info (cyan), tip (lime), warn (orange).
+
+### Inputs / Fields
+- **Style:** sunken ground, strong hairline, 6px radius, 48px minimum height (textarea 140px).
+- **Hover:** border turns muted.
+- **Focus:** yellow border plus a 2px yellow outline at 2px offset.
+- **Error:** orange border with orange helper text below; success and error status text use lime and orange.
+- **Disabled submit:** raised panel with bright ink and a wait cursor.
+
+### Navigation
+- **Landing header:** sticky, translucent, hairline bottom. Brand wordmark in Rubik 800. Links are muted 44px targets with 6px radius; hover fills panel 2 and brightens. The Asset Store CTA is an outlined pill whose border turns yellow on hover. At ≤760px links move into a drop-down panel behind a pill menu toggle.
+- **Docs sidebar:** collapsible asset groups with a mono version pill (yellow on the current asset), indented page lists on a hairline spine, active page marked by a 2px yellow left border and a panel-2 fill.
+- **Docs TOC:** hairline spine, muted links, active link in yellow.
+
+### Docs prose (signature)
+- **Inline code:** cyan mono on panel, hairline, 5px radius.
+- **Menu path chip:** bright mono on panel 2 with a strong hairline, e.g. `Tools › FBSystem › Setup Wizard`.
+- **Keyboard key:** raised panel, strong hairline, 2px bottom edge.
+- **Code block:** sunken ground, 10px radius, mono 0.84rem, a faint language tag and a mono copy button that turns lime when copied.
+- **Numbered steps:** counter-driven step list for setup guides.
+
+### Earshot ray diagram (signature)
+An authored SVG standing in for a missing screenshot: a raised-panel wall on the hairline grid, a faint dashed blocked ray, a yellow dashed path that bends around the wall, teal pulse rings from the source, and a bright listener ring. With motion allowed, the path travels and the rings pulse; with reduced motion it is static.
+
+## Do's and Don'ts
+
+### Do:
+- **Do** keep landing and docs on the same token values; change `docs-src/assets/docs.css` and the landing `:root` together.
+- **Do** reserve selection yellow for a primary action, a released state, or the current location.
+- **Do** set versions, menu paths, keys, code and spec values in JetBrains Mono.
+- **Do** separate surfaces with tonal steps and 1px hairlines.
+- **Do** keep touch targets at 44px or more (buttons 48px, nav links 44px).
+- **Do** respect `prefers-reduced-motion`: smooth scrolling and diagram animation switch off, and transitions collapse to 0.01ms.
+- **Do** use real Unity screenshots as product proof, with alt text.
+
+### Don't:
+- **Don't** add box shadows outside modal overlays, and no glows or gradient fills; the only gradient is the hero grid mask.
+- **Don't** use yellow for decoration, illustration fills or section backgrounds.
+- **Don't** reassign the signal hues (teal link, cyan code/info, lime success, orange warning).
+- **Don't** put `ink-faint` text on `panel-raised`; use `ink-muted` there. Keep `ink-faint` to breadcrumbs, labels and other secondary hints.
+- **Don't** reintroduce the rejected espresso/coral poster world, the violet/Geist look, or the one-bit desktop gimmick.
+- **Don't** hand-edit `od-site/docs/`; style changes go through `docs-src/` and the build.
