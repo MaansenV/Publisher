@@ -77,6 +77,8 @@
       overflow-x: clip;
     }
     img { max-width: 100%; height: auto; display: block; }
+    /* <picture> only selects a source; the <img> inside keeps sizing as if it were the direct child. */
+    picture { display: contents; }
     svg { display: block; }
     a { color: var(--teal); text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
     a:hover { color: var(--cyan); text-decoration-thickness: 2px; }
@@ -96,7 +98,8 @@
       background: var(--accent); color: var(--on-accent); font-weight: 600; text-decoration: none;
       transform: translateY(-160%);
     }
-    .skip-link:focus { transform: none; color: var(--on-accent); }
+    .skip-link:focus { transform: none; }
+    .skip-link:focus, .skip-link:hover { color: var(--on-accent); }
 
     .container { width: min(1200px, 100% - 2 * var(--gutter)); margin-inline: auto; }
 
@@ -248,7 +251,7 @@
     }
     .product-main { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
     .product-media { min-width: 0; padding: 14px; display: grid; gap: 10px; align-content: start; }
-    .product-media > img, .product-art {
+    .product-media > picture > img, .product-art {
       width: 100%; border-radius: var(--radius); border: 1px solid var(--line);
       background: var(--surface-2);
     }
@@ -412,11 +415,15 @@
       #kontakt .contact-form-grid { grid-template-columns: minmax(0, 1fr); }
     }
     @media (max-width: 420px) {
-      .hero-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 14px; }
+      /* Three columns are too narrow here: one fact per row, label left and value right. */
+      .hero-facts { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 6px; }
+      .hero-facts div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 8px 0; }
+      .hero-facts div + div { border-top: 1px solid var(--line); }
+      .hero-facts dd { margin: 0; text-align: right; }
       .hero-actions .button { flex: 1 1 auto; }
       .product-actions .button--primary { flex: 1 1 100%; }
       .tile-label { left: 6px; bottom: 6px; right: 6px; }
-      .tile-label span { padding: 3px 7px; }
+      .tile-label span { padding: 3px 8px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition-duration: 0.01ms !important; animation: none !important; }
@@ -464,13 +471,13 @@
         <ul class="mosaic" aria-label="Products">
           <li>
             <a class="tile tile--fp" href="#fp">
-              <img src="assets/web/fp-overview.jpg" width="1200" height="900" alt="Easy FP Full Body Controller: a white mannequin character crouching in a grey and blue test level" fetchpriority="high" decoding="async">
+              <picture><source type="image/avif" srcset="assets/web/fp-overview-480.avif 480w, assets/web/fp-overview-800.avif 800w, assets/web/fp-overview-1200.avif 1200w" sizes="(max-width: 960px) min(640px, calc(100vw - 32px)), 580px"><img src="assets/web/fp-overview.jpg" srcset="assets/web/fp-overview-480.jpg 480w, assets/web/fp-overview-800.jpg 800w, assets/web/fp-overview.jpg 1200w" sizes="(max-width: 960px) min(640px, calc(100vw - 32px)), 580px" width="1200" height="900" alt="Easy FP Full Body Controller: a white mannequin character crouching in a grey and blue test level" fetchpriority="high" decoding="async"></picture>
               <span class="tile-label"><span>Easy FP Full Body Controller</span><span class="tile-status">v1.7.0</span></span>
             </a>
           </li>
           <li>
             <a class="tile tile--dungeon" href="#dungeon">
-              <img src="assets/web/dungen-main.jpg" width="1200" height="675" alt="Easy Dungeon Generator: a node graph from entrance through rooms to treasure and boss, next to dungeon and backrooms scenes" decoding="async">
+              <picture><source type="image/avif" srcset="assets/web/dungen-main-480.avif 480w, assets/web/dungen-main-800.avif 800w, assets/web/dungen-main-1200.avif 1200w" sizes="(max-width: 960px) min(314px, calc(50vw - 22px)), 284px"><img src="assets/web/dungen-main.jpg" srcset="assets/web/dungen-main-480.jpg 480w, assets/web/dungen-main-800.jpg 800w, assets/web/dungen-main.jpg 1200w" sizes="(max-width: 960px) min(314px, calc(50vw - 22px)), 284px" width="1200" height="675" alt="Easy Dungeon Generator: a node graph from entrance through rooms to treasure and boss, next to dungeon and backrooms scenes" decoding="async"></picture>
               <span class="tile-label"><span>Easy Dungeon Generator</span><span class="tile-status">v1.1.0</span></span>
             </a>
           </li>
@@ -507,10 +514,10 @@
           <article class="product" id="fp" aria-labelledby="fp-title">
             <div class="product-main">
               <div class="product-media">
-                <img src="assets/web/fp-features.jpg" width="1200" height="900" alt="Easy FP key art: the player's own arms and legs visible in first person while walking through a test level" loading="lazy" decoding="async">
+                <picture><source type="image/avif" srcset="assets/web/fp-features-480.avif 480w, assets/web/fp-features-800.avif 800w, assets/web/fp-features-1200.avif 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 600px"><img src="assets/web/fp-features.jpg" srcset="assets/web/fp-features-480.jpg 480w, assets/web/fp-features-800.jpg 800w, assets/web/fp-features.jpg 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 600px" width="1200" height="900" alt="Easy FP key art: the player's own arms and legs visible in first person while walking through a test level" loading="lazy" decoding="async"></picture>
                 <ul class="shots" aria-label="More screenshots">
-                  <li><a href="assets/web/fp-integrations.jpg"><img src="assets/web/fp-integrations.jpg" width="1200" height="900" alt="Setup Wizard steps 1 to 3: choose root, assign model, find bones (opens full size)" loading="lazy" decoding="async"></a></li>
-                  <li><a href="assets/web/fp-setup.jpg"><img src="assets/web/fp-setup.jpg" width="1200" height="900" alt="Setup Wizard steps 4 to 6: add scripts, set up helpers, connect systems (opens full size)" loading="lazy" decoding="async"></a></li>
+                  <li><a href="assets/web/fp-integrations.jpg"><picture><source type="image/avif" srcset="assets/web/fp-integrations-480.avif 480w, assets/web/fp-integrations-800.avif 800w, assets/web/fp-integrations-1200.avif 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px"><img src="assets/web/fp-integrations.jpg" srcset="assets/web/fp-integrations-480.jpg 480w, assets/web/fp-integrations-800.jpg 800w, assets/web/fp-integrations.jpg 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px" width="1200" height="900" alt="Setup Wizard steps 1 to 3: choose root, assign model, find bones (opens full size)" loading="lazy" decoding="async"></picture></a></li>
+                  <li><a href="assets/web/fp-setup.jpg"><picture><source type="image/avif" srcset="assets/web/fp-setup-480.avif 480w, assets/web/fp-setup-800.avif 800w, assets/web/fp-setup-1200.avif 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px"><img src="assets/web/fp-setup.jpg" srcset="assets/web/fp-setup-480.jpg 480w, assets/web/fp-setup-800.jpg 800w, assets/web/fp-setup.jpg 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px" width="1200" height="900" alt="Setup Wizard steps 4 to 6: add scripts, set up helpers, connect systems (opens full size)" loading="lazy" decoding="async"></picture></a></li>
                 </ul>
               </div>
               <div class="product-body">
@@ -559,10 +566,10 @@
           <article class="product" id="dungeon" aria-labelledby="dungeon-title">
             <div class="product-main">
               <div class="product-media">
-                <img src="assets/web/dungen-editor.jpg" width="1200" height="675" alt="Room Designer window: painting floor tiles, doors and a stair opening on a grid" loading="lazy" decoding="async">
+                <picture><source type="image/avif" srcset="assets/web/dungen-editor-480.avif 480w, assets/web/dungen-editor-800.avif 800w, assets/web/dungen-editor-1200.avif 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 600px"><img src="assets/web/dungen-editor.jpg" srcset="assets/web/dungen-editor-480.jpg 480w, assets/web/dungen-editor-800.jpg 800w, assets/web/dungen-editor.jpg 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 600px" width="1200" height="675" alt="Room Designer window: painting floor tiles, doors and a stair opening on a grid" loading="lazy" decoding="async"></picture>
                 <ul class="shots" aria-label="More screenshots">
-                  <li><a href="assets/web/dungen-nodes.jpg"><img src="assets/web/dungen-nodes.jpg" width="1200" height="675" alt="Node graph connecting entrance, rooms and boss room (opens full size)" loading="lazy" decoding="async"></a></li>
-                  <li><a href="assets/web/dungen-features.jpg"><img src="assets/web/dungen-features.jpg" width="1200" height="800" alt="Feature overview: node-based design, room editor and multi-floor support (opens full size)" loading="lazy" decoding="async"></a></li>
+                  <li><a href="assets/web/dungen-nodes.jpg"><picture><source type="image/avif" srcset="assets/web/dungen-nodes-480.avif 480w, assets/web/dungen-nodes-800.avif 800w, assets/web/dungen-nodes-1200.avif 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px"><img src="assets/web/dungen-nodes.jpg" srcset="assets/web/dungen-nodes-480.jpg 480w, assets/web/dungen-nodes-800.jpg 800w, assets/web/dungen-nodes.jpg 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px" width="1200" height="675" alt="Node graph connecting entrance, rooms and boss room (opens full size)" loading="lazy" decoding="async"></picture></a></li>
+                  <li><a href="assets/web/dungen-features.jpg"><picture><source type="image/avif" srcset="assets/web/dungen-features-480.avif 480w, assets/web/dungen-features-800.avif 800w, assets/web/dungen-features-1200.avif 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px"><img src="assets/web/dungen-features.jpg" srcset="assets/web/dungen-features-480.jpg 480w, assets/web/dungen-features-800.jpg 800w, assets/web/dungen-features.jpg 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px" width="1200" height="800" alt="Feature overview: node-based design, room editor and multi-floor support (opens full size)" loading="lazy" decoding="async"></picture></a></li>
                 </ul>
               </div>
               <div class="product-body">
