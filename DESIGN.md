@@ -62,6 +62,7 @@ typography:
     fontWeight: 500
     lineHeight: 1.4
 rounded:
+  xs: "2px"
   sm: "6px"
   md: "10px"
   lg: "14px"
@@ -199,7 +200,8 @@ A neutral dark viewport with one warm highlight and a small set of editor signal
 - **Title** (700, `clamp(1.55rem, 1.2rem + 1.2vw, 2.1rem)`, 1.12): product names on catalog cards.
 - **Doc H2 / H3** (700 at 1.72rem / 600 at 1.32rem): docs sections; H2 carries a hairline rule above it.
 - **Body** (400, 1.0625rem, 1.65 landing / 1.7 docs): running copy; docs measure is 72ch, landing paragraphs 46–60ch.
-- **Label** (JetBrains Mono 500, 0.72–0.82rem): versions, badges, spec values, timeline dates, menu paths, keyboard keys.
+- **Label** (JetBrains Mono 500, 0.72–0.82rem): versions, badges, Inspector values, timeline dates, step numbers, keyboard keys. Inline code and menu paths in landing copy run at 0.86em of the surrounding text.
+- **UI label** (Rubik 400, 0.78rem `fs-xs` or 0.88rem `fs-sm`, muted ink): 0.78rem for hero-fact labels and the store note under the actions; 0.88rem for Inspector row labels, nav links, form labels and the "what's new" line. Nothing on the landing goes below 0.72rem.
 
 ### Named Rules
 **The Machine Fact Rule.** Anything a developer would type, copy or compare (versions, menu paths, code, keys, spec values) is set in JetBrains Mono. Prose is never set in mono.
@@ -214,7 +216,7 @@ Docs: a 1480px shell with a 280px sticky sidebar, a content column at 72ch measu
 
 Breakpoints: landing 960px (everything stacks), 760px (mobile nav, 16px gutter), 420px (full-width actions; the three hero facts become ruled rows with the label left and the value right). Docs 1240px, 920px, 640px, 400px.
 
-**The Scene Grid Rule.** The 56px hero grid is the only background texture, masked to fade out. Do not add other patterns, gradients or noise.
+**The Scene Grid Rule.** The hairline grid is the only background texture: 56px behind the hero, masked to fade out, and 28px (14px at ≤960px) on the sunken ground of each catalog media column, where the product shot sits on it as the selected object. Do not add other patterns, gradients or noise.
 
 ## Elevation & Depth
 
@@ -227,7 +229,7 @@ The system is flat. Depth comes from tonal steps (sunken, ground, panel, panel 2
 
 ## Shapes
 
-Gentle, consistent rounding. Containers use 14px (`lg`: product cards, mosaic tiles, the contact form), inner panels and code blocks 10px (`md`), and small controls 6px (`sm`: nav links, inputs, search button, copy button). Every action and status is a full pill (999px): buttons, badges, nav CTA, kicker, version pills, "what's new" links. Borders are always 1px hairlines; the only heavier strokes are the 3px callout edge, the 2px roadmap spine and the 2px bottom edge of keyboard keys. Feature bullets are 8px yellow squares with a 2px radius; roadmap nodes are 14px circles.
+Gentle, consistent rounding. Containers use 14px (`lg`: product cards, mosaic tiles, the contact form), inner panels and code blocks 10px (`md`), and small controls 6px (`sm`: nav links, inputs, search button, copy button). Every action and status is a full pill (999px): buttons, badges, nav CTA, kicker, version pills, "what's new" links. Borders are always 1px hairlines; the only heavier strokes are the 3px callout edge, the 2px roadmap spine and the 2px bottom edge of keyboard keys. The 2px radius (`xs`) is for editor marks only: the selection box and the feature bullets (7px squares with a muted 1px border, no fill). Roadmap nodes are 14px circles.
 
 ## Components
 
@@ -243,11 +245,14 @@ Pill-shaped, confident, and few per view.
 ### Badges and chips
 - **Released:** yellow pill, mono 0.74rem, 26px tall.
 - **In development:** transparent pill with a dashed teal border and teal text.
-- **"What's new" links:** 36px outlined pills; hover turns border and text teal. The changelog link drops the border and reads as an underlined link.
 
 ### Cards / Containers
-- **Product card:** panel ground, strong hairline, 14px radius, clipped. Media column holds a screenshot or the ray diagram in a 10px-radius frame plus a two-up thumbnail strip; the body column holds status, name, tagline, yellow-square feature list, a 3-column mono spec grid, and actions pinned to the bottom. A panel-2 "what's new" strip closes the card.
-- **Mosaic tile:** 16:10 image tile, strong hairline, 14px radius, blurred pill labels at the bottom; hover turns the border yellow.
+- **Product card:** panel ground, strong hairline, 14px radius, clipped. The media column is a scene view (sunken ground, 28px grid, 28px padding) holding one screenshot or the ray diagram in a 6px-radius frame inside a selection box. The body column holds status, name, summary, at most four plain-language feature bullets (technical term in parentheses), the Inspector, actions pinned to the bottom, and a muted store note pointing to ratings and the current price. Below sit the setup strip and a one-line panel-2 "what's new" sentence with a single changelog link. At ≤960px the columns stack: image, body, setup, what's new.
+- **Selection box (signature):** a 1px box with 2px radius and 7px square handles on its four corners, drawn as a pseudo-element. Around catalog media it is always visible in strong hairline with muted handles and turns yellow while the card is hovered or holds focus. On mosaic tiles it appears only on hover and keyboard focus, inset 6px (4px with 5px handles at ≤420px). It marks selection state, never decoration.
+- **Inspector (signature):** package facts as a Unity component, a native `<details open>`. Header row in panel 2 with a rotating foldout triangle and the component name ("Package", or "Planned requirements" before release); rows on sunken ground with a muted label column (38%, 84px min) and bright mono values, separated by hairlines. Released assets show Price, Unity, Pipeline and Download; version and release date live only in the status line. Unity versions read `6.5+ (6000.5)`.
+- **Setup strip:** a three-step `<ol>` with mono step numbers in 28px hairline squares, a bright step title, one plain sentence, menu paths in cyan mono, and step screenshots as 16:9 thumbnails (6px radius, strong hairline, yellow border on hover). Three columns on desktop, one column (max 560px) at ≤960px. The heading row can hold a small ghost button (44px) for the walkthrough video.
+- **Mosaic tile:** 16:10 image tile, strong hairline, 14px radius, blurred pill labels inset 16px at the bottom; hover and focus turn the border yellow and show the selection box.
+- **Viewer:** one native `<dialog>` for screenshots and the walkthrough video, opened with `showModal()`. Panel ground, strong hairline, 14px radius, a caption bar with a 44px round close button, and a sunken stage. Images open as the same `<picture>` at full width; the youtube-nocookie iframe is created on click and removed on close. Esc, the close button and a backdrop click close it, and focus returns to the opener. Without JS the links open the JPG or the YouTube page. No shadow, an 88% sunken backdrop.
 - **Docs callout:** panel ground tinted 7% with its signal hue, 3px left edge, 30% hue border. Variants: info (cyan), tip (lime), warn (orange). Markup is `<div class="callout …" role="note">`, never `<aside>`, so callouts do not add landmarks.
 
 ### Inputs / Fields
@@ -284,6 +289,8 @@ An authored SVG standing in for a missing screenshot: a raised-panel wall on the
 - **Do** keep touch targets at 44px or more (buttons 48px, nav links 44px).
 - **Do** respect `prefers-reduced-motion`: smooth scrolling and diagram animation switch off, and transitions collapse to 0.01ms.
 - **Do** use real Unity screenshots as product proof, with alt text.
+- **Do** keep landing anchors in English (`#about`, `#contact`); the inline script forwards the old `#ueber-mich` and `#kontakt` links.
+- **Do** list the roadmap newest first.
 
 ### Don't:
 - **Don't** add box shadows outside modal overlays, and no glows or gradient fills; the only gradient is the hero grid mask.

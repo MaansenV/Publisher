@@ -86,7 +86,7 @@
     ::selection { background: var(--accent); color: var(--on-accent); }
     [hidden] { display: none !important; }
     h1, h2, h3 { color: var(--fg); margin: 0; text-wrap: balance; }
-    p, li, dd { overflow-wrap: break-word; }
+    p, li, dd { overflow-wrap: break-word; text-wrap: pretty; }
 
     .sr-only {
       position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -192,7 +192,10 @@
       border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
       background: var(--surface); color: var(--fg); text-decoration: none;
     }
-    .tile:hover { color: var(--fg); border-color: var(--accent); }
+    .tile { --sel-line: var(--accent); --sel-handle: var(--accent); }
+    .tile::after { z-index: 1; inset: 6px; opacity: 0; transition: opacity 160ms ease; }
+    .tile:hover, .tile:focus-visible { color: var(--fg); border-color: var(--accent); }
+    .tile:hover::after, .tile:focus-visible::after { opacity: 1; }
     .tile img { width: 100%; height: 100%; object-fit: cover; }
     .tile--fp { aspect-ratio: 16 / 10; }
     .tile--fp img { object-position: 50% 40%; }
@@ -200,7 +203,7 @@
     .tile--earshot { background: var(--bg-sunken); }
     .tile--earshot svg { width: 100%; height: 100%; }
     .tile-label {
-      position: absolute; left: 10px; bottom: 10px; right: 10px;
+      position: absolute; left: 16px; bottom: 16px; right: 16px;
       display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px;
       pointer-events: none;
     }
@@ -250,17 +253,33 @@
       background: var(--surface); overflow: hidden;
     }
     .product-main { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
-    .product-media { min-width: 0; padding: 14px; display: grid; gap: 10px; align-content: start; }
-    .product-media > picture > img, .product-art {
-      width: 100%; border-radius: var(--radius); border: 1px solid var(--line);
-      background: var(--surface-2);
+    /* The media column is a scene view: the product shot sits on the grid as the selected object. */
+    .product-media {
+      min-width: 0; padding: 28px; display: grid; align-content: center;
+      border-right: 1px solid var(--line); background-color: var(--bg-sunken);
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 28px 28px;
+      background-position: -1px -1px;
     }
+    .viewport { position: relative; --sel-line: var(--line-strong); --sel-handle: var(--muted); }
+    .product:hover .viewport, .product:focus-within .viewport { --sel-line: var(--accent); --sel-handle: var(--accent); }
+    .viewport img, .product-art { width: 100%; border-radius: var(--radius-sm); background: var(--surface-2); }
     .product-art { aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-sunken); }
     .product-art svg { width: 100%; height: 100%; }
-    .shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
-    .shots a { display: block; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); }
-    .shots a:hover { border-color: var(--accent); }
-    .shots img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 62%; }
+    /* Editor selection: a 1px box with square handles on each corner, as Unity draws a selected rect. */
+    .viewport::after, .tile::after {
+      content: ""; position: absolute; pointer-events: none;
+      border: 1px solid var(--sel-line); border-radius: 2px;
+      background:
+        linear-gradient(var(--sel-handle) 0 0) 0 0,
+        linear-gradient(var(--sel-handle) 0 0) 100% 0,
+        linear-gradient(var(--sel-handle) 0 0) 0 100%,
+        linear-gradient(var(--sel-handle) 0 0) 100% 100%;
+      background-size: 7px 7px; background-repeat: no-repeat; background-origin: border-box;
+    }
+    .viewport::after { inset: -7px; }
     .product-body { min-width: 0; padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; gap: 18px; }
     .product-status { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: var(--fs-sm); color: var(--muted); }
     .badge {
@@ -274,35 +293,65 @@
     .tagline { margin: -6px 0 0; color: var(--fg); font-size: 1.15rem; font-weight: 500; line-height: 1.45; }
     .features { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
     .features li { position: relative; padding-left: 22px; line-height: 1.5; }
+    /* Hairline squares: the bullets mark list items, they do not compete with the yellow actions. */
     .features li::before {
-      content: ""; position: absolute; left: 2px; top: 0.6em; width: 8px; height: 8px;
-      border-radius: 2px; background: var(--accent);
+      content: ""; position: absolute; left: 2px; top: 0.62em; width: 7px; height: 7px;
+      border: 1px solid var(--muted); border-radius: 2px;
     }
-    .specs {
-      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
-      margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--line);
+
+    /* Package facts as a Unity Inspector component: foldout header, label column, mono values. */
+    .inspector { border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--bg-sunken); overflow: hidden; }
+    .inspector summary {
+      display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 6px 12px;
+      background: var(--surface-2); color: var(--fg); font-size: var(--fs-sm); font-weight: 600;
+      cursor: pointer; list-style: none;
     }
-    .specs div { min-width: 0; padding: 10px 12px; background: var(--surface); }
-    .specs dt { color: var(--muted); font-size: var(--fs-xs); }
-    .specs dd { margin: 1px 0 0; color: var(--fg); font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.45; }
+    .inspector summary::-webkit-details-marker { display: none; }
+    .inspector summary::before {
+      content: ""; width: 0; height: 0; flex: 0 0 auto;
+      border-left: 5px solid var(--muted); border-block: 4px solid transparent;
+      transition: transform 160ms ease;
+    }
+    .inspector[open] summary::before { transform: rotate(90deg); }
+    .inspector summary:hover { background: var(--surface-raised); }
+    .inspector summary:focus-visible { outline-offset: -2px; }
+    .inspector dl { margin: 0; border-top: 1px solid var(--line); }
+    .inspector dl div { display: grid; grid-template-columns: minmax(84px, 38%) minmax(0, 1fr); gap: 12px; padding: 7px 12px 7px 27px; }
+    .inspector dl div + div { border-top: 1px solid var(--line); }
+    .inspector dt { color: var(--muted); font-size: var(--fs-sm); line-height: 1.5; }
+    .inspector dd { margin: 0; color: var(--fg); font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.7; }
     .product-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: auto; padding-top: 4px; }
+    .store-note { margin: -8px 0 0; color: var(--muted); font-size: var(--fs-xs); }
+
+    /* Setup proof: the three moves from import to a running scene. */
+    .setup { padding: clamp(22px, 3vw, 32px) clamp(24px, 3vw, 36px); border-top: 1px solid var(--line); }
+    .setup-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-bottom: 20px; }
+    .setup h4 { margin: 0; color: var(--fg); font-size: var(--fs-lg); font-weight: 600; line-height: 1.3; }
+    .steps { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 28px; }
+    .steps > li { position: relative; min-width: 0; padding-left: 40px; counter-increment: step; }
+    .steps > li::before {
+      content: counter(step); position: absolute; left: 0; top: 0;
+      display: grid; place-items: center; width: 28px; height: 28px;
+      border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+      color: var(--fg); font-family: var(--font-mono); font-size: 0.82rem; line-height: 1;
+    }
+    .steps p { margin: 0; color: var(--fg-body); font-size: 0.96rem; line-height: 1.55; }
+    .steps .step-title { margin-bottom: 4px; color: var(--fg); font-size: var(--fs-base); font-weight: 600; line-height: 1.6; }
+    code { font-family: var(--font-mono); font-size: 0.86em; color: var(--cyan); overflow-wrap: anywhere; }
+    .step-shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+    .step-shots--one { grid-template-columns: minmax(0, 1fr); }
+    .step-shots a { display: block; overflow: hidden; border: 1px solid var(--line-strong); border-radius: var(--radius-sm); }
+    .step-shots a:hover { border-color: var(--accent); }
+    .step-shots img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 62%; }
+    .button--sm { min-height: 44px; padding: 8px 16px; font-size: var(--fs-sm); }
+    .button--sm svg { width: 12px; height: 12px; }
 
     .whats-new {
-      display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 12px 32px; align-items: start;
-      padding: 20px clamp(24px, 3vw, 36px);
+      margin: 0; padding: 16px clamp(24px, 3vw, 36px);
       border-top: 1px solid var(--line); background: var(--surface-2);
+      color: var(--fg-body); font-size: var(--fs-sm); line-height: 1.6;
     }
-    .whats-new h4 { margin: 0; color: var(--fg); font-size: 1rem; font-weight: 600; line-height: 1.4; }
-    .whats-new h4 small { display: block; margin-top: 2px; color: var(--muted); font-size: var(--fs-xs); font-weight: 400; }
-    .whats-new ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
-    .whats-new li a {
-      display: inline-flex; align-items: center; min-height: 36px; padding: 4px 12px;
-      border: 1px solid var(--line-strong); border-radius: 999px;
-      color: var(--fg); font-size: var(--fs-sm); text-decoration: none; line-height: 1.3;
-    }
-    .whats-new li a:hover { border-color: var(--teal); color: var(--teal); }
-    .whats-new li.changelog a { border-color: transparent; color: var(--teal); text-decoration: underline; text-underline-offset: 0.22em; }
-    .whats-new li.changelog a:hover { color: var(--cyan); }
+    .whats-new strong { color: var(--fg); font-weight: 600; }
 
     /* ---------- Roadmap ---------- */
     .timeline { margin: 0; padding: 0; list-style: none; border-left: 2px solid var(--line-strong); margin-left: 6px; max-width: 760px; }
@@ -335,42 +384,64 @@
     .contact-copy .support-mail { display: inline-block; margin-top: 6px; font-family: var(--font-mono); font-size: 0.95rem; }
     .contact-links { margin: 26px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
 
-    #kontakt .contact-form {
+    #contact .contact-form {
       display: grid; gap: 16px; padding: clamp(22px, 3vw, 32px);
       border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: var(--surface);
     }
-    #kontakt .contact-form-title { font-size: 1.3rem; font-weight: 600; }
-    #kontakt .contact-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 16px; }
-    #kontakt .form-field { display: grid; min-width: 0; gap: 6px; }
-    #kontakt .form-field--wide { grid-column: 1 / -1; }
-    #kontakt .form-label { color: var(--fg); font-size: var(--fs-sm); font-weight: 500; }
-    #kontakt .form-control {
+    #contact .contact-form-title { font-size: 1.3rem; font-weight: 600; }
+    #contact .contact-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 16px; }
+    #contact .form-field { display: grid; min-width: 0; gap: 6px; }
+    #contact .form-field--wide { grid-column: 1 / -1; }
+    #contact .form-label { color: var(--fg); font-size: var(--fs-sm); font-weight: 500; }
+    #contact .form-control {
       width: 100%; min-height: 48px; padding: 11px 13px;
       border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
       background: var(--bg-sunken); color: var(--fg); font: inherit; line-height: 1.4;
     }
-    #kontakt textarea.form-control { min-height: 140px; resize: vertical; }
-    #kontakt .form-control::placeholder { color: var(--muted); opacity: 1; }
-    #kontakt .form-control:hover { border-color: var(--muted); }
-    #kontakt .form-control:focus-visible { border-color: var(--focus); outline: 2px solid var(--focus); outline-offset: 2px; }
-    #kontakt .form-control[aria-invalid="true"] { border-color: var(--orange); }
-    #kontakt .field-error { min-height: 1.4em; margin: 0; color: var(--orange); font-size: var(--fs-xs); line-height: 1.4; }
-    #kontakt .contact-submit {
+    #contact textarea.form-control { min-height: 140px; resize: vertical; }
+    #contact .form-control::placeholder { color: var(--muted); opacity: 1; }
+    #contact .form-control:hover { border-color: var(--muted); }
+    #contact .form-control:focus-visible { border-color: var(--focus); outline: 2px solid var(--focus); outline-offset: 2px; }
+    #contact .form-control[aria-invalid="true"] { border-color: var(--orange); }
+    #contact .field-error { min-height: 1.4em; margin: 0; color: var(--orange); font-size: var(--fs-xs); line-height: 1.4; }
+    #contact .contact-submit {
       width: 100%; min-height: 50px; padding: 12px 18px;
       border: 0; border-radius: 999px; background: var(--accent); color: var(--on-accent);
       cursor: pointer; font: inherit; font-weight: 600; line-height: 1.2;
       transition: background-color 160ms ease;
     }
-    #kontakt .contact-submit:hover { background: color-mix(in oklch, var(--accent) 85%, white); }
-    #kontakt .contact-submit:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
-    #kontakt .contact-submit:disabled { cursor: wait; background: var(--surface-raised); color: var(--fg); }
-    #kontakt .contact-status { min-height: 1.5em; margin: 0; color: var(--muted); font-size: var(--fs-sm); line-height: 1.5; }
-    #kontakt .contact-status[data-state="success"] { color: var(--lime); }
-    #kontakt .contact-status[data-state="error"] { color: var(--orange); }
-    #kontakt .field-honeypot {
+    #contact .contact-submit:hover { background: color-mix(in oklch, var(--accent) 85%, white); }
+    #contact .contact-submit:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+    #contact .contact-submit:disabled { cursor: wait; background: var(--surface-raised); color: var(--fg); }
+    #contact .contact-status { min-height: 1.5em; margin: 0; color: var(--muted); font-size: var(--fs-sm); line-height: 1.5; }
+    #contact .contact-status[data-state="success"] { color: var(--lime); }
+    #contact .contact-status[data-state="error"] { color: var(--orange); }
+    #contact .field-honeypot {
       position: absolute; left: -9999px; width: 1px; height: 1px; padding: 0; overflow: hidden;
       clip-path: inset(50%); white-space: nowrap; border: 0; opacity: 0;
     }
+
+    /* ---------- Viewer (screenshots and walkthrough video) ---------- */
+    .viewer {
+      width: min(1200px, 100vw - 32px); max-width: none; max-height: calc(100dvh - 32px);
+      margin: auto; padding: 0; overflow: hidden;
+      border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+      background: var(--surface); color: var(--fg-body);
+    }
+    .viewer[open] { display: flex; flex-direction: column; }
+    .viewer::backdrop { background: color-mix(in oklch, var(--bg-sunken) 88%, transparent); }
+    html:has(.viewer[open]) { overflow: hidden; }
+    .viewer-bar { display: flex; align-items: center; gap: 16px; padding: 8px 8px 8px 18px; border-bottom: 1px solid var(--line); }
+    .viewer-caption { margin: 0; min-width: 0; color: var(--fg); font-size: var(--fs-sm); font-weight: 500; line-height: 1.4; }
+    .viewer-close {
+      display: inline-grid; place-items: center; flex: 0 0 auto; width: 44px; height: 44px; margin-left: auto;
+      border: 1px solid var(--line-strong); border-radius: 999px; background: transparent; color: var(--fg); cursor: pointer;
+    }
+    .viewer-close:hover { border-color: var(--fg); background: var(--surface-2); }
+    .viewer-close svg { width: 14px; height: 14px; }
+    .viewer-stage { display: grid; place-items: center; min-height: 0; background: var(--bg-sunken); }
+    .viewer-stage img { width: auto; max-width: 100%; max-height: calc(100dvh - 32px - 62px); }
+    .viewer-stage iframe { display: block; width: 100%; max-height: calc(100dvh - 32px - 62px); aspect-ratio: 16 / 9; border: 0; }
 
     /* ---------- Footer ---------- */
     .site-footer { padding: 48px 0 40px; border-top: 1px solid var(--line); background: var(--bg-sunken); font-size: var(--fs-sm); }
@@ -388,9 +459,9 @@
       .hero h1 { max-width: 15ch; }
       .mosaic { max-width: 640px; }
       .product-main { grid-template-columns: minmax(0, 1fr); }
-      .product-media { padding-bottom: 0; }
+      .product-media { padding: 14px; border-right: 0; border-bottom: 1px solid var(--line); background-size: 14px 14px; }
       .section-head { grid-template-columns: minmax(0, 1fr); align-items: start; }
-      .whats-new { grid-template-columns: minmax(0, 1fr); }
+      .steps { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
     }
     @media (max-width: 760px) {
       :root { --gutter: 16px; --header-h: 60px; }
@@ -409,10 +480,9 @@
       .no-js .main-nav { display: flex; position: static; flex-direction: row; flex-wrap: wrap; padding: 0; border: 0; }
       .main-nav a { min-height: 48px; font-size: 1rem; color: var(--fg); }
       .main-nav .nav-cta { margin: 8px 0 0; justify-content: center; }
-      .specs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .footer-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
       .footer-brand { grid-column: 1 / -1; }
-      #kontakt .contact-form-grid { grid-template-columns: minmax(0, 1fr); }
+      #contact .contact-form-grid { grid-template-columns: minmax(0, 1fr); }
     }
     @media (max-width: 420px) {
       /* Three columns are too narrow here: one fact per row, label left and value right. */
@@ -422,7 +492,8 @@
       .hero-facts dd { margin: 0; text-align: right; }
       .hero-actions .button { flex: 1 1 auto; }
       .product-actions .button--primary { flex: 1 1 100%; }
-      .tile-label { left: 6px; bottom: 6px; right: 6px; }
+      .tile-label { left: 12px; bottom: 12px; right: 12px; }
+      .tile::after { inset: 4px; background-size: 5px 5px; }
       .tile-label span { padding: 3px 8px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -438,14 +509,14 @@
       <a class="brand" href="#top" aria-label="vedaloiv, back to top"><span class="brand-name">vedaloiv</span></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        Menu
+        <span class="nav-toggle-label">Menu</span>
       </button>
       <nav class="main-nav" id="main-nav" aria-label="Main">
         <a href="#assets">Assets</a>
         <a href="#roadmap">Roadmap</a>
-        <a href="#ueber-mich">About</a>
+        <a href="#about">About</a>
         <a href="docs/index.html">Docs</a>
-        <a class="nav-cta" href="#kontakt">Contact</a>
+        <a class="nav-cta" href="#contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -464,7 +535,7 @@
           <dl class="hero-facts">
             <div><dt>On the Asset Store</dt><dd>2 tools</dd></div>
             <div><dt>In development</dt><dd>Earshot</dd></div>
-            <div><dt>Documentation</dt><dd>24 guides</dd></div>
+            <div><dt>Every released tool</dt><dd>Manual &amp; changelog</dd></div>
           </dl>
         </div>
 
@@ -506,7 +577,7 @@
       <div class="container">
         <div class="section-head">
           <h2 id="assets-title">Two tools released, one on the way.</h2>
-          <p>Every released asset has a quick start, a full manual and a changelog. Prices are the Asset Store list prices at the time of writing.</p>
+          <p>Every released asset has a quick start, a full manual and a changelog. Prices are Asset Store list prices; the store page shows the current price.</p>
         </div>
 
         <div class="catalog">
@@ -514,126 +585,160 @@
           <article class="product" id="fp" aria-labelledby="fp-title">
             <div class="product-main">
               <div class="product-media">
-                <picture><source type="image/avif" srcset="assets/web/fp-features-480.avif 480w, assets/web/fp-features-800.avif 800w, assets/web/fp-features-1200.avif 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 600px"><img src="assets/web/fp-features.jpg" srcset="assets/web/fp-features-480.jpg 480w, assets/web/fp-features-800.jpg 800w, assets/web/fp-features.jpg 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 600px" width="1200" height="900" alt="Easy FP key art: the player's own arms and legs visible in first person while walking through a test level" loading="lazy" decoding="async"></picture>
-                <ul class="shots" aria-label="More screenshots">
-                  <li><a href="assets/web/fp-integrations.jpg"><picture><source type="image/avif" srcset="assets/web/fp-integrations-480.avif 480w, assets/web/fp-integrations-800.avif 800w, assets/web/fp-integrations-1200.avif 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px"><img src="assets/web/fp-integrations.jpg" srcset="assets/web/fp-integrations-480.jpg 480w, assets/web/fp-integrations-800.jpg 800w, assets/web/fp-integrations.jpg 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px" width="1200" height="900" alt="Setup Wizard steps 1 to 3: choose root, assign model, find bones (opens full size)" loading="lazy" decoding="async"></picture></a></li>
-                  <li><a href="assets/web/fp-setup.jpg"><picture><source type="image/avif" srcset="assets/web/fp-setup-480.avif 480w, assets/web/fp-setup-800.avif 800w, assets/web/fp-setup-1200.avif 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px"><img src="assets/web/fp-setup.jpg" srcset="assets/web/fp-setup-480.jpg 480w, assets/web/fp-setup-800.jpg 800w, assets/web/fp-setup.jpg 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px" width="1200" height="900" alt="Setup Wizard steps 4 to 6: add scripts, set up helpers, connect systems (opens full size)" loading="lazy" decoding="async"></picture></a></li>
-                </ul>
+                <div class="viewport">
+                  <picture><source type="image/avif" srcset="assets/web/fp-features-480.avif 480w, assets/web/fp-features-800.avif 800w, assets/web/fp-features-1200.avif 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 580px"><img src="assets/web/fp-features.jpg" srcset="assets/web/fp-features-480.jpg 480w, assets/web/fp-features-800.jpg 800w, assets/web/fp-features.jpg 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 580px" width="1200" height="900" alt="Easy FP key art: the player's own arms and legs visible in first person while walking through a test level" loading="lazy" decoding="async"></picture>
+                </div>
               </div>
               <div class="product-body">
                 <p class="product-status"><span class="badge badge--released">v1.7.0</span><span>Released 28 Oct 2026</span></p>
                 <h3 id="fp-title">Easy FP Full Body Controller</h3>
                 <p class="product-summary">True first person with a visible body. Look down and you see your legs; reach for a door and your hands do.</p>
                 <ul class="features">
-                  <li>Stable anchor camera with procedural hand, head and spine IK</li>
-                  <li>Ground-anchored foot planting and finger grips per item</li>
-                  <li>Item system with holster; FPCutter hides the head in first person but keeps its shadow</li>
-                  <li>7-step Setup Wizard, 3 demo scenes and ready-made prefabs</li>
-                  <li>Optional health and heart-rate stamina; FishNet and PurrNet add-ons for 2–4 player co-op</li>
+                  <li>A steady camera while your hands, head and spine follow what you do (procedural IK)</li>
+                  <li>Feet plant on the ground and fingers grip each item (foot planting, per-item grips)</li>
+                  <li>Items with a holster; your head is hidden from your own camera but still casts a shadow (FPCutter)</li>
+                  <li>Optional health and heart-rate stamina, plus 2–4 player co-op through FishNet or PurrNet add-ons</li>
                 </ul>
-                <dl class="specs">
-                  <div><dt>Price</dt><dd>€36.79</dd></div>
-                  <div><dt>Unity</dt><dd>6000.5+</dd></div>
-                  <div><dt>Pipeline</dt><dd>URP</dd></div>
-                  <div><dt>Download</dt><dd>194.7 MB</dd></div>
-                  <div><dt>Version</dt><dd>1.7.0</dd></div>
-                  <div><dt>Released</dt><dd>2026-10-28</dd></div>
-                </dl>
+                <details class="inspector" open>
+                  <summary>Package</summary>
+                  <dl>
+                    <div><dt>Price</dt><dd>€36.79</dd></div>
+                    <div><dt>Unity</dt><dd>6.5+ (6000.5)</dd></div>
+                    <div><dt>Pipeline</dt><dd>URP</dd></div>
+                    <div><dt>Download</dt><dd>194.7 MB</dd></div>
+                  </dl>
+                </details>
                 <div class="product-actions">
                   <a class="button button--primary" href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">
                     View on Asset Store
                     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     <span class="sr-only">(opens in a new tab)</span>
                   </a>
-                  <a class="button button--ghost" href="docs/overview.html">Docs</a>
+                  <a class="button button--ghost" href="docs/overview.html">Manual</a>
                   <a class="button button--quiet" href="docs/quick-start.html">Quick start</a>
                 </div>
+                <p class="store-note">Ratings, reviews and the current price are on the Asset Store page.</p>
               </div>
             </div>
-            <div class="whats-new">
-              <h4>New in 1.7.0 <small>28 Oct 2026</small></h4>
-              <ul>
-                <li><a href="docs/fp-body-ik.html#hand-motion">Hand sway and walking motion</a></li>
-                <li><a href="docs/fp-body-ik.html#planting-turning">Foot planting turns and stops</a></li>
-                <li><a href="docs/fp-body-ik.html#stride-warping">Stride warping</a></li>
-                <li><a href="docs/fp-items.html#ik-presets-window">Item IK Presets window</a></li>
-                <li class="changelog"><a href="docs/fp-changelog.html#v1-7-0">Full changelog</a></li>
-              </ul>
+            <div class="setup" aria-labelledby="fp-setup-title">
+              <div class="setup-head">
+                <h4 id="fp-setup-title">From import to Play</h4>
+                <a class="button button--ghost button--sm" href="https://www.youtube.com/watch?v=_X0HWXqQ3_k" data-viewer="video" data-embed="https://www.youtube-nocookie.com/embed/_X0HWXqQ3_k" data-caption="FBSystem Quick Start Guide">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z" fill="currentColor"/></svg>
+                  Watch the walkthrough
+                </a>
+              </div>
+              <ol class="steps">
+                <li>
+                  <p class="step-title">Import the package</p>
+                  <p>Into a URP project on Unity 6.5 or newer. Input System and Cinemachine 3 are required.</p>
+                </li>
+                <li>
+                  <p class="step-title">Run the Setup Wizard</p>
+                  <p><code>Tools › FBSystem › Setup Wizard</code> builds your player in 7 steps.</p>
+                  <ul class="step-shots">
+                    <li><a href="assets/web/fp-integrations.jpg" data-viewer="image" data-caption="Setup Wizard steps 1 to 3: choose root, assign model, find bones"><picture><source type="image/avif" srcset="assets/web/fp-integrations-480.avif 480w, assets/web/fp-integrations-800.avif 800w, assets/web/fp-integrations-1200.avif 1200w" sizes="(max-width: 760px) calc(50vw - 46px), 170px"><img src="assets/web/fp-integrations.jpg" srcset="assets/web/fp-integrations-480.jpg 480w, assets/web/fp-integrations-800.jpg 800w, assets/web/fp-integrations.jpg 1200w" sizes="(max-width: 760px) calc(50vw - 46px), 170px" width="1200" height="900" alt="Setup Wizard steps 1 to 3: choose root, assign model, find bones (opens larger view)" loading="lazy" decoding="async"></picture></a></li>
+                    <li><a href="assets/web/fp-setup.jpg" data-viewer="image" data-caption="Setup Wizard steps 4 to 6: add scripts, set up helpers, connect systems"><picture><source type="image/avif" srcset="assets/web/fp-setup-480.avif 480w, assets/web/fp-setup-800.avif 800w, assets/web/fp-setup-1200.avif 1200w" sizes="(max-width: 760px) calc(50vw - 46px), 170px"><img src="assets/web/fp-setup.jpg" srcset="assets/web/fp-setup-480.jpg 480w, assets/web/fp-setup-800.jpg 800w, assets/web/fp-setup.jpg 1200w" sizes="(max-width: 760px) calc(50vw - 46px), 170px" width="1200" height="900" alt="Setup Wizard steps 4 to 6: add scripts, set up helpers, connect systems (opens larger view)" loading="lazy" decoding="async"></picture></a></li>
+                  </ul>
+                </li>
+                <li>
+                  <p class="step-title">Press Play</p>
+                  <p>Open one of the 3 demo scenes and walk around with a full body in first person.</p>
+                </li>
+              </ol>
             </div>
+            <p class="whats-new"><strong>New in 1.7.0:</strong> hand sway and walking motion, foot planting through turns and stops, stride warping and the Item IK Presets window. <a href="docs/fp-changelog.html#v1-7-0">Full changelog</a></p>
           </article>
 
           <!-- Easy Dungeon Generator -->
           <article class="product" id="dungeon" aria-labelledby="dungeon-title">
             <div class="product-main">
               <div class="product-media">
-                <picture><source type="image/avif" srcset="assets/web/dungen-editor-480.avif 480w, assets/web/dungen-editor-800.avif 800w, assets/web/dungen-editor-1200.avif 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 600px"><img src="assets/web/dungen-editor.jpg" srcset="assets/web/dungen-editor-480.jpg 480w, assets/web/dungen-editor-800.jpg 800w, assets/web/dungen-editor.jpg 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 600px" width="1200" height="675" alt="Room Designer window: painting floor tiles, doors and a stair opening on a grid" loading="lazy" decoding="async"></picture>
-                <ul class="shots" aria-label="More screenshots">
-                  <li><a href="assets/web/dungen-nodes.jpg"><picture><source type="image/avif" srcset="assets/web/dungen-nodes-480.avif 480w, assets/web/dungen-nodes-800.avif 800w, assets/web/dungen-nodes-1200.avif 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px"><img src="assets/web/dungen-nodes.jpg" srcset="assets/web/dungen-nodes-480.jpg 480w, assets/web/dungen-nodes-800.jpg 800w, assets/web/dungen-nodes.jpg 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px" width="1200" height="675" alt="Node graph connecting entrance, rooms and boss room (opens full size)" loading="lazy" decoding="async"></picture></a></li>
-                  <li><a href="assets/web/dungen-features.jpg"><picture><source type="image/avif" srcset="assets/web/dungen-features-480.avif 480w, assets/web/dungen-features-800.avif 800w, assets/web/dungen-features-1200.avif 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px"><img src="assets/web/dungen-features.jpg" srcset="assets/web/dungen-features-480.jpg 480w, assets/web/dungen-features-800.jpg 800w, assets/web/dungen-features.jpg 1200w" sizes="(max-width: 960px) calc(50vw - 36px), 295px" width="1200" height="800" alt="Feature overview: node-based design, room editor and multi-floor support (opens full size)" loading="lazy" decoding="async"></picture></a></li>
-                </ul>
+                <div class="viewport">
+                  <picture><source type="image/avif" srcset="assets/web/dungen-features-480.avif 480w, assets/web/dungen-features-800.avif 800w, assets/web/dungen-features-1200.avif 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 580px"><img src="assets/web/dungen-features.jpg" srcset="assets/web/dungen-features-480.jpg 480w, assets/web/dungen-features-800.jpg 800w, assets/web/dungen-features.jpg 1200w" sizes="(max-width: 960px) calc(100vw - 62px), 580px" width="1200" height="800" alt="Easy Dungeon Generator overview: a node graph of rooms above the Room Editor and multi-floor views, with stacked dungeon floors" loading="lazy" decoding="async"></picture>
+                </div>
               </div>
               <div class="product-body">
                 <p class="product-status"><span class="badge badge--released">v1.1.0</span><span>Released 8 Oct 2026</span></p>
                 <h3 id="dungeon-title">Easy Dungeon Generator</h3>
                 <p class="product-summary">Paint the rooms, connect them in a graph, press generate. Works for hand-tuned dungeons and endless backrooms alike.</p>
                 <ul class="features">
-                  <li>Room Designer: paint floors, doors, stairs and holes</li>
-                  <li>Node-based templates and seeded random generation</li>
-                  <li>Multiple floors and infinite chunk streaming</li>
-                  <li>Rule-based decoration, portal culling and runtime NavMesh</li>
-                  <li>4 demo scenes</li>
+                  <li>Paint floors, doors, stairs and holes on a grid (Room Designer)</li>
+                  <li>Connect rooms in a node graph; the same seed gives the same layout (seeded generation)</li>
+                  <li>Several floors, or endless levels loaded in pieces (infinite chunk streaming)</li>
+                  <li>Decoration placed by rules, plus portal culling and a runtime NavMesh</li>
                 </ul>
-                <dl class="specs">
-                  <div><dt>Price</dt><dd>€33.11</dd></div>
-                  <div><dt>Unity</dt><dd>6000.5+</dd></div>
-                  <div><dt>Pipeline</dt><dd>Built-in, URP, HDRP</dd></div>
-                  <div><dt>Download</dt><dd>1.1 MB</dd></div>
-                  <div><dt>Version</dt><dd>1.1.0</dd></div>
-                  <div><dt>Released</dt><dd>2026-10-08</dd></div>
-                </dl>
+                <details class="inspector" open>
+                  <summary>Package</summary>
+                  <dl>
+                    <div><dt>Price</dt><dd>€33.11</dd></div>
+                    <div><dt>Unity</dt><dd>6.5+ (6000.5)</dd></div>
+                    <div><dt>Pipeline</dt><dd>Built-in, URP, HDRP</dd></div>
+                    <div><dt>Download</dt><dd>1.1 MB</dd></div>
+                  </dl>
+                </details>
                 <div class="product-actions">
                   <a class="button button--primary" href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">
                     View on Asset Store
                     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     <span class="sr-only">(opens in a new tab)</span>
                   </a>
-                  <a class="button button--ghost" href="docs/dungeon-generator.html">Docs</a>
+                  <a class="button button--ghost" href="docs/dungeon-generator.html">Manual</a>
                   <a class="button button--quiet" href="docs/dungeon-quick-start.html">Quick start</a>
                 </div>
+                <p class="store-note">Ratings, reviews and the current price are on the Asset Store page.</p>
               </div>
             </div>
-            <div class="whats-new">
-              <h4>New in 1.1.0 <small>8 Oct 2026</small></h4>
-              <ul>
-                <li><a href="docs/dungeon-changelog.html#v1-1-0-walls">Wall mode and double-sided walls</a></li>
-                <li><a href="docs/dungeon-room-designer.html#room-doors">Room doors</a></li>
-                <li><a href="docs/dungeon-room-designer.html#room-prefab-manager">Room Prefab Manager</a></li>
-                <li><a href="docs/dungeon-demos.html">4 demo scenes</a></li>
-                <li class="changelog"><a href="docs/dungeon-changelog.html#v1-1-0">Full changelog</a></li>
-              </ul>
+            <div class="setup" aria-labelledby="dungeon-setup-title">
+              <div class="setup-head">
+                <h4 id="dungeon-setup-title">From rooms to a dungeon</h4>
+              </div>
+              <ol class="steps">
+                <li>
+                  <p class="step-title">Paint your rooms</p>
+                  <p>Create a theme, then paint rooms in <code>Tools › DungeonGen › Room Designer</code>.</p>
+                  <ul class="step-shots step-shots--one">
+                    <li><a href="assets/web/dungen-editor.jpg" data-viewer="image" data-caption="Room Designer: painting floor tiles, doors and a stair opening on a grid"><picture><source type="image/avif" srcset="assets/web/dungen-editor-480.avif 480w, assets/web/dungen-editor-800.avif 800w, assets/web/dungen-editor-1200.avif 1200w" sizes="(max-width: 760px) calc(100vw - 82px), 350px"><img src="assets/web/dungen-editor.jpg" srcset="assets/web/dungen-editor-480.jpg 480w, assets/web/dungen-editor-800.jpg 800w, assets/web/dungen-editor.jpg 1200w" sizes="(max-width: 760px) calc(100vw - 82px), 350px" width="1200" height="675" alt="Room Designer: painting floor tiles, doors and a stair opening on a grid (opens larger view)" loading="lazy" decoding="async"></picture></a></li>
+                  </ul>
+                </li>
+                <li>
+                  <p class="step-title">Connect them in a template</p>
+                  <p>Lay out the room graph in <code>Tools › DungeonGen › Dungeon Template Designer</code>.</p>
+                  <ul class="step-shots step-shots--one">
+                    <li><a href="assets/web/dungen-nodes.jpg" data-viewer="image" data-caption="Template graph connecting entrance, rooms and boss room"><picture><source type="image/avif" srcset="assets/web/dungen-nodes-480.avif 480w, assets/web/dungen-nodes-800.avif 800w, assets/web/dungen-nodes-1200.avif 1200w" sizes="(max-width: 760px) calc(100vw - 82px), 350px"><img src="assets/web/dungen-nodes.jpg" srcset="assets/web/dungen-nodes-480.jpg 480w, assets/web/dungen-nodes-800.jpg 800w, assets/web/dungen-nodes.jpg 1200w" sizes="(max-width: 760px) calc(100vw - 82px), 350px" width="1200" height="675" alt="Template graph connecting entrance, rooms and boss room (opens larger view)" loading="lazy" decoding="async"></picture></a></li>
+                  </ul>
+                </li>
+                <li>
+                  <p class="step-title">Generate</p>
+                  <p>In <code>Tools › DungeonGen › Dungeon Setup</code>, create a template dungeon, assign the template and rooms, and click Generate Dungeon. 4 demo scenes show finished setups.</p>
+                </li>
+              </ol>
             </div>
+            <p class="whats-new"><strong>New in 1.1.0:</strong> wall mode and double-sided walls, room doors, the Room Prefab Manager and 4 demo scenes. <a href="docs/dungeon-changelog.html#v1-1-0">Full changelog</a></p>
           </article>
 
           <!-- Earshot -->
           <article class="product" id="earshot" aria-labelledby="earshot-title">
             <div class="product-main">
               <div class="product-media">
-                <div class="product-art">
-                  <svg viewBox="0 0 400 300" role="img" aria-label="Diagram: the direct line from a sound source to the listener is blocked by a wall; the sound reaches the listener along a path around the wall's corner">
-                    <g class="ray-grid"><path d="M0 60H400M0 120H400M0 180H400M0 240H400M80 0V300M160 0V300M240 0V300M320 0V300"/></g>
-                    <rect class="ray-wall" x="186" y="92" width="26" height="208" rx="2"/>
-                    <path class="ray-blocked" d="M92 196 L186 204"/>
-                    <path class="ray-path" d="M92 196 L199 76 L312 214"/>
-                    <circle class="ray-wave" cx="92" cy="196" r="34"/>
-                    <circle class="ray-wave" cx="92" cy="196" r="58"/>
-                    <circle class="ray-wave" cx="92" cy="196" r="82"/>
-                    <circle class="ray-source" cx="92" cy="196" r="8"/>
-                    <circle class="ray-listener" cx="312" cy="214" r="13"/>
-                    <circle class="ray-listener-dot" cx="312" cy="214" r="4"/>
-                    <text class="ray-text" x="70" y="296">source</text>
-                    <text class="ray-text" x="288" y="250">listener</text>
-                    <text class="ray-text" x="218" y="70">around the corner</text>
-                  </svg>
+                <div class="viewport">
+                  <div class="product-art">
+                    <svg viewBox="0 0 400 300" role="img" aria-label="Diagram: the direct line from a sound source to the listener is blocked by a wall; the sound reaches the listener along a path around the wall's corner">
+                      <g class="ray-grid"><path d="M0 60H400M0 120H400M0 180H400M0 240H400M80 0V300M160 0V300M240 0V300M320 0V300"/></g>
+                      <rect class="ray-wall" x="186" y="92" width="26" height="208" rx="2"/>
+                      <path class="ray-blocked" d="M92 196 L186 204"/>
+                      <path class="ray-path" d="M92 196 L199 76 L312 214"/>
+                      <circle class="ray-wave" cx="92" cy="196" r="34"/>
+                      <circle class="ray-wave" cx="92" cy="196" r="58"/>
+                      <circle class="ray-wave" cx="92" cy="196" r="82"/>
+                      <circle class="ray-source" cx="92" cy="196" r="8"/>
+                      <circle class="ray-listener" cx="312" cy="214" r="13"/>
+                      <circle class="ray-listener-dot" cx="312" cy="214" r="4"/>
+                      <text class="ray-text" x="70" y="296">source</text>
+                      <text class="ray-text" x="288" y="250">listener</text>
+                      <text class="ray-text" x="218" y="70">around the corner</text>
+                    </svg>
+                  </div>
                 </div>
               </div>
               <div class="product-body">
@@ -645,16 +750,16 @@
                   <li>Reverb that follows the room you are standing in</li>
                   <li>Sound pathing through doors and around corners</li>
                 </ul>
-                <dl class="specs">
-                  <div><dt>Status</dt><dd>In development</dd></div>
-                  <div><dt>Unity</dt><dd>6.6+</dd></div>
-                  <div><dt>Pipeline</dt><dd>Any</dd></div>
-                  <div><dt>Optional</dt><dd>Steam Audio</dd></div>
-                  <div><dt>Price</dt><dd>Not set</dd></div>
-                  <div><dt>Store page</dt><dd>Not yet</dd></div>
-                </dl>
+                <details class="inspector" open>
+                  <summary>Planned requirements</summary>
+                  <dl>
+                    <div><dt>Unity</dt><dd>6.6+ (6000.6)</dd></div>
+                    <div><dt>Pipeline</dt><dd>Any</dd></div>
+                    <div><dt>Optional</dt><dd>Steam Audio</dd></div>
+                  </dl>
+                </details>
                 <div class="product-actions">
-                  <a class="button button--ghost" href="#kontakt">Ask about Earshot</a>
+                  <a class="button button--ghost" href="#contact">Ask about Earshot</a>
                 </div>
               </div>
             </div>
@@ -669,11 +774,16 @@
           <h2 id="roadmap-title">Releases and what comes next</h2>
           <p>Only what is shipped or actively being built. Dates appear once something is released.</p>
         </div>
-        <ol class="timeline">
+        <ol class="timeline" reversed>
+          <li class="is-next">
+            <span class="timeline-when">In development</span>
+            <h3>Earshot</h3>
+            <p>Ray-traced sound occlusion, reverb and pathing. No price or release date yet.</p>
+          </li>
           <li class="is-done">
-            <span class="timeline-when">2026-10-08</span>
-            <h3>Easy Dungeon Generator 1.1.0</h3>
-            <p>Wall mode, room doors, Room Prefab Manager and four demo scenes. <a href="docs/dungeon-changelog.html#v1-1-0">Changelog</a></p>
+            <span class="timeline-when">2026-10-28</span>
+            <h3>Easy FP Full Body Controller 1.7.0</h3>
+            <p>Hand sway and walking motion, turning feet, stride warping and the Item IK Presets window. <a href="docs/fp-changelog.html#v1-7-0">Changelog</a></p>
           </li>
           <li class="is-done">
             <span class="timeline-when">2026-10-09</span>
@@ -681,20 +791,15 @@
             <p>Foot planting, finger grips, demo scenes, PurrNet co-op and vitals. <a href="docs/fp-changelog.html#v1-6-0">Changelog</a></p>
           </li>
           <li class="is-done">
-            <span class="timeline-when">2026-10-28</span>
-            <h3>Easy FP Full Body Controller 1.7.0</h3>
-            <p>Hand sway and walking motion, turning feet, stride warping and the Item IK Presets window. <a href="docs/fp-changelog.html#v1-7-0">Changelog</a></p>
-          </li>
-          <li class="is-next">
-            <span class="timeline-when">In development</span>
-            <h3>Earshot</h3>
-            <p>Ray-traced sound occlusion, reverb and pathing. No price or release date yet.</p>
+            <span class="timeline-when">2026-10-08</span>
+            <h3>Easy Dungeon Generator 1.1.0</h3>
+            <p>Wall mode, room doors, Room Prefab Manager and four demo scenes. <a href="docs/dungeon-changelog.html#v1-1-0">Changelog</a></p>
           </li>
         </ol>
       </div>
     </section>
 
-    <section class="section" id="ueber-mich" aria-labelledby="about-title">
+    <section class="section" id="about" aria-labelledby="about-title">
       <div class="container about-grid">
         <div class="about-copy">
           <h2 id="about-title">One developer, built around the workflow.</h2>
@@ -710,7 +815,7 @@
       </div>
     </section>
 
-    <section class="section section--sunken" id="kontakt" aria-labelledby="contact-title">
+    <section class="section section--sunken" id="contact" aria-labelledby="contact-title">
       <div class="container contact-grid">
         <div class="contact-copy">
           <h2 id="contact-title">Questions before or after buying?</h2>
@@ -726,7 +831,7 @@
           <input class="field-honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
           <input type="hidden" name="_subject" value="New message from vedaloiv publisher page">
           <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://vedaloiv.wasmer.app/unity-asset-portfolio.html">
+          <input type="hidden" name="_next" value="https://vedaloiv.wasmer.app/unity-asset-portfolio.html#contact">
           <div class="contact-form-grid">
             <div class="form-field">
               <label class="form-label" for="contact-name">Name</label>
@@ -750,7 +855,7 @@
             </div>
           </div>
           <button class="contact-submit" type="submit" data-od-id="contact-submit">Send message</button>
-          <p class="contact-status" data-contact-status data-state="idle" role="status" aria-live="polite">Ready for your message.</p>
+          <p class="contact-status" data-contact-status data-state="idle" role="status" aria-live="polite"></p>
         </form>
       </div>
     </section>
@@ -762,7 +867,7 @@
         <div class="footer-brand">
           <span class="brand-name">vedaloiv</span>
           <p>Unity tools with guided setup and real documentation.</p>
-          <p>Support: <a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a></p>
+          <p>Support: <a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a> or the <a href="#contact">contact form</a></p>
         </div>
         <nav aria-labelledby="footer-docs">
           <h2 id="footer-docs">Docs</h2>
@@ -779,7 +884,6 @@
           <ul>
             <li><a href="https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454" target="_blank" rel="noopener">Easy FP Full Body Controller<span class="sr-only"> (opens in a new tab)</span></a></li>
             <li><a href="https://assetstore.unity.com/packages/tools/level-design/easy-dungeon-generator-401094" target="_blank" rel="noopener">Easy Dungeon Generator<span class="sr-only"> (opens in a new tab)</span></a></li>
-            <li><a href="#kontakt">Contact</a></li>
           </ul>
         </nav>
       </div>
@@ -787,17 +891,37 @@
     </div>
   </footer>
 
+  <dialog class="viewer" id="viewer" aria-labelledby="viewer-caption">
+    <div class="viewer-bar">
+      <p class="viewer-caption" id="viewer-caption"></p>
+      <button class="viewer-close" type="button" aria-label="Close">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="viewer-stage"></div>
+  </dialog>
+
   <script>
     document.body.classList.remove("no-js");
+
+    // The anchors were German before; keep old links working.
+    (() => {
+      const renamed = { "#kontakt": "#contact", "#ueber-mich": "#about" };
+      const follow = () => { if (renamed[location.hash]) location.replace(renamed[location.hash]); };
+      follow();
+      addEventListener("hashchange", follow);
+    })();
 
     // Mobile navigation disclosure.
     (() => {
       const toggle = document.querySelector(".nav-toggle");
       const nav = document.getElementById("main-nav");
       if (!toggle || !nav) return;
+      const label = toggle.querySelector(".nav-toggle-label");
       const setOpen = (open) => {
         toggle.setAttribute("aria-expanded", String(open));
         nav.classList.toggle("is-open", open);
+        if (label) label.textContent = open ? "Close" : "Menu";
       };
       toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
       nav.addEventListener("click", (event) => { if (event.target.closest("a")) setOpen(false); });
@@ -807,10 +931,59 @@
       matchMedia("(min-width: 761px)").addEventListener("change", (event) => { if (event.matches) setOpen(false); });
     })();
 
+    // Screenshot and walkthrough viewer. Without JS (or <dialog>) the links open the JPG or YouTube.
+    (() => {
+      const viewer = document.getElementById("viewer");
+      if (!viewer || typeof viewer.showModal !== "function") return;
+      const stage = viewer.querySelector(".viewer-stage");
+      const caption = viewer.querySelector(".viewer-caption");
+      let opener = null;
+
+      function show(content, text, from) {
+        stage.replaceChildren(content);
+        caption.textContent = text;
+        opener = from;
+        viewer.showModal();
+      }
+
+      document.addEventListener("click", (event) => {
+        const link = event.target.closest("a[data-viewer]");
+        if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        if (link.dataset.viewer === "video") {
+          // The YouTube embed loads only now, on request, and is removed again on close.
+          const frame = document.createElement("iframe");
+          frame.src = `${link.dataset.embed}?autoplay=1&rel=0`;
+          frame.title = link.dataset.caption;
+          frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+          frame.allowFullscreen = true;
+          show(frame, link.dataset.caption, link);
+        } else {
+          const picture = link.querySelector("picture").cloneNode(true);
+          picture.querySelectorAll("source, img").forEach((el) => { el.sizes = "min(1200px, 100vw - 32px)"; });
+          const img = picture.querySelector("img");
+          img.loading = "eager";
+          img.alt = link.dataset.caption;
+          show(picture, link.dataset.caption, link);
+        }
+      });
+
+      viewer.querySelector(".viewer-close").addEventListener("click", () => viewer.close());
+      // A click on the backdrop lands on the dialog element itself.
+      viewer.addEventListener("click", (event) => { if (event.target === viewer) viewer.close(); });
+      viewer.addEventListener("close", () => {
+        stage.replaceChildren();
+        if (opener) opener.focus();
+        opener = null;
+      });
+    })();
+
     (() => {
       const form = document.getElementById("contact-form");
       if (!form) return;
       const status = form.querySelector("[data-contact-status]");
+      const next = form.querySelector("[name=\"_next\"]");
+      if (next && /^https?:$/.test(location.protocol)) next.value = `${location.origin}${location.pathname}#contact`;
       const fields = [
         { input: form.querySelector('[name="name"]'), error: form.querySelector("#error-name") },
         { input: form.querySelector('[name="email"]'), error: form.querySelector("#error-email"), email: true },
