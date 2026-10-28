@@ -113,10 +113,10 @@
   <li><strong>Re-Steps</strong>: the <code>StepSettings</code> curves for path, arc, lift and rotation, plus <code>arcStrength</code> (0.3), <code>catchUpBoost</code> (0.4) and <code>restepDistance</code> (0.055).</li>
 </ul>
 
-<aside class="callout note">
+<div class="callout note" role="note">
   <strong class="callout-title">Remote players</strong>
   <p>Multiplayer add-ons can feed the drive state of a remote player through <code>SetExternalDriveState</code>. The PurrNet add-on does this. Details are in <a href="purrnet.html">PurrNet</a>.</p>
-</aside>
+</div>
 
 <h3 id="planting-turning">Turning and stopping</h3>
 <p>Planted feet keep their heading while the body turns. Past <code>maxFootYaw</code> (30 degrees by default, in the <strong>Ground Align</strong> foldout) a planted foot pivots on its ball and its heel lifts, instead of twisting at the ankle. Re-steps lead the turn, and a foot that is left turned after you stop settles with a re-step. These settings are in the <strong>Turning &amp; Stopping</strong> foldout of Advanced Settings:</p>
@@ -181,23 +181,23 @@
 <p>Your own effects can listen to <code>FootPlanted</code> (C#, receives <code>FootStepArgs</code>) or to <code>OnFootPlanted</code> (UnityEvent). Both fire for walking steps and re-steps.</p>
 
 <h2 id="pitfalls">Common pitfalls</h2>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Stride warping does nothing</strong>
   <p>The stride table is empty. Bake it as described in <a href="#stride-warping">Stride warping</a>.</p>
-</aside>
-<aside class="callout note">
+</div>
+<div class="callout note" role="note">
   <strong class="callout-title">The hand lags or bobs too much</strong>
   <p>Lower <code>sway.lagScale</code> or <code>gait.bobGain</code> on <code>PlayerHandIK</code>, or turn the part off with its <code>enabled</code> switch. See <a href="#hand-motion">Hand sway and walking motion</a>.</p>
-</aside>
-<aside class="callout warn">
+</div>
+<div class="callout warn" role="note">
   <strong class="callout-title">Feet slide or float</strong>
   <p>Check <strong>Ground Layers</strong> on <code>PlayerFootPlanting</code>. Make sure no other foot IK runs on the same character.</p>
-</aside>
-<aside class="callout warn">
+</div>
+<div class="callout warn" role="note">
   <strong class="callout-title">Foot settings were reset after an update</strong>
   <p>Version 1.6 renamed the foot component and its settings. Re-enter your values. See <a href="fp-changelog.html#v1-6-0">1.6.0</a>.</p>
-</aside>
-<aside class="callout note">
+</div>
+<div class="callout note" role="note">
   <strong class="callout-title">Hands in the wrong place</strong>
   <p>Tune the item's grip and hand offsets. Use <a href="fp-items.html#tune">Tune an item in the scene</a> and save the result as an IK preset.</p>
-</aside>
+</div>

@@ -18,8 +18,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/docs.css?v=mvs9i5zn">
-  <script src="assets/docs.js?v=mvs9i5zn" defer></script>
+  <link rel="stylesheet" href="assets/docs.css?v=mvs9p8xe">
+  <script src="assets/docs.js?v=mvs9p8xe" defer></script>
 </head>
 <body data-page="interfaces" data-group="fp">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -149,9 +149,9 @@
 <li class="toc-l2"><a href="#demo-editor">Demo classes</a></li>
 </ol></details>
 
-<aside class="callout note">
+<div class="callout note" role="note">
   <p>Names are the C# names. Inspector labels are shown where they differ.</p>
-</aside>
+</div>
 
 <h2 id="player-controller">PlayerController<a class="anchor" href="#player-controller" aria-label="Link to this section">#</a></h2>
 <p>The hub on the player root. In <code>Awake</code> it fills in any subsystem reference you left empty, so external code needs one reference.</p>
@@ -482,10 +482,10 @@ public class MyListener : MonoBehaviour, IItemEventListener, ILocomotionEventLis
 <pre><code class="lang-csharp">player.Locomotion.Jumped += () =&gt; Debug.Log("jumped");
 player.HandItemSocket.ItemEquipped += args =&gt;
     Debug.Log($"equipped {args.Item.name} from slot {args.SlotIndex}");</code></pre>
-<aside class="callout note">
+<div class="callout note" role="note">
   <strong class="callout-title">Delivery</strong>
   <p>Each transition fires its C# event, its UnityEvent and each listener once, from one place in the code. A listener that throws stops the remaining handlers for that transition, so keep handlers free of exceptions.</p>
-</aside>
+</div>
 
 <h2 id="fpcutter">FPCutter: FPCutterController<a class="anchor" href="#fpcutter" aria-label="Link to this section">#</a></h2>
 <p>Namespace <code>FPCutter</code>. Hides body parts in first person and keeps their shadows. The FPCutter Wizard generates the controller on a complete copy of the character. See <a href="fp-fpcutter.html">FPCutter</a>.</p>

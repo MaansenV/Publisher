@@ -12,10 +12,10 @@
     <tr><td><code>DungeonCulling</code></td><td>−100</td><td>Hides rooms. Runs after the bake, so the bake still includes every room.</td></tr>
   </tbody>
 </table>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Culling priority must not be higher than the NavMesh priority</strong>
   <p>If <code>DungeonCulling</code> runs before the bake and hides rooms, the NavMesh misses them. When the culling priority is higher than the NavMesh priority, <code>DungeonCulling</code> logs a warning. Keep the culling priority at or below the NavMesh priority. The demo scene uses −10 for culling and 0 for the NavMesh.</p>
-</aside>
+</div>
 
 <h2 id="culling">Portal culling</h2>
 <p>Culling hides rooms that are far away or behind doors that are closed. It does not change the dungeon itself. Removing the component restores the normal behavior.</p>

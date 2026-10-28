@@ -67,10 +67,10 @@
   <dd>Where the hand goes when lowered, and how far the item tips.</dd>
 </dl>
 <p>To turn the animation off, disable <strong>Smooth Transitions</strong> on <code>HandItemSocket</code> (on by default). <strong>Stow Timeout</strong> (default 1 second) completes a put-away even if the hand never reaches the lowered pose.</p>
-<aside class="callout note">
+<div class="callout note" role="note">
   <strong class="callout-title">Switching is instant in code</strong>
   <p><code>CurrentItem</code> and the events change at once. The visuals follow. <code>StowingItem</code> is the item being lowered and <code>PendingItem</code> the item waiting to be drawn. <code>UseCurrentItem()</code> does nothing until the new item is drawn.</p>
-</aside>
+</div>
 
 <h2 id="drop">Pick up and drop</h2>
 <p>The demo scripts add pickup and drop. The core package does not include them.</p>
@@ -129,10 +129,10 @@
   <li>In Edit Mode, select the items and press <strong>Load Selected</strong>. The values go into the player's items. With <strong>Write held prefabs</strong> on (the default), they also go into the item prefabs.</li>
   <li>In Play Mode, press <strong>Equip</strong> on an item and tune it in its Item Hold Data inspector. Then press <strong>Save</strong> to write the values into its preset, or <strong>From…</strong> to copy the values of another preset.</li>
 </ol>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Prefab changes cannot be undone</strong>
   <p>Load Selected asks first and lists the prefabs it will change. Prefab assets are saved directly, so Undo does not restore them. A held prefab is skipped when other items use it and are not loaded with the same preset. Those items get the values as player overrides instead.</p>
-</aside>
+</div>
 
 <h2 id="events">Item events</h2>
 <table>
@@ -146,15 +146,15 @@
 <p>With smooth transitions, <code>ItemUnequipped</code> fires while the old item is still visible. <code>ItemEquipped</code> can fire for an item that is still waiting to be drawn. Code and listeners are covered in <a href="interfaces.html#event-api">Event API</a>.</p>
 
 <h2 id="pitfalls">Common pitfalls</h2>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Pickup does nothing</strong>
   <p>The world item's <code>itemId</code> (or its definition) must match an item in the container. The world item also needs a collider on a layer that the pickup's Interactable Layer includes.</p>
-</aside>
-<aside class="callout warn">
+</div>
+<div class="callout warn" role="note">
   <strong class="callout-title">Item will not equip</strong>
   <p>Check that the item is in the container's <strong>Items</strong> list and has an <code>ItemHoldData</code>. The container needs its hand socket, which the Setup Wizard connects in step 6.</p>
-</aside>
-<aside class="callout note">
+</div>
+<div class="callout note" role="note">
   <strong class="callout-title">Unused input actions</strong>
   <p><code>FBInputActions</code> defines <em>Previous</em> and <em>Next</em> (bound to <kbd>1</kbd> and <kbd>2</kbd>) and <em>Attack</em>. No shipped script reads them. <code>ItemSwitcher</code> reads the keys directly, so rebinding these actions does not change item switching.</p>
-</aside>
+</div>

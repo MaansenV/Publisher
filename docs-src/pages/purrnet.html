@@ -3,9 +3,9 @@
 -->
 <p class="lead">Add host-client co-op for <strong>2 to 4 players</strong> to FBSystem with the optional <strong>FBSystemPurrNet</strong> addon: owner-authoritative movement, synced animator and foot planting, item equip, pickup and drop, and networked world items, wired by a dedicated Setup Wizard.</p>
 
-<aside class="callout note">
+<div class="callout note" role="note">
 <p>The addon targets <strong>PurrNet v1.22.0</strong>. PurrNet is not bundled and must be installed first.</p>
-</aside>
+</div>
 
 <h2 id="what">What the addon does</h2>
 <p>An <strong>optional package</strong> in <code>Assets/FBSystemPurrNet/</code> that adds host-client co-op to any FBSystem scene. It does not depend on FishNet and does not change the base package.</p>
@@ -80,14 +80,14 @@
   </table>
 
 <h2 id="scope">Not included by design</h2>
-<aside class="callout warn"><strong class="callout-title">Out of scope for the addon</strong>
+<div class="callout warn" role="note"><strong class="callout-title">Out of scope for the addon</strong>
   <ul>
     <li><strong>Host-client only.</strong> The host is a player. There is no dedicated server, relay or NAT traversal, and the session ends when the host leaves.</li>
     <li><strong>Client-authoritative movement.</strong> There is no server prediction and no authoritative movement correction.</li>
     <li><strong>Item use</strong> stays local. There is no server-side usage logic.</li>
     <li><strong>Reconnect</strong> creates a new player. Nothing is persisted, and ownership transfer on host migration is not supported.</li>
   </ul>
-</aside>
+</div>
 
 <h2 id="testing">Testing host &amp; clients</h2>
 <p>The addon ships a prepared test setup, and its scene is already in Build Settings:</p>

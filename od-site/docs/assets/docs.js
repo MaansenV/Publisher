@@ -15,10 +15,13 @@
   const sidebar = $('#sidebar');
   const scrim = $('.scrim');
   const mobileQuery = window.matchMedia('(max-width: 920px)');
+  // Everything outside the open sidebar except the menu button, so Tab cannot leave the panel.
+  const behindNav = $$('.skip-link, .topbar .brand, .topnav, .topbar-actions, #content, .toc, .site-footer');
   function setNav(open, { focus = true } = {}) {
     document.body.classList.toggle('nav-open', open);
     menuBtn?.setAttribute('aria-expanded', String(open));
     if (scrim) scrim.hidden = !open;
+    behindNav.forEach((el) => { el.inert = open; });
     if (open && focus) (sidebar.querySelector('[aria-current="page"]') || sidebar.querySelector('a, button'))?.focus({ preventScroll: true });
     if (!open && focus) menuBtn?.focus({ preventScroll: true });
   }

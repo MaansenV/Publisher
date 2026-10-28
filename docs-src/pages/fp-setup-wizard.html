@@ -84,10 +84,10 @@
 </ol>
 <p>The same validator runs from the <code>PlayerController</code> Inspector (<strong>Perform Manual Health Check</strong> and <strong>FIX ALL ISSUES</strong>). Each message and its fix is listed in <a href="fp-troubleshooting.html#health-check">Health check messages</a>.</p>
 
-<aside class="callout tip">
+<div class="callout tip" role="note">
   <strong class="callout-title">Test the setup</strong>
   <p>Press Play after the health check. Walk, sprint, crouch and equip an item. If something does not behave as expected, check the <a href="fp-troubleshooting.html">troubleshooting</a> page.</p>
-</aside>
+</div>
 
 <h2 id="transfer">Transfer Configuration</h2>
 <p>Use <span class="menu">Tools › FBSystem › Transfer Configuration</span> to move the tuning of a finished player to a new character. You do not re-tune IK, camera, locomotion or items.</p>
@@ -103,21 +103,21 @@
   <li>The <code>PlayerSettings</code> asset is shared, not copied.</li>
 </ul>
 <p>Bones and references are never copied. The wizard detects them again on the target rig.</p>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Source items must be prefabs</strong>
   <p>Items that exist only in the source scene are skipped, and the tool shows a warning. Save them as prefabs first if you want them copied.</p>
-</aside>
+</div>
 
 <h2 id="pitfalls">Common pitfalls</h2>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Prefab asset as the root</strong>
   <p>Step 1 rejects a prefab asset. Drag the prefab into the scene and use the instance.</p>
-</aside>
-<aside class="callout warn">
+</div>
+<div class="callout warn" role="note">
   <strong class="callout-title">Not Humanoid</strong>
   <p>A non-humanoid model stops the wizard at step 2, because the IK and the animations need a Humanoid avatar. Change the Animation Type to Humanoid and click Apply.</p>
-</aside>
-<aside class="callout note">
+</div>
+<div class="callout note" role="note">
   <strong class="callout-title">IK Pass on the Animator layer</strong>
   <p>The body IK runs in the Animator's IK pass. The shipped <code>Player.controller</code> has it enabled. If you use your own controller, open the Animator window, choose <em>Layers</em>, open the gear menu and enable <em>IK Pass</em>.</p>
-</aside>
+</div>

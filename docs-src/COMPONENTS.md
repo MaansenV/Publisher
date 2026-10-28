@@ -40,22 +40,22 @@ One or two sentences under the title.
 
 ## Callouts
 
-`note` (cyan, neutral information), `tip` (lime, shortcut or recommendation), `warn` (orange, breaking or risky). The title is optional.
+`note` (cyan, neutral information), `tip` (lime, shortcut or recommendation), `warn` (orange, breaking or risky). The title is optional. Use `<div role="note">`, not `<aside>`: an `<aside>` would add a landmark per callout.
 
 ```html
-<aside class="callout note">
+<div class="callout note" role="note">
   <p>Names are the C# names; Inspector labels are shown where they differ.</p>
-</aside>
+</div>
 
-<aside class="callout tip">
+<div class="callout tip" role="note">
   <strong class="callout-title">Faster start</strong>
   <p>Drag the demo player prefab into your scene and press Play.</p>
-</aside>
+</div>
 
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Breaking change in 1.6</strong>
   <p>Foot settings reset to their defaults. Note your values before you update.</p>
-</aside>
+</div>
 ```
 
 ## Numbered steps

@@ -18,8 +18,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/docs.css?v=mvs9i5zn">
-  <script src="assets/docs.js?v=mvs9i5zn" defer></script>
+  <link rel="stylesheet" href="assets/docs.css?v=mvs9p8xe">
+  <script src="assets/docs.js?v=mvs9p8xe" defer></script>
 </head>
 <body data-page="dungeon-decoration" data-group="dungeon">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -160,10 +160,10 @@
     <p>Open <strong>Preview &amp; Apply</strong> and check the seams in the preview. Click <strong>Apply</strong> to save the changes to the theme, or <strong>Cancel</strong> to discard them. Until you apply, the wizard only edits a temporary copy.</p>
   </li>
 </ol>
-<aside class="callout tip">
+<div class="callout tip" role="note">
   <strong class="callout-title">Check seams in the preview</strong>
   <p>A wall or door offset that looks small can leave a visible gap between two rooms. Always check the preview after you change an offset.</p>
-</aside>
+</div>
 
 <h2 id="decoration-profiles">Decoration profiles<a class="anchor" href="#decoration-profiles" aria-label="Link to this section">#</a></h2>
 <p>A <strong>DecorationProfile</strong> is an ordered list of categories. Create one with <span class="menu">Assets › Create › DungeonGen › Decoration Profile</span>. Each category places one kind of object:</p>
@@ -224,10 +224,10 @@
   <li>If <strong>Bake Decor</strong> was on when the prefab was saved, the furniture is already in the prefab, and the runtime skips the room.</li>
 </ul>
 
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Profile errors block the save</strong>
   <p>A profile with errors stops Save Prefab and shows the list. Typical errors are an empty pool, a pool entry with weight 0, a relation to a category that no longer exists, a minimum above the maximum count, and an object whose footprint is not baked. For footprints, click <strong>Rebake All Footprints</strong>, then save again.</p>
-</aside>
+</div>
 
 <h2 id="pitfalls">Common mistakes<a class="anchor" href="#pitfalls" aria-label="Link to this section">#</a></h2>
 <ul>

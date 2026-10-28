@@ -9,10 +9,10 @@
   <li>Add <code>PlayerVitals</code>. The Setup Wizard does not add it.</li>
   <li>Press Play. Health starts at <strong>Max Health</strong>.</li>
 </ol>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Put it on the root</strong>
   <p><code>PlayerLocomotion</code> looks for <code>PlayerVitals</code> on its own GameObject. On any other object, the dead state does not stop movement or jumping.</p>
-</aside>
+</div>
 
 <h2 id="health">Health</h2>
 <dl class="props">
@@ -103,11 +103,11 @@ public class HealthBar : MonoBehaviour
 <p>Health is local. The FishNet and PurrNet add-ons do not synchronize it. On a networked game, let the server apply damage and mirror the value to clients with <code>SetHealth</code>.</p>
 
 <h2 id="pitfalls">Common pitfalls</h2>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Damage does nothing</strong>
   <p><code>ApplyDamage</code> returns <code>false</code> for dead players and for amounts of zero or less. Check the return value when you debug, and call <code>Revive()</code> before you damage a dead player again.</p>
-</aside>
-<aside class="callout note">
+</div>
+<div class="callout note" role="note">
   <strong class="callout-title">Sprint is locked</strong>
   <p>An exhausted player cannot sprint until the pulse drops to <em>Resume Bpm</em> and the sprint key is released. Use <code>vitals.Exertion.NeedsSprintRelease</code> and <code>vitals.Exertion.Exhausted</code> to show why.</p>
-</aside>
+</div>

@@ -3,9 +3,9 @@
 -->
 <p class="lead">The public runtime API of Easy FP Full Body Controller. Most code only needs <code>PlayerController</code>, which links to every subsystem. Everything is in the namespace <code>Player</code> unless noted.</p>
 
-<aside class="callout note">
+<div class="callout note" role="note">
   <p>Names are the C# names. Inspector labels are shown where they differ.</p>
-</aside>
+</div>
 
 <h2 id="player-controller">PlayerController</h2>
 <p>The hub on the player root. In <code>Awake</code> it fills in any subsystem reference you left empty, so external code needs one reference.</p>
@@ -336,10 +336,10 @@ public class MyListener : MonoBehaviour, IItemEventListener, ILocomotionEventLis
 <pre><code class="lang-csharp">player.Locomotion.Jumped += () =&gt; Debug.Log("jumped");
 player.HandItemSocket.ItemEquipped += args =&gt;
     Debug.Log($"equipped {args.Item.name} from slot {args.SlotIndex}");</code></pre>
-<aside class="callout note">
+<div class="callout note" role="note">
   <strong class="callout-title">Delivery</strong>
   <p>Each transition fires its C# event, its UnityEvent and each listener once, from one place in the code. A listener that throws stops the remaining handlers for that transition, so keep handlers free of exceptions.</p>
-</aside>
+</div>
 
 <h2 id="fpcutter">FPCutter: FPCutterController</h2>
 <p>Namespace <code>FPCutter</code>. Hides body parts in first person and keeps their shadows. The FPCutter Wizard generates the controller on a complete copy of the character. See <a href="fp-fpcutter.html">FPCutter</a>.</p>

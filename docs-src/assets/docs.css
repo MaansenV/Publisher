@@ -87,6 +87,7 @@ button { font: inherit; color: inherit; }
   transform: translateY(-160%);
 }
 .skip-link:focus { transform: none; }
+.skip-link:focus, .skip-link:hover { color: var(--on-accent); }
 
 /* ---------- Top bar ---------- */
 .topbar {
@@ -428,7 +429,7 @@ a code { color: inherit !important; }
 .prose .asset-card-title { margin: 0 0 6px; padding: 0; border: 0; font-size: 1.3rem; font-weight: 700; letter-spacing: -0.015em; }
 .asset-card-title a { color: var(--fg); text-decoration: none; }
 .asset-card-title a:hover { color: var(--accent); }
-.asset-card-body > p { margin: 0 0 12px; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+.asset-card-body > p { margin: 0 0 12px; max-width: 70ch; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
 .prose .asset-card-links { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; padding: 0; }
 .prose .asset-card-links li { margin: 0; }
 .asset-card-links a {

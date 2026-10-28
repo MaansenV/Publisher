@@ -3,9 +3,9 @@
 -->
 <p class="lead">Make FBSystem scenes and players multiplayer-ready with the optional <strong>FBSystemFishNet</strong> addon: client-authoritative movement, animator and item sync, networked world items, and a dedicated Setup Wizard.</p>
 
-<aside class="callout note">
+<div class="callout note" role="note">
 <p>The addon targets <strong>FishNet 4.7.2</strong>.</p>
-</aside>
+</div>
 
 <h2 id="what">What the addon does</h2>
 <p>An <strong>optional package</strong> that lives in <code>Assets/FBSystemFishNet/</code>. It turns any scene and any FBSystem player into a FishNet-multiplayer setup without touching the base package.</p>
@@ -131,12 +131,12 @@
   </table>
 
 <h2 id="scope">Not included by design</h2>
-<aside class="callout warn"><strong class="callout-title">Out of scope for the addon</strong>
+<div class="callout warn" role="note"><strong class="callout-title">Out of scope for the addon</strong>
   <ul>
     <li><strong>Item use</strong> stays local (no global sync).</li>
     <li><strong>Server prediction</strong> and <strong>authoritative movement correction</strong> are not implemented.</li>
   </ul>
-</aside>
+</div>
 
 <h2 id="testing">Testing host &amp; remote client</h2>
 <p>The addon ships a prepared test setup. The scene is not in Build Settings, so add it before you build a remote client:</p>

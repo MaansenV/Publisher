@@ -18,8 +18,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/docs.css?v=mvs9i5zn">
-  <script src="assets/docs.js?v=mvs9i5zn" defer></script>
+  <link rel="stylesheet" href="assets/docs.css?v=mvs9p8xe">
+  <script src="assets/docs.js?v=mvs9p8xe" defer></script>
 </head>
 <body data-page="dungeon-culling-navmesh" data-group="dungeon">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -124,10 +124,10 @@
     <tr><td><code>DungeonCulling</code></td><td>−100</td><td>Hides rooms. Runs after the bake, so the bake still includes every room.</td></tr>
   </tbody>
 </table></div>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Culling priority must not be higher than the NavMesh priority</strong>
   <p>If <code>DungeonCulling</code> runs before the bake and hides rooms, the NavMesh misses them. When the culling priority is higher than the NavMesh priority, <code>DungeonCulling</code> logs a warning. Keep the culling priority at or below the NavMesh priority. The demo scene uses −10 for culling and 0 for the NavMesh.</p>
-</aside>
+</div>
 
 <h2 id="culling">Portal culling<a class="anchor" href="#culling" aria-label="Link to this section">#</a></h2>
 <p>Culling hides rooms that are far away or behind doors that are closed. It does not change the dungeon itself. Removing the component restores the normal behavior.</p>

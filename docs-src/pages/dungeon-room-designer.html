@@ -63,10 +63,10 @@
 </ul>
 <p>Create a type with <span class="menu">Assets › Create › DungeonGen › Door Socket Type</span>. In the Room Designer, select the type in the <strong>Door Socket Types</strong> section before you paint doors. The same section lets you create a new type.</p>
 
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Doors on an inner corner</strong>
   <p>With double-sided kits, a door placed directly beside an inner corner can end up with no single wall piece that sits flush. Keep at least one straight wall cell on each side of a door. See <a href="dungeon-templates.html#wall-mode">Wall mode</a>.</p>
-</aside>
+</div>
 
 <h2 id="multi-floor">Multi-floor rooms and stairs</h2>
 <p>Use <strong>+ Below</strong> and <strong>+ Above</strong> in the Floors section to add floors. Paint each floor separately. <strong>Remove Current</strong> deletes the selected floor, but only if no stair uses it and the room keeps at least one floor.</p>
@@ -91,10 +91,10 @@
 <p>If the room has a Decoration Profile, the save first validates the profile and bakes its footprints. A profile error stops the save and shows a <strong>Decoration Validation Failed</strong> dialog.</p>
 <p><strong>Bake Decor</strong> (shown in Objects mode) decides where the furniture goes. Off, the prefab stays bare and the furniture is placed at runtime from the profile and seed. On, the furniture is saved into the prefab in a <code>Decoration</code> folder, and the runtime skips it.</p>
 
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Keep saved assets out of the package</strong>
   <p>Save designs, prefabs, and themes in your own content folder. Files inside <code>Assets/DungeonGenerator/</code> are overwritten when you update the package.</p>
-</aside>
+</div>
 
 <h3 id="setup-room-prefab">Setup Room Prefab</h3>
 <p>Use <span class="menu">Tools › DungeonGen › Setup Room Prefab</span> on a prefab you built by hand, without the Room Designer. Select the prefab root first. The tool adds <code>RoomData</code> and a <code>DoorSocket</code> to each door, and reads the grid coordinates from the names of the tiles. It expects the nested <code>Doors</code>, <code>Walls</code>, and <code>Floors</code> containers that the Room Designer creates. Without door meshes in a <code>Doors</code> container, it stops with an error.</p>
@@ -113,10 +113,10 @@
     <tr><td><code>Diagnose</code></td><td>Check whether tiles stay nested prefabs or are baked flat.</td></tr>
   </tbody>
 </table>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Regenerating overwrites the prefab</strong>
   <p>Regeneration replaces the whole prefab. Any change you made by hand in the prefab is lost.</p>
-</aside>
+</div>
 
 <h2 id="pitfalls">Common mistakes</h2>
 <ul>

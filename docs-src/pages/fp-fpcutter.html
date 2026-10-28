@@ -31,10 +31,10 @@
     <p><strong>Generate.</strong> Check the settings below, then click <strong>Generate First-Person Mesh</strong>. The wizard reports how many meshes it processed and where they were saved.</p>
   </li>
 </ol>
-<aside class="callout tip">
+<div class="callout tip" role="note">
   <strong class="callout-title">Preview before you generate</strong>
   <p>Enable <strong>Enable Real-time Preview</strong> under <strong>Advanced Settings</strong>. The Scene view colours the vertices: white for the body, red for the head, blue for the arms and green for the legs.</p>
-</aside>
+</div>
 
 <h2 id="settings">Settings</h2>
 <p>The settings are under <strong>Advanced Settings</strong> in the Generate step:</p>
@@ -74,25 +74,25 @@ cutter.ShowPart(BodyPart.Head);                 // show it again</code></pre>
   <li>A shadow caster pass, so the hidden body still casts a shadow. Spot and point lights are handled as well as directional lights.</li>
 </ul>
 <p>The shader is tagged for the Universal Render Pipeline, so use it in URP projects only.</p>
-<aside class="callout note">
+<div class="callout note" role="note">
   <strong class="callout-title">GLES, WebGL and Android</strong>
   <p>Version 1.6 removed the exclusion of the shader on GLES, WebGL and Android. Builds for those platforms could show hidden parts in magenta. See <a href="fp-changelog.html#v1-6-0">1.6.0</a>.</p>
-</aside>
+</div>
 
 <h2 id="pitfalls">Common pitfalls</h2>
-<aside class="callout warn">
+<div class="callout warn" role="note">
   <strong class="callout-title">Head is still visible in first person</strong>
   <p>Make sure the camera uses the generated copy of the character, not the original. Then check that <strong>Head</strong> is in <strong>Hide In First Person</strong>.</p>
-</aside>
-<aside class="callout warn">
+</div>
+<div class="callout warn" role="note">
   <strong class="callout-title">Jagged or bleeding cut</strong>
   <p>Adjust <strong>Vertex Threshold</strong> for the edge shape and <strong>Weight Threshold</strong> for the neck area. Generate again. The wizard does not change the original mesh.</p>
-</aside>
-<aside class="callout note">
+</div>
+<div class="callout note" role="note">
   <strong class="callout-title">Shader not found</strong>
   <p>If the shipped material is missing, the wizard builds one from the shader. If the shader is missing too, the wizard logs a warning and falls back to a visible <code>Universal Render Pipeline/Lit</code> material, so hidden parts stay visible. Assign a material that uses <code>FPCutter/InvisibleShadowCaster</code> to <strong>Invisible Material</strong> by hand.</p>
-</aside>
-<aside class="callout note">
+</div>
+<div class="callout note" role="note">
   <strong class="callout-title">Multiplayer</strong>
   <p>The FishNet add-on hides the head for the local player and shows the full body for remote players. See <a href="fishnet.html">FishNet</a>.</p>
-</aside>
+</div>
