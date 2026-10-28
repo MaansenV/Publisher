@@ -121,6 +121,19 @@
   <li><strong>Create New Preset Asset</strong>: saves the item's settings as a new preset.</li>
 </ul>
 
+<h3 id="ik-presets-window">Manage presets for all items</h3>
+<p>The Item IK Presets window lists every item of one player in a single table, with one preset per item. Open it from <span class="menu">Tools › FBSystem › Item IK Presets</span>, from <strong>Manage IK Presets of All Items…</strong> in the Item Container Setup window, or from <strong>All Items of This Player…</strong> in an item's Item Hold Data inspector. The player can be a scene object or a prefab asset.</p>
+<ol class="steps">
+  <li>Choose the player. The window follows the selection. <strong>Lock</strong> keeps the current player.</li>
+  <li>Check the preset of each item. An item is matched to a preset named <code>IK_&lt;name&gt;</code>, where the name is the held prefab, the item object, the item definition or the item id. <strong>Auto-Match by Name</strong> drops manual choices and matches again.</li>
+  <li>In Edit Mode, select the items and press <strong>Load Selected</strong>. The values go into the player's items. With <strong>Write held prefabs</strong> on (the default), they also go into the item prefabs.</li>
+  <li>In Play Mode, press <strong>Equip</strong> on an item and tune it in its Item Hold Data inspector. Then press <strong>Save</strong> to write the values into its preset, or <strong>From…</strong> to copy the values of another preset.</li>
+</ol>
+<aside class="callout warn">
+  <strong class="callout-title">Prefab changes cannot be undone</strong>
+  <p>Load Selected asks first and lists the prefabs it will change. Prefab assets are saved directly, so Undo does not restore them. A held prefab is skipped when other items use it and are not loaded with the same preset. Those items get the values as player overrides instead.</p>
+</aside>
+
 <h2 id="events">Item events</h2>
 <table>
   <thead><tr><th scope="col">Source</th><th scope="col">C# event</th><th scope="col">UnityEvent</th></tr></thead>

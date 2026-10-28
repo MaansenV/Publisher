@@ -17,7 +17,7 @@
       "title": "Easy FP Full Body Controller",
       "short": "Easy FP Controller",
       "anchor": "easy-fp-full-body-controller",
-      "version": "1.6.0",
+      "version": "1.7.0",
       "store": "https://assetstore.unity.com/packages/tools/game-toolkits/easy-fp-full-body-controller-357454",
       "summary": "Full-body first- and third-person controller with procedural IK, foot planting, a 7-step Setup Wizard, FPCutter, an item system, and optional FishNet and PurrNet multiplayer add-ons.",
       "facts": ["Unity 6000.5+", "URP"],

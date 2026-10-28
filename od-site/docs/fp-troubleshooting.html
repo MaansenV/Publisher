@@ -18,8 +18,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
-  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+  <link rel="stylesheet" href="assets/docs.css?v=mvs3r4zd">
+  <script src="assets/docs.js?v=mvs3r4zd" defer></script>
 </head>
 <body data-page="fp-troubleshooting" data-group="fp">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -53,7 +53,7 @@
       <nav class="sidebar-nav" aria-label="Documentation pages">
 <a class="nav-home" href="index.html">Docs home</a>
 <section class="nav-group is-current" data-group="fp">
-  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.7.0</span></button>
   <ul class="nav-list" id="nav-fp">
     <li><a href="overview.html">Overview</a></li>
     <li><a href="quick-start.html">Quick Start</a></li>
@@ -103,7 +103,7 @@
         <header class="doc-header">
   <p class="kicker">Reference</p>
   <h1>Troubleshooting</h1>
-  <p class="doc-meta"><span>Documentation for v1.6.0</span></p>
+  <p class="doc-meta"><span>Documentation for v1.7.0</span></p>
 </header>
         <div class="prose">
 <p class="lead">Find your symptom or health check message and follow the fix. Most problems come from a missing reference, a non-humanoid model, or an input setup that does not match the package.</p>
@@ -155,8 +155,11 @@
     <tr><td>Hands or the body look wrong after a model change</td><td>Run the Setup Wizard again from Step 3 so the bones are detected on the new rig. Use Transfer Configuration to keep your tuning. See <a href="fp-setup-wizard.html#transfer">Transfer Configuration</a>.</td></tr>
     <tr><td>Health or stamina does not change</td><td><code>PlayerVitals</code> must be on the player root, next to <code>PlayerLocomotion</code>. <code>ApplyDamage</code> returns <code>false</code> for dead players and for amounts of zero or less.</td></tr>
     <tr><td>Footstep sounds are missing</td><td>Add <code>PlayerFootsteps</code> to the root and assign <em>Step Clips</em>. It is not added by the wizard.</td></tr>
+    <tr><td>Feet slide when walking, or stride warping has no effect</td><td>Stride warping needs the stride table. Select the player and run <span class="menu">Tools › FBSystem › Foot Planting › Bake Stride Speeds</span>, and bake again after you change the locomotion clips. See <a href="fp-body-ik.html#stride-warping">Stride warping</a>.</td></tr>
+    <tr><td>The held hand lags, bobs or drifts too much</td><td>Lower <code>lagScale</code> in <em>Look Lag &amp; Breathing</em> or <code>bobGain</code> in <em>Walking</em> on <code>PlayerHandIK</code>, or turn the group off with its <em>Enabled</em> setting. See <a href="fp-body-ik.html#hand-motion">Hand sway and walking motion</a>.</td></tr>
+    <tr><td><em>Load Selected</em> is disabled in the Item IK Presets window</td><td>Loading into the items and prefabs works in Edit Mode only. Leave Play Mode first. In Play Mode, equip the item and press <em>Save</em> to write its values into its preset.</td></tr>
     <tr><td>Foot settings reset after an update</td><td>Version 1.6 renamed the foot component. Note your values before you update, then re-enter them. See <a href="fp-changelog.html#v1-6-0">1.6.0</a>.</td></tr>
-    <tr><td>Compile errors after updating an add-on</td><td>Add-on packages from older versions do not compile against 1.6. Re-import the FishNet or PurrNet add-on after you update the base package.</td></tr>
+    <tr><td>Compile errors after updating an add-on</td><td>Add-on packages from older versions may not compile against 1.7. Re-import the FishNet or PurrNet add-on after you update the base package.</td></tr>
     <tr><td>Hidden parts are visible or magenta</td><td>The invisible material is missing or uses a different shader. Assign a material that uses <code>FPCutter/InvisibleShadowCaster</code> to <em>Invisible Material</em>. On GLES, WebGL or Android, update to 1.6.</td></tr>
     <tr><td>Binding <code>Previous</code> or <code>Next</code> does not switch items</td><td>No shipped script reads these actions. Item switching uses the keys directly in <code>ItemSwitcher</code>.</td></tr>
     <tr><td>Multiplayer spawn errors such as <code>PrefabId 65535</code></td><td>The player spawner must reference a prefab asset, not a scene object. See <a href="fishnet.html#troubleshooting">FishNet troubleshooting</a>.</td></tr>
@@ -170,7 +173,7 @@
 <p>Email <a href="mailto:karakask2004@gmail.com">karakask2004@gmail.com</a>. Include:</p>
 <ul>
   <li>Unity version and render pipeline.</li>
-  <li>FBSystem version (1.6.0, as shown in <code>CHANGELOG.md</code>) and the add-on version, if you use one.</li>
+  <li>FBSystem version (1.7.0, as shown in <code>CHANGELOG.md</code>) and the add-on version, if you use one.</li>
   <li>The health check messages, and the Console errors with the full stack trace.</li>
   <li>What you tried and what happened.</li>
 </ul>

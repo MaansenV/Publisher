@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Body IK | Easy FP Full Body Controller docs</title>
-  <meta name="description" content="Procedural head, spine and hand IK, ground-anchored foot planting with re-steps, finger grips with automatic calibration, and footsteps detected from the animated feet.">
+  <meta name="description" content="Procedural head, spine and hand IK with hand sway, ground-anchored foot planting with re-steps, turns and stride warping, finger grips with automatic calibration, and footsteps detected from the animated feet.">
   <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/fp-body-ik.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="vedaloiv">
   <meta property="og:title" content="Body IK | Easy FP Full Body Controller docs">
-  <meta property="og:description" content="Procedural head, spine and hand IK, ground-anchored foot planting with re-steps, finger grips with automatic calibration, and footsteps detected from the animated feet.">
+  <meta property="og:description" content="Procedural head, spine and hand IK with hand sway, ground-anchored foot planting with re-steps, turns and stride warping, finger grips with automatic calibration, and footsteps detected from the animated feet.">
   <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/fp-body-ik.html">
   <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -18,8 +18,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
-  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+  <link rel="stylesheet" href="assets/docs.css?v=mvs3r4zd">
+  <script src="assets/docs.js?v=mvs3r4zd" defer></script>
 </head>
 <body data-page="fp-body-ik" data-group="fp">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -53,7 +53,7 @@
       <nav class="sidebar-nav" aria-label="Documentation pages">
 <a class="nav-home" href="index.html">Docs home</a>
 <section class="nav-group is-current" data-group="fp">
-  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.7.0</span></button>
   <ul class="nav-list" id="nav-fp">
     <li><a href="overview.html">Overview</a></li>
     <li><a href="quick-start.html">Quick Start</a></li>
@@ -103,7 +103,7 @@
         <header class="doc-header">
   <p class="kicker">Guide</p>
   <h1>Body IK</h1>
-  <p class="doc-meta"><span>Documentation for v1.6.0</span><span>Procedural IK</span><span>Foot planting</span></p>
+  <p class="doc-meta"><span>Documentation for v1.7.0</span><span>Procedural IK</span><span>Foot planting</span></p>
 </header>
         <div class="prose">
 <p class="lead">Make the body believable in first person: the head looks where you look, the hands hold items, the feet stay on the ground and the fingers wrap around what you carry. This guide shows which component does each job and which settings you will change.</p>
@@ -111,10 +111,13 @@
 <li class="toc-l2"><a href="#overview">The components at a glance</a></li>
 <li class="toc-l2"><a href="#head">Head and spine</a></li>
 <li class="toc-l2"><a href="#hands">Hands and holding items</a></li>
+<li class="toc-l2"><a href="#hand-motion">Hand sway and walking motion</a></li>
 <li class="toc-l2"><a href="#foot-planting">Foot planting</a></li>
 <li class="toc-l3"><a href="#planting-steps">Set it up</a></li>
 <li class="toc-l3"><a href="#planting-basic">Basic settings</a></li>
 <li class="toc-l3"><a href="#planting-advanced">Advanced settings</a></li>
+<li class="toc-l3"><a href="#planting-turning">Turning and stopping</a></li>
+<li class="toc-l3"><a href="#stride-warping">Stride warping</a></li>
 <li class="toc-l2"><a href="#fingers">Finger grips</a></li>
 <li class="toc-l2"><a href="#footsteps">Footsteps</a></li>
 <li class="toc-l2"><a href="#pitfalls">Common pitfalls</a></li>
@@ -127,7 +130,7 @@
     <tr><td><code>PlayerFootPlanting</code></td><td>model</td><td>Anchors the feet to the ground and re-steps them</td><td>−200</td></tr>
     <tr><td><code>PlayerHeadIK</code></td><td>model</td><td>Head look-at</td><td>10</td></tr>
     <tr><td><code>PlayerSpineStabilizer</code></td><td>model</td><td>Keeps the upper body steady while you look around</td><td>15</td></tr>
-    <tr><td><code>PlayerHandIK</code></td><td>model</td><td>Hands and elbows for held items, including the holster</td><td>20</td></tr>
+    <tr><td><code>PlayerHandIK</code></td><td>model</td><td>Hands and elbows for held items, including the holster and hand sway</td><td>20</td></tr>
     <tr><td><code>HandPoseController</code></td><td>model</td><td>Finger grips on held items</td><td>100</td></tr>
     <tr><td><code>PlayerFootsteps</code></td><td>root</td><td>Footstep sounds and events</td><td>−300</td></tr>
   </tbody>
@@ -164,6 +167,37 @@
 </dl>
 <p>The holster timings (<code>holsterDuration</code>, <code>drawDuration</code>, <code>drawStartWeight</code>) are described in <a href="fp-items.html#equip">Items: Equip, switch, holster and use</a>. Two-handed items fade the left hand on and off over <code>twoHandedBlendDuration</code> (default 0.2 seconds).</p>
 
+<h2 id="hand-motion">Hand sway and walking motion<a class="anchor" href="#hand-motion" aria-label="Link to this section">#</a></h2>
+<p>The held hand is not rigid. It trails the view when you turn, breathes at rest, bobs with each step and leans into strafes. Both parts are set on <code>PlayerHandIK</code> and are on by default:</p>
+<dl class="props">
+  <dt><code>sway</code> <span class="type">HandSway</span> <span class="default">Look Lag &amp; Breathing</span></dt>
+  <dd>The hand follows the view on a damped spring with a slight overshoot. It breathes, faster and deeper under exertion when <code>PlayerVitals</code> is present, and drifts slowly while idle.</dd>
+  <dt><code>gait</code> <span class="type">HandGait</span> <span class="default">Walking</span></dt>
+  <dd>The hand bobs in step with the animated head, drags when you start or stop, and the item rolls into strafes.</dd>
+</dl>
+<p>Each part has an <code>enabled</code> switch. These are the main settings; the defaults suit most characters:</p>
+<dl class="props">
+  <dt><code>sway.frequency</code> <span class="default">default 3.5 Hz</span></dt>
+  <dd>Spring frequency of the look lag. Higher is tighter and shorter.</dd>
+  <dt><code>sway.damping</code> <span class="default">default 0.6</span></dt>
+  <dd>Damping ratio. 1 has no overshoot. 0.6 overshoots by about 10 %.</dd>
+  <dt><code>sway.lagScale</code> <span class="default">default 0.6</span></dt>
+  <dd>Share of the lag shown on the hand. 0 keeps the hand rigid.</dd>
+  <dt><code>sway.yawPositionShare</code> <span class="default">default 0.6</span></dt>
+  <dd>Share of the sideways lag on the hand position, so left and right move like up and down.</dd>
+  <dt><code>sway.restRate</code>, <code>sway.exertedRate</code> <span class="default">default 0.25 and 0.65 breaths per second</span></dt>
+  <dd>Breathing rate at rest and at full exertion.</dd>
+  <dt><code>gait.bobFrequency</code> <span class="default">default 4 Hz</span></dt>
+  <dd>Spring frequency of the step bob. Lower gives a bigger bob. Keep it well above the sprint step rate of about 3 Hz.</dd>
+  <dt><code>gait.bobGain</code> <span class="default">default 2.5, 1, 1</span></dt>
+  <dd>Bob gain per axis: x right, y up, z forward.</dd>
+  <dt><code>gait.inertiaGain</code> <span class="default">default 0.25</span></dt>
+  <dd>Share of the start and stop drag that the hand shows.</dd>
+  <dt><code>gait.strafeRoll</code> <span class="default">default 2.5 degrees per m/s</span></dt>
+  <dd>Roll of the item into a strafe. A negative value flips the direction.</dd>
+</dl>
+<p>In the Unity Editor, both fade out while you calibrate an item with <strong>Debug Mode</strong> on in its Item Hold Data, and fade back in afterwards. Scripts can call <code>PlayerHandIK.SetSwaySuppressed(bool)</code>. <code>SwayWeight</code> reports the current strength, where 0 means a rigid hand. View jumps such as a respawn or teleport go through <code>PlayerCameraController.WarpLookDirection</code>, so the hand snaps instead of swinging across the screen.</p>
+
 <h2 id="foot-planting">Foot planting<a class="anchor" href="#foot-planting" aria-label="Link to this section">#</a></h2>
 <p><code>PlayerFootPlanting</code> keeps each foot anchored to the ground where it was set down. While you stand or turn in place, a foot that moves too far from its anchor takes a short curved re-step to a new anchor, instead of sliding. Feet also align to the ground height and slope, and the pelvis lowers so both feet reach uneven ground. The component uses its own leg solver and runs before the camera syncs to the head.</p>
 
@@ -195,7 +229,7 @@
   <li><strong>Planting</strong>: <code>anchorCaptureRange</code> (default 0.375) is how far the animated foot may move from its anchor before it is released. <code>releaseAngle</code> (30 degrees) releases a planted foot that twists too far. <code>maxLegExtension</code> (0.99) pulls the anchor back when the leg is stretched too far.</li>
   <li><strong>Ground Align</strong>: <code>alignFeetToGround</code> (on), <code>maxFootYaw</code> (30 degrees) and the speed of ground alignment.</li>
   <li><strong>Ground Probe</strong>: <code>groundLayers</code>, <code>triggerInteraction</code> (ignores triggers by default) and <code>probeLength</code> (default 1).</li>
-  <li><strong>Pelvis</strong>: <code>pelvisFollowWeight</code> (1), <code>pelvisDropWeight</code> (0.5) and <code>pelvisRaiseLimit</code> (0).</li>
+  <li><strong>Pelvis</strong>: <code>pelvisFollowWeight</code> (1), <code>pelvisDropWeight</code> (0.5) and <code>pelvisRaiseLimit</code> (0) and <code>minLegExtension</code> (0.55): with the feet at different heights, the pelvis drops less so the higher leg does not fold into a deep squat.</li>
   <li><strong>Re-Steps</strong>: the <code>StepSettings</code> curves for path, arc, lift and rotation, plus <code>arcStrength</code> (0.3), <code>catchUpBoost</code> (0.4) and <code>restepDistance</code> (0.055).</li>
 </ul>
 
@@ -203,6 +237,38 @@
   <strong class="callout-title">Remote players</strong>
   <p>Multiplayer add-ons can feed the drive state of a remote player through <code>SetExternalDriveState</code>. The PurrNet add-on does this. Details are in <a href="purrnet.html">PurrNet</a>.</p>
 </aside>
+
+<h3 id="planting-turning">Turning and stopping<a class="anchor" href="#planting-turning" aria-label="Link to this section">#</a></h3>
+<p>Planted feet keep their heading while the body turns. Past <code>maxFootYaw</code> (30 degrees by default, in the <strong>Ground Align</strong> foldout) a planted foot pivots on its ball and its heel lifts, instead of twisting at the ankle. Re-steps lead the turn, and a foot that is left turned after you stop settles with a re-step. These settings are in the <strong>Turning &amp; Stopping</strong> foldout of Advanced Settings:</p>
+<dl class="props">
+  <dt><code>plantedHeadingLock</code> <span class="default">default 1</span></dt>
+  <dd>How strongly planted feet keep their heading. 0 lets them swivel with the body. It needs <code>maxFootYaw</code> above 0.</dd>
+  <dt><code>kneeFollowsFoot</code> <span class="default">default 0.6</span></dt>
+  <dd>How much the knee turns with a foot that points away from the body, so the leg turns at the hip instead of at the ankle.</dd>
+  <dt><code>turnLead</code>, <code>maxTurnLead</code> <span class="default">default 0.12 s and 25 degrees</span></dt>
+  <dd>How far ahead of the turn a re-step aims, and the limit of that lead.</dd>
+  <dt><code>settleYaw</code>, <code>settleDistance</code>, <code>settleDelay</code> <span class="default">default 10 degrees, 0.07, 0.4 s</span></dt>
+  <dd>A foot left turned or displaced after the body stops takes a settle re-step after the delay. 0 turns the yaw or the distance check off.</dd>
+  <dt><code>plantOnStop</code> <span class="default">default on</span></dt>
+  <dd>When you stop, a foot plants where it touches the ground instead of sliding into the idle pose.</dd>
+  <dt><code>footGap</code> <span class="default">default 0.06</span></dt>
+  <dd>Least gap between the feet during and after a re-step, in leg lengths. In a fast turn the stepping foot lands beside the standing foot instead of on its spot.</dd>
+</dl>
+
+<h3 id="stride-warping">Stride warping<a class="anchor" href="#stride-warping" aria-label="Link to this section">#</a></h3>
+<p>Stride warping scales the step length to the body's real speed, so a standing foot moves back as fast as the body moves instead of sliding. It needs the stride table, which holds one speed per clip of the animator's base layer. The table is empty until you bake it:</p>
+<ol class="steps">
+  <li>Select the player, as a scene object or a prefab, that has <code>PlayerFootPlanting</code>.</li>
+  <li>Run <span class="menu">Tools › FBSystem › Foot Planting › Bake Stride Speeds</span>, or press <strong>Bake Stride Speeds</strong> in the <strong>Stride</strong> foldout of Advanced Settings.</li>
+  <li>Bake again after you change the locomotion clips.</li>
+</ol>
+<p>The bake samples each clip on a hidden copy of the character, so the character itself is not posed. The Setup Wizard bakes the table while it connects the systems, if the table is still empty. With an empty table, stride warping is off.</p>
+<dl class="props">
+  <dt><code>strideWarp</code> <span class="default">default 1</span></dt>
+  <dd>Strength of stride warping. 0 turns it off.</dd>
+  <dt><code>minStrideScale</code>, <code>maxStrideScale</code> <span class="default">default 0.5 and 1.4</span></dt>
+  <dd>Shortest and longest step against the clip's step. A body slower than the minimum slides its feet instead of shuffling. Past the maximum the legs would not reach, so a faster body slides its feet.</dd>
+</dl>
 
 <h2 id="fingers">Finger grips<a class="anchor" href="#fingers" aria-label="Link to this section">#</a></h2>
 <p><code>HandPoseController</code> sets the fingers around the held item on top of the animation. It reads the finger limits from the Humanoid avatar, so it works on any humanoid rig with mapped finger bones. Press <strong>Calibrate</strong> in its Inspector after you change the avatar. Items without a grip keep the animated fingers.</p>
@@ -236,6 +302,14 @@
 
 <h2 id="pitfalls">Common pitfalls<a class="anchor" href="#pitfalls" aria-label="Link to this section">#</a></h2>
 <aside class="callout warn">
+  <strong class="callout-title">Stride warping does nothing</strong>
+  <p>The stride table is empty. Bake it as described in <a href="#stride-warping">Stride warping</a>.</p>
+</aside>
+<aside class="callout note">
+  <strong class="callout-title">The hand lags or bobs too much</strong>
+  <p>Lower <code>sway.lagScale</code> or <code>gait.bobGain</code> on <code>PlayerHandIK</code>, or turn the part off with its <code>enabled</code> switch. See <a href="#hand-motion">Hand sway and walking motion</a>.</p>
+</aside>
+<aside class="callout warn">
   <strong class="callout-title">Feet slide or float</strong>
   <p>Check <strong>Ground Layers</strong> on <code>PlayerFootPlanting</code>. Make sure no other foot IK runs on the same character.</p>
 </aside>
@@ -257,10 +331,13 @@
 <li class="toc-l2"><a href="#overview">The components at a glance</a></li>
 <li class="toc-l2"><a href="#head">Head and spine</a></li>
 <li class="toc-l2"><a href="#hands">Hands and holding items</a></li>
+<li class="toc-l2"><a href="#hand-motion">Hand sway and walking motion</a></li>
 <li class="toc-l2"><a href="#foot-planting">Foot planting</a></li>
 <li class="toc-l3"><a href="#planting-steps">Set it up</a></li>
 <li class="toc-l3"><a href="#planting-basic">Basic settings</a></li>
 <li class="toc-l3"><a href="#planting-advanced">Advanced settings</a></li>
+<li class="toc-l3"><a href="#planting-turning">Turning and stopping</a></li>
+<li class="toc-l3"><a href="#stride-warping">Stride warping</a></li>
 <li class="toc-l2"><a href="#fingers">Finger grips</a></li>
 <li class="toc-l2"><a href="#footsteps">Footsteps</a></li>
 <li class="toc-l2"><a href="#pitfalls">Common pitfalls</a></li>

@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Changelog | Easy FP Full Body Controller docs</title>
-  <meta name="description" content="Version history of Easy FP Full Body Controller from 1.0.0 to 1.6.0, with breaking changes marked and upgrade notes for updating from 1.3 and 1.4.">
+  <meta name="description" content="Version history of Easy FP Full Body Controller from 1.0.0 to 1.7.0, with breaking changes marked, upgrade notes for 1.7 and upgrade notes for updating from 1.3.">
   <link rel="canonical" href="https://vedaloiv.wasmer.app/docs/fp-changelog.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="vedaloiv">
   <meta property="og:title" content="Changelog | Easy FP Full Body Controller docs">
-  <meta property="og:description" content="Version history of Easy FP Full Body Controller from 1.0.0 to 1.6.0, with breaking changes marked and upgrade notes for updating from 1.3 and 1.4.">
+  <meta property="og:description" content="Version history of Easy FP Full Body Controller from 1.0.0 to 1.7.0, with breaking changes marked, upgrade notes for 1.7 and upgrade notes for updating from 1.3.">
   <meta property="og:url" content="https://vedaloiv.wasmer.app/docs/fp-changelog.html">
   <meta property="og:image" content="https://vedaloiv.wasmer.app/assets/web/fp-overview.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -18,8 +18,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/docs.css?v=mvhvf3bt">
-  <script src="assets/docs.js?v=mvhvf3bt" defer></script>
+  <link rel="stylesheet" href="assets/docs.css?v=mvs3r4zd">
+  <script src="assets/docs.js?v=mvs3r4zd" defer></script>
 </head>
 <body data-page="fp-changelog" data-group="fp">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -53,7 +53,7 @@
       <nav class="sidebar-nav" aria-label="Documentation pages">
 <a class="nav-home" href="index.html">Docs home</a>
 <section class="nav-group is-current" data-group="fp">
-  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.6.0</span></button>
+  <button class="nav-group-toggle" type="button" aria-expanded="true" aria-controls="nav-fp"><svg class="i i-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="nav-group-title">Easy FP Full Body Controller</span><span class="nav-version">v1.7.0</span></button>
   <ul class="nav-list" id="nav-fp">
     <li><a href="overview.html">Overview</a></li>
     <li><a href="quick-start.html">Quick Start</a></li>
@@ -103,24 +103,29 @@
         <header class="doc-header">
   <p class="kicker">Reference</p>
   <h1>Changelog</h1>
-  <p class="doc-meta"><span>Documentation for v1.6.0</span><span>1.0.0 → 1.6.0</span></p>
+  <p class="doc-meta"><span>Documentation for v1.7.0</span><span>1.0.0 → 1.7.0</span></p>
 </header>
         <div class="prose">
-<p class="lead">What changed in each release of Easy FP Full Body Controller, newest first. Breaking changes are marked, and the upgrade notes at the end list what to do before you update a project.</p>
+<p class="lead">What changed in each release of Easy FP Full Body Controller, newest first. Breaking changes are marked. Each release's upgrade notes list what to do before you update a project, and the notes for older releases are at the end.</p>
 <details class="toc-inline"><summary>On this page</summary><ol class="toc-list">
-<li class="toc-l2"><a href="#v1-6-0">1.6.0 Latest</a></li>
+<li class="toc-l2"><a href="#v1-7-0">1.7.0 Latest</a></li>
 <li class="toc-l3"><a href="#added">Added</a></li>
 <li class="toc-l3"><a href="#changed">Changed</a></li>
 <li class="toc-l3"><a href="#fixed">Fixed</a></li>
-<li class="toc-l2"><a href="#v1-4-0">1.4.0 2026-09-08</a></li>
+<li class="toc-l3"><a href="#upgrade-to-1-7">Upgrade notes</a></li>
+<li class="toc-l2"><a href="#v1-6-0">1.6.0</a></li>
 <li class="toc-l3"><a href="#added-2">Added</a></li>
 <li class="toc-l3"><a href="#changed-2">Changed</a></li>
+<li class="toc-l3"><a href="#fixed-2">Fixed</a></li>
+<li class="toc-l2"><a href="#v1-4-0">1.4.0 2026-09-08</a></li>
+<li class="toc-l3"><a href="#added-3">Added</a></li>
+<li class="toc-l3"><a href="#changed-3">Changed</a></li>
 <li class="toc-l3"><a href="#removed">Removed</a></li>
 <li class="toc-l2"><a href="#v1-3-0">1.3.0 2026-08-28</a></li>
-<li class="toc-l3"><a href="#added-3">Added</a></li>
-<li class="toc-l2"><a href="#v1-1-0">1.1.0 2026-07-30</a></li>
 <li class="toc-l3"><a href="#added-4">Added</a></li>
-<li class="toc-l3"><a href="#changed-3">Changed</a></li>
+<li class="toc-l2"><a href="#v1-1-0">1.1.0 2026-07-30</a></li>
+<li class="toc-l3"><a href="#added-5">Added</a></li>
+<li class="toc-l3"><a href="#changed-4">Changed</a></li>
 <li class="toc-l3"><a href="#removed-2">Removed</a></li>
 <li class="toc-l2"><a href="#v1-0-0">1.0.0 Initial release</a></li>
 <li class="toc-l2"><a href="#upgrades">Upgrade notes</a></li>
@@ -129,10 +134,61 @@
 </ol></details>
 <p>The full changelog ships in the package as <code>CHANGELOG.md</code>.</p>
 
-<h2 id="v1-6-0">1.6.0 <span class="badge">Latest</span><a class="anchor" href="#v1-6-0" aria-label="Link to this section">#</a></h2>
-<p>Released 2026-10-09.</p>
+<h2 id="v1-7-0">1.7.0 <span class="badge">Latest</span><a class="anchor" href="#v1-7-0" aria-label="Link to this section">#</a></h2>
+<p>Released 2026-10-28.</p>
 
 <h3 id="added">Added<a class="anchor" href="#added" aria-label="Link to this section">#</a></h3>
+<ul>
+  <li><strong>Item IK Presets window.</strong> Lists every item of a player and assigns, loads and saves an IK preset per item. See <a href="fp-items.html#ik-presets-window">Manage presets for all items</a>.</li>
+  <li><strong>Hand sway and walking motion.</strong> The held hand trails view turns, breathes, bobs with each step and leans into strafes. See <a href="fp-body-ik.html#hand-motion">Hand sway and walking motion</a>.</li>
+  <li><strong>Foot planting turns and stops.</strong> Planted feet keep their heading while the body turns. A foot left turned after you stop settles with a re-step. See <a href="fp-body-ik.html#planting-turning">Turning and stopping</a>.</li>
+  <li><strong>Stride warping.</strong> The step length follows the body's real speed, so a standing foot does not slide. It needs the baked stride table. See <a href="fp-body-ik.html#stride-warping">Stride warping</a>.</li>
+  <li><strong>Eased movement and body turns.</strong> Starting, stopping and turning accelerate instead of jumping to the target speed. A fast look turns the view ahead, and the body follows.</li>
+  <li>Scripting hooks: <code>PlayerCameraController.SetYawLimit</code> and <code>SetViewPoseOffset</code>, <code>PlayerInputHandler.SetMovementSuppressed</code>, and <code>PlayerSpineStabilizer.PostureBend</code>.</li>
+</ul>
+
+<h3 id="changed">Changed<a class="anchor" href="#changed" aria-label="Link to this section">#</a></h3>
+<ul>
+  <li>Crouch locomotion is reworked. The shipped <code>crouchSpeed</code> is 1 (it was 2), and <code>crouchBackDiagonalSpeed</code> sets the diagonal backward speed.</li>
+  <li>Idle, walk and run use the repaired <code>Locomotion_Standing_*.anim</code> clips, so planted feet stay put when you stop and turn fast.</li>
+  <li>A hand at its reach limit moves without a kink. The clamp eases in over <code>reachSoftBand</code>.</li>
+</ul>
+
+<h3 id="fixed">Fixed<a class="anchor" href="#fixed" aria-label="Link to this section">#</a></h3>
+<ul>
+  <li><strong>Feet at different heights.</strong> With one foot on a ledge, the higher leg no longer folds into a deep squat: the pelvis drops less so every leg keeps <code>minLegExtension</code> (0.55 of its length) where the lower foot can still reach the ground.</li>
+  <li><strong>Crossed feet after a turn at a ledge.</strong> Both feet could wait for each other to step and stay crossed. A planted foot now counts as standing when it holds its own anchor, and the foot that stepped longer ago goes first.</li>
+  <li><strong>Standing up under low ceilings.</strong> The stand-up check sweeps the top of the capsule, so a shallow door header keeps the player crouched.</li>
+  <li><strong>Main demo scene.</strong> The second character lost its model, and the player lacked foot planting and finger grips. The scene now uses the ready-made prefabs.</li>
+  <li><strong>Network add-ons.</strong> Remote players receive the owner's look yaw, and the PurrNet and FishNet pickup and drop checks are hardened.</li>
+</ul>
+
+<h3 id="upgrade-to-1-7">Upgrade notes<a class="anchor" href="#upgrade-to-1-7" aria-label="Link to this section">#</a></h3>
+<ol class="steps">
+  <li>
+    <p><strong>Reset the step curves.</strong> Existing components keep their stored path, arc, lift and rotation curves. New components get the new defaults. To apply them to an existing component, open <strong>Advanced Settings</strong>, expand <strong>Re-Steps</strong> and press <strong>Reset Step Curves</strong>.</p>
+  </li>
+  <li>
+    <p><strong>Bake the stride table.</strong> Until it is baked, there is no stride warping. Select the player and run <span class="menu">Tools › FBSystem › Foot Planting › Bake Stride Speeds</span>. Bake again after you change the locomotion clips, and on characters that use the shipped controller.</p>
+  </li>
+  <li>
+    <p><strong>Movement eases in and out.</strong> To get the previous instant response, set <code>moveAcceleration</code> and <code>moveDeceleration</code> to 0 on <code>PlayerSettings</code>.</p>
+  </li>
+  <li>
+    <p><strong>The body lags a fast look.</strong> To make the body follow the view at once, as before, set <code>bodyTurnSmoothTime</code> to 0.</p>
+  </li>
+  <li>
+    <p><strong>Check Crouch Speed.</strong> Existing <code>PlayerSettings</code> assets keep their value. Check <em>Crouch Speed</em> after you update.</p>
+  </li>
+  <li>
+    <p><strong>Re-import the add-on.</strong> Re-import the FishNet or PurrNet add-on after you update the base package.</p>
+  </li>
+</ol>
+
+<h2 id="v1-6-0">1.6.0<a class="anchor" href="#v1-6-0" aria-label="Link to this section">#</a></h2>
+<p>Released 2026-10-09.</p>
+
+<h3 id="added-2">Added<a class="anchor" href="#added-2" aria-label="Link to this section">#</a></h3>
 <ul>
   <li><strong>Demo scenes and ready-made prefabs.</strong> <code>FBSystem_Player</code> and <code>FBSystem_CameraRig</code>, plus three guided scenes. See <a href="fp-demos.html">Demos</a>.</li>
   <li><strong>Smooth equip and unequip (holster).</strong> Switching items lowers the current item out of view, then raises the new one. Two-handed grips fade the left hand on and off. See <a href="fp-items.html#equip">Items</a>.</li>
@@ -144,7 +200,7 @@
   <li>The PurrNet and FishNet add-ons were rebuilt for this version, including holster and drop sync and item definitions.</li>
 </ul>
 
-<h3 id="changed">Changed<a class="anchor" href="#changed" aria-label="Link to this section">#</a></h3>
+<h3 id="changed-2">Changed<a class="anchor" href="#changed-2" aria-label="Link to this section">#</a></h3>
 <ul>
   <li><span class="badge breaking">Breaking</span> <strong>Foot IK is now foot planting.</strong> The component is <code>PlayerFootPlanting</code>, and the settings have new names. The foot settings of your scenes and prefabs reset to their defaults. Details are in <a href="#upgrade-from-1-3">the upgrade notes</a>.</li>
   <li><strong>Event timing with smooth transitions.</strong> <code>ItemUnequipped</code> fires while the item is still visible. <code>ItemEquipped</code> can fire for an item that is still waiting to be drawn. <code>OnEquip</code> and <code>OnUnequip</code> only fire for items that are shown. Turn off <em>Smooth Transitions</em> to get the instant behaviour back.</li>
@@ -154,7 +210,7 @@
   <li>Setup tools find the package folder from their own location, so moving <code>FBSystem</code> no longer breaks generated assets.</li>
 </ul>
 
-<h3 id="fixed">Fixed<a class="anchor" href="#fixed" aria-label="Link to this section">#</a></h3>
+<h3 id="fixed-2">Fixed<a class="anchor" href="#fixed-2" aria-label="Link to this section">#</a></h3>
 <ul>
   <li><code>SetInputEnabled(false)</code> left the player walking with the last input, and kept Jump and Flashlight presses latched.</li>
   <li>The FPCutter invisible shader works on GLES, WebGL and Android. Hidden parts could render magenta there before. It is SRP Batcher compatible and casts correct spot and point light shadows.</li>
@@ -166,13 +222,13 @@
 
 <h2 id="v1-4-0">1.4.0 <span class="badge">2026-09-08</span><a class="anchor" href="#v1-4-0" aria-label="Link to this section">#</a></h2>
 
-<h3 id="added-2">Added<a class="anchor" href="#added-2" aria-label="Link to this section">#</a></h3>
+<h3 id="added-3">Added<a class="anchor" href="#added-3" aria-label="Link to this section">#</a></h3>
 <ul>
   <li><strong>Ground-anchored foot IK</strong> with automatic re-steps and a direct three-bone leg solver. It was first named <code>PlayerFootGlue</code>; it is <code>PlayerFootPlanting</code> since 1.6.</li>
   <li><strong>PurrNet multiplayer add-on</strong> for host-client co-op with 2 to 4 players, on PurrNet v1.22.0.</li>
   <li><strong>FPCutter multi-mesh support.</strong> The wizard lists every <code>SkinnedMeshRenderer</code> of the character and processes the selected ones with a shared skeleton. The generated copy is a complete character.</li>
 </ul>
-<h3 id="changed-2">Changed<a class="anchor" href="#changed-2" aria-label="Link to this section">#</a></h3>
+<h3 id="changed-3">Changed<a class="anchor" href="#changed-3" aria-label="Link to this section">#</a></h3>
 <ul>
   <li>Segmented FPCutter meshes recalculate their bounds, so skinned-mesh culling stays correct.</li>
 </ul>
@@ -182,18 +238,18 @@
 </ul>
 
 <h2 id="v1-3-0">1.3.0 <span class="badge">2026-08-28</span><a class="anchor" href="#v1-3-0" aria-label="Link to this section">#</a></h2>
-<h3 id="added-3">Added<a class="anchor" href="#added-3" aria-label="Link to this section">#</a></h3>
+<h3 id="added-4">Added<a class="anchor" href="#added-4" aria-label="Link to this section">#</a></h3>
 <ul>
   <li><strong>Character Configuration Transfer.</strong> Copies the tuning and missing items of a finished player to a new character. See <a href="fp-setup-wizard.html#transfer">Transfer Configuration</a>.</li>
 </ul>
 
 <h2 id="v1-1-0">1.1.0 <span class="badge">2026-07-30</span><a class="anchor" href="#v1-1-0" aria-label="Link to this section">#</a></h2>
-<h3 id="added-4">Added<a class="anchor" href="#added-4" aria-label="Link to this section">#</a></h3>
+<h3 id="added-5">Added<a class="anchor" href="#added-5" aria-label="Link to this section">#</a></h3>
 <ul>
   <li><strong>Extensible event API.</strong> Each equip, unequip and locomotion change fires a C# event, a UnityEvent and any listener interface on the player, once per transition. See <a href="interfaces.html#event-api">Event API</a>.</li>
   <li>The demo <code>PlayerEventLogger</code> logs every event to the Console.</li>
 </ul>
-<h3 id="changed-3">Changed<a class="anchor" href="#changed-3" aria-label="Link to this section">#</a></h3>
+<h3 id="changed-4">Changed<a class="anchor" href="#changed-4" aria-label="Link to this section">#</a></h3>
 <ul>
   <li><code>HandItemSocket</code> is the single source of equip and unequip events. <code>ItemContainer</code> drives the socket and no longer emits its own equip events.</li>
 </ul>
@@ -264,19 +320,24 @@
 
     <aside class="toc" aria-labelledby="toc-title">
       <p class="toc-title" id="toc-title">On this page</p><ol class="toc-list">
-<li class="toc-l2"><a href="#v1-6-0">1.6.0 Latest</a></li>
+<li class="toc-l2"><a href="#v1-7-0">1.7.0 Latest</a></li>
 <li class="toc-l3"><a href="#added">Added</a></li>
 <li class="toc-l3"><a href="#changed">Changed</a></li>
 <li class="toc-l3"><a href="#fixed">Fixed</a></li>
-<li class="toc-l2"><a href="#v1-4-0">1.4.0 2026-09-08</a></li>
+<li class="toc-l3"><a href="#upgrade-to-1-7">Upgrade notes</a></li>
+<li class="toc-l2"><a href="#v1-6-0">1.6.0</a></li>
 <li class="toc-l3"><a href="#added-2">Added</a></li>
 <li class="toc-l3"><a href="#changed-2">Changed</a></li>
+<li class="toc-l3"><a href="#fixed-2">Fixed</a></li>
+<li class="toc-l2"><a href="#v1-4-0">1.4.0 2026-09-08</a></li>
+<li class="toc-l3"><a href="#added-3">Added</a></li>
+<li class="toc-l3"><a href="#changed-3">Changed</a></li>
 <li class="toc-l3"><a href="#removed">Removed</a></li>
 <li class="toc-l2"><a href="#v1-3-0">1.3.0 2026-08-28</a></li>
-<li class="toc-l3"><a href="#added-3">Added</a></li>
-<li class="toc-l2"><a href="#v1-1-0">1.1.0 2026-07-30</a></li>
 <li class="toc-l3"><a href="#added-4">Added</a></li>
-<li class="toc-l3"><a href="#changed-3">Changed</a></li>
+<li class="toc-l2"><a href="#v1-1-0">1.1.0 2026-07-30</a></li>
+<li class="toc-l3"><a href="#added-5">Added</a></li>
+<li class="toc-l3"><a href="#changed-4">Changed</a></li>
 <li class="toc-l3"><a href="#removed-2">Removed</a></li>
 <li class="toc-l2"><a href="#v1-0-0">1.0.0 Initial release</a></li>
 <li class="toc-l2"><a href="#upgrades">Upgrade notes</a></li>

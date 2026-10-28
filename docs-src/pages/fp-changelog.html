@@ -1,10 +1,61 @@
 <!--meta
-{"title": "Changelog", "navTitle": "Changelog", "description": "Version history of Easy FP Full Body Controller from 1.0.0 to 1.6.0, with breaking changes marked and upgrade notes for updating from 1.3 and 1.4.", "group": "fp", "kicker": "Reference", "chips": ["1.0.0 → 1.6.0"]}
+{"title": "Changelog", "navTitle": "Changelog", "description": "Version history of Easy FP Full Body Controller from 1.0.0 to 1.7.0, with breaking changes marked, upgrade notes for 1.7 and upgrade notes for updating from 1.3.", "group": "fp", "kicker": "Reference", "chips": ["1.0.0 → 1.7.0"]}
 -->
-<p class="lead">What changed in each release of Easy FP Full Body Controller, newest first. Breaking changes are marked, and the upgrade notes at the end list what to do before you update a project.</p>
+<p class="lead">What changed in each release of Easy FP Full Body Controller, newest first. Breaking changes are marked. Each release's upgrade notes list what to do before you update a project, and the notes for older releases are at the end.</p>
 <p>The full changelog ships in the package as <code>CHANGELOG.md</code>.</p>
 
-<h2 id="v1-6-0">1.6.0 <span class="badge">Latest</span></h2>
+<h2 id="v1-7-0">1.7.0 <span class="badge">Latest</span></h2>
+<p>Released 2026-10-28.</p>
+
+<h3>Added</h3>
+<ul>
+  <li><strong>Item IK Presets window.</strong> Lists every item of a player and assigns, loads and saves an IK preset per item. See <a href="fp-items.html#ik-presets-window">Manage presets for all items</a>.</li>
+  <li><strong>Hand sway and walking motion.</strong> The held hand trails view turns, breathes, bobs with each step and leans into strafes. See <a href="fp-body-ik.html#hand-motion">Hand sway and walking motion</a>.</li>
+  <li><strong>Foot planting turns and stops.</strong> Planted feet keep their heading while the body turns. A foot left turned after you stop settles with a re-step. See <a href="fp-body-ik.html#planting-turning">Turning and stopping</a>.</li>
+  <li><strong>Stride warping.</strong> The step length follows the body's real speed, so a standing foot does not slide. It needs the baked stride table. See <a href="fp-body-ik.html#stride-warping">Stride warping</a>.</li>
+  <li><strong>Eased movement and body turns.</strong> Starting, stopping and turning accelerate instead of jumping to the target speed. A fast look turns the view ahead, and the body follows.</li>
+  <li>Scripting hooks: <code>PlayerCameraController.SetYawLimit</code> and <code>SetViewPoseOffset</code>, <code>PlayerInputHandler.SetMovementSuppressed</code>, and <code>PlayerSpineStabilizer.PostureBend</code>.</li>
+</ul>
+
+<h3>Changed</h3>
+<ul>
+  <li>Crouch locomotion is reworked. The shipped <code>crouchSpeed</code> is 1 (it was 2), and <code>crouchBackDiagonalSpeed</code> sets the diagonal backward speed.</li>
+  <li>Idle, walk and run use the repaired <code>Locomotion_Standing_*.anim</code> clips, so planted feet stay put when you stop and turn fast.</li>
+  <li>A hand at its reach limit moves without a kink. The clamp eases in over <code>reachSoftBand</code>.</li>
+</ul>
+
+<h3>Fixed</h3>
+<ul>
+  <li><strong>Feet at different heights.</strong> With one foot on a ledge, the higher leg no longer folds into a deep squat: the pelvis drops less so every leg keeps <code>minLegExtension</code> (0.55 of its length) where the lower foot can still reach the ground.</li>
+  <li><strong>Crossed feet after a turn at a ledge.</strong> Both feet could wait for each other to step and stay crossed. A planted foot now counts as standing when it holds its own anchor, and the foot that stepped longer ago goes first.</li>
+  <li><strong>Standing up under low ceilings.</strong> The stand-up check sweeps the top of the capsule, so a shallow door header keeps the player crouched.</li>
+  <li><strong>Main demo scene.</strong> The second character lost its model, and the player lacked foot planting and finger grips. The scene now uses the ready-made prefabs.</li>
+  <li><strong>Network add-ons.</strong> Remote players receive the owner's look yaw, and the PurrNet and FishNet pickup and drop checks are hardened.</li>
+</ul>
+
+<h3 id="upgrade-to-1-7">Upgrade notes</h3>
+<ol class="steps">
+  <li>
+    <p><strong>Reset the step curves.</strong> Existing components keep their stored path, arc, lift and rotation curves. New components get the new defaults. To apply them to an existing component, open <strong>Advanced Settings</strong>, expand <strong>Re-Steps</strong> and press <strong>Reset Step Curves</strong>.</p>
+  </li>
+  <li>
+    <p><strong>Bake the stride table.</strong> Until it is baked, there is no stride warping. Select the player and run <span class="menu">Tools › FBSystem › Foot Planting › Bake Stride Speeds</span>. Bake again after you change the locomotion clips, and on characters that use the shipped controller.</p>
+  </li>
+  <li>
+    <p><strong>Movement eases in and out.</strong> To get the previous instant response, set <code>moveAcceleration</code> and <code>moveDeceleration</code> to 0 on <code>PlayerSettings</code>.</p>
+  </li>
+  <li>
+    <p><strong>The body lags a fast look.</strong> To make the body follow the view at once, as before, set <code>bodyTurnSmoothTime</code> to 0.</p>
+  </li>
+  <li>
+    <p><strong>Check Crouch Speed.</strong> Existing <code>PlayerSettings</code> assets keep their value. Check <em>Crouch Speed</em> after you update.</p>
+  </li>
+  <li>
+    <p><strong>Re-import the add-on.</strong> Re-import the FishNet or PurrNet add-on after you update the base package.</p>
+  </li>
+</ol>
+
+<h2 id="v1-6-0">1.6.0</h2>
 <p>Released 2026-10-09.</p>
 
 <h3>Added</h3>
