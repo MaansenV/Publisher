@@ -363,6 +363,21 @@ for (const [slug, { html }] of rendered) {
     else if (hash && targetSlug) warn(`${slug}.html: cannot check anchor in non-generated page "${url}"`);
   }
 }
+
+// ---------- token sync ----------
+// The landing page keeps its own inline :root; every custom property it shares with docs.css must hold the same value.
+const rootVars = (css) => {
+  const block = css.match(/:root\s*\{([\s\S]*?)\n\s*\}/)?.[1] ?? '';
+  return new Map([...block.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
+};
+const docsVars = rootVars(readFileSync(join(SRC, 'assets', 'docs.css'), 'utf8'));
+const landingVars = rootVars(readFileSync(join(SITE, 'unity-asset-portfolio.html'), 'utf8'));
+if (!docsVars.size || !landingVars.size) fail('token sync: could not read the :root block of docs.css or unity-asset-portfolio.html');
+for (const [name, value] of landingVars) {
+  if (docsVars.has(name) && docsVars.get(name) !== value) {
+    fail(`token sync: ${name} is "${value}" on the landing page but "${docsVars.get(name)}" in docs-src/assets/docs.css`);
+  }
+}
 if (errors.length) { console.error(`\nBuild failed: ${errors.length} error(s). Nothing written.`); process.exit(1); }
 
 // ---------- write output ----------

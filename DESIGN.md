@@ -212,7 +212,7 @@ Landing: a centred container of `min(1200px, 100% − 2 × gutter)` with a 24px 
 
 Docs: a 1480px shell with a 280px sticky sidebar, a content column at 72ch measure, and a 232px sticky "On this page" rail. At ≤1240px the rail folds into an inline disclosure; at ≤920px the sidebar becomes an off-canvas menu behind a menu button.
 
-Breakpoints: landing 960px (everything stacks), 760px (mobile nav, 16px gutter), 420px (full-width actions). Docs 1240px, 920px, 640px, 400px.
+Breakpoints: landing 960px (everything stacks), 760px (mobile nav, 16px gutter), 420px (full-width actions; the three hero facts become ruled rows with the label left and the value right). Docs 1240px, 920px, 640px, 400px.
 
 **The Scene Grid Rule.** The 56px hero grid is the only background texture, masked to fade out. Do not add other patterns, gradients or noise.
 
@@ -248,7 +248,7 @@ Pill-shaped, confident, and few per view.
 ### Cards / Containers
 - **Product card:** panel ground, strong hairline, 14px radius, clipped. Media column holds a screenshot or the ray diagram in a 10px-radius frame plus a two-up thumbnail strip; the body column holds status, name, tagline, yellow-square feature list, a 3-column mono spec grid, and actions pinned to the bottom. A panel-2 "what's new" strip closes the card.
 - **Mosaic tile:** 16:10 image tile, strong hairline, 14px radius, blurred pill labels at the bottom; hover turns the border yellow.
-- **Docs callout:** panel ground tinted 7% with its signal hue, 3px left edge, 30% hue border. Variants: info (cyan), tip (lime), warn (orange).
+- **Docs callout:** panel ground tinted 7% with its signal hue, 3px left edge, 30% hue border. Variants: info (cyan), tip (lime), warn (orange). Markup is `<div class="callout …" role="note">`, never `<aside>`, so callouts do not add landmarks.
 
 ### Inputs / Fields
 - **Style:** sunken ground, strong hairline, 6px radius, 48px minimum height (textarea 140px).
@@ -259,7 +259,7 @@ Pill-shaped, confident, and few per view.
 
 ### Navigation
 - **Landing header:** sticky, translucent, hairline bottom. Brand wordmark in Rubik 800. Links are muted 44px targets with 6px radius; hover fills panel 2 and brightens. The Asset Store CTA is an outlined pill whose border turns yellow on hover. At ≤760px links move into a drop-down panel behind a pill menu toggle.
-- **Docs sidebar:** collapsible asset groups with a mono version pill (yellow on the current asset), indented page lists on a hairline spine, active page marked by a 2px yellow left border and a panel-2 fill.
+- **Docs sidebar:** collapsible asset groups with a mono version pill (yellow on the current asset), indented page lists on a hairline spine, active page marked by a 2px yellow left border and a panel-2 fill. At ≤920px it opens off-canvas over a scrim; while open, everything except the sidebar and the menu button is `inert`, and Esc closes it and returns focus to the menu button.
 - **Docs TOC:** hairline spine, muted links, active link in yellow.
 
 ### Docs prose (signature)
@@ -275,7 +275,9 @@ An authored SVG standing in for a missing screenshot: a raised-panel wall on the
 ## Do's and Don'ts
 
 ### Do:
-- **Do** keep landing and docs on the same token values; change `docs-src/assets/docs.css` and the landing `:root` together.
+- **Do** keep landing and docs on the same token values; change `docs-src/assets/docs.css` and the landing `:root` together. `npm run docs:build` fails when a shared custom property differs.
+- **Do** edit `od-site/unity-asset-portfolio.html` for landing changes; the build copies it over `od-site/index.html`.
+- **Do** ship landing screenshots as `<picture>` with AVIF and JPEG `srcset` at 480, 800 and 1200px, with `sizes` matching the slot.
 - **Do** reserve selection yellow for a primary action, a released state, or the current location.
 - **Do** set versions, menu paths, keys, code and spec values in JetBrains Mono.
 - **Do** separate surfaces with tonal steps and 1px hairlines.
