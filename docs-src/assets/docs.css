@@ -12,7 +12,7 @@
   --fg: oklch(0.99 0.01 97.35);
   --fg-body: oklch(0.88 0.008 95);
   --muted: oklch(0.7 0.01 89.88);
-  --faint: oklch(0.56 0.01 89.88);
+  --faint: oklch(0.62 0.01 89.88); /* >= 4.5:1 on bg-sunken through surface-2; not used on surface-raised */
   --on-accent: oklch(0.145 0 89.88);
 
   /* Lines */
@@ -486,6 +486,7 @@ a code { color: inherit !important; }
 }
 .search-results li a[aria-selected="true"], .search-results li a:hover { background: var(--surface-raised); }
 .sr-path { display: block; color: var(--faint); font-family: var(--font-mono); font-size: 0.72rem; }
+.search-results li a[aria-selected="true"] .sr-path, .search-results li a:hover .sr-path { color: var(--muted); }
 .sr-title { display: block; color: var(--fg); font-weight: 500; }
 .sr-text { display: block; color: var(--muted); font-size: 0.84rem; line-height: 1.45; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .search-results mark { background: none; color: var(--accent); }
